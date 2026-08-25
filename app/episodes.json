@@ -1,0 +1,1320 @@
+{
+ "people": [
+  {
+   "name": "Alexander the Great",
+   "tier": "core",
+   "hours": 2.2,
+   "episodes": [
+    {
+     "n": 226,
+     "title": "Heroes: From Alexander the Great and Julius Caesar to Churchill and de Gaulle",
+     "full_title": "#226 Heroes: From Alexander the Great and Julius Caesar to Churchill and de Gaulle",
+     "url": "https://traffic.megaphone.fm/DSLLC9167645160.mp3?updated=1748636215",
+     "sec": 4018,
+     "img": null,
+     "date": "2022-01-12"
+    },
+    {
+     "n": 232,
+     "title": "Alexander the Great",
+     "full_title": "#232 Alexander the Great",
+     "url": "https://traffic.megaphone.fm/DSLLC9449394761.mp3?updated=1748636211",
+     "sec": 3752,
+     "img": null,
+     "date": "2022-02-16"
+    }
+   ]
+  },
+  {
+   "name": "Napoleon",
+   "tier": "core",
+   "hours": 2.6,
+   "episodes": [
+    {
+     "n": 294,
+     "title": "Napoleon",
+     "full_title": "#294 Napoleon",
+     "url": "https://traffic.megaphone.fm/DSLLC5131875417.mp3?updated=1748636170",
+     "sec": 2609,
+     "img": null,
+     "date": "2023-03-13"
+    },
+    {
+     "n": 302,
+     "title": "Napoleon (The Mind of Napoleon)",
+     "full_title": "#302 Napoleon (The Mind of Napoleon)",
+     "url": "https://traffic.megaphone.fm/DSLLC8150935036.mp3?updated=1748636163",
+     "sec": 3008,
+     "img": null,
+     "date": "2023-05-08"
+    },
+    {
+     "n": 337,
+     "title": "Napoleon's Maxims and Strategy",
+     "full_title": "#337 Napoleon's Maxims and Strategy",
+     "url": "https://traffic.megaphone.fm/DSLLC2635110960.mp3?updated=1748636139",
+     "sec": 3631,
+     "img": null,
+     "date": "2024-02-05"
+    }
+   ]
+  },
+  {
+   "name": "Elon Musk",
+   "tier": "core",
+   "hours": 12.6,
+   "episodes": [
+    {
+     "n": 1,
+     "title": "Elon Musk: Tesla, SpaceX, & the Quest for a Fantastic Future",
+     "full_title": "#1 Elon Musk: Tesla, SpaceX, & the Quest for a Fantastic Future",
+     "url": "https://traffic.megaphone.fm/DSLLC9744397519.mp3?updated=1748636355",
+     "sec": 3493,
+     "img": null,
+     "date": "2016-09-19"
+    },
+    {
+     "n": 11,
+     "title": "The Cook & The Chef: Elon Musk's Secret Sauce",
+     "full_title": "#11 The Cook & The Chef: Elon Musk's Secret Sauce",
+     "url": "https://traffic.megaphone.fm/DSLLC9140648844.mp3?updated=1748636349",
+     "sec": 2702,
+     "img": null,
+     "date": "2017-08-13"
+    },
+    {
+     "n": 12,
+     "title": "Elon Musk & How Tesla Will Change The World",
+     "full_title": "#12 Elon Musk & How Tesla Will Change The World",
+     "url": "https://traffic.megaphone.fm/DSLLC3455921037.mp3?updated=1748636348",
+     "sec": 2483,
+     "img": null,
+     "date": "2017-08-20"
+    },
+    {
+     "n": 13,
+     "title": "Elon Musk and Why SpaceX Will Colonize Mars",
+     "full_title": "#13 Elon Musk and Why SpaceX Will Colonize Mars",
+     "url": "https://traffic.megaphone.fm/DSLLC9893053965.mp3?updated=1748636348",
+     "sec": 3310,
+     "img": null,
+     "date": "2017-08-27"
+    },
+    {
+     "n": 30,
+     "title": "Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future",
+     "full_title": "#30 Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future",
+     "url": "https://traffic.megaphone.fm/DSLLC5084467615.mp3?updated=1748636339",
+     "sec": 2306,
+     "img": null,
+     "date": "2018-07-09"
+    },
+    {
+     "n": 38,
+     "title": "The Space Barons: Elon Musk, Jeff Bezos, and the Quest to Colonize the Cosmos",
+     "full_title": "#38 The Space Barons: Elon Musk, Jeff Bezos, and the Quest to Colonize the Cosmos",
+     "url": "https://traffic.megaphone.fm/DSLLC9074033528.mp3?updated=1748636334",
+     "sec": 5409,
+     "img": null,
+     "date": "2018-09-17"
+    },
+    {
+     "n": 172,
+     "title": "Elon Musk (Early Days of SpaceX)",
+     "full_title": "#172 Elon Musk (Early Days of SpaceX)",
+     "url": "https://traffic.megaphone.fm/DSLLC6184357148.mp3?updated=1748636251",
+     "sec": 3957,
+     "img": null,
+     "date": "2021-03-21"
+    },
+    {
+     "n": 233,
+     "title": "Elon Musk, Peter Thiel, Max Levchin (PayPal)",
+     "full_title": "#233 Elon Musk, Peter Thiel, Max Levchin (PayPal)",
+     "url": "https://traffic.megaphone.fm/DSLLC8109783014.mp3?updated=1748636210",
+     "sec": 6830,
+     "img": null,
+     "date": "2022-02-23"
+    },
+    {
+     "n": 369,
+     "title": "Elon Musk and The Early Days of SpaceX",
+     "full_title": "#369 Elon Musk and The Early Days of SpaceX",
+     "url": "https://traffic.megaphone.fm/DSLLC8680044038.mp3?updated=1748636115",
+     "sec": 3839,
+     "img": null,
+     "date": "2024-11-01"
+    },
+    {
+     "n": 399,
+     "title": "How Elon Works",
+     "full_title": "#399 How Elon Works",
+     "url": "https://traffic.megaphone.fm/DSLLC5340727074.mp3?updated=1756144240",
+     "sec": 5582,
+     "img": null,
+     "date": "2025-08-25"
+    },
+    {
+     "n": 414,
+     "title": "How SpaceX Works",
+     "full_title": "#414 How SpaceX Works",
+     "url": "https://traffic.megaphone.fm/DSLLC4974262170.mp3?updated=1772993997",
+     "sec": 2466,
+     "img": null,
+     "date": "2026-03-08"
+    },
+    {
+     "n": 415,
+     "title": "How Elon Thinks",
+     "full_title": "#415 How Elon Thinks",
+     "url": "https://traffic.megaphone.fm/DSLLC8428842056.mp3?updated=1774384781",
+     "sec": 3085,
+     "img": null,
+     "date": "2026-03-24"
+    }
+   ]
+  },
+  {
+   "name": "Jeff Bezos",
+   "tier": "core",
+   "hours": 13.0,
+   "episodes": [
+    {
+     "n": 17,
+     "title": "Jeff Bezos and the Age of Amazon",
+     "full_title": "#17 Jeff Bezos and the Age of Amazon",
+     "url": "https://traffic.megaphone.fm/DSLLC1951103118.mp3?updated=1748636346",
+     "sec": 3835,
+     "img": null,
+     "date": "2018-01-01"
+    },
+    {
+     "n": 38,
+     "title": "The Space Barons: Elon Musk, Jeff Bezos, and the Quest to Colonize the Cosmos",
+     "full_title": "#38 The Space Barons: Elon Musk, Jeff Bezos, and the Quest to Colonize the Cosmos",
+     "url": "https://traffic.megaphone.fm/DSLLC9074033528.mp3?updated=1748636334",
+     "sec": 5409,
+     "img": null,
+     "date": "2018-09-17"
+    },
+    {
+     "n": 71,
+     "title": "Jeff Bezos' Shareholder Letters",
+     "full_title": "#71 Jeff Bezos' Shareholder Letters",
+     "url": "https://traffic.megaphone.fm/DSLLC6277815760.mp3?updated=1748636312",
+     "sec": 6464,
+     "img": null,
+     "date": "2019-05-12"
+    },
+    {
+     "n": 155,
+     "title": "Jeff Bezos (Shareholder Letters and Speeches)",
+     "full_title": "#155 Jeff Bezos (Shareholder Letters and Speeches)",
+     "url": "https://traffic.megaphone.fm/DSLLC4272316738.mp3?updated=1748636261",
+     "sec": 4081,
+     "img": null,
+     "date": "2020-11-23"
+    },
+    {
+     "n": 179,
+     "title": "Jeff Bezos",
+     "full_title": "#179 Jeff Bezos",
+     "url": "https://traffic.megaphone.fm/DSLLC1874696750.mp3?updated=1748636246",
+     "sec": 4872,
+     "img": null,
+     "date": "2021-05-10"
+    },
+    {
+     "n": 180,
+     "title": "Jeff Bezos (Invention of a Global Empire)",
+     "full_title": "#180 Jeff Bezos (Invention of a Global Empire)",
+     "url": "https://traffic.megaphone.fm/DSLLC5733803822.mp3?updated=1748636245",
+     "sec": 3827,
+     "img": null,
+     "date": "2021-05-17"
+    },
+    {
+     "n": 282,
+     "title": "Jeff Bezos Shareholder Letters",
+     "full_title": "#282 Jeff Bezos Shareholder Letters",
+     "url": "https://traffic.megaphone.fm/DSLLC2781166264.mp3?updated=1748636177",
+     "sec": 4228,
+     "img": null,
+     "date": "2022-12-19"
+    },
+    {
+     "n": 321,
+     "title": "Working with Jeff Bezos",
+     "full_title": "#321 Working with Jeff Bezos",
+     "url": "https://traffic.megaphone.fm/DSLLC1104059035.mp3?updated=1748636150",
+     "sec": 3445,
+     "img": null,
+     "date": "2023-09-21"
+    },
+    {
+     "n": 374,
+     "title": "Rare Jeff Bezos Interview",
+     "full_title": "#374 Rare Jeff Bezos Interview",
+     "url": "https://traffic.megaphone.fm/DSLLC5764465077.mp3?updated=1748636112",
+     "sec": 2160,
+     "img": null,
+     "date": "2024-12-15"
+    },
+    {
+     "n": 388,
+     "title": "Jeff Bezos's Shareholder Letters: All of Them!",
+     "full_title": "#388 Jeff Bezos's Shareholder Letters: All of Them!",
+     "url": "https://traffic.megaphone.fm/DSLLC6933773453.mp3?updated=1748636103",
+     "sec": 4768,
+     "img": null,
+     "date": "2025-05-15"
+    },
+    {
+     "n": null,
+     "title": "Jeff Bezos (Insights, Stories, and Secrets)",
+     "full_title": "Jeff Bezos (Insights, Stories, and Secrets)",
+     "url": "https://traffic.megaphone.fm/DSLLC6682023814.mp3?updated=1748636245",
+     "sec": 3808,
+     "img": null,
+     "date": "2021-05-13"
+    }
+   ]
+  },
+  {
+   "name": "Bill Gates",
+   "tier": "core",
+   "hours": 6.4,
+   "episodes": [
+    {
+     "n": 44,
+     "title": "A Memoir by the Cofounder of Microsoft",
+     "full_title": "#44 A Memoir by the Cofounder of Microsoft",
+     "url": "https://traffic.megaphone.fm/DSLLC2625511299.mp3?updated=1748636330",
+     "sec": 4957,
+     "img": null,
+     "date": "2018-10-30"
+    },
+    {
+     "n": 140,
+     "title": "Bill Gates (the Making of the Microsoft Empire)",
+     "full_title": "#140 Bill Gates (the Making of the Microsoft Empire)",
+     "url": "https://traffic.megaphone.fm/DSLLC4671713101.mp3?updated=1748636271",
+     "sec": 3300,
+     "img": null,
+     "date": "2020-08-16"
+    },
+    {
+     "n": 174,
+     "title": "Bill Gates (Overdrive)",
+     "full_title": "#174 Bill Gates (Overdrive)",
+     "url": "https://traffic.megaphone.fm/DSLLC3245904028.mp3?updated=1748636250",
+     "sec": 2895,
+     "img": null,
+     "date": "2021-04-05"
+    },
+    {
+     "n": 208,
+     "title": "Steve Jobs, Bill Gates, Michael Dell, Bill Gates, Andy Grove, Bill Hewlett",
+     "full_title": "#208 Steve Jobs, Bill Gates, Michael Dell, Bill Gates, Andy Grove, Bill Hewlett",
+     "url": "https://traffic.megaphone.fm/DSLLC7427317185.mp3?updated=1748636228",
+     "sec": 4895,
+     "img": null,
+     "date": "2021-09-29"
+    },
+    {
+     "n": 290,
+     "title": "Bill Gates",
+     "full_title": "#290 Bill Gates",
+     "url": "https://traffic.megaphone.fm/DSLLC6606679139.mp3?updated=1748636172",
+     "sec": 2840,
+     "img": null,
+     "date": "2023-02-13"
+    },
+    {
+     "n": 401,
+     "title": "How Bill Gates Works",
+     "full_title": "#401 How Bill Gates Works",
+     "url": "https://traffic.megaphone.fm/DSLLC5572194318.mp3?updated=1758682944",
+     "sec": 4090,
+     "img": null,
+     "date": "2025-09-24"
+    }
+   ]
+  },
+  {
+   "name": "Jensen Huang",
+   "tier": "core",
+   "hours": 2.6,
+   "episodes": [
+    {
+     "n": 376,
+     "title": "Jensen Huang: Founder of Nvidia",
+     "full_title": "#376 Jensen Huang: Founder of Nvidia",
+     "url": "https://traffic.megaphone.fm/DSLLC9479610759.mp3?updated=1748636110",
+     "sec": 6044,
+     "img": null,
+     "date": "2025-01-13"
+    },
+    {
+     "n": 403,
+     "title": "How Jensen Works",
+     "full_title": "#403 How Jensen Works",
+     "url": "https://traffic.megaphone.fm/DSLLC6890692582.mp3?updated=1764796550",
+     "sec": 3315,
+     "img": null,
+     "date": "2025-10-20"
+    }
+   ]
+  },
+  {
+   "name": "Mark Zuckerberg",
+   "tier": "core",
+   "hours": 0.6,
+   "episodes": [
+    {
+     "n": 14,
+     "title": "The Accidental Billionaires: The Founding of Facebook: A Tale of Sex, Money, Genius, and Betrayal",
+     "full_title": "#14 The Accidental Billionaires: The Founding of Facebook: A Tale of Sex, Money, Genius, and Betrayal",
+     "url": "https://traffic.megaphone.fm/DSLLC5225592365.mp3?updated=1748636347",
+     "sec": 2300,
+     "img": null,
+     "date": "2017-09-17"
+    }
+   ]
+  },
+  {
+   "name": "Steve Jobs",
+   "tier": "core",
+   "hours": 23.2,
+   "episodes": [
+    {
+     "n": 5,
+     "title": "Steve Jobs",
+     "full_title": "#5 Steve Jobs",
+     "url": "https://traffic.megaphone.fm/DSLLC9931501223.mp3?updated=1748636353",
+     "sec": 5731,
+     "img": null,
+     "date": "2017-04-30"
+    },
+    {
+     "n": 19,
+     "title": "Becoming Steve Jobs",
+     "full_title": "#19 Becoming Steve Jobs",
+     "url": "https://traffic.megaphone.fm/DSLLC2741604726.mp3?updated=1748636345",
+     "sec": 4433,
+     "img": null,
+     "date": "2018-01-19"
+    },
+    {
+     "n": 36,
+     "title": "Finding The Next Steve Jobs: How to Find, Keep, and Nurture Talent",
+     "full_title": "#36 Finding The Next Steve Jobs: How to Find, Keep, and Nurture Talent",
+     "url": "https://traffic.megaphone.fm/DSLLC4664576444.mp3?updated=1748636335",
+     "sec": 2680,
+     "img": null,
+     "date": "2018-09-03"
+    },
+    {
+     "n": 76,
+     "title": "Steve Jobs: The Early Years of Apple",
+     "full_title": "#76 Steve Jobs: The Early Years of Apple",
+     "url": "https://traffic.megaphone.fm/DSLLC2825431025.mp3?updated=1748636309",
+     "sec": 4390,
+     "img": null,
+     "date": "2019-06-16"
+    },
+    {
+     "n": 77,
+     "title": "Steve Jobs (The NeXT Years)",
+     "full_title": "#77 Steve Jobs (The NeXT Years)",
+     "url": "https://traffic.megaphone.fm/DSLLC6881319726.mp3?updated=1748636309",
+     "sec": 5852,
+     "img": null,
+     "date": "2019-06-23"
+    },
+    {
+     "n": 204,
+     "title": "Steve Jobs (Inside Steve's Brain)",
+     "full_title": "#204 Steve Jobs (Inside Steve's Brain)",
+     "url": "https://traffic.megaphone.fm/DSLLC6302010031.mp3?updated=1748636230",
+     "sec": 3530,
+     "img": null,
+     "date": "2021-09-14"
+    },
+    {
+     "n": 214,
+     "title": "Steve Jobs: The Exclusive Biography",
+     "full_title": "#214 Steve Jobs: The Exclusive Biography",
+     "url": "https://traffic.megaphone.fm/DSLLC5809262349.mp3?updated=1748636223",
+     "sec": 7936,
+     "img": null,
+     "date": "2021-11-03"
+    },
+    {
+     "n": 235,
+     "title": "Steve Jobs (The Pixar Story)",
+     "full_title": "#235 Steve Jobs (The Pixar Story)",
+     "url": "https://traffic.megaphone.fm/DSLLC7655125763.mp3?updated=1748636209",
+     "sec": 4705,
+     "img": null,
+     "date": "2022-03-07"
+    },
+    {
+     "n": 249,
+     "title": "Steve Jobs In His Own Words",
+     "full_title": "#249 Steve Jobs In His Own Words",
+     "url": "https://traffic.megaphone.fm/DSLLC1944549091.mp3?updated=1748636199",
+     "sec": 2974,
+     "img": null,
+     "date": "2022-06-01"
+    },
+    {
+     "n": 265,
+     "title": "Becoming Steve Jobs: The Evolution of a Reckless Upstart into a Visionary Leader",
+     "full_title": "#265 Becoming Steve Jobs: The Evolution of a Reckless Upstart into a Visionary Leader",
+     "url": "https://traffic.megaphone.fm/DSLLC8313466657.mp3?updated=1748636188",
+     "sec": 5170,
+     "img": null,
+     "date": "2022-08-30"
+    },
+    {
+     "n": 281,
+     "title": "Working with Steve Jobs",
+     "full_title": "#281 Working with Steve Jobs",
+     "url": "https://traffic.megaphone.fm/DSLLC7660677042.mp3?updated=1748636178",
+     "sec": 2469,
+     "img": null,
+     "date": "2022-12-12"
+    },
+    {
+     "n": 299,
+     "title": "Steve Jobs (Make Something Wonderful)",
+     "full_title": "#299 Steve Jobs (Make Something Wonderful)",
+     "url": "https://traffic.megaphone.fm/DSLLC7292628933.mp3?updated=1748636166",
+     "sec": 7245,
+     "img": null,
+     "date": "2023-04-17"
+    },
+    {
+     "n": 349,
+     "title": "How Steve Jobs Kept Things Simple",
+     "full_title": "#349 How Steve Jobs Kept Things Simple",
+     "url": "https://traffic.megaphone.fm/DSLLC3717733883.mp3?updated=1748636129",
+     "sec": 3149,
+     "img": null,
+     "date": "2024-05-20"
+    },
+    {
+     "n": 350,
+     "title": "How To Sell Like Steve Jobs",
+     "full_title": "#350 How To Sell Like Steve Jobs",
+     "url": "https://traffic.megaphone.fm/DSLLC7516826800.mp3?updated=1748636128",
+     "sec": 2826,
+     "img": null,
+     "date": "2024-05-27"
+    },
+    {
+     "n": 390,
+     "title": "Rare Steve Jobs Interview",
+     "full_title": "#390 Rare Steve Jobs Interview",
+     "url": "https://traffic.megaphone.fm/DSLLC3562185186.mp3?updated=1751042842",
+     "sec": 2446,
+     "img": null,
+     "date": "2025-06-04"
+    },
+    {
+     "n": 398,
+     "title": "Steve Jobs In His Own Words (Make Something Wonderful)",
+     "full_title": "#398 Steve Jobs In His Own Words (Make Something Wonderful)",
+     "url": "https://traffic.megaphone.fm/DSLLC3173889564.mp3?updated=1755138336",
+     "sec": 7282,
+     "img": null,
+     "date": "2025-08-14"
+    },
+    {
+     "n": 420,
+     "title": "Steve Jobs In Exile",
+     "full_title": "#420 Steve Jobs In Exile",
+     "url": "https://traffic.megaphone.fm/DSLLC6836876920.mp3",
+     "sec": 3226,
+     "img": null,
+     "date": "2026-06-04"
+    },
+    {
+     "n": null,
+     "title": "Steve Jobs  and Edwin Land",
+     "full_title": "Steve Jobs  and Edwin Land",
+     "url": "https://traffic.megaphone.fm/DSLLC6420150103.mp3?updated=1748636115",
+     "sec": 3738,
+     "img": null,
+     "date": "2024-10-20"
+    },
+    {
+     "n": null,
+     "title": "Steve Jobs's Heroes",
+     "full_title": "Steve Jobs's Heroes",
+     "url": "https://traffic.megaphone.fm/DSLLC7432604828.mp3?updated=1748636199",
+     "sec": 1851,
+     "img": null,
+     "date": "2022-06-02"
+    },
+    {
+     "n": null,
+     "title": "Steve Jobs and His Heroes",
+     "full_title": "Steve Jobs and His Heroes",
+     "url": "https://traffic.megaphone.fm/DSLLC3558143558.mp3?updated=1748636205",
+     "sec": 1824,
+     "img": null,
+     "date": "2022-04-01"
+    }
+   ]
+  },
+  {
+   "name": "John D. Rockefeller",
+   "tier": "core",
+   "hours": 12.6,
+   "episodes": [
+    {
+     "n": 16,
+     "title": "Titan: The Life of John D. Rockefeller",
+     "full_title": "#16 Titan: The Life of John D. Rockefeller",
+     "url": "https://traffic.megaphone.fm/DSLLC7075824291.mp3?updated=1748636346",
+     "sec": 3812,
+     "img": null,
+     "date": "2017-12-08"
+    },
+    {
+     "n": 148,
+     "title": "John D. Rockefeller (Autobiography)",
+     "full_title": "#148 John D. Rockefeller (Autobiography)",
+     "url": "https://traffic.megaphone.fm/DSLLC8255754056.mp3?updated=1748636266",
+     "sec": 3430,
+     "img": null,
+     "date": "2020-10-11"
+    },
+    {
+     "n": 247,
+     "title": "Henry Flagler (Rockefeller's partner)",
+     "full_title": "#247 Henry Flagler (Rockefeller's partner)",
+     "url": "https://traffic.megaphone.fm/DSLLC3875288996.mp3?updated=1748636201",
+     "sec": 4579,
+     "img": null,
+     "date": "2022-05-19"
+    },
+    {
+     "n": 248,
+     "title": "John D. Rockefeller (Titan)",
+     "full_title": "#248 John D. Rockefeller (Titan)",
+     "url": "https://traffic.megaphone.fm/DSLLC8952103788.mp3?updated=1748636200",
+     "sec": 6637,
+     "img": null,
+     "date": "2022-05-28"
+    },
+    {
+     "n": 254,
+     "title": "John D. Rockefeller: The Founding Father of the Rockefellers",
+     "full_title": "#254 John D. Rockefeller: The Founding Father of the Rockefellers",
+     "url": "https://traffic.megaphone.fm/DSLLC5860428875.mp3?updated=1748636196",
+     "sec": 6048,
+     "img": null,
+     "date": "2022-06-27"
+    },
+    {
+     "n": 307,
+     "title": "The World's Great Family Dynasties: Rockefeller, Rothschild, Morgan, & Toyada",
+     "full_title": "#307: The World's Great Family Dynasties: Rockefeller, Rothschild, Morgan, & Toyada",
+     "url": "https://traffic.megaphone.fm/DSLLC7621530923.mp3?updated=1748636160",
+     "sec": 3769,
+     "img": null,
+     "date": "2023-06-12"
+    },
+    {
+     "n": 324,
+     "title": "John D. Rockefeller (38 Letters Rockefeller Wrote to His Son)",
+     "full_title": "#324 John D. Rockefeller (38 Letters Rockefeller Wrote to His Son)",
+     "url": "https://traffic.megaphone.fm/DSLLC8340544691.mp3?updated=1748636147",
+     "sec": 6386,
+     "img": null,
+     "date": "2023-10-21"
+    },
+    {
+     "n": 359,
+     "title": "The Russian Rockefellers: The Nobel Family Dynasty",
+     "full_title": "#359 The Russian Rockefellers: The Nobel Family Dynasty",
+     "url": "https://traffic.megaphone.fm/DSLLC3071131334.mp3?updated=1748636122",
+     "sec": 3971,
+     "img": null,
+     "date": "2024-08-07"
+    },
+    {
+     "n": 368,
+     "title": "Rockefeller's Autobiography",
+     "full_title": "#368 Rockefeller's Autobiography",
+     "url": "https://traffic.megaphone.fm/DSLLC9071473708.mp3?updated=1748636117",
+     "sec": 3353,
+     "img": null,
+     "date": "2024-10-15"
+    },
+    {
+     "n": 405,
+     "title": "How Rockefeller Worked",
+     "full_title": "#405 How Rockefeller Worked",
+     "url": "https://traffic.megaphone.fm/DSLLC3321690021.mp3?updated=1764001725",
+     "sec": 3480,
+     "img": null,
+     "date": "2025-11-17"
+    }
+   ]
+  },
+  {
+   "name": "Andrew Carnegie",
+   "tier": "core",
+   "hours": 5.8,
+   "episodes": [
+    {
+     "n": 73,
+     "title": "Andrew Carnegie and Henry Clay Frick: The Bitter Partnership That Changed America",
+     "full_title": "#73 Andrew Carnegie and Henry Clay Frick: The Bitter Partnership That Changed America",
+     "url": "https://traffic.megaphone.fm/DSLLC4976276417.mp3?updated=1748636311",
+     "sec": 5536,
+     "img": null,
+     "date": "2019-05-26"
+    },
+    {
+     "n": 74,
+     "title": "The Autobiography of Andrew Carnegie",
+     "full_title": "#74 The Autobiography of Andrew Carnegie",
+     "url": "https://traffic.megaphone.fm/DSLLC8700094780.mp3?updated=1748636310",
+     "sec": 3304,
+     "img": null,
+     "date": "2019-06-02"
+    },
+    {
+     "n": 75,
+     "title": "Henry Clay Frick: Andrew Carnegie's Partner",
+     "full_title": "#75 Henry Clay Frick: Andrew Carnegie's Partner",
+     "url": "https://traffic.megaphone.fm/DSLLC9381881127.mp3?updated=1748636310",
+     "sec": 4954,
+     "img": null,
+     "date": "2019-06-09"
+    },
+    {
+     "n": 283,
+     "title": "Andrew Carnegie",
+     "full_title": "#283 Andrew Carnegie",
+     "url": "https://traffic.megaphone.fm/DSLLC1456817812.mp3?updated=1748636177",
+     "sec": 3122,
+     "img": null,
+     "date": "2022-12-26"
+    },
+    {
+     "n": 284,
+     "title": "Andrew Carnegie and Henry Clay Frick",
+     "full_title": "#284 Andrew Carnegie and Henry Clay Frick",
+     "url": "https://traffic.megaphone.fm/DSLLC5649463859.mp3?updated=1748636176",
+     "sec": 4037,
+     "img": null,
+     "date": "2023-01-02"
+    }
+   ]
+  },
+  {
+   "name": "Henry Ford",
+   "tier": "core",
+   "hours": 6.4,
+   "episodes": [
+    {
+     "n": 9,
+     "title": "I Invented the Modern Age: The Rise of Henry Ford",
+     "full_title": "#9 I Invented the Modern Age: The Rise of Henry Ford",
+     "url": "https://traffic.megaphone.fm/DSLLC1318396829.mp3?updated=1748636350",
+     "sec": 4246,
+     "img": null,
+     "date": "2017-07-10"
+    },
+    {
+     "n": 26,
+     "title": "My Life and Work: The Autobiography of Henry Ford",
+     "full_title": "#26 My Life and Work: The Autobiography of Henry Ford",
+     "url": "https://traffic.megaphone.fm/DSLLC2444886812.mp3?updated=1748636341",
+     "sec": 3162,
+     "img": null,
+     "date": "2018-05-02"
+    },
+    {
+     "n": 80,
+     "title": "Henry Ford (Today and Tomorrow)",
+     "full_title": "#80 Henry Ford (Today and Tomorrow)",
+     "url": "https://traffic.megaphone.fm/DSLLC7788553775.mp3?updated=1748636306",
+     "sec": 2744,
+     "img": null,
+     "date": "2019-07-14"
+    },
+    {
+     "n": 118,
+     "title": "Forty Years With Henry Ford",
+     "full_title": "#118 Forty Years With Henry Ford",
+     "url": "https://traffic.megaphone.fm/DSLLC7963551023.mp3?updated=1748636284",
+     "sec": 4818,
+     "img": null,
+     "date": "2020-03-31"
+    },
+    {
+     "n": 190,
+     "title": "Henry Ford and Thomas Edison",
+     "full_title": "#190 Henry Ford and Thomas Edison",
+     "url": "https://traffic.megaphone.fm/DSLLC7713034296.mp3?updated=1748636239",
+     "sec": 3596,
+     "img": null,
+     "date": "2021-07-10"
+    },
+    {
+     "n": 266,
+     "title": "Henry Ford's Autobiography",
+     "full_title": "#266 Henry Ford's Autobiography",
+     "url": "https://traffic.megaphone.fm/DSLLC6885286520.mp3?updated=1748636188",
+     "sec": 4425,
+     "img": null,
+     "date": "2022-09-08"
+    }
+   ]
+  },
+  {
+   "name": "Nikola Tesla",
+   "tier": "core",
+   "hours": 1.8,
+   "episodes": [
+    {
+     "n": 83,
+     "title": "Thomas Edison, Nikola Tesla, George Westinghouse, and the Race to Electrify the World",
+     "full_title": "#83 Thomas Edison, Nikola Tesla, George Westinghouse, and the Race to Electrify the World",
+     "url": "https://traffic.megaphone.fm/DSLLC1900737350.mp3?updated=1748636305",
+     "sec": 6620,
+     "img": null,
+     "date": "2019-08-04"
+    }
+   ]
+  },
+  {
+   "name": "J. Robert Oppenheimer",
+   "tier": "core",
+   "hours": 1.0,
+   "episodes": [
+    {
+     "n": 215,
+     "title": "J. Robert Oppenheimer and Leslie Groves (The General and the Genius)",
+     "full_title": "#215: J. Robert Oppenheimer and Leslie Groves (The General and the Genius)",
+     "url": "https://traffic.megaphone.fm/DSLLC8416236920.mp3?updated=1748636222",
+     "sec": 3445,
+     "img": null,
+     "date": "2021-11-09"
+    }
+   ]
+  },
+  {
+   "name": "Claude Shannon",
+   "tier": "adjacent",
+   "hours": 3.3,
+   "episodes": [
+    {
+     "n": 92,
+     "title": "Ed Thorp and Claude Shannon",
+     "full_title": "#92 Ed Thorp and Claude Shannon",
+     "url": "https://traffic.megaphone.fm/DSLLC1497405772.mp3?updated=1748636300",
+     "sec": 4932,
+     "img": null,
+     "date": "2019-10-07"
+    },
+    {
+     "n": 95,
+     "title": "Claude Shannon",
+     "full_title": "#95 Claude Shannon",
+     "url": "https://traffic.megaphone.fm/DSLLC4858195757.mp3?updated=1748636298",
+     "sec": 3922,
+     "img": null,
+     "date": "2019-10-27"
+    },
+    {
+     "n": 428,
+     "title": "How Claude Shannon Worked",
+     "full_title": "#428 How Claude Shannon Worked",
+     "url": "https://traffic.megaphone.fm/DSLLC8077327013.mp3",
+     "sec": 3078,
+     "img": null,
+     "date": "2026-08-09"
+    }
+   ]
+  },
+  {
+   "name": "Vannevar Bush",
+   "tier": "adjacent",
+   "hours": 2.0,
+   "episodes": [
+    {
+     "n": 270,
+     "title": "Vannevar Bush (Pieces of the Action)",
+     "full_title": "#270: Vannevar Bush (Pieces of the Action)",
+     "url": "https://traffic.megaphone.fm/DSLLC1344066599.mp3?updated=1748636185",
+     "sec": 3915,
+     "img": null,
+     "date": "2022-10-06"
+    },
+    {
+     "n": 271,
+     "title": "Vannevar Bush (Engineer of the American Century)",
+     "full_title": "#271 Vannevar Bush (Engineer of the American Century)",
+     "url": "https://traffic.megaphone.fm/DSLLC1932178269.mp3?updated=1748636185",
+     "sec": 3204,
+     "img": null,
+     "date": "2022-10-12"
+    }
+   ]
+  },
+  {
+   "name": "Alfred Lee Loomis",
+   "tier": "adjacent",
+   "hours": 0.9,
+   "episodes": [
+    {
+     "n": 143,
+     "title": "Alfred Lee Loomis (the most interesting man you've never heard of)",
+     "full_title": "#143 Alfred Lee Loomis (the most interesting man you've never heard of)",
+     "url": "https://traffic.megaphone.fm/DSLLC5679635210.mp3?updated=1748636269",
+     "sec": 3369,
+     "img": null,
+     "date": "2020-09-06"
+    }
+   ]
+  },
+  {
+   "name": "Kelly Johnson - Skunk Works",
+   "tier": "adjacent",
+   "hours": 0.8,
+   "episodes": [
+    {
+     "n": 419,
+     "title": "Kelly Johnson: Skunk Works",
+     "full_title": "#419 Kelly Johnson: Skunk Works",
+     "url": "https://traffic.megaphone.fm/DSLLC4184610609.mp3",
+     "sec": 2979,
+     "img": null,
+     "date": "2026-05-16"
+    }
+   ]
+  },
+  {
+   "name": "Edwin Land - Polaroid",
+   "tier": "adjacent",
+   "hours": 6.5,
+   "episodes": [
+    {
+     "n": 40,
+     "title": "Insisting On The Impossible: The Life of Edwin Land and Instant: The Story of Polaroid",
+     "full_title": "#40 Insisting On The Impossible: The Life of Edwin Land and Instant: The Story of Polaroid",
+     "url": "https://traffic.megaphone.fm/DSLLC9885123353.mp3?updated=1748636333",
+     "sec": 4155,
+     "img": null,
+     "date": "2018-10-02"
+    },
+    {
+     "n": 132,
+     "title": "Edwin Land (Steve Jobs's Hero)",
+     "full_title": "#132 Edwin Land (Steve Jobs's Hero)",
+     "url": "https://traffic.megaphone.fm/DSLLC1023715333.mp3?updated=1748636275",
+     "sec": 3698,
+     "img": null,
+     "date": "2020-06-20"
+    },
+    {
+     "n": 133,
+     "title": "Edwin Land (Polaroid and The Man Who Invented It)",
+     "full_title": "#133 Edwin Land (Polaroid and The Man Who Invented It)",
+     "url": "https://traffic.megaphone.fm/DSLLC7155756853.mp3?updated=1748636275",
+     "sec": 3274,
+     "img": null,
+     "date": "2020-06-25"
+    },
+    {
+     "n": 134,
+     "title": "Edwin Land (Polaroid vs Kodak)",
+     "full_title": "#134 Edwin Land (Polaroid vs Kodak)",
+     "url": "https://traffic.megaphone.fm/DSLLC3238203655.mp3?updated=1748636274",
+     "sec": 4687,
+     "img": null,
+     "date": "2020-07-01"
+    },
+    {
+     "n": 263,
+     "title": "Land's Polaroid: A Company and the Man Who Invented It",
+     "full_title": "#263 Land's Polaroid: A Company and the Man Who Invented It",
+     "url": "https://traffic.megaphone.fm/DSLLC5782705896.mp3?updated=1748636190",
+     "sec": 4291,
+     "img": null,
+     "date": "2022-08-18"
+    },
+    {
+     "n": 264,
+     "title": "The Story of Edwin Land and Polaroid",
+     "full_title": "#264 The Story of Edwin Land and Polaroid",
+     "url": "https://traffic.megaphone.fm/DSLLC7226610590.mp3?updated=1748636189",
+     "sec": 3245,
+     "img": null,
+     "date": "2022-08-24"
+    }
+   ]
+  },
+  {
+   "name": "Ed Catmull - Pixar",
+   "tier": "adjacent",
+   "hours": 2.5,
+   "episodes": [
+    {
+     "n": 34,
+     "title": "Creativity Inc: The Autobiography of the founder of Pixar",
+     "full_title": "#34 Creativity Inc: The Autobiography of the founder of Pixar",
+     "url": "https://traffic.megaphone.fm/DSLLC6822466909.mp3?updated=1748636336",
+     "sec": 5250,
+     "img": null,
+     "date": "2018-08-20"
+    },
+    {
+     "n": 317,
+     "title": "Ed Catmull (Founder of Pixar)",
+     "full_title": "#317 Ed Catmull (Founder of Pixar)",
+     "url": "https://traffic.megaphone.fm/DSLLC5499403516.mp3?updated=1748636153",
+     "sec": 3910,
+     "img": null,
+     "date": "2023-08-21"
+    }
+   ]
+  },
+  {
+   "name": "Demis Hassabis - DeepMind",
+   "tier": "adjacent",
+   "hours": 0.9,
+   "episodes": [
+    {
+     "n": 416,
+     "title": "The Relentless Missionary Creating AGI: Demis Hassabis",
+     "full_title": "#416 The Relentless Missionary Creating AGI: Demis Hassabis",
+     "url": "https://traffic.megaphone.fm/DSLLC3316654449.mp3?updated=1775009143",
+     "sec": 3294,
+     "img": null,
+     "date": "2026-04-01"
+    }
+   ]
+  },
+  {
+   "name": "Bill Walsh",
+   "tier": "adjacent",
+   "hours": 1.1,
+   "episodes": [
+    {
+     "n": 106,
+     "title": "Bill Walsh (The Score Takes Care of Itself)",
+     "full_title": "#106 Bill Walsh (The Score Takes Care of Itself)",
+     "url": "https://traffic.megaphone.fm/DSLLC5795530151.mp3?updated=1748636291",
+     "sec": 3972,
+     "img": null,
+     "date": "2020-01-12"
+    }
+   ]
+  },
+  {
+   "name": "Jim Simons",
+   "tier": "adjacent",
+   "hours": 2.3,
+   "episodes": [
+    {
+     "n": 108,
+     "title": "Jim Simons (Money Printer)",
+     "full_title": "#108 Jim Simons (Money Printer)",
+     "url": "https://traffic.megaphone.fm/DSLLC3236320681.mp3?updated=1748636290",
+     "sec": 4045,
+     "img": null,
+     "date": "2020-01-26"
+    },
+    {
+     "n": 387,
+     "title": "Jim Simons Built The World’s Greatest Money-Making Machine",
+     "full_title": "#387 Jim Simons Built The World’s Greatest Money-Making Machine",
+     "url": "https://traffic.megaphone.fm/DSLLC3940355033.mp3?updated=1748636103",
+     "sec": 4086,
+     "img": null,
+     "date": "2025-05-01"
+    }
+   ]
+  },
+  {
+   "name": "Intel - Noyce Grove Shockley",
+   "tier": "adjacent",
+   "hours": 5.4,
+   "episodes": [
+    {
+     "n": 8,
+     "title": "The Intel Trinity: How Robert Noyce, Gordon Moore, and Andy Grove Built the World's Most Important Company",
+     "full_title": "#8 The Intel Trinity: How Robert Noyce, Gordon Moore, and Andy Grove Built the World's Most Important Company",
+     "url": "https://traffic.megaphone.fm/DSLLC8253378844.mp3?updated=1748636351",
+     "sec": 3653,
+     "img": null,
+     "date": "2017-06-20"
+    },
+    {
+     "n": 159,
+     "title": "Andy Grove (Intel)",
+     "full_title": "#159 Andy Grove (Intel)",
+     "url": "https://traffic.megaphone.fm/DSLLC6054851309.mp3?updated=1748636259",
+     "sec": 4219,
+     "img": null,
+     "date": "2020-12-21"
+    },
+    {
+     "n": 165,
+     "title": "William Shockley (Creator of the Electronic Age)",
+     "full_title": "#165 William Shockley (Creator of the Electronic Age)",
+     "url": "https://traffic.megaphone.fm/DSLLC2186957359.mp3?updated=1748636256",
+     "sec": 3729,
+     "img": null,
+     "date": "2021-02-01"
+    },
+    {
+     "n": 166,
+     "title": "Robert Noyce (Intel)",
+     "full_title": "#166 Robert Noyce (Intel)",
+     "url": "https://traffic.megaphone.fm/DSLLC9061128222.mp3?updated=1748636255",
+     "sec": 4375,
+     "img": null,
+     "date": "2021-02-08"
+    },
+    {
+     "n": 356,
+     "title": "How The Sun Rose On Silicon Valley: Bob Noyce (Founder of Intel)",
+     "full_title": "#356 How The Sun Rose On Silicon Valley: Bob Noyce (Founder of Intel)",
+     "url": "https://traffic.megaphone.fm/DSLLC7106078544.mp3?updated=1748636124",
+     "sec": 3485,
+     "img": null,
+     "date": "2024-07-12"
+    }
+   ]
+  },
+  {
+   "name": "Winston Churchill",
+   "tier": "adjacent",
+   "hours": 4.4,
+   "episodes": [
+    {
+     "n": 196,
+     "title": "Winston Churchill (Leadership during WW2)",
+     "full_title": "#196 Winston Churchill (Leadership during WW2)",
+     "url": "https://traffic.megaphone.fm/DSLLC9091774014.mp3?updated=1748636235",
+     "sec": 4758,
+     "img": null,
+     "date": "2021-08-07"
+    },
+    {
+     "n": 225,
+     "title": "Winston Churchill",
+     "full_title": "#225 Winston Churchill",
+     "url": "https://traffic.megaphone.fm/DSLLC3538393356.mp3?updated=1748636215",
+     "sec": 4967,
+     "img": null,
+     "date": "2022-01-09"
+    },
+    {
+     "n": 319,
+     "title": "The Making of Winston Churchill Part 1",
+     "full_title": "#319 The Making of Winston Churchill Part 1",
+     "url": "https://traffic.megaphone.fm/DSLLC9475220534.mp3?updated=1748636151",
+     "sec": 2891,
+     "img": null,
+     "date": "2023-09-05"
+    },
+    {
+     "n": 320,
+     "title": "The Making of Winston Churchill Part 2",
+     "full_title": "#320 The Making of Winston Churchill Part 2",
+     "url": "https://traffic.megaphone.fm/DSLLC7892524323.mp3?updated=1748636150",
+     "sec": 3270,
+     "img": null,
+     "date": "2023-09-14"
+    }
+   ]
+  },
+  {
+   "name": "Charles de Gaulle",
+   "tier": "adjacent",
+   "hours": 1.8,
+   "episodes": [
+    {
+     "n": 224,
+     "title": "Charles de Gaulle",
+     "full_title": "#224 Charles de Gaulle",
+     "url": "https://traffic.megaphone.fm/DSLLC8138486392.mp3?updated=1748636216",
+     "sec": 6590,
+     "img": null,
+     "date": "2022-01-05"
+    }
+   ]
+  },
+  {
+   "name": "Peter Thiel",
+   "tier": "adjacent",
+   "hours": 4.5,
+   "episodes": [
+    {
+     "n": 31,
+     "title": "Conspiracy: Peter Thiel, Hulk Hogan, Gawker, and the Anatomy of Intrigue and Zero to One: Notes on Startups, or How to Build the Future",
+     "full_title": "#31 Conspiracy: Peter Thiel, Hulk Hogan, Gawker, and the Anatomy of Intrigue and Zero to One: Notes on Startups, or How to Build the Future",
+     "url": "https://traffic.megaphone.fm/DSLLC4328713979.mp3?updated=1748636338",
+     "sec": 9502,
+     "img": null,
+     "date": "2018-08-02"
+    },
+    {
+     "n": 278,
+     "title": "Peter Thiel",
+     "full_title": "#278 Peter Thiel",
+     "url": "https://traffic.megaphone.fm/DSLLC7378519597.mp3?updated=1748636181",
+     "sec": 3393,
+     "img": null,
+     "date": "2022-11-22"
+    },
+    {
+     "n": 424,
+     "title": "Peter Thiel on How to Build a Creative Monopoly",
+     "full_title": "#424 Peter Thiel on How to Build a Creative Monopoly",
+     "url": "https://traffic.megaphone.fm/DSLLC7405458315.mp3",
+     "sec": 3238,
+     "img": null,
+     "date": "2026-07-10"
+    }
+   ]
+  },
+  {
+   "name": "Cornelius Vanderbilt",
+   "tier": "adjacent",
+   "hours": 4.0,
+   "episodes": [
+    {
+     "n": 54,
+     "title": "The Epic Life of Cornelius Vanderbilt",
+     "full_title": "#54 The Epic Life of Cornelius Vanderbilt",
+     "url": "https://traffic.megaphone.fm/DSLLC9249160567.mp3?updated=1748636321",
+     "sec": 5395,
+     "img": null,
+     "date": "2019-01-08"
+    },
+    {
+     "n": 55,
+     "title": "Tycoon's War: How Cornelius Vanderbilt Invaded a Country to Overthrow America's Most Famous Military Adventurer",
+     "full_title": "#55 Tycoon's War: How Cornelius Vanderbilt Invaded a Country to Overthrow America's Most Famous Military Adventurer",
+     "url": "https://traffic.megaphone.fm/DSLLC3678055168.mp3?updated=1748636321",
+     "sec": 4980,
+     "img": null,
+     "date": "2019-01-14"
+    },
+    {
+     "n": 341,
+     "title": "Cornelius Vanderbilt (Tycoon's War)",
+     "full_title": "#341 Cornelius Vanderbilt (Tycoon's War)",
+     "url": "https://traffic.megaphone.fm/DSLLC7072690542.mp3?updated=1748636135",
+     "sec": 3942,
+     "img": null,
+     "date": "2024-03-11"
+    }
+   ]
+  },
+  {
+   "name": "J.P. Morgan",
+   "tier": "adjacent",
+   "hours": 2.0,
+   "episodes": [
+    {
+     "n": 139,
+     "title": "J.P. Morgan",
+     "full_title": "#139 J.P. Morgan",
+     "url": "https://traffic.megaphone.fm/DSLLC6095419380.mp3?updated=1748636272",
+     "sec": 4095,
+     "img": null,
+     "date": "2020-08-09"
+    },
+    {
+     "n": 142,
+     "title": "Teddy Roosevelt and J.P. Morgan",
+     "full_title": "#142 Teddy Roosevelt and J.P. Morgan",
+     "url": "https://traffic.megaphone.fm/DSLLC3955261058.mp3?updated=1748636269",
+     "sec": 3083,
+     "img": null,
+     "date": "2020-08-30"
+    }
+   ]
+  },
+  {
+   "name": "The Rothschilds",
+   "tier": "adjacent",
+   "hours": 2.5,
+   "episodes": [
+    {
+     "n": 197,
+     "title": "Founder of the Rothschild Family Dynasty",
+     "full_title": "#197 Founder of the Rothschild Family Dynasty",
+     "url": "https://traffic.megaphone.fm/DSLLC8445297612.mp3?updated=1748636235",
+     "sec": 4642,
+     "img": null,
+     "date": "2021-08-11"
+    },
+    {
+     "n": 198,
+     "title": "Nathan Rothschild (Rothschild Family Dynasty)",
+     "full_title": "#198 Nathan Rothschild (Rothschild Family Dynasty)",
+     "url": "https://traffic.megaphone.fm/DSLLC6783596463.mp3?updated=1748636234",
+     "sec": 4504,
+     "img": null,
+     "date": "2021-08-18"
+    }
+   ]
+  },
+  {
+   "name": "Jacob Fugger",
+   "tier": "adjacent",
+   "hours": 1.0,
+   "episodes": [
+    {
+     "n": 250,
+     "title": "Jacob Fugger (The Richest Man Who Ever Lived)",
+     "full_title": "#250 Jacob Fugger (The Richest Man Who Ever Lived)",
+     "url": "https://traffic.megaphone.fm/DSLLC1701587951.mp3?updated=1748636198",
+     "sec": 3424,
+     "img": null,
+     "date": "2022-06-08"
+    }
+   ]
+  },
+  {
+   "name": "James J. Hill",
+   "tier": "adjacent",
+   "hours": 2.0,
+   "episodes": [
+    {
+     "n": 96,
+     "title": "James J. Hill (Empire Builder of the Northwest)",
+     "full_title": "#96 James J. Hill (Empire Builder of the Northwest)",
+     "url": "https://traffic.megaphone.fm/DSLLC2146078848.mp3?updated=1748636298",
+     "sec": 3536,
+     "img": null,
+     "date": "2019-11-04"
+    },
+    {
+     "n": 371,
+     "title": "James J. Hill: The Empire Builder",
+     "full_title": "#371 James J. Hill: The Empire Builder",
+     "url": "https://traffic.megaphone.fm/DSLLC2241445326.mp3?updated=1748636114",
+     "sec": 3523,
+     "img": null,
+     "date": "2024-11-18"
+    }
+   ]
+  }
+ ],
+ "generated_from": "https://feeds.megaphone.fm/DSLLC6297708582"
+}
