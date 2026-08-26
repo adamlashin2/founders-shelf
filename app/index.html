@@ -704,8 +704,21 @@ body.phase-lock #player .fld-r,body.phase-lock #player .fld-l{animation-play-sta
 .about-body{margin-top:46.5px;font-size:15.5px;line-height:21px;letter-spacing:-.24px;
   color:rgba(255,255,255,.94);white-space:pre-line}
 
+/* Reduce Motion asks for less LARGE positional movement — it does not ask for a
+   dead interface. The previous blanket `animation-duration:.01ms !important` on
+   every element made each screen snap into place with no movement at all, which
+   reads as a slide deck rather than an app. Here the slides become cross-fades at
+   the same measured durations: nothing travels across the screen, but everything
+   still moves. */
 @media (prefers-reduced-motion:reduce){
-  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  @keyframes pushIn{from{opacity:0}to{opacity:1}}
+  @keyframes popOut{from{opacity:1}to{opacity:0}}
+  @keyframes pushUnder{from{opacity:1}to{opacity:1}}
+  @keyframes popBack{from{opacity:1}to{opacity:1}}
+  #player{transition:transform 1ms linear, opacity var(--d-sheetup) var(--e-sheetup);opacity:0}
+  #player.show{opacity:1}
+  #player.dismissing{animation:none;transition:opacity .2s linear;opacity:0}
+  .eq i{animation:none;height:11px}
 }
 </style>
 </head>
@@ -871,6 +884,20 @@ const SECTIONS = [
 ];
 
 /* ============ state ============ */
+/* Build stamp. An iOS home-screen web app has no reload button, so a cached
+   index.html can persist across deploys with no way for the user to notice or
+   clear it. On boot we compare this against version.txt (fetched no-store) and
+   reload once if the served build is newer. sessionStorage guards the loop. */
+const BUILD='20260826-1850';
+(()=>{
+  fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{
+    v=(v||'').trim();
+    if(v && v!==BUILD && !sessionStorage.getItem('fs.reloaded')){
+      sessionStorage.setItem('fs.reloaded','1');
+      location.reload();
+    }
+  }).catch(()=>{});
+})();
 let DATA=null, PORTRAITS=null;
 const audio = document.getElementById('audio');
 const $ = id => document.getElementById(id);
@@ -1087,7 +1114,20 @@ function renderSettings(){
     <div class="setgroup">
       <button class="setrow press" id="s-clear"><span>Clear listening history</span><span class="val">${
         Object.keys(localStorage).filter(k=>k.startsWith('fs.pos.')).length} saved</span></button>
+    </div>
+    <div class="setgroup">
+      <button class="setrow press" id="s-update"><span>Version</span><span class="val">${BUILD}</span></button>
     </div>`;
+  $('s-update').onclick=()=>{
+    const r=$('s-update').querySelector('.val');
+    r.textContent='Checking…';
+    fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(x=>x.text()).then(v=>{
+      v=v.trim();
+      if(v && v!==BUILD){ r.textContent='Updating…'; sessionStorage.removeItem('fs.reloaded');
+        location.reload(); }
+      else r.textContent=BUILD+' · latest';
+    }).catch(()=>{ r.textContent=BUILD+' · offline'; });
+  };
   $('s-speed').onclick=()=>{ const o=[1,1.25,1.5,1.75,2];
     const n=o[(o.indexOf(store.get('speed',1))+1)%o.length];
     store.set('speed',n); audio.playbackRate=n; $('ctl-speed').textContent=n+'×'; renderSettings(); };
