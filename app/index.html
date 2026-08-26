@@ -223,17 +223,25 @@ body.has-track #minipill{transform:none;opacity:1}
   -webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);
   box-shadow:inset 0 0 0 .5px var(--spec-soft), 0 8px 26px rgba(0,0,0,.42);
 }
-/* collapsed dock (reference: scrolled state, v2 f40 / f_browse) */
-body.scrolled #tabbar{flex:none;width:65px;padding:0;border-radius:50%;height:65px}
-body.scrolled .tab{display:none}
-body.scrolled .tab.on{display:flex;background:none;flex:1}
-body.scrolled .tab.on .lbl{display:none}
-body.scrolled #tabrow{gap:0}
-body.scrolled #minipill{
-  position:absolute;left:calc(22px + 69px);right:calc(22px + 69px);bottom:22px;
-  width:auto;height:65px;border-radius:33px;margin:0;
+/* collapsed dock — measured on the reference's pushed/scrolled pages:
+   three 48pt-tall elements, 28pt side inset, 8.3pt gaps, 28.3pt above the
+   screen bottom (the expanded tab bar is 61.7pt at a 22pt inset)             */
+body.scrolled #dock,body.detail-open #dock{
+  display:flex;flex-direction:row;align-items:center;gap:8.3px;padding:0 28px 28.3px;
 }
-body.scrolled #dock{display:flex;flex-direction:column-reverse}
+body.scrolled #tabrow,body.detail-open #tabrow{display:contents}
+body.scrolled #tabbar,body.detail-open #tabbar{
+  order:1;flex:none;width:48px;height:48px;border-radius:24px;padding:0;
+}
+body.scrolled .tab,body.detail-open .tab{display:none}
+body.scrolled .tab.on,body.detail-open .tab.on{display:flex;flex:1}
+body.scrolled .tab.on::before,body.detail-open .tab.on::before{display:none}
+body.scrolled .tab.on .lbl,body.detail-open .tab.on .lbl{display:none}
+body.scrolled #minipill,body.detail-open #minipill{
+  order:2;flex:1;min-width:0;height:48px;border-radius:24px;margin:0;padding:0 16px 0 7px;
+}
+body.scrolled #minipill .art,body.detail-open #minipill .art{width:34px;height:34px;border-radius:9px}
+body.scrolled #tabsearch,body.detail-open #tabsearch{order:3;width:48px;height:48px}
 #tabbar,#minipill,#tabsearch{transition:height .34s var(--ease), width .34s var(--ease),
   border-radius .34s var(--ease), transform .5s var(--ease), opacity .3s var(--ease)}
 
@@ -261,33 +269,33 @@ body.scrolled #dock{display:flex;flex-direction:column-reverse}
 .ggroup button{width:49px;height:44px;display:flex;align-items:center;justify-content:center}
 .ggroup .sep{width:.5px;align-self:stretch;background:rgba(255,255,255,.14)}
 
-.hero-body{position:absolute;left:var(--pad);right:var(--pad);bottom:9px;z-index:2;text-align:center}
+.hero-body{position:absolute;left:var(--pad);right:var(--pad);bottom:7px;z-index:2;text-align:center}
 .hero-name{font-size:34px;font-weight:700;letter-spacing:.37px;line-height:41px;
   text-shadow:0 1px 22px rgba(0,0,0,.5)}
-.hero-sub{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:5px;
+.hero-sub{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:2px;
   font-size:17px;letter-spacing:-.41px;line-height:22px;color:rgba(235,235,245,.9)}
-.hero-sub .dot{width:22px;height:22px;border-radius:50%;flex:none;display:flex;
-  align-items:center;justify-content:center;font-size:10px;font-weight:700;
+.hero-sub .dot{width:12px;height:12px;border-radius:50%;flex:none;display:flex;
+  align-items:center;justify-content:center;font-size:8px;font-weight:700;
   background:#2E9E22;color:#fff}
-.hero-actions{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:17.3px}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:15.8px}
 .act-circle{width:44px;height:44px;border-radius:50%;flex:none;
   display:flex;align-items:center;justify-content:center;background:#242424}
 .act-circle.faved .sfi{background-color:#FFD60A!important}
-.playpill{height:35px;min-width:93px;border-radius:17.5px;background:#fff;color:#000;
+.playpill{height:43.3px;min-width:91px;border-radius:21.7px;background:#fff;color:#000;
   font-size:17px;font-weight:600;letter-spacing:-.41px;
   display:flex;align-items:center;justify-content:center;gap:8px;padding:0 20px}
 
-.bio-wrap{margin:20px var(--pad) 0}
-.bio{font-size:15px;line-height:20px;letter-spacing:-.24px;color:rgba(235,235,245,.6);display:inline}
-.bio-more{color:var(--blue);font-size:15px;letter-spacing:-.24px;display:inline;margin-left:4px}
+.bio-wrap{margin:15.7px var(--pad) 0}
+.bio{font-size:13px;line-height:16px;letter-spacing:-.08px;color:rgba(235,235,245,.6);display:inline}
+.bio-more{color:var(--blue);font-size:13px;letter-spacing:-.08px;display:inline;margin-left:4px}
 
-.epsect{margin:22px var(--pad) 0}
-.epsect-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.epsect{margin:20.6px var(--pad) 0}
+.epsect-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16.4px}
 .epsect-head h2{font-size:20px;font-weight:700;letter-spacing:.38px;line-height:25px}
 .eplist{background:var(--card);border-radius:24px;overflow:hidden;padding:6px 0}
 .eprow{display:flex;align-items:center;gap:13.3px;width:100%;text-align:left;
   height:78px;padding:0 16px;position:relative}
-.numtile{width:50px;height:46px;flex:none;border-radius:12px;background:var(--tile);
+.numtile{width:50px;height:50px;flex:none;border-radius:12px;background:var(--tile);
   display:flex;align-items:center;justify-content:center;
   font-size:20px;font-weight:600;letter-spacing:.38px;font-variant-numeric:tabular-nums}
 .eprow.done .numtile{color:var(--grey)}
@@ -748,6 +756,8 @@ function openDetail(pslug){
   curDetail=p; renderDetail(p);
   const b=activeView(), d=$('detail');
   d.style.display='block'; d.scrollTop=0; document.body.classList.remove('scrolled');
+  document.body.classList.add('detail-open');
+  curTab='figures'; paintTabs();   /* a figure page belongs to the Figures tab */
   d.classList.add('push-in'); b.classList.add('push-under');
   setTimeout(()=>{ d.classList.remove('push-in'); b.classList.remove('push-under'); b.style.display='none'; navBusy=false; },440);
   history.pushState({v:'detail',p:pslug},'','#/p/'+pslug);
@@ -760,6 +770,7 @@ function closeDetail(fromPop){
   d.classList.add('pop-out'); b.classList.add('pop-back');
   setTimeout(()=>{ d.classList.remove('pop-out'); b.classList.remove('pop-back'); d.style.display='none';
     curDetail=null; navBusy=false; document.body.classList.toggle('scrolled', b.scrollTop>18); },400);
+  document.body.classList.remove('detail-open');
   if (!fromPop) history.back();
 }
 window.addEventListener('popstate',e=>{
@@ -803,9 +814,9 @@ function renderDetail(p){
         <div class="hero-name">${esc(p.shortName)}</div>
         <div class="hero-sub"><span class="dot">ƒ</span><span>${esc(m.sub||'')}</span></div>
         <div class="hero-actions">
-          <button class="act-circle press" id="d-shuffle">${IC.shuffle(22)}</button>
+          <button class="act-circle press" id="d-shuffle">${IC.shuffle(18)}</button>
           <button class="playpill press" id="d-play">${IC.play(15,'#000')} Play</button>
-          <button class="act-circle press ${faved?'faved':''}" id="d-star">${IC.star(22,faved)}</button>
+          <button class="act-circle press ${faved?'faved':''}" id="d-star">${IC.star(20,faved)}</button>
         </div>
       </div>
     </div>
@@ -817,7 +828,7 @@ function renderDetail(p){
     </div>`;
   requestAnimationFrame(()=>{ const bio=$('d-bio'); if(!bio) return; const wrap=bio.parentElement;
     let words=bio.textContent.split(' '), guard=0;
-    while(wrap.scrollHeight>44 && words.length>4 && guard++<250){
+    while(wrap.scrollHeight>40 && words.length>4 && guard++<250){
       words.pop(); bio.textContent=words.join(' ').replace(/[,.;:]$/,'')+'…';
     }
   });
@@ -1123,7 +1134,7 @@ Promise.all([fetch('episodes.json').then(r=>r.json()),fetch('portraits.json').th
 
   const m=location.hash.match(/^#\/p\/(.+)$/);
   if(m){const p=DATA.people.find(x=>x.slug===decodeURIComponent(m[1]));
-    if(p){curDetail=p;renderDetail(p);$('browse').style.display='none';$('detail').style.display='block';
+    if(p){curDetail=p;renderDetail(p);$('browse').style.display='none';$('detail').style.display='block';document.body.classList.add('detail-open');curTab='figures';paintTabs();
       history.replaceState({v:'detail',p:p.slug},'','#/p/'+p.slug);}}
 
   const last=store.get('last',null);
@@ -1146,6 +1157,16 @@ Promise.all([fetch('episodes.json').then(r=>r.json()),fetch('portraits.json').th
     const p=curDetail||DATA.people.slice().sort((a,b)=>b.episodes.length-a.episodes.length)[0];
     if(st==='about'){ cur={p,i:0}; document.body.classList.add('has-track'); paintShells(); openAbout(p); }
     else if(st==='playlists'||st==='settings'){ goTab(st); }
+    else if(st==='detail'&&!curDetail){
+      curDetail=p; renderDetail(p);
+      $('browse').style.display='none'; $('detail').style.display='block';
+      document.body.classList.add('detail-open'); curTab='figures'; paintTabs();
+      /* the reference has a DIFFERENT figure playing in the mini pill, so no
+         row on this page is the active one — mirror that */
+      const other=DATA.people.find(x=>x.slug!==p.slug)||p;
+      cur={p:other,i:0}; document.body.classList.add('has-track'); paintShells();
+      renderDetail(p);
+    }
     else {
       cur={p,i:0}; document.body.classList.add('has-track');
       audio.src=p.episodes[0].url; paintShells();
