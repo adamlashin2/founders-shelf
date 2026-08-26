@@ -407,50 +407,149 @@ background:linear-gradient(to bottom,
 }
 /* live finger tracking while dragging */
 #player.dragging{transition:none}
-#player::before{
-  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  /* the bottom-right glow that survives the wash's trough (video-1 f143)      */
-  background:
-    radial-gradient(46% 27% at 106% 101%, rgba(0,120,255,.60), rgba(0,120,255,0) 100%),
-    linear-gradient(to bottom,#000011 0%,#000011 86.9%,rgb(0,20,52) 94.8%,rgb(1,34,104) 100%);
+/* ===================== AMBIENT FIELD (rebuilt, round 4) =====================
+   Round 3 fitted this to a SINGLE still (f_player.png) and got the shape, the
+   extent and the horizontal bias wrong at every other moment of the loop.
+   Round 4 re-derives it from the whole cycle: 88 player-only frames of video 1
+   (pts 0-356, i.e. one full period plus the previous tail), sampled on 102
+   content-free probes (vertical lanes at x=20 / x=1150, horizontal lanes at
+   y=1555 / y=2440), then a physical layer model was fitted to all of them at
+   once with least-squares (scratchpad/r4/fitfield7.py, scratchpad/r4/fit7.json).
+
+   What the measurement actually says, and what round 3 had wrong:
+   * The glow NEVER climbs above y~1100 @3x (43% of the screen). At every one of
+     the 88 frames, y=400 / y=700 / y=1000 read blue 17-18, i.e. pure #000011.
+   * It is TWO lobes, not one: a right-hand column anchored off the bottom-right
+     corner that pulses in place, and a left-hand column that rises AND blooms.
+     The right lobe leads the left by ~30 frames, which is why the bottom of the
+     screen is right-biased while the wash is rising (pts 216: bottom row
+     224,201,175,164,178,216,253) and left-biased while it recedes (pts 340:
+     254,248,229,209,198,206,222). A single translating layer cannot do that.
+   * At the trough the field does not vanish: a static bottom-right corner glow
+     and a shallow bottom floor remain (pts 160 bottom row 80,61,60,75,108,150,181).
+     That residue is .fld-base, fitted to the trough frame alone: mean |dB| 1.29,
+     max 7.2 over all 102 probes.
+   * Period: successive troughs are 300 frames apart at 60fps => 5.000s
+     (round 3 used 4.967s).
+   Phase 0 == the trough == video-1 pts 160.  ?phase=0..1 still freezes it.     */
+#player .fld{position:absolute;inset:0;z-index:0;pointer-events:none}
+/* the two animated layers are drawn into a box twice the size of the player,
+   because translating/scaling an inset:0 layer drags its own edge into view
+   and the field simply stops (that cost the bottom 207px at pts 216). All
+   their percentages below are therefore halved / re-centred accordingly. */
+#player .fld-r,#player .fld-l{inset:-50%}
+#player .fld-base{background:
+    /* SL  static left corner */
+    radial-gradient(16.25% 24.9% at 1.709% 116.5%,
+      rgba(84,21,255,0.7686) 0%,
+      rgba(0,110,255,0.6991) 51.63%,
+      rgba(0,73,255,0.2642) 61.95%,
+      rgba(0,73,255,0) 100%),
+    /* SR  static right corner */
+    radial-gradient(65.05% 42.81% at 101.2% 113.4%,
+      rgba(61,255,255,0.99) 0%,
+      rgba(0,114,255,0.6243) 35.99%,
+      rgba(0,135,255,0.2114) 58.57%,
+      rgba(0,135,255,0) 100%),
+    /* static bottom floor */
+    linear-gradient(to bottom, rgba(6,134,255,0) 81.99%, rgba(6,134,255,0.2271) 100%);}
+#player .fld-r{transform-origin:71.5% 89.17%;background:
+    /* PR  right pulse */
+    radial-gradient(31% 24.19% at 71.5% 89.17%,
+      rgba(98,255,255,0.99) 0%,
+      rgba(0,148,255,0.99) 47.18%,
+      rgba(0,85,255,0.7065) 65.45%,
+      rgba(0,85,255,0) 100%);}
+#player .fld-l{transform-origin:28.92% 75.59%;background:
+    /* PL  left riser */
+    radial-gradient(26.9% 15.35% at 28.92% 75.59%,
+      rgba(109,255,255,0.99) 0%,
+      rgba(0,107,255,0.99) 34.83%,
+      rgba(0,56,255,0.2232) 75.82%,
+      rgba(0,56,255,0) 100%);}
+
+@keyframes fldR{
+  0%{opacity:0;transform:translateY(0%)}  /* pts 160 */
+  4%{opacity:0.073;transform:translateY(-0.0666%)}  /* pts 172 */
+  6.667%{opacity:0.122;transform:translateY(-0.111%)}  /* pts 180 */
+  10.67%{opacity:0.195;transform:translateY(-0.1776%)}  /* pts 192 */
+  13.33%{opacity:0.41;transform:translateY(-1.425%)}  /* pts 200 */
+  16%{opacity:0.625;transform:translateY(-2.595%)}  /* pts 208 */
+  18.67%{opacity:0.94;transform:translateY(-4.102%)}  /* pts 216 */
+  21.33%{opacity:1;transform:translateY(-5.68%)}  /* pts 224 */
+  24%{opacity:1;transform:translateY(-7.239%)}  /* pts 232 */
+  26.67%{opacity:1;transform:translateY(-8.56%)}  /* pts 240 */
+  29.33%{opacity:1;transform:translateY(-9.646%)}  /* pts 248 */
+  32%{opacity:1;transform:translateY(-10.65%)}  /* pts 256 */
+  34.67%{opacity:0.994;transform:translateY(-11.63%)}  /* pts 264 */
+  37.33%{opacity:0.969;transform:translateY(-12.58%)}  /* pts 272 */
+  40%{opacity:0.926;transform:translateY(-13.33%)}  /* pts 280 */
+  42.67%{opacity:0.881;transform:translateY(-13.42%)}  /* pts 288 */
+  45.33%{opacity:0.845;transform:translateY(-12.38%)}  /* pts 296 */
+  48%{opacity:0.758;transform:translateY(-11.45%)}  /* pts 304 */
+  50.67%{opacity:0.635;transform:translateY(-10.21%)}  /* pts 312 */
+  53.33%{opacity:0.505;transform:translateY(-8.336%)}  /* pts 320 */
+  56%{opacity:0.371;transform:translateY(-6.624%)}  /* pts 328 */
+  58.67%{opacity:0.274;transform:translateY(-4.622%)}  /* pts 336 */
+  61.33%{opacity:0.216;transform:translateY(-3.873%)}  /* pts 344 */
+  64%{opacity:0.239;transform:translateY(-3.729%)}  /* pts 352 */
+  66.67%{opacity:0.24;transform:translateY(-3.926%)}  /* pts 360 */
+  69.33%{opacity:0.273;transform:translateY(-4.369%)}  /* pts 368 */
+  72%{opacity:0.371;transform:translateY(-4.784%)}  /* pts 376 */
+  77.33%{opacity:0.485;transform:translateY(-4.611%)}  /* pts 392 */
+  80%{opacity:0.385;transform:translateY(-4.613%)}  /* pts 100 */
+  84%{opacity:0.354;transform:translateY(-5.285%)}  /* pts 112 */
+  88%{opacity:0.265;transform:translateY(-7.112%)}  /* pts 124 */
+  92%{opacity:0.184;transform:translateY(-7.163%)}  /* pts 136 */
+  96%{opacity:0.1;transform:translateY(-2.962%)}  /* pts 148 */
+  100%{opacity:0;transform:translateY(0%)}  /* pts 160 */
 }
-/* AMBIENT WASH — the reference background is a glow that rises from the bottom
-   of the screen and recedes, on a fixed loop. Measured from video 1, blue
-   channel down the left edge: minimum f143, glow front reaches the top at
-   f332, back to minimum at f440 => period 298 frames @60fps = 4.967s.
-   The layer below IS the measured arrived field (video-1 f332 == f_player.png);
-   the keyframes are the measured front position and amplitude per frame.      */
-#player .aur{
-  position:absolute;inset:0;z-index:0;pointer-events:none;will-change:transform;
-  background:
-    radial-gradient(58% 27% at -6% 100%, rgba(20,130,255,1), rgba(20,130,255,0) 100%),
-    radial-gradient(62% 47% at -12% 62%, rgba(0,66,255,.66), rgba(0,66,255,0) 100%),
-    radial-gradient(42% 22% at 34% 56%, rgba(0,60,255,.16), rgba(0,60,255,0) 100%),
-    radial-gradient(44% 25% at 112% 100%, rgba(0,120,255,.5), rgba(0,120,255,0) 100%),
-    linear-gradient(to bottom,
-      #000011 0%, #000011 46.2%, rgb(1,5,22) 47.4%, rgb(0,8,33) 55.3%,
-      rgb(0,15,50) 63.2%, rgb(1,21,81) 71.1%, rgb(0,27,109) 79%,
-      rgb(1,37,140) 84.9%, rgb(0,50,166) 88.9%, rgb(2,86,213) 94.8%,
-      rgb(0,123,241) 98.7%, rgb(2,132,250) 100%);
-  animation-name:wash;animation-duration:4.967s;animation-timing-function:linear;
-  animation-iteration-count:infinite;animation-delay:var(--pd,0s);
+@keyframes fldL{
+  0%{opacity:0;transform:translateY(0%) scale(1)}  /* pts 160 */
+  4%{opacity:0.133;transform:translateY(2.06%) scale(1.058)}  /* pts 172 */
+  6.667%{opacity:0.222;transform:translateY(3.434%) scale(1.096)}  /* pts 180 */
+  10.67%{opacity:0.355;transform:translateY(5.494%) scale(1.154)}  /* pts 192 */
+  13.33%{opacity:0.53;transform:translateY(5.697%) scale(1.203)}  /* pts 200 */
+  16%{opacity:0.712;transform:translateY(5.911%) scale(1.282)}  /* pts 208 */
+  18.67%{opacity:0.82;transform:translateY(4.625%) scale(1.343)}  /* pts 216 */
+  21.33%{opacity:0.937;transform:translateY(4.277%) scale(1.421)}  /* pts 224 */
+  24%{opacity:0.999;transform:translateY(3.679%) scale(1.475)}  /* pts 232 */
+  26.67%{opacity:1;transform:translateY(2.521%) scale(1.496)}  /* pts 240 */
+  29.33%{opacity:1;transform:translateY(1.538%) scale(1.507)}  /* pts 248 */
+  32%{opacity:1;transform:translateY(0.9285%) scale(1.571)}  /* pts 256 */
+  34.67%{opacity:1;transform:translateY(1.053%) scale(1.745)}  /* pts 264 */
+  37.33%{opacity:1;transform:translateY(1.188%) scale(1.918)}  /* pts 272 */
+  40%{opacity:1;transform:translateY(1.267%) scale(2.071)}  /* pts 280 */
+  42.67%{opacity:1;transform:translateY(1.738%) scale(2.252)}  /* pts 288 */
+  45.33%{opacity:1;transform:translateY(3.713%) scale(2.599)}  /* pts 296 */
+  48%{opacity:1;transform:translateY(4.873%) scale(2.759)}  /* pts 304 */
+  50.67%{opacity:0.998;transform:translateY(6.39%) scale(2.897)}  /* pts 312 */
+  53.33%{opacity:0.98;transform:translateY(7.996%) scale(3.003)}  /* pts 320 */
+  56%{opacity:0.957;transform:translateY(9.829%) scale(3.081)}  /* pts 328 */
+  58.67%{opacity:0.922;transform:translateY(12.12%) scale(3.159)}  /* pts 336 */
+  61.33%{opacity:0.914;transform:translateY(17.11%) scale(3.213)}  /* pts 344 */
+  64%{opacity:0.921;transform:translateY(20.11%) scale(3.2)}  /* pts 352 */
+  66.67%{opacity:1;transform:translateY(23.15%) scale(3.252)}  /* pts 360 */
+  69.33%{opacity:1;transform:translateY(26.11%) scale(3.286)}  /* pts 368 */
+  72%{opacity:0.828;transform:translateY(21.24%) scale(2.765)}  /* pts 376 */
+  77.33%{opacity:0.941;transform:translateY(21.86%) scale(2.349)}  /* pts 392 */
+  80%{opacity:1;transform:translateY(24.02%) scale(2.287)}  /* pts 100 */
+  84%{opacity:1;transform:translateY(32.4%) scale(2.657)}  /* pts 112 */
+  88%{opacity:0.667;transform:translateY(52.71%) scale(4)}  /* pts 124 */
+  92%{opacity:0.0092;transform:translateY(59%) scale(4)}  /* pts 136 */
+  96%{opacity:0.006;transform:translateY(64%) scale(4)}  /* pts 148 */
+  100%{opacity:0;transform:translateY(0%) scale(1)}  /* pts 160 */
 }
-@keyframes wash{
-   0%{transform:translateY(47%);opacity:1}    8%{transform:translateY(46%);opacity:1}
-  16%{transform:translateY(45%);opacity:1}   20%{transform:translateY(42%);opacity:1}
-  24%{transform:translateY(38%);opacity:1}   28%{transform:translateY(33%);opacity:1}
-  32%{transform:translateY(28%);opacity:1}   36%{transform:translateY(23%);opacity:1}
-  40%{transform:translateY(19%);opacity:1}   44%{transform:translateY(14%);opacity:1}
-  48%{transform:translateY(11%);opacity:1}   52%{transform:translateY(6%);opacity:1}
-  56%{transform:translateY(3%);opacity:1}    60%{transform:translateY(1%);opacity:1}
-  64%{transform:translateY(0);opacity:1}     68%{transform:translateY(3%);opacity:.85}
-  72%{transform:translateY(8%);opacity:.72}  76%{transform:translateY(15%);opacity:.62}
-  80%{transform:translateY(22%);opacity:.57} 84%{transform:translateY(27%);opacity:.55}
-  88%{transform:translateY(33%);opacity:.62} 92%{transform:translateY(39%);opacity:.75}
-  96%{transform:translateY(44%);opacity:.92}100%{transform:translateY(47%);opacity:1}
-}
+
 /* deterministic freeze for pixel verification: ?phase=0..1 */
-body.phase-lock #player .aur{animation-play-state:paused}
+body.phase-lock #player .fld-r,body.phase-lock #player .fld-l{animation-play-state:paused}
+#player .fld-r,#player .fld-l{
+  animation-duration:5s;animation-timing-function:linear;
+  animation-iteration-count:infinite;animation-delay:var(--pd,0s);
+  will-change:transform,opacity;
+}
+#player .fld-r{animation-name:fldR}
+#player .fld-l{animation-name:fldL}
 #player>*{position:relative;z-index:1}
 .grab{width:36px;height:5.33px;border-radius:2.7px;background:rgba(255,255,255,.28);
   margin:0 auto;flex:none}
@@ -616,7 +715,7 @@ body.phase-lock #player .aur{animation-play-state:paused}
 </div>
 
 <div id="player">
-  <i class="aur"></i>
+  <i class="fld fld-base"></i><i class="fld fld-r"></i><i class="fld fld-l"></i>
   <div class="grab"></div>
   <div class="toppill-wrap"><button class="toppill press" id="toppill"></button></div>
   <div class="spacer"></div>
@@ -756,7 +855,7 @@ const qs = new URLSearchParams(location.search);
           document.documentElement.style.setProperty('--safe-b','34px'); }
   const ph=qs.get('phase');
   if(ph!==null){ document.body.classList.add('phase-lock');
-    document.getElementById('player').style.setProperty('--pd',(-parseFloat(ph)*4.967)+'s'); } })();
+    document.getElementById('player').style.setProperty('--pd',(-parseFloat(ph)*5)+'s'); } })();
 const store = {
   get(k,d){ try{const v=localStorage.getItem('fs.'+k);return v===null?d:JSON.parse(v)}catch(e){return d} },
   set(k,v){ try{localStorage.setItem('fs.'+k,JSON.stringify(v))}catch(e){} },
