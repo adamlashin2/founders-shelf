@@ -38,7 +38,24 @@
   --glass-tile:rgb(35,36,43);           /* queue number tile                   */
   --spec:rgba(255,255,255,.16);
   --spec-soft:rgba(255,255,255,.10);
+  /* MEASURED BLUR RADII (round 4). Chrome delivers ~0.96x the declared
+     blur(Npx), calibrated on a random-block backdrop at DSF 3 over ten radii,
+     so each declared value below is (reference sigma / 0.96).
+       --blur-dock  reference sigma 21.4 CSS (tab bar) and 21.6 (mini pill),
+                    from the browse portrait row passing under both, with the
+                    unoccluded backdrop recovered by registering the same list
+                    from a scrolled frame (v2 pts 0 vs pts 128, shift 1071.95px).
+                    ONE significant figure: one frame pair, two edges. The
+                    reference measures the SAME radius for the bar and the pill,
+                    i.e. one material for the whole dock; we had 30 and 13.
+       --blur       queue card and player top pill. NOT measurable in either the
+                    reference or our own render: both sit over a smooth ambient
+                    gradient. Our own top pill, fitted against an exact
+                    visibility:hidden ground truth at a known declared 30px,
+                    returns signal 0.00 and rms 0.00 at every sigma from 4 to
+                    220 - there is nothing there to blur. Left at 30.           */
   --blur:blur(30px) saturate(1.8);
+  --blur-dock:blur(22px) saturate(1.8);
   --blur-lite:blur(22px) saturate(1.7);
 
   /* ---- player surface ---- */
@@ -229,7 +246,7 @@ body.scrolled #navbar{opacity:1;pointer-events:auto}
      rgb 26 — transmission ~91%. It is visible almost entirely by its specular
      edge (rgb 58 over the 26 fill => white at .14), not by its fill.          */
   background:rgba(50,50,58,.10);
-  -webkit-backdrop-filter:blur(13px) saturate(1.8);backdrop-filter:blur(13px) saturate(1.8);
+  -webkit-backdrop-filter:var(--blur-dock);backdrop-filter:var(--blur-dock);
   box-shadow:inset 0 0 0 .55px rgba(255,255,255,.14), 0 8px 26px rgba(0,0,0,.42);
   transform:translateY(180%);opacity:0;
   transition:transform .5s var(--ease), opacity .3s var(--ease);
@@ -249,7 +266,7 @@ body.has-track #minipill{transform:none;opacity:1}
   flex:1;min-width:0;height:61.7px;border-radius:31px;display:flex;align-items:stretch;
   padding:0 9px;
   background:var(--glass-bar);
-  -webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);
+  -webkit-backdrop-filter:var(--blur-dock);backdrop-filter:var(--blur-dock);
   box-shadow:inset 0 0 0 .5px var(--spec-soft), 0 8px 26px rgba(0,0,0,.42);
 }
 .tab{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -263,7 +280,7 @@ body.has-track #minipill{transform:none;opacity:1}
   width:65px;height:65px;flex:none;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   background:var(--glass-bar);
-  -webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);
+  -webkit-backdrop-filter:var(--blur-dock);backdrop-filter:var(--blur-dock);
   box-shadow:inset 0 0 0 .5px var(--spec-soft), 0 8px 26px rgba(0,0,0,.42);
 }
 /* collapsed dock — measured on the reference's pushed/scrolled pages:
@@ -659,7 +676,9 @@ body.phase-lock #player .fld-r,body.phase-lock #player .fld-l{animation-play-sta
 #about{
   position:fixed;inset:0;z-index:80;overflow-y:auto;max-width:390px;margin:0 auto;
   background:rgba(28,28,30,.62);
-  -webkit-backdrop-filter:blur(44px) saturate(1.35);backdrop-filter:blur(44px) saturate(1.35);
+  /* reference sigma 44.5 CSS px (6 observation frames, spread +-0.15,
+     model explains 99.2% of variance); 44.5/0.96 = 46 declared */
+  -webkit-backdrop-filter:blur(46px) saturate(1.35);backdrop-filter:blur(46px) saturate(1.35);
   /* MEASURED (v2 pts 392-424): this is a SHEET THAT SLIDES UP, not a cross-fade.
      The sheet is fully opaque from its first visible frame; only translateY
      changes (2532px -> 0 over 567ms on the spring above). Its corner radius is
