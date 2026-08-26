@@ -95,10 +95,19 @@ img{-webkit-user-drag:none;user-select:none;display:block}
 
 /* ================================ browse ================================= */
 /* measured: large-title baseline y=79.7pt; search field 101.7–146; card 147.3–341 */
-#browse{padding:0 var(--pad) 190px}
+#browse{padding:0 var(--pad) 190px;position:fixed}
+/* top-of-list ambient wash — sampled from video-2 f13, x-uniform, dies at 214pt */
+#browse::before{
+  content:"";position:absolute;top:0;left:-16px;right:-16px;height:214px;z-index:-1;
+  background:linear-gradient(to bottom,
+    rgb(19,0,84) 0, rgb(19,0,82) 47px, rgb(20,0,72) 60.3px, rgb(16,0,62) 73.7px,
+    rgb(9,2,52) 87px, rgb(2,4,44) 100.3px, rgb(0,5,36) 113.7px, rgb(0,5,31) 127px,
+    rgb(0,7,25) 140.3px, rgb(0,5,22) 153.7px, rgb(0,4,19) 167px, rgb(0,1,15) 180.3px,
+    rgb(0,1,11) 193.7px, rgb(1,0,2) 207px, rgb(0,0,0) 214px);
+}
 .bigtitle{
   padding-top:calc(var(--safe-t) + 7.5px);
-  height:calc(var(--safe-t) + 54.7px);
+  height:calc(var(--safe-t) + 40.4px);
   display:flex;align-items:flex-end;
 }
 /* collapsed nav that cross-fades in on scroll (reference: v2 f40) */
@@ -121,33 +130,35 @@ body.scrolled #navbar{opacity:1;pointer-events:auto}
 .field input{flex:1;min-width:0;background:none;border:none;color:var(--text);
   font-size:17px;letter-spacing:-.41px}
 .field input::placeholder{color:rgba(235,235,245,.42)}
-#browse .field{margin-top:11px}
+#browse .field{margin-top:14.7px}
 
 /* Top figures card — reference "Top Reciters / This month", y 147.3–341 (194pt) */
 .topcard{
-  position:relative;margin-top:1.5px;height:194px;border-radius:24px;overflow:hidden;
-  background:linear-gradient(to bottom,#1F1F1F 0%,#141414 46%,#050505 82%,#000 100%);
+  position:relative;margin-top:2px;height:194px;border-radius:24px;overflow:hidden;
+  background:linear-gradient(to bottom,rgb(31,32,36) 0%,rgb(29,29,29) 9%,rgb(18,18,18) 59%,rgb(7,7,7) 87%,rgb(2,2,2) 100%);
   display:block;width:100%;text-align:left;
 }
-.topcard .fan{position:absolute;left:0;right:0;top:14px;height:96px;
-  display:flex;align-items:center;justify-content:center}
+.topcard .fan{position:absolute;left:0;right:0;top:23px;height:108px;
+  display:flex;align-items:center;justify-content:center;gap:15.3px}
 .topcard .fan span{border-radius:50%;overflow:hidden;background:#151515;flex:none;
   box-shadow:0 0 0 3px #101010}
-.topcard .fan span:nth-child(1){width:66px;height:66px;transform:translateX(26px)}
-.topcard .fan span:nth-child(2){width:94px;height:94px;position:relative;z-index:2}
-.topcard .fan span:nth-child(3){width:66px;height:66px;transform:translateX(-26px)}
+.topcard .fan span:nth-child(1){width:66px;height:66px}
+.topcard .fan span:nth-child(2){width:108px;height:108px}
+.topcard .fan span:nth-child(3){width:66px;height:66px}
 .topcard .fan img{width:100%;height:100%;object-fit:cover;object-position:top center}
 .topcard .ini{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
   font-size:22px;font-weight:600;background:linear-gradient(150deg,#C4783A,#7C4318)}
-.topcard .tc-t{position:absolute;left:16px;bottom:47px;font-size:20px;font-weight:600;letter-spacing:.38px}
-.topcard .tc-s{position:absolute;left:16px;bottom:22px;font-size:17px;letter-spacing:-.41px;color:rgba(235,235,245,.6)}
-.topcard .tc-c{position:absolute;right:16px;bottom:31px}
+.topcard .tc-t{position:absolute;left:16px;bottom:31.2px;font-size:17px;font-weight:600;
+  letter-spacing:-.41px;line-height:22px}
+.topcard .tc-s{position:absolute;left:16px;bottom:10.5px;font-size:15px;letter-spacing:-.24px;
+  line-height:20px;color:rgba(235,235,245,.6)}
+.topcard .tc-c{position:absolute;right:14.5px;bottom:19.5px;line-height:0}
 
-.sect{margin-top:26px}
+.sect{margin-top:33.3px}
 .sect-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;gap:10px}
 .sect-head h2{font-size:22px;font-weight:700;letter-spacing:.35px;line-height:28px;
   display:flex;align-items:center;gap:9px;min-width:0}
-.sect-head .seeall{font-size:17px;font-weight:400;letter-spacing:-.41px;color:var(--blue);flex:none}
+.sect-head .seeall{font-size:15.5px;font-weight:400;letter-spacing:-.24px;color:var(--blue);flex:none}
 .starmark{filter:drop-shadow(0 0 9px rgba(255,214,10,.45))}
 
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 12px}
@@ -167,7 +178,7 @@ body.scrolled #navbar{opacity:1;pointer-events:auto}
    the same axis; mini pill y 2135–2259 (h 41.3), gap to bar 8.7             */
 #dock{
   position:fixed;left:0;right:0;bottom:0;z-index:40;max-width:390px;margin:0 auto;
-  padding:0 22px 22px;pointer-events:none;
+  padding:0 22px 19.7px;pointer-events:none;
 }
 #dock>*{pointer-events:auto}
 
@@ -192,16 +203,19 @@ body.has-track #minipill{transform:none;opacity:1}
 
 #tabrow{display:flex;align-items:center;gap:4px}
 #tabbar{
-  flex:1;min-width:0;height:60px;border-radius:30px;display:flex;align-items:stretch;
+  flex:1;min-width:0;height:61.7px;border-radius:31px;display:flex;align-items:stretch;
   padding:0 9px;
   background:var(--glass-bar);
   -webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);
   box-shadow:inset 0 0 0 .5px var(--spec-soft), 0 8px 26px rgba(0,0,0,.42);
 }
 .tab{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:3px;border-radius:26px;position:relative;color:rgba(255,255,255,.98)}
-.tab .lbl{font-size:11px;font-weight:500;letter-spacing:.07px;line-height:13px;white-space:nowrap}
-.tab.on{background:rgba(255,255,255,.11)}
+  gap:1.5px;position:relative;z-index:0;color:rgba(255,255,255,.98)}
+.tab .lbl{font-size:10px;font-weight:500;letter-spacing:.12px;line-height:8px;
+  white-space:nowrap;position:relative;top:-2px}
+/* active capsule: measured 43.7pt tall inside a 61.7pt bar, 11.3pt from its top */
+.tab.on::before{content:"";position:absolute;left:0;right:0;top:11.3px;height:43.7px;
+  border-radius:21.9px;background:rgba(255,255,255,.11);z-index:-1}
 #tabsearch{
   width:65px;height:65px;flex:none;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
@@ -875,7 +889,7 @@ function paintTabs(){
   document.querySelectorAll('#tabbar .tab').forEach(b=>{
     const on=b.dataset.tab===curTab;
     b.classList.toggle('on',on);
-    b.querySelector('.ic').innerHTML=TABICON[b.dataset.tab](25, on?'#fff':'rgba(255,255,255,.98)');
+    b.querySelector('.ic').innerHTML=TABICON[b.dataset.tab](26.5, on?'#fff':'rgba(255,255,255,.98)');
   });
 }
 function goTab(t){
@@ -891,7 +905,7 @@ function goTab(t){
   paintTabs();
 }
 document.querySelectorAll('#tabbar .tab').forEach(b=>b.onclick=()=>goTab(b.dataset.tab));
-$('tabsearch').innerHTML=IC.search(26,'#fff');
+$('tabsearch').innerHTML=IC.search(28,'#fff');
 $('tabsearch').onclick=()=>{
   if(curDetail){ closeDetail(false); setTimeout(focusSearch,420); } else focusSearch();
 };
