@@ -275,13 +275,13 @@ body.scrolled #dock{display:flex;flex-direction:column-reverse}
   height:78px;padding:0 16px;position:relative}
 .numtile{width:50px;height:46px;flex:none;border-radius:12px;background:var(--tile);
   display:flex;align-items:center;justify-content:center;
-  font-size:19px;font-weight:600;letter-spacing:.38px;font-variant-numeric:tabular-nums}
+  font-size:20px;font-weight:600;letter-spacing:.38px;font-variant-numeric:tabular-nums}
 .eprow.done .numtile{color:var(--grey)}
 .ep-main{flex:1;min-width:0}
-.ep-t{display:block;font-size:17px;font-weight:600;letter-spacing:-.41px;line-height:22px;
+.ep-t{display:block;font-size:18px;font-weight:600;letter-spacing:-.45px;line-height:23px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .eprow.active .ep-t{color:var(--blue)}
-.ep-s{display:block;font-size:14px;letter-spacing:-.15px;line-height:18px;color:var(--grey);
+.ep-s{display:block;font-size:13px;letter-spacing:-.08px;line-height:18px;color:var(--grey);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
 .ep-side{flex:none;display:flex;align-items:center;gap:14px;color:var(--grey);
   font-size:13px;letter-spacing:-.08px;font-variant-numeric:tabular-nums}
@@ -320,27 +320,48 @@ body.scrolled #dock{display:flex;flex-direction:column-reverse}
 #player.show{transform:none}
 #player::before{
   content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  /* base = the darkest column of the reference at each y; the two left lobes and
-     one right lobe reproduce the measured horizontal falloff at x=8 / x=1162   */
+  /* the bottom-right glow that survives the wash's trough (video-1 f143)      */
   background:
+    radial-gradient(46% 27% at 106% 101%, rgba(0,120,255,.60), rgba(0,120,255,0) 100%),
+    linear-gradient(to bottom,#000011 0%,#000011 86.9%,rgb(0,20,52) 94.8%,rgb(1,34,104) 100%);
+}
+/* AMBIENT WASH — the reference background is a glow that rises from the bottom
+   of the screen and recedes, on a fixed loop. Measured from video 1, blue
+   channel down the left edge: minimum f143, glow front reaches the top at
+   f332, back to minimum at f440 => period 298 frames @60fps = 4.967s.
+   The layer below IS the measured arrived field (video-1 f332 == f_player.png);
+   the keyframes are the measured front position and amplitude per frame.      */
+#player .aur{
+  position:absolute;inset:0;z-index:0;pointer-events:none;will-change:transform;
+  background:
+    radial-gradient(58% 27% at -6% 100%, rgba(20,130,255,1), rgba(20,130,255,0) 100%),
+    radial-gradient(62% 47% at -12% 62%, rgba(0,66,255,.66), rgba(0,66,255,0) 100%),
+    radial-gradient(42% 22% at 34% 56%, rgba(0,60,255,.16), rgba(0,60,255,0) 100%),
+    radial-gradient(44% 25% at 112% 100%, rgba(0,120,255,.5), rgba(0,120,255,0) 100%),
     linear-gradient(to bottom,
       #000011 0%, #000011 46.2%, rgb(1,5,22) 47.4%, rgb(0,8,33) 55.3%,
       rgb(0,15,50) 63.2%, rgb(1,21,81) 71.1%, rgb(0,27,109) 79%,
       rgb(1,37,140) 84.9%, rgb(0,50,166) 88.9%, rgb(2,86,213) 94.8%,
       rgb(0,123,241) 98.7%, rgb(2,132,250) 100%);
+  animation-name:wash;animation-duration:4.967s;animation-timing-function:linear;
+  animation-iteration-count:infinite;animation-delay:var(--pd,0s);
 }
-/* glow lobes, vertically masked so nothing bleeds into the black upper half —
-   the reference is flat #000011 above y=1000 @3x and rises steeply by y=1200  */
-#player::after{
-  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(58% 27% at -6% 100%, rgba(20,130,255,1), rgba(20,130,255,0) 100%),
-    radial-gradient(62% 47% at -12% 62%, rgba(0,66,255,.66), rgba(0,66,255,0) 100%),
-    radial-gradient(42% 22% at 34% 56%, rgba(0,60,255,.16), rgba(0,60,255,0) 100%),
-    radial-gradient(44% 25% at 112% 100%, rgba(0,120,255,.5), rgba(0,120,255,0) 100%);
-  -webkit-mask-image:linear-gradient(to bottom, transparent 40%, #000 50%, #000 100%);
-  mask-image:linear-gradient(to bottom, transparent 40%, #000 50%, #000 100%);
+@keyframes wash{
+   0%{transform:translateY(47%);opacity:1}    8%{transform:translateY(46%);opacity:1}
+  16%{transform:translateY(45%);opacity:1}   20%{transform:translateY(42%);opacity:1}
+  24%{transform:translateY(38%);opacity:1}   28%{transform:translateY(33%);opacity:1}
+  32%{transform:translateY(28%);opacity:1}   36%{transform:translateY(23%);opacity:1}
+  40%{transform:translateY(19%);opacity:1}   44%{transform:translateY(14%);opacity:1}
+  48%{transform:translateY(11%);opacity:1}   52%{transform:translateY(6%);opacity:1}
+  56%{transform:translateY(3%);opacity:1}    60%{transform:translateY(1%);opacity:1}
+  64%{transform:translateY(0);opacity:1}     68%{transform:translateY(3%);opacity:.85}
+  72%{transform:translateY(8%);opacity:.72}  76%{transform:translateY(15%);opacity:.62}
+  80%{transform:translateY(22%);opacity:.57} 84%{transform:translateY(27%);opacity:.55}
+  88%{transform:translateY(33%);opacity:.62} 92%{transform:translateY(39%);opacity:.75}
+  96%{transform:translateY(44%);opacity:.92}100%{transform:translateY(47%);opacity:1}
 }
+/* deterministic freeze for pixel verification: ?phase=0..1 */
+body.phase-lock #player .aur{animation-play-state:paused}
 #player>*{position:relative;z-index:1}
 .grab{width:36px;height:5.33px;border-radius:2.7px;background:rgba(255,255,255,.28);
   margin:0 auto;flex:none}
@@ -406,7 +427,7 @@ body.scrolled #dock{display:flex;flex-direction:column-reverse}
 }
 #queue.show{opacity:1;pointer-events:auto}
 .q-head{display:flex;align-items:center;justify-content:space-between;height:32px;flex:none}
-.q-head h3{font-size:22px;font-weight:700;letter-spacing:.35px;line-height:28px}
+.q-head h3{font-size:18px;font-weight:700;letter-spacing:-.45px;line-height:22px}
 .q-ic{display:flex;gap:12px}
 .q-ic button{width:32px;height:32px;border-radius:50%;background:var(--glass-inner);
   display:flex;align-items:center;justify-content:center}
@@ -424,13 +445,13 @@ body.scrolled #dock{display:flex;flex-direction:column-reverse}
   letter-spacing:-.32px;font-variant-numeric:tabular-nums}
 .q-row.active .q-tile{background:transparent}
 .q-main{flex:1;min-width:0}
-.q-t{display:block;font-size:17px;font-weight:600;letter-spacing:-.41px;line-height:22px;
+.q-t{display:block;font-size:16px;font-weight:600;letter-spacing:-.32px;line-height:21px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.q-s{display:block;font-size:15px;letter-spacing:-.24px;line-height:20px;
+.q-s{display:block;font-size:13px;letter-spacing:-.08px;line-height:18px;
   color:rgba(235,235,245,.56);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .q-side{flex:none;font-size:13px;letter-spacing:-.08px;color:rgba(235,235,245,.56);
   font-variant-numeric:tabular-nums}
-.q-playcircle{width:24px;height:24px;flex:none;border-radius:50%;background:#fff;
+.q-playcircle{width:24px;height:24px;flex:none;border-radius:50%;background:#fff;margin-right:2.3px;
   display:flex;align-items:center;justify-content:center}
 #qscrim{position:fixed;inset:0;z-index:65;opacity:0;pointer-events:none}
 #qscrim.show{opacity:1;pointer-events:auto}
@@ -496,6 +517,7 @@ body.scrolled #dock{display:flex;flex-direction:column-reverse}
 </div>
 
 <div id="player">
+  <i class="aur"></i>
   <div class="grab"></div>
   <div class="toppill-wrap"><button class="toppill press" id="toppill"></button></div>
   <div class="spacer"></div>
@@ -632,7 +654,10 @@ const $ = id => document.getElementById(id);
 const qs = new URLSearchParams(location.search);
 (()=>{ const sv=qs.get('safe');
   if(sv){ document.documentElement.style.setProperty('--safe-t',(parseInt(sv)||47)+'px');
-          document.documentElement.style.setProperty('--safe-b','34px'); } })();
+          document.documentElement.style.setProperty('--safe-b','34px'); }
+  const ph=qs.get('phase');
+  if(ph!==null){ document.body.classList.add('phase-lock');
+    document.getElementById('player').style.setProperty('--pd',(-parseFloat(ph)*4.967)+'s'); } })();
 const store = {
   get(k,d){ try{const v=localStorage.getItem('fs.'+k);return v===null?d:JSON.parse(v)}catch(e){return d} },
   set(k,v){ try{localStorage.setItem('fs.'+k,JSON.stringify(v))}catch(e){} },
@@ -1073,7 +1098,7 @@ function renderQueue(filter=''){
 }
 
 /* ============ boot ============ */
-$('q-searchwrap').insertAdjacentHTML('afterbegin',IC.search(17,'rgba(235,235,245,.44)'));
+$('q-searchwrap').insertAdjacentHTML('afterbegin',IC.search(20,'rgba(235,235,245,.44)'));
 paintTabs();
 Promise.all([fetch('episodes.json').then(r=>r.json()),fetch('portraits.json').then(r=>r.json())])
 .then(([d,pr])=>{
@@ -1104,7 +1129,7 @@ Promise.all([fetch('episodes.json').then(r=>r.json()),fetch('portraits.json').th
   /* static-state hooks for pixel verification — never call audio.play() */
   const st=qs.get('state');
   if(st){
-    const p=curDetail||DATA.people[0];
+    const p=curDetail||DATA.people.slice().sort((a,b)=>b.episodes.length-a.episodes.length)[0];
     if(st==='about'){ cur={p,i:0}; document.body.classList.add('has-track'); paintShells(); openAbout(p); }
     else if(st==='playlists'||st==='settings'){ goTab(st); }
     else {
