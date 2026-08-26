@@ -56,23 +56,27 @@
        push      v2 pts 178-202, incoming translateX 1170px -> 0 (417ms).
                  Geometric decay r=0.795/frame => a critically damped spring,
                  tau = 69ms. The outgoing view rides the SAME curve to -30%.
-       sheetup   v2 pts 392-424, about sheet translateY 2532px -> 0 (567ms),
-                 same spring family, r=0.78/frame.
+       sheetup   v2 pts 392-424, about sheet translateY 2532px -> 0 (533ms).
+                 These stops ARE the measured per-frame displacement, not a
+                 model: dy = 2532,1850,1351,1154,868,701,540,398,322,...,3,2,1,0
+                 px@3x. Mean decay 0.80/frame, i.e. the same spring as the push.
        qopen     v1 pts 354-367, queue card opacity 0 -> 1 (229ms).
        qclose    v1 pts 481-495, queue card opacity 1 -> 0 (217ms).            */
   --e-push:linear(0 0%, .2051 4%, .3641 8%, .4906 12%, .5983 16%, .6863 20%,
     .7573 24%, .8137 28%, .8581 32%, .8923 36%, .9188 40%, .9393 44%, .9547 48%,
     .9658 52%, .9744 56%, .9812 60%, .9863 64%, .9897 68%, .9923 72%, .9949 76%,
     .9957 80%, .9974 84%, .9974 88%, .9983 92%, .9991 96%, 1 100%);
-  --e-sheetup:linear(0 0%, .3917 5.882%, .63 11.76%, .775 17.65%, .8632 23.53%,
-    .9168 29.41%, .9495 35.29%, .9694 41.18%, .9814 47.06%, .9888 52.94%,
-    .9933 58.82%, .996 64.71%, .9976 70.59%, .9986 76.47%, .9993 82.35%,
-    .9996 88.24%, .9999 94.12%, 1 100%);
+  --e-sheetup:linear(0 0%, .2694 3.125%, .4664 6.25%, .5442 9.375%, .6572 12.5%,
+    .7231 15.62%, .7867 18.75%, .8428 21.88%, .8728 25%, .8878 28.12%, .9028 31.25%,
+    .9147 34.38%, .9281 37.5%, .9475 40.62%, .9562 43.75%, .9656 46.87%, .9735 50%,
+    .9795 53.12%, .9842 56.25%, .9878 59.38%, .9905 62.5%, .9929 65.62%, .9945 68.75%,
+    .9957 71.87%, .9968 75%, .9976 78.12%, .998 81.25%, .9984 84.37%, .9988 87.5%,
+    .9992 90.62%, .9992 93.75%, .9996 96.87%, 1 100%);
   --e-qopen:cubic-bezier(.155,0,.633,1);
   --e-qclose:linear(0 0%, .069 7.692%, .118 15.38%, .179 23.08%, .279 30.77%,
     .398 38.46%, .484 46.15%, .592 53.85%, .704 61.54%, .802 69.23%, .898 76.92%,
     .955 84.62%, .985 92.31%, 1 100%);
-  --d-push:.417s; --d-sheetup:.567s; --d-qopen:.229s; --d-qclose:.217s;
+  --d-push:.417s; --d-sheetup:.533s; --d-qopen:.229s; --d-qclose:.217s;
 }
 @font-face{font-family:'SF Pro';src:url('assets/fonts/SF-Pro.woff2') format('woff2');font-weight:100 1000;font-style:normal;font-display:block}
 
