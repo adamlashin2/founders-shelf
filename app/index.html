@@ -62,6 +62,16 @@
                  px@3x. Mean decay 0.80/frame, i.e. the same spring as the push.
        qopen     v1 pts 354-367, queue card opacity 0 -> 1 (229ms).
        qclose    v1 pts 481-495, queue card opacity 1 -> 0 (217ms).            */
+  --e-qopen:cubic-bezier(.155,0,.633,1);
+  /* cubic-bezier fallbacks, fitted to the same measured series (push rms .0019,
+     sheetup rms .0106, qclose rms .0080). The linear() ramps below replace them
+     wherever linear() easing is supported - they are exact, the beziers are not. */
+  --e-push:cubic-bezier(.205,1.128,.496,.968);
+  --e-sheetup:cubic-bezier(.096,1.094,.369,.971);
+  --e-qclose:cubic-bezier(.411,.2,.767,1.138);
+  --d-push:.417s; --d-sheetup:.533s; --d-qopen:.229s; --d-qclose:.217s;
+}
+@supports (animation-timing-function:linear(0,1)){:root{
   --e-push:linear(0 0%, .2051 4%, .3641 8%, .4906 12%, .5983 16%, .6863 20%,
     .7573 24%, .8137 28%, .8581 32%, .8923 36%, .9188 40%, .9393 44%, .9547 48%,
     .9658 52%, .9744 56%, .9812 60%, .9863 64%, .9897 68%, .9923 72%, .9949 76%,
@@ -72,12 +82,10 @@
     .9795 53.12%, .9842 56.25%, .9878 59.38%, .9905 62.5%, .9929 65.62%, .9945 68.75%,
     .9957 71.87%, .9968 75%, .9976 78.12%, .998 81.25%, .9984 84.37%, .9988 87.5%,
     .9992 90.62%, .9992 93.75%, .9996 96.87%, 1 100%);
-  --e-qopen:cubic-bezier(.155,0,.633,1);
   --e-qclose:linear(0 0%, .069 7.692%, .118 15.38%, .179 23.08%, .279 30.77%,
     .398 38.46%, .484 46.15%, .592 53.85%, .704 61.54%, .802 69.23%, .898 76.92%,
     .955 84.62%, .985 92.31%, 1 100%);
-  --d-push:.417s; --d-sheetup:.533s; --d-qopen:.229s; --d-qclose:.217s;
-}
+}}
 @font-face{font-family:'SF Pro';src:url('assets/fonts/SF-Pro.woff2') format('woff2');font-weight:100 1000;font-style:normal;font-display:block}
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
