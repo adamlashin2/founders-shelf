@@ -888,7 +888,7 @@ const SECTIONS = [
    index.html can persist across deploys with no way for the user to notice or
    clear it. On boot we compare this against version.txt (fetched no-store) and
    reload once if the served build is newer. sessionStorage guards the loop. */
-const BUILD='20260826-1850';
+const BUILD='20260826-1942';
 (()=>{
   fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{
     v=(v||'').trim();
@@ -925,6 +925,46 @@ const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"
 const fmtDur = s => {s=Math.max(0,Math.round(s));const h=~~(s/3600),m=~~((s%3600)/60);return h?h+'h '+String(m).padStart(2,'0'):m+' min'};
 const fmtClock = s => {s=Math.max(0,Math.round(s));const h=~~(s/3600),m=~~((s%3600)/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
 const mon = d => d? new Date(d).toLocaleDateString(undefined,{month:'short',year:'numeric'}) : '';
+
+/* Feed titles are written for one global chronological stream, so most of them
+   lead with the subject's name: on Steve Jobs's shelf eight rows in a row open
+   with "Steve Jobs" and the part that actually distinguishes them ("The NeXT
+   Years", "The Pixar Story") sits behind it. Inside a person's shelf that name
+   is already established, so strip it when it is a leading prefix and promote
+   what follows. Titles where the name is load-bearing rather than a prefix
+   ("Becoming Steve Jobs", "Titan: The Life of John D. Rockefeller") are left
+   whole — the name is not at the front, so nothing matches. */
+function epTitle(p, e){
+  const t = e.title;
+  const short = p.shortName || p.name;
+  const words = short.split(/\s+/);
+  const vars = [p.name, short];
+  if (words.length === 2) vars.push(words[1]);       // surname, only for "First Last"
+  const uniq = [...new Set(vars.filter(v => v && v.length > 2))]
+                 .sort((a, b) => b.length - a.length);
+  for (const v of uniq){
+    const q = v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // "Name (Subtitle)" -> "Subtitle"
+    let m = t.match(new RegExp('^' + q + '\\s*\\((.+)\\)\\s*$', 'i'));
+    if (m && m[1].length > 2) return m[1];
+    // "Name: X" / "Name - X" only. Conjunctions are excluded on purpose:
+    // "Steve Jobs and His Heroes" must stay whole, not become "His Heroes".
+    m = t.match(new RegExp('^' + q + '\\s*(?::|\\u2013|\\u2014|-)\\s*(.+)$', 'i'));
+    if (m && m[1].length > 2) return m[1];
+  }
+  return t;
+}
+
+/* Each Founders episode is built on one book, and that book is what actually
+   separates two episodes about the same person — "Steve Jobs" #5 is Isaacson,
+   #204 is Kahney. So on a person's shelf the book is the headline and the
+   author replaces the feed's global episode number, which carries no meaning
+   once you are looking at one person rather than the whole chronology. */
+const rowTitle = (p, e) => (e.book && e.book.trim()) ? e.book.trim() : epTitle(p, e);
+const rowSub = (p, e) => {
+  const a = (e.author || '').trim(), d = mon(e.date);
+  return a ? a + ' · ' + d : d;
+};
 
 /* ============ browse (Shelf) ============ */
 function renderBrowse(filter=''){
@@ -1021,8 +1061,8 @@ function renderDetail(p){
     const prog= started? `<span class="ep-prog"><i style="width:${Math.min(99,100*ps/(e.sec||1))}%"></i></span>`:'';
     return `<button class="eprow press ${isCur?'active':''} ${dn?'done':''}" data-i="${i}">
       <span class="numtile">${tile}</span>
-      <span class="ep-main"><span class="ep-t">${esc(e.title)}</span>
-        <span class="ep-s">${e.n!==null?'#'+e.n+' · ':''}${mon(e.date)}</span></span>
+      <span class="ep-main"><span class="ep-t">${esc(rowTitle(p,e))}</span>
+        <span class="ep-s">${esc(rowSub(p,e))}</span></span>
       <span class="ep-side">${side}${IC.ellipsis(20)}</span>${prog}</button>`;
   }).join('');
   const faved=favs.includes(p.name);
@@ -1226,7 +1266,7 @@ function setMediaSession(p,e){
   if(!('mediaSession' in navigator))return;
   const art=new URL(PORTRAITS[p.name],location.href).href;
   navigator.mediaSession.metadata=new MediaMetadata({
-    title:e.title,artist:p.shortName,album:'Founders',
+    title:rowTitle(p,e),artist:p.shortName,album:'Founders',
     artwork:[{src:art,sizes:'800x800',type:'image/jpeg'}]});
   navigator.mediaSession.setActionHandler('play',()=>audio.play());
   navigator.mediaSession.setActionHandler('pause',()=>audio.pause());
@@ -1242,12 +1282,12 @@ function paintShells(){
   if(!cur)return;
   const {p,i}=cur, e=p.episodes[i];
   $('mp-img').src=PORTRAITS[p.name];
-  $('mp-t').textContent=(i+1)+'. '+e.title;
+  $('mp-t').textContent=(i+1)+'. '+rowTitle(p,e);
   $('mp-s').textContent=p.shortName;
   $('mp-toggle').innerHTML=audio.paused?IC.play(14):IC.pause(14);
   $('mp-fwd').innerHTML=IC.ff(23);
   $('np-img').src=PORTRAITS[p.name];
-  $('np-t').textContent=e.title;
+  $('np-t').textContent=rowTitle(p,e);
   $('np-s').textContent=p.shortName;
   $('toppill').innerHTML=IC.chevD(15)+`<span>${esc(p.shortName)}</span>`;
   $('ctl-play').innerHTML=audio.paused?IC.bigplay():IC.bigpause();
@@ -1366,12 +1406,12 @@ function renderQueue(filter=''){
   const {p,i}=cur; const f=filter.trim().toLowerCase();
   const list=$('q-list');
   list.innerHTML=p.episodes.map((e,j)=>{
-    if(f&&!e.title.toLowerCase().includes(f))return '';
+    if(f&&!(rowTitle(p,e)+' '+e.title+' '+(e.author||'')).toLowerCase().includes(f))return '';
     const active=j===i;
     return `<button class="q-row press ${active?'active':''}" data-j="${j}">
       <span class="q-tile">${j+1}</span>
-      <span class="q-main"><span class="q-t">${esc(e.title)}</span>
-        <span class="q-s">${e.n!==null?'#'+e.n+' · ':''}${mon(e.date)}</span></span>
+      <span class="q-main"><span class="q-t">${esc(rowTitle(p,e))}</span>
+        <span class="q-s">${esc(rowSub(p,e))}</span></span>
       ${active?`<span class="q-playcircle">${audio.paused?IC.play(11,'#000'):IC.pause(11,'#000')}</span>`
               :`<span class="q-side">${fmtDur(e.sec)}</span>`}</button>`;
   }).join('');
@@ -1385,7 +1425,11 @@ function renderQueue(filter=''){
 /* ============ boot ============ */
 $('q-searchwrap').insertAdjacentHTML('afterbegin',IC.search(20,'rgba(235,235,245,.44)'));
 paintTabs();
-Promise.all([fetch('episodes.json').then(r=>r.json()),fetch('portraits.json').then(r=>r.json())])
+/* Version the data fetches too. index.html has its own staleness check, but the
+   JSON is cached independently — a fresh page with a stale episodes.json shows
+   the old titles and looks like the deploy silently did nothing. */
+Promise.all([fetch('episodes.json?v='+BUILD).then(r=>r.json()),
+             fetch('portraits.json?v='+BUILD).then(r=>r.json())])
 .then(([d,pr])=>{
   DATA=d;PORTRAITS=pr;
   DATA.people.forEach(p=>{p.slug=slug(p.name);p.shortName=p.name.split(' - ')[0]});
