@@ -947,7 +947,7 @@ function goTab(t){
   paintTabs();
 }
 document.querySelectorAll('#tabbar .tab').forEach(b=>b.onclick=()=>goTab(b.dataset.tab));
-$('tabsearch').innerHTML=IC.search(28,'#fff');
+$('tabsearch').innerHTML=IC.search(29,'#fff');
 $('tabsearch').onclick=()=>{
   if(curDetail){ closeDetail(false); setTimeout(focusSearch,420); } else focusSearch();
 };
