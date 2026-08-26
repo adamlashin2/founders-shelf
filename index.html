@@ -290,9 +290,9 @@ body.scrolled #tabsearch,body.detail-open #tabsearch{order:3;width:48px;height:4
 .bio-more{color:var(--blue);font-size:13px;letter-spacing:-.08px;display:inline;margin-left:4px}
 
 .epsect{margin:20.6px var(--pad) 0}
-.epsect-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16.4px}
+.epsect-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20.4px}
 .epsect-head h2{font-size:20px;font-weight:700;letter-spacing:.38px;line-height:25px}
-.eplist{background:var(--card);border-radius:24px;overflow:hidden;padding:6px 0}
+.eplist{background:var(--card);border-radius:24px;overflow:hidden;padding:1.4px 0 6px}
 .eprow{display:flex;align-items:center;gap:13.3px;width:100%;text-align:left;
   height:78px;padding:0 16px;position:relative}
 .numtile{width:50px;height:50px;flex:none;border-radius:12px;background:var(--tile);
@@ -336,10 +336,32 @@ body.scrolled #tabsearch,body.detail-open #tabsearch{order:3;width:48px;height:4
   position:fixed;inset:0;z-index:60;max-width:390px;margin:0 auto;background:#000011;
   display:flex;flex-direction:column;
   padding:calc(var(--safe-t) + 7px) 24px 47.5px;
-  transform:translateY(100%);overflow:hidden;
-  transition:transform .633s cubic-bezier(.16,1,.3,1);
+  transform:translateY(100%);overflow:hidden;transform-origin:50% 50%;
+  transition:transform .52s cubic-bezier(.32,.72,.33,1);
+  border-radius:0;
 }
 #player.show{transform:none}
+/* DISMISS — measured from video 1. It is an interactive drag, not a canned
+   animation: f1117-1121 finger-down with no movement, then the sheet scales
+   1.000 -> 0.836 and translates ~+90px down / +5px right across f1122-1129
+   (117ms) and fades out by f1131. Per-frame progress
+   0/.128/.250/.439/.659/.841/.927/1 => peak energy at 50% => ease-in-out.    */
+#player.dismissing{
+  animation:sheetDismiss .167s cubic-bezier(.42,0,.58,1) forwards;
+  transition:none;
+}
+@keyframes sheetDismiss{
+   0%{transform:none;border-radius:0;opacity:1}
+  14.3%{transform:translate(1px,13px) scale(.979);border-radius:14px}
+  28.6%{transform:translate(2px,25px) scale(.959);border-radius:20px}
+  42.9%{transform:translate(3px,44px) scale(.928);border-radius:24px}
+  57.1%{transform:translate(4px,66px) scale(.892);border-radius:24px}
+  71.4%{transform:translate(4px,84px) scale(.862);border-radius:24px}
+  85.7%{transform:translate(5px,93px) scale(.848);border-radius:24px;opacity:.85}
+ 100%{transform:translate(5px,100px) scale(.836);border-radius:24px;opacity:0}
+}
+/* live finger tracking while dragging */
+#player.dragging{transition:none}
 #player::before{
   content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   /* the bottom-right glow that survives the wash's trough (video-1 f143)      */
@@ -845,7 +867,10 @@ function renderDetail(p){
   });
   v.onscroll=()=>{ const y=v.scrollTop, img=$('heroimg');
     document.body.classList.toggle('scrolled', y>18);
-    if(img&&y<700) img.style.transform=`translateY(${y*.42}px)`;   /* measured parallax ratio */
+    /* measured: the reference hero scrolls 1:1 with the page (cross-correlated
+       hero band vs content band over v2 f1110-1119 => ratio 1.000, no parallax).
+       Only the pull-down overscroll stretches it. */
+    if(img) img.style.transform = y<0 ? `scale(${1 + Math.min(60,-y)*.0016})` : 'none';
   };
 }
 function refreshDetail(){ if(curDetail) renderDetail(curDetail); }
@@ -1023,7 +1048,11 @@ function paintProgress(){
   $('t-rem').textContent='-'+fmtClock(Math.max(0,d-(scrubbing?scrubT:t)));
 }
 function openPlayer(){ $('player').classList.add('show'); }
-function closePlayer(){ $('player').classList.remove('show'); closeQueue(); }
+function closePlayer(){
+  const sh=$('player'); closeQueue();
+  sh.classList.add('dismissing');
+  setTimeout(()=>{ sh.classList.remove('dismissing','show'); sh.style.transform=''; },170);
+}
 
 $('minipill').onclick=e=>{
   if(e.target.closest('#mp-toggle')){toggle();return}
@@ -1081,12 +1110,24 @@ bar.addEventListener('pointermove',e=>{ if(scrubbing) barSeek(e.clientX,false); 
 bar.addEventListener('pointerup',e=>{ if(scrubbing){ barSeek(e.clientX,true); scrubbing=false; bar.classList.remove('grab'); } });
 
 /* swipe-down to dismiss the player */
-(()=>{ let y0=null,t0=0;
+(()=>{ let y0=null,x0=null,t0=0;
   const sh=$('player');
-  sh.addEventListener('touchstart',e=>{ if(e.target.closest('#queue'))return; y0=e.touches[0].clientY; t0=Date.now(); },{passive:true});
+  sh.addEventListener('touchstart',e=>{ if(e.target.closest('#queue'))return;
+    y0=e.touches[0].clientY; x0=e.touches[0].clientX; t0=Date.now(); },{passive:true});
+  sh.addEventListener('touchmove',e=>{ if(y0===null||scrubbing)return;
+    const dy=Math.max(0,e.touches[0].clientY-y0), dx=e.touches[0].clientX-x0;
+    /* the reference tracks the finger: scale falls to .836 across ~550px of
+       drag, matching the measured 1.000->.836 over the dismiss distance */
+    const k=Math.min(1,dy/550), sc=1-.164*k;
+    sh.classList.add('dragging');
+    sh.style.transform=`translate(${dx*.06}px,${dy*.18}px) scale(${sc})`;
+    sh.style.borderRadius=(24*Math.min(1,dy/60))+'px';
+  },{passive:true});
   sh.addEventListener('touchend',e=>{ if(y0===null)return;
     const dy=e.changedTouches[0].clientY-y0, dt=Date.now()-t0;
-    if(dy>80&&dt<600&&!scrubbing) closePlayer(); y0=null; },{passive:true});
+    sh.classList.remove('dragging'); sh.style.transform=''; sh.style.borderRadius='';
+    if(dy>80&&dt<900&&!scrubbing) closePlayer();
+    y0=null; },{passive:true});
 })();
 
 /* ============ queue sheet ============ */
