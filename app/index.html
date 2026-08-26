@@ -185,9 +185,12 @@ body.scrolled #navbar{opacity:1;pointer-events:auto}
 #minipill{
   width:100%;height:41px;border-radius:21px;display:flex;align-items:center;gap:9px;
   padding:0 14px 0 6px;text-align:left;margin-bottom:8.7px;
-  background:rgba(46,47,52,.62);
-  -webkit-backdrop-filter:blur(26px) saturate(1.8);backdrop-filter:blur(26px) saturate(1.8);
-  box-shadow:inset 0 0 0 .5px var(--spec-soft), 0 8px 26px rgba(0,0,0,.42);
+  /* measured: the reference pill over the detail list card (rgb 24) reads
+     rgb 26 — transmission ~91%. It is visible almost entirely by its specular
+     edge (rgb 58 over the 26 fill => white at .14), not by its fill.          */
+  background:rgba(50,50,58,.10);
+  -webkit-backdrop-filter:blur(13px) saturate(1.8);backdrop-filter:blur(13px) saturate(1.8);
+  box-shadow:inset 0 0 0 .55px rgba(255,255,255,.14), 0 8px 26px rgba(0,0,0,.42);
   transform:translateY(180%);opacity:0;
   transition:transform .5s var(--ease), opacity .3s var(--ease);
 }
