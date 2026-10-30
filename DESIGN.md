@@ -1,5 +1,25 @@
 # The Greats — design system
 
+**System v5 (2026-10-31): Adam's two picks become the operating system.** Pins `808888783111165642` (dark journal) and
+`355714070590901781` (light assistant), chosen from ~270 Pinterest candidates. Values measured by script from the pin images
+(`D:/tmp/oa/ds`), not by eye; the CSS block "SYSTEM v5" in `app/index.html` carries them.
+
+| Token | Value | Measured from |
+|---|---|---|
+| Ground | `#000`, flat | journal, below the header |
+| Panel | `#1c1c1e`, corner 20, gap 8, padding 16 | journal panels (369pt wide, 12pt inset, 19–20pt corner, 7–8pt gap) |
+| Inner tile | `#323234`, corner 12, 52pt | journal play tile (51pt) |
+| Big card | corner 28 | assistant card (27–28pt) |
+| Two-tone text | 24/29, white lead then `#69696b` | assistant headline (24pt, 29pt pitch); journal placeholder `#69696b` |
+| Text tabs | 22pt semibold, active white, rest `#69696b` | journal tabs (~23–24pt) |
+| Circle button | 48pt, 1px hairline | assistant chips (47–48pt, rim `#e8e8e8` on `#f7f7f7`) |
+| Primary | white pill, black text, 44pt | journal "Save Dream" (38pt, raised to the 44pt target) |
+| Audio card | play tile + title + time + waveform; progress = clipped white copy of the bars | journal "Audio Record" |
+
+Retired in v5: glass rims, gradient grounds, paper/tape/jacket textures, gold eyebrows, filled chips. Fonts unchanged
+(Instrument Serif for names, SF Pro for everything you operate). Small text stays `#8e8e93` rather than the journal's
+`#535355`, which fails contrast at 11–13pt.
+
 **Direction (2026-10-30, frontier pass): tactile archival listening room.** The application chrome remains disciplined and
 monochrome, while the content is allowed restrained material colour: cloth book jackets, ivory correspondence, broadcast programmes,
 and graphite tape. Black-and-white portraits and Instrument Serif carry the editorial voice; SF Pro is reserved for everything the

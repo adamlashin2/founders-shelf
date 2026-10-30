@@ -47,19 +47,27 @@
   --fill:hsl(var(--gh) calc(var(--gs)*35%) 80% / .12);   /* C: panel = ground, desaturated, lifted */
   --fill2:hsl(var(--gh) calc(var(--gs)*30%) 90% / .20);
   --fill3:rgba(255,255,255,.06);
-  --hair:rgba(255,255,255,.12);       /* measured: Replay card rim         */
-  --sep:rgba(255,255,255,.09);
-  --raised:hsl(var(--gh) calc(var(--gs)*40%) 70% / .09);
+  --hair:rgba(255,255,255,.08);       /* pin 355714070590901781: chip rim #e8e8e8 on #f7f7f7, inverted */
+  --sep:rgba(255,255,255,.08);
+  --raised:#1c1c1e;
+  /* v5 surfaces, measured by script from pin 808888783111165642 (dark journal) */
+  --panel:#1c1c1e;                    /* panel fill                        */
+  --panel2:#323234;                   /* inner square (play tile)          */
+  --dim:#69696b;                      /* second tone of large text, placeholders */
 
   /* ---------- type: HIG iOS Large table + SF Pro tracking ---------- */
   --f:"SF Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 
   /* ---------- space & shape ---------- */
-  --m:18px;                           /* measured side margin (H, A)       */
-  --r-hero:19px;                      /* measured hero card                */
-  --r-card:14px;                      /* measured Replay card              */
-  --r-tile:9px;
-  --r-row:18px;
+  --m:12px;                           /* measured panel inset 12pt (pin 808888783111165642) */
+  --gap:8px;                          /* measured gap between panels       */
+  --r-panel:20px;                     /* measured panel corner             */
+  --r-big:28px;                       /* measured card corner (pin 355714070590901781) */
+  --r-inner:12px;                     /* measured play tile corner         */
+  --r-hero:28px;
+  --r-card:20px;
+  --r-tile:14px;
+  --r-row:20px;
   --tabh:58px;                        /* measured tab bar                  */
   --minih:50px;                       /* 44pt controls plus player chrome  */
   --safe-t:env(safe-area-inset-top,0px);
@@ -96,10 +104,7 @@ html{--gh:0;--gs:0}
 html,body{height:100%;color:var(--label);color-scheme:dark}
 /* Neutral graphite media-room ground. Hue properties remain registered so a
    future contextual transition cannot cut between frames. */
-body{background:
-  radial-gradient(120% 70% at 50% -10%,hsl(var(--gh) calc(var(--gs)*100%) 30%),transparent 70%),
-  linear-gradient(hsl(var(--gh) calc(var(--gs)*90%) 17%),hsl(var(--gh) calc(var(--gs)*70%) 8%) 60%,hsl(var(--gh) calc(var(--gs)*50%) 5%));
-  background-attachment:fixed}
+body{background:var(--bg)}          /* flat black ground, as measured */
 body{font-family:var(--f);overscroll-behavior:none;-webkit-font-smoothing:antialiased;overflow:hidden}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 input{font:inherit;color:inherit;outline:none;border:0;background:none}
@@ -671,6 +676,134 @@ html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fad
   .sheet{left:calc(50% - 260px);right:auto;width:520px;bottom:auto;top:50%;border-radius:28px;max-height:80vh}
   .settings,.libwrap{max-width:760px!important}
 }
+/* =========================== SYSTEM v5 ===============================
+   Adam's picks (2026-10-30): pin 808888783111165642 (dark journal) and
+   pin 355714070590901781 (light assistant). Every value below was measured
+   by script from those images (D:/tmp/oa/ds): flat panels on black, 20pt
+   corners, 8pt gaps, 16pt panel padding, two-tone large text, text tabs,
+   hairline circle buttons, one white pill. No textures, no rims, no gradients. */
+
+/* floating chrome: quiet frosted panel, hairline instead of a specular rim */
+.glass{background:rgba(28,28,30,.78);box-shadow:inset 0 0 0 1px var(--hair),0 12px 32px rgba(0,0,0,.4)}
+.glass::after{display:none}
+
+/* panels */
+.panel{background:var(--panel);border-radius:var(--r-panel)}
+.label-up{font-size:13px;line-height:16px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--label2)}
+
+/* buttons: white pill (measured 38pt, raised to the 44pt target), hairline circles */
+.btn{height:44px;border-radius:22px;font-size:15px;font-weight:600;letter-spacing:-.23px}
+.btn-primary,.btn-red{background:#fff;color:#000}
+.btn-tinted{background:var(--panel);color:#fff;box-shadow:inset 0 0 0 1px var(--hair)}
+.btn-play,.bigplay{background:#fff;color:#000;box-shadow:none}
+.btn-icon{background:var(--panel);box-shadow:inset 0 0 0 1px var(--hair)}
+.btn-icon.glass{background:rgba(28,28,30,.62)}
+.circ{width:48px;height:48px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none;
+  color:rgba(255,255,255,.86);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}   /* measured 47-48pt, hairline */
+@media (hover:hover){
+  .btn-primary:hover,.pill:not(.ghost):hover{background:#fff;box-shadow:0 8px 24px rgba(255,255,255,.12)}
+  .btn-tinted:hover,.btn-icon:hover,.circ:hover{background-color:#2a2a2c;color:#fff}
+  .chip:hover{background:none;color:#fff}
+}
+
+/* text tabs replace filled chips (measured: 24pt, active white, rest #69696b) */
+.chip,.chip.on{height:44px;padding:0 6px;border-radius:0;background:none;box-shadow:none;font-size:22px;font-weight:600;letter-spacing:-.4px;color:var(--dim)}
+.chip.on{color:#fff}
+.hrow:has(>.chip){gap:10px!important;padding:0 calc(var(--m) - 6px)}
+.history-filters{gap:10px;margin-left:-6px}
+
+/* fields */
+.search{height:52px;border-radius:var(--r-panel);padding:0 16px;background:var(--panel);color:var(--dim)}
+.search input::placeholder{color:var(--dim)}
+
+/* two-tone intro (measured: 24/29, white lead then #828282-equivalent grey) */
+.intro{margin-top:14px;font-size:24px;line-height:29px;font-weight:500;letter-spacing:-.45px;color:var(--dim);text-wrap:pretty;max-width:560px}
+.intro b{color:#fff;font-weight:500}
+.intro-acts{display:flex;align-items:center;gap:8px;margin-top:18px;flex-wrap:wrap}
+.intro-acts .btn{padding:0 20px}
+
+/* audio card (measured: panel, 51pt play tile r12, 13pt title, grey time, waveform) */
+.acard{display:block;width:100%;margin-top:var(--gap);padding:12px;border-radius:var(--r-panel);background:var(--panel);text-align:left}
+.acard .ahead{display:flex;align-items:center;gap:14px}
+.acard .atile{position:relative;width:52px;height:52px;border-radius:var(--r-inner);overflow:hidden;flex:none;background:var(--panel2);display:flex;align-items:center;justify-content:center;color:#fff}
+.acard .atile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%;opacity:.55}
+.acard .atile .sfi,.acard .atile svg{position:relative}
+.acard .amid{flex:1;min-width:0}
+.acard .atitle{display:block;font-size:15px;line-height:20px;font-weight:600;letter-spacing:-.23px}
+.acard .atime{display:block;font-size:13px;line-height:18px;color:var(--label2)}
+.wave{position:relative;display:block;height:40px;margin:14px 4px 4px;overflow:hidden}
+.wave .wv{position:absolute;inset:0;display:flex;align-items:center;gap:3px}
+.wave i{flex:none;width:3px;border-radius:2px;background:rgba(255,255,255,.3)}
+.wave .wv.on i{background:#fff}
+
+/* cards */
+.fc,.fcw{border-radius:var(--r-big)}
+.fc{box-shadow:none}
+.pcard .art{border-radius:var(--r-panel)}
+.tile .art{border-radius:var(--r-tile)}
+.hero::after,.rcard::after,.tile .art::after,.pcard .art::after,.wide .art::after{box-shadow:none}
+.fcfav{background:rgba(28,28,30,.55);box-shadow:inset 0 0 0 1px var(--hair)}
+.cat{border-radius:var(--r-panel);background:var(--panel)}
+.cat::before{background:linear-gradient(90deg,var(--panel) 0%,rgba(28,28,30,.88) 55%,rgba(28,28,30,.1) 100%)}
+.cat::after,.cat .bgc{display:none}
+.cat .mark{color:rgba(255,255,255,.07)}
+
+/* rows inside panels (measured: inset divider, 16pt padding) */
+.erows{background:var(--panel);border-radius:var(--r-panel);padding:0 16px}
+.er{min-height:60px;box-shadow:inset 0 -1px 0 var(--sep)}
+.er:last-child{box-shadow:none}
+.er .l{font-size:20px;line-height:26px;font-weight:600;letter-spacing:-.4px}
+.er .l sup{color:var(--dim);font-weight:500}
+.er .r{color:var(--dim)}
+.cp{padding:12px;border-radius:var(--r-panel);background:var(--panel)}
+.group{background:var(--panel);border-radius:var(--r-panel)}
+.grow .ico{width:32px;height:32px;border-radius:9px;background:var(--panel2);box-shadow:none;color:rgba(255,255,255,.86)}
+.gh{padding:0 16px 8px;font-size:13px;letter-spacing:.04em}
+.empty-state{background:var(--panel);border:0;border-radius:var(--r-panel)}
+
+/* archive objects: flat panels, one serif title, no paper, tape or ink */
+.cover{--jacket:var(--panel2);--ink:#fff;background:var(--panel2)!important;color:#fff;border-radius:var(--r-inner);transform:none;box-shadow:none}
+.cover::before,.cover::after,.cover .mark{display:none}
+.cover .no,.cover .au{color:rgba(255,255,255,.5);letter-spacing:.06em}
+.cover .ti{color:#fff;left:14px;right:14px}
+.cover .no,.cover .au{left:14px}
+.cover .pr{background:rgba(255,255,255,.1)} .cover .pr i{background:#fff}
+.cover .dn{background:#fff;color:#000}
+.cover.cur{box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+@media (hover:hover){.book:hover .cover,.artifact-card:hover .cover{transform:translateY(-3px);box-shadow:none}}
+.letter-object,.speech-object,.edit-object{background:var(--panel2);color:#fff;border-radius:var(--r-inner);box-shadow:none;transform:none}
+.letter-object::before,.speech-object::before,.letter-object .stamp,.letter-object .signature,.speech-object .mic,.edit-object .reels{display:none}
+.letter-object .kicker,.letter-object .date,.speech-object .kicker,.speech-object .speaker,.cover .no{display:none}
+.letter-object .object-title,.speech-object .object-title{margin-top:0}
+.letter-object,.speech-object{display:flex;flex-direction:column;justify-content:flex-end}
+.cover .ti{top:16px}
+.edit-object .tape-label{background:none;box-shadow:none;color:#fff;padding:0;height:auto}
+.edit-object .object-title{font-family:'Instrument Serif',Georgia,serif;font-size:18px;line-height:19px;font-weight:400;letter-spacing:0;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.edit-object .wave{display:flex;align-items:center;height:34px;margin:12px 0 0;gap:2px}
+.edit-object .wave i{width:3px;background:rgba(255,255,255,.6)}
+.artifact-card .object-stage,.archive-tile{background:var(--panel);box-shadow:none;border-radius:var(--r-panel)}
+.artifact-card .object-stage::after{display:none}
+.hist-object{background:var(--panel);box-shadow:none;border-radius:var(--r-inner)}
+.hist-kind{color:var(--label2)}
+.hist-progress i,.wide .art .bar i{background:#fff}
+.t-eyebrow[style*="#c9a96f"]{color:var(--label2)!important}
+
+/* person */
+.ph{margin:calc(var(--safe-t) + 6px) var(--m) 0;border-radius:var(--r-big)}
+.pill{height:50px;border-radius:25px}
+.pill.ghost{width:50px;background:rgba(28,28,30,.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+
+/* dock */
+#tabbar{background:rgba(28,28,30,.82)}
+#tabhl{background:var(--panel2)}
+#mini{border-radius:var(--r-panel)}
+
+/* now playing */
+#np .art{border-radius:var(--r-panel);background:var(--panel);box-shadow:none}
+.speed button,.speed button.on{height:44px;border-radius:0;background:none;box-shadow:none;font-size:17px;font-weight:600;color:var(--dim)}
+.speed button.on{color:#fff}
+.sheet{background:rgba(28,28,30,.92)}
+
 /* phone / desktop variants */
 .desk{display:none}
 @media (min-width:900px){ .mob{display:none!important} .desk{display:block} }
@@ -814,7 +947,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261031-0100';
+const BUILD='20261031-0200';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -1040,6 +1173,13 @@ function historyRow(h){
       <button class="hist-action press" data-hmore="${p.slug}|${k}|${i}" aria-label="More actions for ${esc(rowTitle(p,e))}">${IC.more(18)}</button></span>
   </article>`;
 }
+/* audio card (pin 808888783111165642): play tile, title, time, a waveform that fills with progress */
+const wavebars=(s,n,prog)=>{ const bars=Array.from({length:n},(_,k)=>`<i style="height:${22+((s+k*37)%61)}%"></i>`).join('');
+  return `<span class="wv">${bars}</span>${prog?`<span class="wv on" style="clip-path:inset(0 ${100-100*prog}% 0 0)">${bars}</span>`:''}`; };
+const acard=f=>{ const pr=Math.min(1,pos(f.p,f.e)/(f.e.sec||1)), t=rowTitle(f.p,f.e);
+  return `<button class="acard press" data-ep="${f.p.slug}|${f.k}|${f.i}"><span class="ahead"><span class="atile">${img(f.p)}${IC.play(18)}</span>
+    <span class="amid"><span class="atitle trunc">${esc(t)}</span><span class="atime num">${esc(f.p.shortName)} · ${fmtDur(f.e.sec)}</span></span></span>
+    <span class="wave" aria-hidden="true">${wavebars(objectSeed(t),200,pr)}</span></button>`; };
 const wide=c=>`<button class="wide press" data-ep="${c.p.slug}|${c.k}|${c.i}" style="${tone(c.p)}"><span class="art toned">${img(c.p)}<span class="bar"><i style="width:${Math.min(99,100*c.ps/(c.e.sec||1))}%"></i></span></span>
   <span class="tt t-sub trunc" style="font-weight:600">${esc(rowTitle(c.p,c.e))}</span><span class="t-foot c2 trunc" style="display:block">${esc(c.p.shortName)} · ${fmtDur((c.e.sec||0)-c.ps)} left</span></button>`;
 
@@ -1057,11 +1197,12 @@ function pageHome(){
   return `<div class="content">
   <div class="ltitle" data-title="The Greats"><h1 class="t-page" style="font-size:52px;line-height:52px">The Greats</h1>
     <button class="btn-icon glass press mob" data-go="settings" aria-label="Settings">${IC.gear(19)}</button></div>
-  <div class="wrap rise"><section class="purpose-card"><img src="${P[focus.p.name]}" alt=""><div class="purpose-copy"><div class="t-eyebrow" style="color:#c9a96f">A practice of greatness</div>
-    <h2>Study the lives that shaped the world.</h2><p class="t-body">Listen closely. Return often. Carry the best ideas into your own work.</p>
-    <div class="purpose-actions"><button class="btn btn-primary press" data-ep="${focus.p.slug}|${focus.k}|${focus.i}">${IC.play(15)} ${cont.length?'Continue listening':'Begin today’s study'}</button>
-      <button class="btn btn-tinted press" data-go="history">${IC.clock(16)} History</button><span class="purpose-stat t-foot"><b>${studied}</b> studied this week</span></div></div></section></div>
-  <div class="wrap"><button class="search press" data-go="search" style="width:100%;margin-top:18px">${IC.search(17)}<span class="t-body c2">Greats, books, speeches</span></button></div>
+  <div class="wrap rise"><p class="intro"><b>Study the lives that shaped the world.</b> Listen closely, return often, and carry the best ideas into your own work.</p>
+    <div class="intro-acts"><button class="btn btn-primary press" data-ep="${focus.p.slug}|${focus.k}|${focus.i}">${IC.play(14)} ${cont.length?'Continue':'Today’s study'}</button>
+      <button class="circ press" data-go="history" aria-label="History, ${studied} studied this week">${IC.clock(18)}</button>
+      <button class="circ press" data-go="search" aria-label="Search">${IC.search(18)}</button>
+      <button class="circ press" data-go="l/favs" aria-label="Favourites">${IC.star(18)}</button></div>
+    ${acard(focus)}</div>
   <section class="sect"><div class="wrap">${shead('Choose a great')}</div><div class="hrow rise">${pop.map(fcard).join('')}</div></section>
   ${cont.length?`<section class="sect"><div class="wrap">${shead('Continue')}</div><div class="hrow">${cont.map(c=>book(c.p,c.k,c.e,c.i)).join('')}</div></section>`:''}
   <section class="sect"><div class="wrap">${shead('Shelves')}</div>
