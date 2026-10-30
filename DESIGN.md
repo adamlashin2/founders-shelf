@@ -1,8 +1,9 @@
 # The Greats — design system
 
-**Direction (2026-10-30, revised): monochrome editorial.** Per-figure colour was removed at Adam's request ("not a colouring
-festival"). One neutral ground, black-and-white portraits, Instrument Serif for names and titles, SF Pro for everything you operate,
-white pills for primary actions. App icon: the glass laurel.
+**Direction (2026-10-30, frontier pass): tactile archival listening room.** The application chrome remains disciplined and
+monochrome, while the content is allowed restrained material colour: cloth book jackets, ivory correspondence, broadcast programmes,
+and graphite tape. Black-and-white portraits and Instrument Serif carry the editorial voice; SF Pro is reserved for everything the
+listener operates. App icon: the glass laurel.
 
 ## Components and the reference each is built from
 Pinterest brief "The Greats · components" (`D:/tmp/oa/sheets5`, picks in `pick.jpg`). Concept shots have no fixed scale, so
@@ -19,19 +20,29 @@ structure and proportions come from the reference; type sizes stay on the Apple 
 | Editorial nav rows — big label, `[count]`, arrow | `4611615768377300032` |
 | Home — search, "Popular this week" portrait cards with overlaid title | `4610841701090354752` "Discover" |
 | Figure cards with overlaid name | `1045116657290183465`, `1121959326098177962` |
+| Content-object stacks and quiet archive composition | `832954893628477100` |
+| Books as dimensional hero objects | `53198839333782252` |
+| Letter and document objects | `539024649169832628` |
+| Edit tape vocabulary (reels, label, waveform; used with restraint) | `731272058261128395` |
+| Wide desktop listening panel and compact transport | `4608589877548880960`, `415175659384999404` |
+| macOS toolbar and card-grid hierarchy | `795589090467224683` |
+| Reachable mobile playback hierarchy | `1101341283912421828`, `733101645643367237` |
 
----|---|---|
-| Ground | each screen sits on its figure's hue: radial top `hsl(h, s·100%, 30%)` over `hsl(h, s·90%, 17%) → 8% → 5%` | C refs: art hue at L .31 → .17 (pins 60, 65, 71) |
-| Ground family | ember 16/.47 · umber 19/.29 · bronze 33/.50 · amber 31/.70 · sage 147/.14 · moss 99/.40 · graphite 220/.06 · crimson 1/.55 · azure 207/.45 · sand 29/.20 (hue / sat) | median border colour of each reference, `palette.py` |
-| Assignment | per shelf subset, rotating within a shelf so neighbours differ → `app/palette.json` | |
-| Morph | `--gh/--gs` are registered `@property` numbers, so the ground animates between figures (0.9 s spring) | |
-| Glass | the ground desaturated and lifted: `hsl(h, s·35%, 80%) @ 12%`, blur 30, saturate 1.4 | C: panel S .10–.16 vs ground S .35–.6 |
-| Portraits | duotone: photo luminosity over `hsl(h, s·85%, 46%)` (`.toned`) | B: tonal poster portraits (pins 21, 37, 56) |
-| Display type | Instrument Serif (OFL, self-hosted): page titles 44/46, figure names 56/56 (96 desktop), sections 28/32, card names 22/24 | B: serif display names |
-| UI type | SF Pro, Apple HIG iOS table (below) | |
-| Accent | ivory `#F3EDE4` pills on tinted grounds (replaces the red, which fought every ground) | B: white chips |
+## Design thesis
 
----
+The Greats is an archival listening room, not a generic podcast dashboard. Portraits, book jackets, names, and the spoken archive are
+the content layer. They carry the emotion. Navigation and playback are the functional layer, so they are the only places that use
+glass. Quiet opaque surfaces organize everything else.
+
+- **Signature:** monumental black-and-white portraits paired with editorial serif names.
+- **Hierarchy:** one clear subject or action per view; secondary controls stay discoverable without competing.
+- **Colour:** graphite, white, and ivory in the shell. Muted oxblood, bottle green, midnight blue, and tobacco appear only where a
+  physical archive object would naturally have material colour. Red is reserved for destructive consequences in controls.
+- **Adaptation:** compact widths keep reachable bottom navigation and 44-point targets; intermediate widths gain denser grids;
+  wide layouts use a bounded 1180-pixel canvas, precise pointer states, and keyboard shortcuts.
+- **Materials:** regular glass for floating navigation, playback, and temporary presentation. Content cards remain opaque.
+- **Appearance:** dark is an intentional media-room art direction, with explicit increased-contrast, reduced-transparency, and
+  reduced-motion variants.
 
 
 One system for every screen, phone and desktop. Every value has a source; nothing is picked by eye.
@@ -46,8 +57,8 @@ The live, rendered version is in the app: **Library → ⚙ → Design system** 
 | Colour, radii, component sizes | Measured by script from real iOS 26 / iPadOS 26 Apple Music screenshots on Pinterest: Home `739434832610073940`, artist page `1091911872195345882`, iPad Replay `898890406989751969`, iPhone Replay `1046946244644498781` |
 | Library / Settings / Search patterns | Apple Music Library `769834130101817658`, Apple Games Library `832954893623780849`, Apple Music Search `4591138481938600000` |
 | Motion | Apple *Designing Fluid Interfaces*: default spring damping 1.0 / response 0.4 s; sheets 0.8 / 0.3 s; momentum projection `v/1000·d/(1−d)`, d = 0.998 |
-| Spring runtime | Motion `motion@11.11.13` (jsDelivr, pinned) |
-| Page morphs | View Transitions API (card → page zoom, push / pop), capped at 900 ms, skipped when hidden or reduced-motion |
+| Runtime | Web Animations API plus View Transitions (card → page zoom, push / pop), compositor-driven and skipped for reduced motion |
+| Frontier object pass | Pinterest brief `The Greats — tactile archive pass` (`f1a2ef57-0b39-44b9-9067-8557d6d9fa26`); references listed above were interpreted as material and hierarchy cues, not copied layouts |
 
 ## Motion (measured, 2026-10-30)
 
@@ -59,12 +70,28 @@ Animations API / View Transitions (compositor-driven), no animation library.
 |---|---|---|---|
 | Card → figure page | portrait + name (`hero`, `heroname`), page fades 200 ms underneath | — | 417 ms |
 | Back | the page's portrait shrinks back into its card | — | 417 ms |
-| Open Now Playing | sheet slides up; art grows out of whatever was tapped (mini player art, book jacket, row thumbnail) | 156–168 ms | 326–340 ms |
-| Close Now Playing / sheets | slide away on the push curve; drag-to-dismiss uses Apple's momentum projection | 169–181 ms | 291–302 ms |
+| Open Now Playing | phone sheet slides up; desktop listening panel resolves in-window; art grows out of the tapped content object | 156–168 ms | 326–340 ms |
+| Close Now Playing / sheets | panel/sheet resolves away on the push curve; phone drag-to-dismiss uses Apple's momentum projection | 169–181 ms | 291–302 ms |
 | Tab switch | none — instant, as on iOS | — | — |
 | Press | scale .97 on pointer-down in 100 ms, release on the spring | | |
 
 Sampled per frame in headless Chromium by `D:/tmp/oa/tools/motion_probe.py`. Decorative loops (Now Playing backdrop) pause while hidden.
+
+## HIG interaction pass (2026-10-30)
+
+The editorial treatment stays custom; navigation, controls, and state follow the Apple interaction model:
+
+- phone controls use at least a 44×44 activation region, including filters, playback speed, sheet controls, and the mini-player;
+- the mini-player exposes separate previous, play/pause, next, open-player, and queue actions instead of one compound click target;
+- tab scroll position, the figure filter, and the active search query survive destination changes;
+- current tabs, filters, favourites, playback speed, sleep state, dialogs, and the scrubber expose names, roles, and values to assistive technology;
+- Now Playing and sheets contain keyboard focus, restore focus on dismissal, and retain explicit close buttons alongside drag-to-dismiss;
+- empty states explain the state and provide one useful recovery route; startup has honest loading and retry states;
+- destructive history clearing is outcome-labeled, unavailable when empty, and requires an explicit cancelable confirmation;
+- desktop supports `Command/Control-F` for app search, `Command/Control-,` for settings, `/` for search, Space for playback, and Escape for dismissal/back;
+- page zoom is not disabled, Reduce Motion, Reduce Transparency, and Increased Contrast remain supported, and search only auto-focuses for fine-pointer desktop input.
+
+Sources: Apple HIG [Accessibility](https://developer.apple.com/design/human-interface-guidelines/accessibility), [Buttons](https://developer.apple.com/design/human-interface-guidelines/buttons), [Tab bars](https://developer.apple.com/design/human-interface-guidelines/tab-bars), [Search fields](https://developer.apple.com/design/human-interface-guidelines/search-fields), [Playing audio](https://developer.apple.com/design/human-interface-guidelines/playing-audio), and [VoiceOver](https://developer.apple.com/design/human-interface-guidelines/voiceover).
 
 ## Type (iOS Large)
 
@@ -92,7 +119,8 @@ Classes: `.t-display .t-large .t-title1 .t-title2 .t-title3 .t-head .t-body .t-c
 | `--bg` | `#000` | every background probe in the Apple dark refs |
 | `--label` | `#fff` | |
 | `--label2` | `rgb(142,142,147)` | measured = systemGray |
-| `--red` | `rgb(232,66,78)` | measured active tab, iOS 26 Home — the one accent |
+| `--red` | `#F3EDE4` | legacy token name; the actual interactive accent is ivory |
+| `--danger` | `#ff453a` | destructive actions only |
 | `--glow` | `rgb(208,48,48)` | measured iPad Replay corner glow |
 | `--fill` | white @ 10% | measured mini player over black |
 | `--fill2` | white @ 17% | measured active tab lozenge |
@@ -101,16 +129,17 @@ Classes: `.t-display .t-large .t-title1 .t-title2 .t-title3 .t-head .t-body .t-c
 
 ## Shape & space
 
-Side margin 18 (phone, measured) / 40 (desktop). Hero card 356×443 r19, ranked card 240×320 r14 (desktop 223×296), tiles r9, grouped lists r18, latest card 356×105 r18. Tab bar 58 tall, search button 60, mini player 43, play circle 61, glass buttons 44 / 36.
+Side margin 18 (phone), 28 (intermediate), 40 (desktop). Hero card 356×443 r19, ranked card 240×320 r14 (desktop 223×296), tiles r9, grouped lists r18, latest card 356×105 r18. Tab bar 58 tall, search button 60, mini player 50, play circle 61, phone glass buttons 44.
 
 ## Components
 
 - **Buttons**: `.btn-primary` (white pill), `.btn-tinted` (white@17%), `.btn-red`, `.btn-glass`, `.btn-sm`, `.btn-icon(.sm)` (glass circles), `.btn-play` (61 white circle), `.chip(.on)`, `.textbtn`.
 - **Glass** (`.glass`): fill + blur(24) saturate(1.9) + top/bottom specular insets + gradient rim. Floating chrome only, never content.
-- **Cards**: `.hero`, `.rcard`, `.tile`, `.pcard`, `.wide` (continue listening), `.cat` (browse tile), `.lcard` (latest).
-- **Lists**: `.row` (number or artwork lead, inset separator), `.lnav` (Library nav rows), `.group/.grow` (Settings), `.trow` (tinted gradient rows).
-- **Chrome**: large title + collapsing glass nav bar; phone tab bar with travelling highlight + separate search circle; desktop centred glass tab pill; floating transport bar.
-- **Sheets**: Now Playing (drag to dismiss with velocity, animated artwork backdrop), Up Next, About, toast.
+- **Cards and objects**: `.hero`, `.rcard`, `.tile`, `.pcard`, `.wide` (continue listening), `.cat` (monochrome browse tile), `.lcard` (latest), tactile book jackets, folded letters, speech programmes, and edit tapes. Each archive kind has a recognisable silhouette before its label is read.
+- **Lists**: `.row` (number or artwork lead, inset separator), `.lnav` (Library nav rows), `.group/.grow` (Settings).
+- **Chrome**: large title + collapsing glass nav bar; phone tab bar with travelling highlight + separate search circle; bounded desktop toolbar with brand, primary destinations, search, and settings; floating transport bar.
+- **Playback presentation**: full-height, reachable Now Playing sheet on phone; wide two-column listening panel on desktop, with the current physical archive object beside title, progress, transport, and speed. The persistent transport hides while the desktop panel is open.
+- **Sheets**: mobile Now Playing (drag to dismiss with velocity), Up Next, About, toast. Desktop uses window-appropriate panels rather than phone-shaped presentations.
 
 ## Pages
 
