@@ -1,2 +1,9 @@
 ﻿download_log.txt
 __pycache__/
+
+# generated / third-party media (personal listening only, not for the public site)
+app/media/
+sources/portraits/
+sources/logo/refs/
+verification/
+sources/logo/*.log

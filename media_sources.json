@@ -1,0 +1,136 @@
+{
+ "_readme": "Sources for build_media.py. `q` is a YouTube search pinned on first build (see app/media.json for what it resolved to); replace it with `url` to force a specific video. `text` items are cut from a public source between `from` and `until` and narrated.",
+
+ "Steve Jobs": {
+  "speeches": [
+   {"id": "stanford-2005", "title": "Stanford Commencement Address", "sub": "Stanford University · June 2005", "q": "Steve Jobs 2005 Stanford Commencement Address Stanford"},
+   {"id": "think-different-1997", "title": "Think Different, internal meeting", "sub": "Apple · September 1997", "q": "Steve Jobs 1997 think different internal meeting marketing is about values"}
+  ],
+  "edits": [
+   {"id": "edit-1", "title": "Stay hungry, stay foolish", "sub": "Edit", "q": "Steve Jobs edit motivational"}
+  ],
+  "letters": [
+   {"id": "thoughts-on-flash", "title": "Thoughts on Flash", "sub": "Open letter · April 2010", "voice": "en-US-AndrewNeural",
+    "text": {"url": "https://web.archive.org/web/20100501000000id_/http://www.apple.com/hotnews/thoughts-on-flash/", "format": "html",
+             "from": "Apple has a long relationship with Adobe", "until": "April, 2010", "drop": ["^\\s*Steve Jobs\\s*$"]}}
+  ]
+ },
+
+ "Jeff Bezos": {
+  "speeches": [
+   {"id": "princeton-2010", "title": "We Are What We Choose", "sub": "Princeton Baccalaureate · May 2010", "q": "Jeff Bezos 2010 Princeton baccalaureate we are what we choose"}
+  ],
+  "edits": [
+   {"id": "edit-1", "title": "Regret minimization", "sub": "Edit", "q": "Jeff Bezos motivational edit"}
+  ],
+  "letters": [
+   {"id": "shareholders-1997", "title": "1997 Letter to Shareholders", "sub": "Amazon.com · It's All About the Long Term", "voice": "en-US-AndrewNeural",
+    "text": {"url": "https://s2.q4cdn.com/299287126/files/doc_financials/annual/Shareholderletter97.pdf", "format": "pdf",
+             "from": "To our shareholders:", "until": "Jeffrey P. Bezos"}}
+  ]
+ },
+
+ "Elon Musk": {
+  "speeches": [
+   {"id": "usc-2014", "title": "USC Commencement Address", "sub": "USC Marshall · May 2014", "q": "Elon Musk USC Marshall commencement speech 2014"}
+  ],
+  "edits": [
+   {"id": "edit-1", "title": "2008", "sub": "Edit", "q": "Elon Musk motivational edit"}
+  ],
+  "letters": [
+   {"id": "master-plan-2006", "title": "The Secret Tesla Motors Master Plan", "sub": "Tesla blog · August 2006", "voice": "en-US-AndrewNeural",
+    "text": {"url": "https://web.archive.org/web/2012id_/http://www.teslamotors.com/blog/secret-tesla-motors-master-plan-just-between-you-and-me", "format": "html",
+             "from": "Background: My day job", "until": "Tweet"}}
+  ]
+ },
+
+ "Bill Gates": {
+  "speeches": [
+   {"id": "harvard-2007", "title": "Harvard Commencement Address", "sub": "Harvard University · June 2007", "q": "Bill Gates Harvard commencement speech 2007 full"}
+  ]
+ },
+
+ "Mark Zuckerberg": {
+  "speeches": [
+   {"id": "harvard-2017", "title": "Harvard Commencement Address", "sub": "Harvard University · May 2017", "q": "Mark Zuckerberg Harvard commencement speech 2017 full"}
+  ],
+  "letters": [
+   {"id": "founders-letter-2012", "title": "Letter from Mark Zuckerberg", "sub": "Facebook S-1 · February 2012", "voice": "en-US-AndrewNeural",
+    "text": {"url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312512034517/d287954ds1.htm", "format": "html",
+             "from": "Facebook was not originally created to be a company", "until": "Thanks for", "drop": ["^\\s*Table of Contents\\s*$"]}}
+  ]
+ },
+
+ "Jensen Huang": {
+  "speeches": [
+   {"id": "caltech-2024", "title": "Caltech Commencement Address", "sub": "Caltech · June 2024", "q": "Jensen Huang Caltech commencement 2024 full speech"}
+  ],
+  "edits": [
+   {"id": "edit-1", "title": "Pain and suffering", "sub": "Edit", "q": "Jensen Huang pain and suffering edit"}
+  ]
+ },
+
+ "Peter Thiel": {
+  "speeches": [
+   {"id": "hamilton-2016", "title": "Hamilton College Commencement", "sub": "Hamilton College · May 2016", "q": "Peter Thiel Hamilton College commencement 2016"}
+  ]
+ },
+
+ "Winston Churchill": {
+  "speeches": [
+   {"id": "blood-toil-1940", "title": "Blood, Toil, Tears and Sweat", "sub": "House of Commons · 13 May 1940", "q": "Churchill blood toil tears and sweat speech original audio"},
+   {"id": "beaches-1940", "title": "We Shall Fight on the Beaches", "sub": "House of Commons · 4 June 1940", "q": "Churchill we shall fight on the beaches full speech audio"},
+   {"id": "finest-hour-1940", "title": "Their Finest Hour", "sub": "House of Commons · 18 June 1940", "q": "Churchill their finest hour speech full audio 1940"}
+  ],
+  "edits": [
+   {"id": "edit-1", "title": "Never surrender", "sub": "Edit", "q": "Winston Churchill edit"}
+  ]
+ },
+
+ "Charles de Gaulle": {
+  "speeches": [
+   {"id": "appel-1940", "title": "Appeal to the French", "sub": "BBC London · June 1940 · French", "q": "appel du 18 juin 1940 général de Gaulle discours audio"}
+  ]
+ },
+
+ "J. Robert Oppenheimer": {
+  "speeches": [
+   {"id": "become-death-1965", "title": "Now I Am Become Death", "sub": "NBC, The Decision to Drop the Bomb · 1965", "q": "Oppenheimer now I am become death destroyer of worlds 1965 original"}
+  ],
+  "edits": [
+   {"id": "edit-1", "title": "Destroyer of worlds", "sub": "Edit", "q": "Oppenheimer edit"}
+  ]
+ },
+
+ "Napoleon": {
+  "edits": [
+   {"id": "edit-1", "title": "Impossible is not French", "sub": "Edit", "q": "Napoleon Bonaparte edit"}
+  ],
+  "letters": [
+   {"id": "josephine-1796-waking", "title": "My waking thoughts are all of thee", "sub": "To Josephine · Paris, 1796 · translated", "voice": "en-GB-RyanNeural",
+    "text": {"url": "https://www.gutenberg.org/cache/epub/37499/pg37499.txt", "format": "txt",
+             "from": "My waking thoughts are all of thee", "until": "N. B."}},
+   {"id": "josephine-1796-port-maurice", "title": "To live for Josephine", "sub": "To Josephine · Port Maurice, April 1796 · translated", "voice": "en-GB-RyanNeural",
+    "text": {"url": "https://www.gutenberg.org/cache/epub/37499/pg37499.txt", "format": "txt",
+             "from": "I have received all your letters, but none has affected me", "until": "\nNo. 4.", "drop": ["^\\s{2,}\\S", "^\\s*\\*"]}}
+  ]
+ },
+
+ "Alexander the Great": {
+  "speeches": [
+   {"id": "opis-324bc", "title": "The Speech at Opis", "sub": "To the mutinous army · 324 BC · Arrian, tr. Chinnock", "voice": "en-GB-RyanNeural",
+    "text": {"url": "https://www.gutenberg.org/cache/epub/46976/pg46976.txt", "format": "txt",
+             "from": "The speech which I am about to deliver", "until": "CHAPTER XI.",
+             "drop": ["^\\s*CHAPTER X\\.?\\s*$", "SPEECH \\(continued\\)"]}}
+  ],
+  "edits": [
+   {"id": "edit-1", "title": "Undefeated", "sub": "Edit", "q": "Alexander the Great edit"}
+  ]
+ },
+
+ "John D. Rockefeller": {
+  "edits": [
+   {"id": "edit-1", "title": "The richest man in history", "sub": "Edit", "q": "John D Rockefeller edit"}
+  ]
+ }
+}

@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<title>Founders</title>
+<title>The Greats</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Founders">
+<meta name="apple-mobile-web-app-title" content="The Greats">
 <meta name="theme-color" content="#000000">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="assets/icon.png">
-<link rel="icon" type="image/png" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/png" href="assets/icon-192.png?v=2">
 <style>
 /* =============================================================================
    FOUNDERS — structure rebuilt from the reference recordings at 1170x2532 (@3x).
@@ -720,6 +720,278 @@ body.phase-lock #player .fld-r,body.phase-lock #player .fld-l{animation-play-sta
   #player.dismissing{animation:none;transition:opacity .2s linear;opacity:0}
   .eq i{animation:none;height:11px}
 }
+
+/* =============================================================================
+   THE GREATS — iOS 26 / iPadOS 26 Apple Music, measured.
+   Every number below comes from a real Apple screenshot sourced on Pinterest
+   (brief 69d4d49f), profiled with scripts in D:/tmp/oa/tools, not by eye:
+     H  = iOS 26 Music Home, dark   (pin 739434832610073940, 0.534 pt/px)
+     A  = iOS 27 artist page        (pin 1091911872195345882, 1.328 pt/px)
+     R  = iPadOS 26 Replay, dark    (pin 898890406989751969, 1.114 pt/px)
+     R2 = iOS Replay, dark          (pin 1046946244644498781)
+   ========================================================================== */
+:root{
+  --bg:#000; --grey:#8E8E93; --grey2:rgb(127,126,131);   /* R headline grey */
+  --red:rgb(232,66,78);                                   /* H active tab    */
+  --glow:208,48,48;                                       /* R corner glow   */
+  --hair:rgba(255,255,255,.12);                           /* R2 card rim     */
+  --sep:rgba(255,255,255,.10);
+  --m:18px;                                               /* H/A side margin */
+  --blue:var(--red); --primary:var(--red);
+
+  /* glass: H mini player reads white@.10 over black, H active lozenge white@.28 */
+  --g-fill:rgba(255,255,255,.10);
+  --g-blur:blur(24px) saturate(1.8);
+  --g-shadow:inset 0 .5px 0 rgba(255,255,255,.28), inset 0 -.5px 0 rgba(255,255,255,.08),
+             0 8px 30px rgba(0,0,0,.45);
+  --g-rim:linear-gradient(160deg,rgba(255,255,255,.45),rgba(255,255,255,.08) 30%,
+            rgba(255,255,255,0) 52%,rgba(255,255,255,.05) 74%,rgba(255,255,255,.22));
+}
+html,body{background:#000}
+::selection{background:rgba(232,66,78,.45)}
+:focus-visible{outline:2px solid rgba(232,66,78,.8);outline-offset:2px}
+
+/* ---- the one glass recipe (floating chrome only, never content) ---- */
+:is(#minipill,#tabbar,#tabsearch,.gbtn,.ggroup,#topnav,.lcard,#queue,.toppill,.about-x){
+  isolation:isolate;position:relative;
+  background:var(--g-fill);
+  -webkit-backdrop-filter:var(--g-blur);backdrop-filter:var(--g-blur);
+  box-shadow:var(--g-shadow);
+}
+#queue{position:fixed}
+:is(#minipill,#tabbar,#tabsearch,.gbtn,.ggroup,#topnav,.lcard,#queue,.toppill,.about-x)::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:3;padding:1px;
+  background:var(--g-rim);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+#tabbar{background:rgba(40,40,40,.55)}
+#queue{background:rgba(28,28,30,.82)}
+
+/* ================================ HOME (H + R2) ============================== */
+#browse{padding:0 var(--m) 200px}
+#browse::before{left:-60px;right:-18px;height:420px;background:
+  radial-gradient(75% 60% at 100% 0%,rgba(var(--glow),.85) 0%,rgba(var(--glow),.45) 25%,
+  rgba(var(--glow),.12) 55%,rgba(var(--glow),0) 80%)}
+#navbar{background:linear-gradient(to bottom,rgba(0,0,0,.85) 55%,transparent);
+  -webkit-backdrop-filter:none;backdrop-filter:none}
+.field{background:rgba(255,255,255,.10);box-shadow:none;
+  -webkit-backdrop-filter:var(--g-blur);backdrop-filter:var(--g-blur);height:40px;border-radius:20px}
+.field input::placeholder{color:rgba(235,235,245,.55)}
+
+/* H: the editorial hero card — 356x443, r 19, caption 22pt off the bottom */
+.feature{position:relative;display:block;width:100%;height:443px;margin-top:20px;border-radius:19px;
+  overflow:hidden;background:#111;text-align:center}
+.feature img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%}
+.feature::before{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to bottom,transparent 55%,rgba(0,0,0,.45) 82%,rgba(0,0,0,.7))}
+.feature::after{content:"";position:absolute;inset:0;border-radius:inherit;z-index:2;box-shadow:inset 0 0 0 1px var(--hair)}
+.feature .fx{position:absolute;left:18px;right:18px;top:22px;z-index:2;font-size:13px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.feature .fcap{position:absolute;left:20px;right:20px;bottom:22px;z-index:2;font-size:15px;font-weight:400;
+  letter-spacing:-.24px;line-height:20px;color:#fff}
+
+.sect{margin-top:34px}
+.sect-head{margin-bottom:12px}
+.sect-head h2{font-size:22px;font-weight:700;letter-spacing:.35px;line-height:28px;gap:4px}
+.sect-head h2 .sfi{position:relative;top:1px}
+.sect-head .seeall{display:none}
+
+/* R2: ranked portrait cards */
+.rank-row{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+  margin:0 calc(-1 * var(--m));padding:0 var(--m) 2px;scroll-padding:0 var(--m)}
+.rcard{position:relative;flex:none;width:240px;height:320px;border-radius:14px;overflow:hidden;
+  scroll-snap-align:start;background:#111;text-align:center}
+.rcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+.rcard::before{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to bottom,transparent 52%,rgba(0,0,0,.55) 78%,rgba(0,0,0,.85))}
+.rcard::after{content:"";position:absolute;inset:0;z-index:3;border-radius:inherit;box-shadow:inset 0 0 0 1px var(--hair)}
+.rcard .rk{position:absolute;left:18px;top:9px;z-index:2;font-size:45px;font-weight:700;line-height:54px;letter-spacing:-.5px}
+.rcard .rn{position:absolute;left:12px;right:12px;bottom:34px;z-index:2;font-size:17px;font-weight:600;letter-spacing:-.41px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rcard .rm{position:absolute;left:12px;right:12px;bottom:14px;z-index:2;font-size:15px;letter-spacing:-.24px;
+  color:rgba(235,235,245,.72);font-variant-numeric:tabular-nums}
+
+/* R: numbered track list (Top Songs) */
+.tlist{display:grid;grid-template-columns:1fr;column-gap:28px}
+.trow{display:flex;align-items:center;gap:12px;height:56px;width:100%;text-align:left;position:relative}
+.trow img{width:44px;height:44px;border-radius:6px;object-fit:cover;object-position:top;flex:none;
+  box-shadow:0 0 0 .5px var(--hair)}
+.trow .tn{width:16px;flex:none;text-align:center;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.trow .tm{flex:1;min-width:0;align-self:stretch;display:flex;flex-direction:column;justify-content:center;
+  box-shadow:inset 0 -.5px 0 var(--sep)}
+.trow .tt{font-size:16px;letter-spacing:-.32px;line-height:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trow .ts{font-size:13px;letter-spacing:-.08px;line-height:18px;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trow .tx{flex:none;align-self:stretch;display:flex;align-items:center;box-shadow:inset 0 -.5px 0 var(--sep);padding-left:6px}
+
+/* R: square shelf tiles (Top Albums) — 162pt, caption below */
+.shelf{display:flex;gap:12px;overflow-x:auto;margin:0 calc(-1 * var(--m));padding:0 var(--m);
+  scroll-snap-type:x mandatory;scroll-padding:0 var(--m)}
+.stile{flex:none;width:162px;text-align:left;scroll-snap-align:start}
+.stile .sa{display:block;position:relative;width:162px;height:162px;border-radius:9px;overflow:hidden;background:#111}
+.stile .sa::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 .5px var(--hair)}
+.stile img{width:100%;height:100%;object-fit:cover;object-position:center 15%;transition:transform .5s var(--ease-out)}
+.stile:hover img{transform:scale(1.04)}
+.stile .st{display:block;margin-top:7px;font-size:13px;line-height:17px;letter-spacing:-.08px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stile .ss{display:block;font-size:13px;line-height:17px;letter-spacing:-.08px;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge-new{position:absolute;top:8px;right:8px;z-index:2;background:var(--red);color:#fff;font-size:10px;
+  font-weight:700;letter-spacing:.3px;padding:2px 6px;border-radius:6px}
+
+/* ============================ DOCK (H, measured) =========================== */
+#dock{padding:0 20px 20px}
+#minipill{height:43px;border-radius:22px;margin-bottom:6px;padding:0 14px 0 6px;gap:10px}
+#minipill .art{width:31px;height:31px;border-radius:7px}
+#minipill .mp-t{font-size:15px;font-weight:500;letter-spacing:-.24px}
+#minipill .mp-s{font-size:13px;color:rgba(235,235,245,.6)}
+#tabrow{gap:10px}
+#tabbar{height:58px;border-radius:29px;padding:0 4px}
+.tab .lbl{font-size:10px;font-weight:600;line-height:12px;top:0}
+.tab{gap:3px}
+.tab.on{color:var(--red)}
+.tab.on::before{top:4px;bottom:4px;height:auto;left:0;right:0;border-radius:25px;background:rgba(255,255,255,.17)}
+#tabsearch{width:60px;height:60px}
+body.scrolled #tabbar,body.detail-open #tabbar{width:48px;height:48px}
+body.scrolled #tabsearch,body.detail-open #tabsearch{width:48px;height:48px}
+body.scrolled #minipill,body.detail-open #minipill{height:48px}
+#minipill #rwbtn{display:none}
+
+/* ============================ PERSON (A, measured) ========================= */
+#detail{padding-bottom:200px;background:#000}
+.pbg{position:fixed;inset:-60px;z-index:-1;pointer-events:none;overflow:hidden}
+.pbg img{width:100%;height:100%;object-fit:cover;filter:blur(60px) brightness(.32) saturate(1.2);transform:scale(1.2)}
+.ahero{position:relative;height:500px;overflow:hidden}
+.ahero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 12%;will-change:transform}
+.ahero .fade{position:absolute;inset:0;background:linear-gradient(to bottom,
+  rgba(0,0,0,.35) 0%,transparent 16%,transparent 52%,rgba(10,10,10,.35) 68%,rgba(10,10,10,.8) 86%,rgba(12,12,12,.97) 100%)}
+.hero-top{position:absolute;top:calc(var(--safe-t) + 6px);left:var(--m);right:var(--m);z-index:4;
+  display:flex;justify-content:space-between;align-items:center}
+.gbtn{width:44px;height:44px;border-radius:22px;display:flex;align-items:center;justify-content:center}
+.ggroup{height:44px;border-radius:22px;display:flex;align-items:center;padding:0 4px;overflow:visible}
+.ggroup button{width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+.ggroup .sep{display:none}
+/* name 34 bold centred at y=349pt, controls centred at y=412pt */
+.abody{position:absolute;left:var(--m);right:var(--m);bottom:22px;z-index:3;text-align:center}
+.aname{font-size:34px;font-weight:700;letter-spacing:.37px;line-height:41px;text-shadow:0 2px 24px rgba(0,0,0,.4)}
+.asub{font-size:15px;letter-spacing:-.24px;line-height:20px;color:rgba(255,255,255,.75);margin-top:2px}
+.actl{display:flex;align-items:center;justify-content:center;gap:34px;margin-top:14px}
+.actl .ic2{width:36px;height:36px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.actl .ic2.faved .sfi{background-color:#FFD60A!important}
+.pplay{width:61px;height:61px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.pplay .sfi{transform:translateX(2px)}
+.pmain{position:relative;padding:0 var(--m)}
+/* A: the glass "latest" card, 356x105 */
+.lcard{display:flex;align-items:center;gap:14px;width:100%;height:105px;border-radius:18px;padding:0 14px;
+  margin-top:4px;text-align:left;background:rgba(255,255,255,.13)}
+.lcard img{width:75px;height:75px;border-radius:8px;object-fit:cover;object-position:top;flex:none}
+.lcard .lk{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.lcard .lt{font-size:16px;font-weight:600;letter-spacing:-.32px;line-height:20px;margin-top:2px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lcard .ls{font-size:13px;color:rgba(255,255,255,.6);margin-top:2px}
+.lcard .lm{flex:1;min-width:0}
+.psect{margin-top:30px}
+.psect .sect-head{margin-bottom:6px}
+.prow{display:flex;align-items:center;gap:14px;width:100%;height:56px;text-align:left;position:relative}
+.prow .pn{width:22px;flex:none;text-align:right;font-size:15px;color:var(--grey);font-variant-numeric:tabular-nums}
+.prow.active .pn,.prow.active .pt{color:var(--red)}
+.prow .pm{flex:1;min-width:0;align-self:stretch;display:flex;flex-direction:column;justify-content:center;
+  box-shadow:inset 0 -.5px 0 var(--sep)}
+.prow .pt{font-size:16px;letter-spacing:-.32px;line-height:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prow .ps{font-size:13px;letter-spacing:-.08px;line-height:18px;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prow .px{flex:none;align-self:stretch;display:flex;align-items:center;gap:12px;color:var(--grey);font-size:13px;
+  font-variant-numeric:tabular-nums;box-shadow:inset 0 -.5px 0 var(--sep)}
+.prow .px .lft{color:var(--red);font-weight:600}
+.prow .eq i{background:var(--red)}
+.prow .prog{position:absolute;left:36px;right:0;bottom:6px;height:2px;border-radius:1px;background:rgba(255,255,255,.1)}
+.prow .prog i{display:block;height:100%;background:var(--red);border-radius:1px}
+.pabout{margin-top:34px}
+.pabout p{font-size:15px;line-height:21px;letter-spacing:-.24px;color:rgba(255,255,255,.75)}
+.pabout button{color:#fff;font-weight:600;margin-top:6px;font-size:15px}
+
+/* player / queue / about recolour */
+#player{--ptrack:rgba(255,255,255,.18);--psub:rgba(255,255,255,.6)}
+#player .spacer{display:flex;align-items:center;justify-content:center;min-height:0;padding:22px 0}
+.np-art{height:100%;max-height:440px;aspect-ratio:3/4;max-width:100%;border-radius:14px;overflow:hidden;
+  box-shadow:0 30px 70px rgba(0,0,0,.55);position:relative;transition:transform .5s var(--ease-out)}
+.np-art img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.np-art::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px var(--hair)}
+body:not(.playing) .np-art{transform:scale(.88)}
+#pscrim,#topnav{display:none}
+.eq i{background:var(--red)}
+
+/* ======================= DESKTOP (R, iPadOS 26) ========================== */
+@media (min-width:900px){
+  :root{--m:40px}
+  .view{max-width:none}
+  /* R: centred glass tab pill, 42pt tall; red label on a lozenge */
+  #topnav{display:flex;position:fixed;z-index:46;top:14px;left:50%;transform:translateX(-50%);
+    height:44px;border-radius:22px;padding:3px;gap:2px;align-items:center}
+  #topnav button{height:38px;padding:0 16px;border-radius:19px;font-size:15px;font-weight:600;
+    letter-spacing:-.24px;color:#fff;display:flex;align-items:center;gap:7px}
+  #topnav button.on{color:var(--red);background:rgba(255,255,255,.14)}
+  #topnav button:hover:not(.on){background:rgba(255,255,255,.06)}
+  #topnav .tn-logo{padding:0 12px 0 8px}
+  #topnav .tn-logo img{width:26px;height:26px;border-radius:7px}
+  #tabrow,#navbar{display:none!important}
+  #browse,#playlists,#settings{padding:0 var(--m) 160px}
+  #browse>*,#playlists>*,#settings>*,#detail .pmain>*{max-width:1200px;margin-left:auto;margin-right:auto}
+  #browse::before{left:auto;right:0;width:65vw;height:560px}
+  .bigtitle{padding-top:78px;height:auto}
+  /* R headline: ~39pt bold, grey with the figure in white */
+  .bigtitle h1{font-size:40px;line-height:46px;font-weight:700;letter-spacing:-.4px;color:var(--grey2)}
+  .bigtitle h1 b{color:#fff;font-weight:700}
+  #browse>.field{max-width:420px;margin:18px 0 0 calc((100% - min(1200px,100%))/2)}
+  .feature{display:none}
+  .rank-row{margin:0 calc(-1 * var(--m));padding:0 var(--m);gap:20px}
+  .rcard{width:223px;height:296px}
+  .tlist{grid-template-columns:1fr 1fr}
+  .shelf{gap:20px}
+  .stile,.stile .sa{width:180px}
+  .stile .sa{height:180px}
+  .sect{margin-top:40px}
+  /* person: wide banner, name bottom-left like the Mac artist page */
+  #detail{padding:0 0 160px}
+  .ahero{height:min(62vh,600px)}
+  .ahero>img{object-position:center 22%}
+  .hero-top{top:14px;left:var(--m);right:var(--m)}
+  .abody{left:var(--m);right:var(--m);bottom:34px;text-align:left;max-width:1200px;margin:0 auto}
+  .aname{font-size:64px;line-height:70px;letter-spacing:-.5px}
+  .asub{font-size:17px}
+  .actl{justify-content:flex-start;gap:16px;margin-top:18px}
+  .pmain{padding:0 var(--m)}
+  .pcols{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:44px;align-items:start}
+  .pcols .lcard{position:sticky;top:76px}
+  .prow:hover{background:rgba(255,255,255,.04)}
+  /* R transport: 690x63 pill centred at the bottom */
+  #dock,body.scrolled #dock,body.detail-open #dock{display:flex;justify-content:center;max-width:none;padding:0 0 22px}
+  #minipill,body.scrolled #minipill,body.detail-open #minipill{width:690px;height:63px;border-radius:32px;
+    padding:0 22px 0 14px;margin:0;gap:14px;background:rgba(21,21,21,.72)}
+  #minipill #rwbtn{display:flex}
+  #minipill .mp-btn{order:-1}
+  #minipill #rwbtn{order:-2}
+  #minipill .art,body.scrolled #minipill .art,body.detail-open #minipill .art{width:42px;height:42px;border-radius:8px;margin-left:10px}
+  #player{left:calc(50% - 215px);right:auto;top:3vh;bottom:3vh;width:430px;margin:0;border-radius:30px;
+    transform:translateY(110vh);box-shadow:0 40px 120px rgba(0,0,0,.7),inset 0 0 0 1px var(--hair)}
+  #player.show{transform:none}
+  #pscrim{display:block;position:fixed;inset:0;z-index:59;background:rgba(0,0,0,.55);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
+  body.player-open #pscrim{opacity:1;pointer-events:auto}
+  #queue{left:calc(50% - 195px);right:auto;width:390px}
+}
+@media (prefers-reduced-transparency:reduce){
+  :is(#minipill,#tabbar,#tabsearch,.gbtn,.ggroup,#topnav,.lcard,#queue){-webkit-backdrop-filter:none;backdrop-filter:none;background:#1c1c1e}
+}
+@media (prefers-reduced-motion:reduce){ .np-art,.stile img{transition:none} }
+
+.bigtitle .dh{display:none}
+.pcols{display:flex;flex-direction:column}
+.pright{order:-1}
+@media (max-width:899px){ .tlist .trow:nth-child(n+5){display:none} }
+@media (min-width:900px){
+  .bigtitle .ph{display:none} .bigtitle .dh{display:inline}
+  .pcols{display:grid} .pright{order:0}
+}
 </style>
 </head>
 <body>
@@ -729,7 +1001,8 @@ body.phase-lock #player .fld-r,body.phase-lock #player .fld-l{animation-play-sta
 <div class="view" id="playlists" style="display:none"></div>
 <div class="view" id="settings" style="display:none"></div>
 
-<div id="navbar"><div class="nt" id="nav-title">Founders</div></div>
+<nav id="topnav" aria-label="Sections"></nav>
+<div id="navbar"><div class="nt" id="nav-title">The Greats</div></div>
 
 <div id="dock">
   <button id="minipill" aria-label="Open player">
@@ -738,14 +1011,15 @@ body.phase-lock #player .fld-r,body.phase-lock #player .fld-l{animation-play-sta
       <span class="mp-t" id="mp-t"></span>
       <span class="mp-s" id="mp-s"></span>
     </span>
+    <span class="mp-btn" id="rwbtn"></span>
     <span class="mp-btn" id="mp-toggle"></span>
     <span class="mp-btn" id="mp-fwd"></span>
   </button>
   <div id="tabrow">
     <nav id="tabbar">
-      <button class="tab press on" data-tab="browse"><span class="ic"></span><span class="lbl">Shelf</span></button>
+      <button class="tab press on" data-tab="browse"><span class="ic"></span><span class="lbl">Home</span></button>
       <button class="tab press" data-tab="figures"><span class="ic"></span><span class="lbl">Figures</span></button>
-      <button class="tab press" data-tab="playlists"><span class="ic"></span><span class="lbl">Playlists</span></button>
+      <button class="tab press" data-tab="playlists"><span class="ic"></span><span class="lbl">Library</span></button>
       <button class="tab press" data-tab="settings"><span class="ic"></span><span class="lbl">Settings</span></button>
     </nav>
     <button id="tabsearch" class="press" aria-label="Search"></button>
@@ -756,7 +1030,7 @@ body.phase-lock #player .fld-r,body.phase-lock #player .fld-l{animation-play-sta
   <i class="fld fld-base"></i><i class="fld fld-r"></i><i class="fld fld-l"></i>
   <div class="grab"></div>
   <div class="toppill-wrap"><button class="toppill press" id="toppill"></button></div>
-  <div class="spacer"></div>
+  <div class="spacer"><div class="np-art"><img id="np-art" alt=""></div></div>
   <div class="np-row">
     <span class="disc"><img id="np-img" alt=""></span>
     <span class="np-meta">
@@ -784,6 +1058,7 @@ body.phase-lock #player .fld-r,body.phase-lock #player .fld-l{animation-play-sta
   </div>
 </div>
 
+<div id="pscrim"></div>
 <div id="qscrim"></div>
 <div id="queue">
   <div class="q-head">
@@ -888,7 +1163,7 @@ const SECTIONS = [
    index.html can persist across deploys with no way for the user to notice or
    clear it. On boot we compare this against version.txt (fetched no-store) and
    reload once if the served build is newer. sessionStorage guards the loop. */
-const BUILD='20260826-1942';
+const BUILD='20261030-1730';
 (()=>{
   fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{
     v=(v||'').trim();
@@ -913,13 +1188,19 @@ const store = {
   set(k,v){ try{localStorage.setItem('fs.'+k,JSON.stringify(v))}catch(e){} },
 };
 const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-const epKey = (p,e) => p.slug+'::'+(e.n!==null?e.n:e.title);
+const epKey = (p,e) => p.slug+'::'+(e.id?e.id:(e.n!==null?e.n:e.title));
 const pos  = (p,e) => store.get('pos.'+epKey(p,e),0);
 const done = (p,e) => store.get('done.'+epKey(p,e),false);
 let cur=null, saveTick=0, scrubbing=false, shuffleOn=false, repeatOn=false;
 let sleepUntil=null, sleepMin=0, muted=false;
 let favs = store.get('favs',[]);
-let curDetail=null, curTab='browse';
+let curDetail=null, curTab='browse', curKind='bio';
+/* Every person's audio is split by kind. 'bio' is the Founders feed (one book
+   per episode); the rest come from media.json, built by build_media.py. */
+const KINDS=[['bio','Biographies'],['edits','Edits'],['speeches','Speeches'],['letters','Letters']];
+const KLABEL=Object.fromEntries(KINDS);
+const items=(p,k='bio')=>k==='bio'?p.episodes:((p.media||{})[k]||[]);
+const curEp=()=>items(cur.p,cur.k||'bio')[cur.i];
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 
 const fmtDur = s => {s=Math.max(0,Math.round(s));const h=~~(s/3600),m=~~((s%3600)/60);return h?h+'h '+String(m).padStart(2,'0'):m+' min'};
@@ -962,51 +1243,69 @@ function epTitle(p, e){
    once you are looking at one person rather than the whole chronology. */
 const rowTitle = (p, e) => (e.book && e.book.trim()) ? e.book.trim() : epTitle(p, e);
 const rowSub = (p, e) => {
+  if (e.sub) return e.sub;
   const a = (e.author || '').trim(), d = mon(e.date);
   return a ? a + ' · ' + d : d;
 };
 
 /* ============ browse (Shelf) ============ */
+function listenedSec(){ let t=0;
+  DATA.people.forEach(p=>p.episodes.forEach(e=>{ t+= done(p,e)?(e.sec||0):pos(p,e); })); return t; }
 function renderBrowse(filter=''){
   const v=$('browse'); const f=filter.trim().toLowerCase();
   const people = DATA.people.filter(p=>!f||p.name.toLowerCase().includes(f)||p.shortName.toLowerCase().includes(f));
-  const card = p => {
+  const byCount = DATA.people.slice().sort((a,b)=>b.episodes.length-a.episodes.length);
+  const rank = byCount.slice(0,10);
+  /* Featured rotates daily through the portraits that read as icons */
+  const FEAT=['Steve Jobs','Winston Churchill','Napoleon','Alexander the Great','Elon Musk','Jeff Bezos',
+    'Jensen Huang','Nikola Tesla','Andrew Carnegie','Peter Thiel','Henry Ford','Charles de Gaulle'];
+  const fp = FEAT.map(n=>DATA.people.find(p=>p.name===n)).filter(Boolean);
+  const feat = fp[Math.floor(Date.now()/864e5) % fp.length] || byCount[0];
+  const books = DATA.people.reduce((t,p)=>t+p.episodes.length,0);
+  const hrs = Math.round(listenedSec()/3600);
+  const head = hrs ? `You've spent <b>${hrs} hour${hrs===1?'':'s'}</b> with the greats.`
+                   : `<b>${DATA.people.length} lives</b>, told in ${books} books.`;
+  const tile = p => {
     const isNew = p.episodes.some(e=>e.date && e.date>='2026-01-01');
-    return `<button class="pcard press" data-p="${p.slug}">
-      <span class="discwrap">${isNew?'<span class="badge-new">NEW</span>':''}
-        <span class="disc"><img loading="lazy" src="${PORTRAITS[p.name]}" alt="${esc(p.shortName)}"></span></span>
-      <span class="pname">${esc(p.shortName)}</span></button>`;
+    return `<button class="stile press" data-p="${p.slug}"><span class="sa">${isNew?'<span class="badge-new">NEW</span>':''}
+      <img loading="lazy" src="${PORTRAITS[p.name]}" alt=""></span>
+      <span class="st">${esc(p.shortName)}</span><span class="ss">${esc((META[p.name]||{}).sub||'')}</span></button>`;
   };
-  const top = DATA.people.slice().sort((a,b)=>b.episodes.length-a.episodes.length).slice(0,3);
-  let html = `<div class="bigtitle"><h1 class="t34">Founders</h1></div>
-  <div class="field">${IC.search(18)}<input id="b-search" type="text" placeholder="Search figures" value="${esc(filter)}" autocomplete="off"></div>
-  <button class="topcard press" id="topcard">
-    <span class="fan">
-      <span><img src="${PORTRAITS[top[1].name]}" alt=""></span>
-      <span><img src="${PORTRAITS[top[0].name]}" alt=""></span>
-      <span>${PORTRAITS[top[2].name]?`<img src="${PORTRAITS[top[2].name]}" alt="">`:`<span class="ini">${esc(top[2].shortName.split(' ').map(w=>w[0]).join('').slice(0,2))}</span>`}</span>
-    </span>
-    <span class="tc-t">Most covered</span>
-    <span class="tc-s">All time</span>
-    <span class="tc-c">${IC.chevR(20,'#fff')}</span>
-  </button>`;
+  const chev = IC.chevR(16,'rgba(235,235,245,.5)');
+  const recent = DATA.people.flatMap(p=>p.episodes.map((e,i)=>({p,e,i})))
+    .filter(r=>r.e.date).sort((a,b)=>b.e.date.localeCompare(a.e.date)).slice(0,8);
+  let html = `<div class="bigtitle"><h1 class="t34"><span class="ph">The Greats</span><span class="dh">${head}</span></h1></div>
+  <div class="field">${IC.search(18)}<input id="b-search" type="text" placeholder="Search the greats" value="${esc(filter)}" autocomplete="off"></div>`;
+  if (!f) html += `
+  <button class="feature press" data-p="${feat.slug}"><img src="${PORTRAITS[feat.name]}" alt="">
+    <span class="fx">Featured</span>
+    <span class="fcap">${esc(feat.shortName)}, told in ${feat.episodes.length} book${feat.episodes.length===1?'':'s'}.</span></button>
+  <section class="sect"><div class="sect-head"><h2>Most covered ${chev}</h2></div>
+    <div class="rank-row">${rank.map((p,i)=>`<button class="rcard press" data-p="${p.slug}">
+      <img src="${PORTRAITS[p.name]}" alt="" loading="${i<3?'eager':'lazy'}">
+      <span class="rk">${i+1}</span><span class="rn">${esc(p.shortName)}</span>
+      <span class="rm">${p.episodes.length} books · ${Math.round(p.episodes.reduce((t,e)=>t+(e.sec||0),0)/3600)} h</span></button>`).join('')}</div></section>
+  <section class="sect"><div class="sect-head"><h2>New episodes ${chev}</h2></div>
+    <div class="tlist">${recent.map((r,n)=>`<button class="trow press" data-p="${r.p.slug}" data-i="${r.i}">
+      <img src="${PORTRAITS[r.p.name]}" alt="" loading="lazy"><span class="tn">${n+1}</span>
+      <span class="tm"><span class="tt">${esc(rowTitle(r.p,r.e))}</span><span class="ts">${esc(r.p.shortName)} · ${mon(r.e.date)}</span></span>
+      <span class="tx">${IC.ellipsis(18)}</span></button>`).join('')}</div></section>`;
   const favp = people.filter(p=>favs.includes(p.name));
-  if (favp.length) html += `<section class="sect">
-      <div class="sect-head"><h2><span class="starmark">${sfi('star_fill',20,'#FFD60A')}</span>Your favourites</h2><span class="seeall">See all</span></div>
-      <div class="pgrid">${favp.map(card).join('')}</div></section>`;
+  if (favp.length) html += `<section class="sect"><div class="sect-head"><h2>Your favourites ${chev}</h2></div>
+      <div class="shelf">${favp.map(tile).join('')}</div></section>`;
   for (const [key,label] of SECTIONS){
-    const ps = people.filter(p=>(META[p.name]||{}).cat===key && !favs.includes(p.name));
+    const ps = people.filter(p=>(META[p.name]||{}).cat===key);
     if (!ps.length) continue;
-    html += `<section class="sect">
-      <div class="sect-head"><h2>${label}</h2><span class="seeall">See all</span></div>
-      <div class="pgrid">${ps.map(card).join('')}</div></section>`;
+    html += `<section class="sect" id="sec-${key}"><div class="sect-head"><h2>${label} ${chev}</h2></div>
+      <div class="shelf">${ps.map(tile).join('')}</div></section>`;
   }
   v.innerHTML = html;
   const si=$('b-search');
   si.addEventListener('input',()=>{ const val=si.value, sel=si.selectionStart;
     renderBrowse(val); const s2=$('b-search'); s2.focus(); s2.setSelectionRange(sel,sel); });
-  $('topcard').onclick=()=>openDetail(top[0].slug);
-  v.querySelectorAll('.pcard').forEach(b=>b.onclick=()=>openDetail(b.dataset.p));
+  v.querySelectorAll('.stile,.rcard,.feature').forEach(b=>b.onclick=()=>openDetail(b.dataset.p));
+  v.querySelectorAll('.trow').forEach(b=>b.onclick=()=>{
+    const p=DATA.people.find(x=>x.slug===b.dataset.p); playEp(p,+b.dataset.i,true,'bio'); openPlayer(); });
 }
 
 /* ============ scroll → collapsed nav + collapsed dock ============ */
@@ -1021,7 +1320,7 @@ let navBusy=false;
 function openDetail(pslug){
   if (navBusy) return; navBusy=true;
   const p=DATA.people.find(x=>x.slug===pslug); if(!p){navBusy=false;return}
-  curDetail=p; renderDetail(p);
+  curDetail=p; renderDetail(p); renderSidebar();
   const b=activeView(), d=$('detail');
   d.style.display='block'; d.scrollTop=0; document.body.classList.remove('scrolled');
   document.body.classList.add('detail-open');
@@ -1037,7 +1336,7 @@ function closeDetail(fromPop){
   b.style.display='block';
   d.classList.add('pop-out'); b.classList.add('pop-back');
   setTimeout(()=>{ d.classList.remove('pop-out'); b.classList.remove('pop-back'); d.style.display='none';
-    curDetail=null; navBusy=false; document.body.classList.toggle('scrolled', b.scrollTop>18); },400);
+    curDetail=null; navBusy=false; renderSidebar(); document.body.classList.toggle('scrolled', b.scrollTop>18); },400);
   document.body.classList.remove('detail-open');
   if (!fromPop) history.back();
 }
@@ -1050,84 +1349,68 @@ window.addEventListener('popstate',e=>{
 function renderDetail(p){
   const v=$('detail');
   const m=META[p.name]||{sub:'',bio:''};
-  let ndone=0; p.episodes.forEach(e=>{if(done(p,e))ndone++});
-  const rows=p.episodes.map((e,i)=>{
-    const isCur=cur&&cur.p.slug===p.slug&&cur.i===i;
-    const dn=done(p,e), ps=pos(p,e), started=ps>60&&!dn;
-    const tile=isCur?`<span class="eq${audio.paused?' paused':''}"><i></i><i></i><i></i></span>`:(i+1);
-    const side= started? `<span class="lft">${fmtDur((e.sec||0)-ps)} left</span>`
-              : dn? IC.check(17)
-              : `<span>${fmtDur(e.sec)}</span>`;
-    const prog= started? `<span class="ep-prog"><i style="width:${Math.min(99,100*ps/(e.sec||1))}%"></i></span>`:'';
-    return `<button class="eprow press ${isCur?'active':''} ${dn?'done':''}" data-i="${i}">
-      <span class="numtile">${tile}</span>
-      <span class="ep-main"><span class="ep-t">${esc(rowTitle(p,e))}</span>
-        <span class="ep-s">${esc(rowSub(p,e))}</span></span>
-      <span class="ep-side">${side}${IC.ellipsis(20)}</span>${prog}</button>`;
-  }).join('');
   const faved=favs.includes(p.name);
-  v.innerHTML=`
-    <div class="hero">
-      <img id="heroimg" src="${PORTRAITS[p.name]}" alt="">
-      <div class="fade"></div>
-      <div class="hero-top">
-        <button class="gcircle press" id="d-back">${IC.chevL(20)}</button>
-        <div class="ggroup">
-          <button class="press" id="d-fav">${IC.star(20,faved)}</button>
-          <span class="sep"></span>
-          <button class="press" id="d-info">${IC.info(21)}</button>
-        </div>
-      </div>
-      <div class="hero-body">
-        <div class="hero-name">${esc(p.shortName)}</div>
-        <div class="hero-sub"><span class="dot">ƒ</span><span>${esc(m.sub||'')}</span></div>
-        <div class="hero-actions">
-          <button class="act-circle press" id="d-shuffle">${IC.shuffle(18)}</button>
-          <button class="playpill press" id="d-play">${IC.play(15,'#000')} Play</button>
-          <button class="act-circle press ${faved?'faved':''}" id="d-star">${IC.star(20,faved)}</button>
-        </div>
-      </div>
-    </div>
-    <div class="bio-wrap"><span class="bio" id="d-bio">${esc((m.bio||'').split('\n')[0])}</span><button class="bio-more" id="d-more">More</button></div>
-    <div class="epsect">
-      <div class="epsect-head"><h2>${p.episodes.length} episodes recorded</h2>
-        ${ndone?`<span class="ep-side"><span>${ndone} done</span></span>`:''}</div>
-      <div class="eplist">${rows}</div>
-    </div>`;
-  requestAnimationFrame(()=>{ const bio=$('d-bio'); if(!bio) return; const wrap=bio.parentElement;
-    let words=bio.textContent.split(' '), guard=0;
-    while(wrap.scrollHeight>40 && words.length>4 && guard++<250){
-      words.pop(); bio.textContent=words.join(' ').replace(/[,.;:]$/,'')+'…';
-    }
-  });
+  const chev=IC.chevR(16,'rgba(235,235,245,.5)');
+  const latest=p.episodes.map((e,i)=>({e,i})).filter(r=>r.e.date)
+    .sort((a,b)=>b.e.date.localeCompare(a.e.date))[0];
+  const row=(k,e,i)=>{
+    const isCur=cur&&cur.p.slug===p.slug&&(cur.k||'bio')===k&&cur.i===i;
+    const dn=done(p,e), ps=pos(p,e), started=ps>60&&!dn;
+    const num=isCur?`<span class="eq${audio.paused?' paused':''}"><i></i><i></i><i></i></span>`:(i+1);
+    const side= started? `<span class="lft">${fmtDur((e.sec||0)-ps)} left</span>`
+              : dn? IC.check(16,'#8E8E93') : `<span>${fmtDur(e.sec)}</span>`;
+    return `<button class="prow press ${isCur?'active':''}" data-k="${k}" data-i="${i}">
+      <span class="pn">${num}</span>
+      <span class="pm"><span class="pt">${esc(rowTitle(p,e))}</span><span class="ps">${esc(rowSub(p,e))}</span></span>
+      <span class="px">${side}${IC.ellipsis(18)}</span>
+      ${started?`<span class="prog"><i style="width:${Math.min(99,100*ps/(e.sec||1))}%"></i></span>`:''}</button>`;
+  };
+  const sect=k=>{ const L=items(p,k); if(!L.length) return '';
+    return `<section class="psect"><div class="sect-head"><h2>${KLABEL[k]} ${chev}</h2></div>${L.map((e,i)=>row(k,e,i)).join('')}</section>`; };
+  v.innerHTML=`<div class="pbg"><img src="${PORTRAITS[p.name]}" alt=""></div>
+    <div class="ahero"><img id="heroimg" src="${PORTRAITS[p.name]}" alt=""><div class="fade"></div>
+      <div class="hero-top"><button class="gbtn press" id="d-back" aria-label="Back">${IC.chevL(20)}</button>
+        <div class="ggroup"><button class="press" id="d-fav" aria-label="Favourite">${IC.star(19,faved)}</button>
+          <button class="press" id="d-info" aria-label="About">${IC.ellipsis(20,'#fff')}</button></div></div>
+      <div class="abody"><div class="aname">${esc(p.shortName)}</div>
+        <div class="asub">${esc(m.sub||'')}</div>
+        <div class="actl"><button class="ic2 press" id="d-shuffle" aria-label="Shuffle">${IC.shuffle(17)}</button>
+          <button class="pplay press" id="d-play" aria-label="Play">${IC.play(26,'#000')}</button>
+          <button class="ic2 press ${faved?'faved':''}" id="d-star" aria-label="Favourite">${IC.star(18,faved)}</button></div></div></div>
+    <div class="pmain"><div class="pcols">
+      <div class="pleft">${sect('bio')}${sect('speeches')}${sect('edits')}${sect('letters')}
+        <section class="pabout"><div class="sect-head"><h2>About</h2></div>
+          <p>${esc((m.bio||'').split('\n')[0])}</p><button id="d-more">More</button></section></div>
+      <div class="pright">${latest?`<button class="lcard press" id="d-latest"><img src="${PORTRAITS[p.name]}" alt="">
+        <span class="lm"><span class="lk">Latest · ${mon(latest.e.date)}</span><span class="lt">${esc(rowTitle(p,latest.e))}</span>
+        <span class="ls">${esc((latest.e.author||'').trim()||p.shortName)} · ${fmtDur(latest.e.sec)}</span></span>${IC.play(18,'#fff')}</button>`:''}</div>
+    </div></div>`;
   $('d-back').onclick=()=>closeDetail(false);
-  $('d-info').onclick=()=>openAbout(p);
-  $('d-more').onclick=()=>openAbout(p);
+  $('d-info').onclick=$('d-more').onclick=()=>openAbout(p);
   $('d-fav').onclick=$('d-star').onclick=()=>{ toggleFav(p.name); renderDetail(p); };
-  $('d-play').onclick=()=>{ playEp(p,resumeIndex(p),true); openPlayer(); };
-  $('d-shuffle').onclick=()=>{ shuffleOn=true; playEp(p,~~(Math.random()*p.episodes.length),true); openPlayer(); paintQueueIcons(); };
-  v.querySelectorAll('.eprow').forEach(b=>b.onclick=()=>{
-    const i=+b.dataset.i;
-    if (cur&&cur.p.slug===p.slug&&cur.i===i){ toggle(); refreshDetail(); return; }
-    playEp(p,i,true); openPlayer();
+  $('d-play').onclick=()=>{ playEp(p,resumeIndex(p,'bio'),true,'bio'); openPlayer(); };
+  $('d-shuffle').onclick=()=>{ shuffleOn=true; playEp(p,~~(Math.random()*p.episodes.length),true,'bio'); openPlayer(); paintQueueIcons(); };
+  if(latest) $('d-latest').onclick=()=>{ playEp(p,latest.i,true,'bio'); openPlayer(); };
+  v.querySelectorAll('.prow').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.k, i=+b.dataset.i;
+    if (cur&&cur.p.slug===p.slug&&(cur.k||'bio')===k&&cur.i===i){ toggle(); refreshDetail(); return; }
+    playEp(p,i,true,k); openPlayer();
   });
   v.onscroll=()=>{ const y=v.scrollTop, img=$('heroimg');
     document.body.classList.toggle('scrolled', y>18);
-    /* measured: the reference hero scrolls 1:1 with the page (cross-correlated
-       hero band vs content band over v2 f1110-1119 => ratio 1.000, no parallax).
-       Only the pull-down overscroll stretches it. */
     if(img) img.style.transform = y<0 ? `scale(${1 + Math.min(60,-y)*.0016})` : 'none';
   };
 }
 function refreshDetail(){ if(curDetail) renderDetail(curDetail); }
-function resumeIndex(p){
-  let i=p.episodes.findIndex(e=>pos(p,e)>60&&!done(p,e));
-  if(i<0) i=p.episodes.findIndex(e=>!done(p,e));
+function resumeIndex(p,k='bio'){
+  const L=items(p,k);
+  let i=L.findIndex(e=>pos(p,e)>60&&!done(p,e));
+  if(i<0) i=L.findIndex(e=>!done(p,e));
   return i<0?0:i;
 }
 function toggleFav(name){
   favs = favs.includes(name)? favs.filter(x=>x!==name) : [...favs,name];
-  store.set('favs',favs);
+  store.set('favs',favs); renderSidebar();
   renderBrowse($('b-search')?$('b-search').value:'');
   if(curTab==='playlists') renderPlaylists();
 }
@@ -1178,13 +1461,24 @@ function renderSettings(){
     .forEach(k=>localStorage.removeItem(k)); renderSettings(); refreshDetail(); };
 }
 
+/* ============ sidebar (desktop) ============ */
+function renderSidebar(){
+  const n=$('topnav'); if(!n||!DATA) return;
+  const t=(id,l)=>`<button class="press${curTab===id&&!curDetail?' on':''}" data-t="${id}">${l}</button>`;
+  n.innerHTML=`<button class="tn-logo press" data-t="browse" aria-label="The Greats"><img src="assets/icon-192.png?v=2" alt=""></button>
+    ${t('browse','Home')}${t('playlists','Library')}${t('settings','Settings')}
+    <button class="press" id="tn-search" aria-label="Search">${IC.search(17,'#fff')}</button>`;
+  n.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>goTab(b.dataset.t));
+  $('tn-search').onclick=()=>{ if(curDetail){ closeDetail(false); setTimeout(focusSearch,420); } else focusSearch(); };
+}
+
 /* ============ tabs ============ */
 const TABICON={browse:IC.house,figures:IC.people,playlists:IC.grid,settings:IC.gear};
 function paintTabs(){
   document.querySelectorAll('#tabbar .tab').forEach(b=>{
     const on=b.dataset.tab===curTab;
     b.classList.toggle('on',on);
-    b.querySelector('.ic').innerHTML=TABICON[b.dataset.tab](26.5, on?'#fff':'rgba(255,255,255,.98)');
+    b.querySelector('.ic').innerHTML=TABICON[b.dataset.tab](24, on?'rgb(232,66,78)':'#fff');
   });
 }
 function goTab(t){
@@ -1196,7 +1490,8 @@ function goTab(t){
   if(t==='settings') renderSettings();
   const v=$(views[t]); v.style.display='block'; v.scrollTop=0;
   document.body.classList.remove('scrolled');
-  $('nav-title').textContent={browse:'Founders',figures:'Figures',playlists:'Playlists',settings:'Settings'}[t];
+  renderSidebar();
+  $('nav-title').textContent={browse:'The Greats',figures:'Figures',playlists:'Library',settings:'Settings'}[t];
   paintTabs();
 }
 document.querySelectorAll('#tabbar .tab').forEach(b=>b.onclick=()=>goTab(b.dataset.tab));
@@ -1220,15 +1515,15 @@ $('about-x').onclick=()=>$('about').classList.remove('show');
 $('about').addEventListener('click',e=>{ if(e.target.id==='about') $('about').classList.remove('show'); });
 
 /* ============ playback engine ============ */
-function playEp(p,i,fromSaved){
-  const e=p.episodes[i];
-  cur={p,i};
+function playEp(p,i,fromSaved,k=(cur&&cur.k)||'bio'){
+  const e=items(p,k)[i]; if(!e) return;
+  cur={p,i,k};
   audio.src=e.url;
   const start=fromSaved?pos(p,e):0;
   audio.play().then(()=>{ if(start>5&&start<(e.sec||1)-20) audio.currentTime=start; }).catch(()=>{});
   audio.playbackRate=store.get('speed',1);
   audio.muted=muted;
-  store.set('last',{slug:p.slug,i});
+  store.set('last',{slug:p.slug,i,k});
   document.body.classList.add('has-track');
   paintShells(); setMediaSession(p,e); renderQueue();
   if(curDetail) refreshDetail();
@@ -1236,37 +1531,37 @@ function playEp(p,i,fromSaved){
 function toggle(){ if(!cur)return; audio.paused?audio.play():audio.pause(); }
 function seekBy(d){ if(cur) audio.currentTime=Math.max(0,audio.currentTime+d); }
 function nextEp(auto){
-  if(!cur)return; const {p,i}=cur;
+  if(!cur)return; const {p,i}=cur, L=items(p,cur.k||'bio');
   if(repeatOn&&auto){ playEp(p,i,false); return; }
-  if(shuffleOn){ const c=p.episodes.map((_,j)=>j).filter(j=>j!==i);
+  if(shuffleOn){ const c=L.map((_,j)=>j).filter(j=>j!==i);
     if(c.length) playEp(p,c[~~(Math.random()*c.length)],true); return; }
-  if(i+1<p.episodes.length) playEp(p,i+1,true);
+  if(i+1<L.length) playEp(p,i+1,true);
 }
 function prevEp(){ if(cur&&audio.currentTime>10){audio.currentTime=0;return} if(cur&&cur.i>0) playEp(cur.p,cur.i-1,true); }
 
 audio.addEventListener('timeupdate',()=>{
   if(!cur)return;
   const now=Date.now();
-  if(now-saveTick>4000){ saveTick=now; store.set('pos.'+epKey(cur.p,cur.p.episodes[cur.i]),Math.round(audio.currentTime)); }
+  if(now-saveTick>4000){ saveTick=now; store.set('pos.'+epKey(cur.p,curEp()),Math.round(audio.currentTime)); }
   if(sleepUntil&&now>=sleepUntil){ audio.pause(); sleepUntil=null; sleepMin=0; paintMoon(); }
   paintProgress();
 });
 audio.addEventListener('ended',()=>{
   if(!cur)return;
-  const e=cur.p.episodes[cur.i];
+  const e=curEp();
   store.set('done.'+epKey(cur.p,e),true);
   store.set('pos.'+epKey(cur.p,e),0);
   nextEp(true);
 });
-audio.addEventListener('play',paintShells);
-audio.addEventListener('pause',()=>{ paintShells();
-  if(cur) store.set('pos.'+epKey(cur.p,cur.p.episodes[cur.i]),Math.round(audio.currentTime)); });
+audio.addEventListener('play',()=>{document.body.classList.add('playing');paintShells()});
+audio.addEventListener('pause',()=>{ document.body.classList.remove('playing'); paintShells();
+  if(cur) store.set('pos.'+epKey(cur.p,curEp()),Math.round(audio.currentTime)); });
 
 function setMediaSession(p,e){
   if(!('mediaSession' in navigator))return;
   const art=new URL(PORTRAITS[p.name],location.href).href;
   navigator.mediaSession.metadata=new MediaMetadata({
-    title:rowTitle(p,e),artist:p.shortName,album:'Founders',
+    title:rowTitle(p,e),artist:p.shortName,album:KLABEL[(cur&&cur.k)||'bio'],
     artwork:[{src:art,sizes:'800x800',type:'image/jpeg'}]});
   navigator.mediaSession.setActionHandler('play',()=>audio.play());
   navigator.mediaSession.setActionHandler('pause',()=>audio.pause());
@@ -1280,13 +1575,13 @@ function setMediaSession(p,e){
 /* ============ shells ============ */
 function paintShells(){
   if(!cur)return;
-  const {p,i}=cur, e=p.episodes[i];
+  const {p,i}=cur, e=curEp();
   $('mp-img').src=PORTRAITS[p.name];
   $('mp-t').textContent=(i+1)+'. '+rowTitle(p,e);
   $('mp-s').textContent=p.shortName;
-  $('mp-toggle').innerHTML=audio.paused?IC.play(14):IC.pause(14);
-  $('mp-fwd').innerHTML=IC.ff(23);
-  $('np-img').src=PORTRAITS[p.name];
+  $('mp-toggle').innerHTML=audio.paused?IC.play(20):IC.pause(20);
+  $('mp-fwd').innerHTML=IC.ff(23); $('rwbtn').innerHTML=IC.rw(23);
+  $('np-img').src=PORTRAITS[p.name]; $('np-art').src=PORTRAITS[p.name];
   $('np-t').textContent=rowTitle(p,e);
   $('np-s').textContent=p.shortName;
   $('toppill').innerHTML=IC.chevD(15)+`<span>${esc(p.shortName)}</span>`;
@@ -1299,26 +1594,28 @@ function paintShells(){
 }
 function paintProgress(){
   if(!cur)return;
-  const e=cur.p.episodes[cur.i];
+  const e=curEp();
   const d=audio.duration&&isFinite(audio.duration)?audio.duration:(e.sec||1);
   const t=audio.currentTime||0;
   if(!scrubbing) $('scrubfill').style.width=(100*t/d)+'%';
   $('t-el').textContent=fmtClock(scrubbing?scrubT:t);
   $('t-rem').textContent='-'+fmtClock(Math.max(0,d-(scrubbing?scrubT:t)));
 }
-function openPlayer(){ $('player').classList.add('show'); }
+function openPlayer(){ $('player').classList.add('show'); document.body.classList.add('player-open'); }
 function closePlayer(){
-  const sh=$('player'); closeQueue();
+  const sh=$('player'); closeQueue(); document.body.classList.remove('player-open');
   sh.classList.add('dismissing');
   setTimeout(()=>{ sh.classList.remove('dismissing','show'); sh.style.transform=''; },170);
 }
 
 $('minipill').onclick=e=>{
+  if(e.target.closest('#rwbtn')){prevEp();return}
   if(e.target.closest('#mp-toggle')){toggle();return}
   if(e.target.closest('#mp-fwd')){nextEp(false);return}
   openPlayer();
 };
 $('toppill').onclick=()=>closePlayer();
+$('pscrim').onclick=()=>closePlayer();
 $('ctl-rw').innerHTML=IC.rw(35);
 $('ctl-ff').innerHTML=IC.ff(35);
 $('ctl-rw').onclick=()=>seekBy(-15);
@@ -1357,7 +1654,7 @@ function barSeek(clientX,commit){
   if(!cur)return;
   const r=bar.getBoundingClientRect();
   const f=Math.min(1,Math.max(0,(clientX-r.left)/r.width));
-  const e=cur.p.episodes[cur.i];
+  const e=curEp();
   const d=audio.duration&&isFinite(audio.duration)?audio.duration:(e.sec||1);
   scrubT=f*d;
   $('scrubfill').style.width=(f*100)+'%';
@@ -1405,7 +1702,7 @@ function renderQueue(filter=''){
   if(!cur)return;
   const {p,i}=cur; const f=filter.trim().toLowerCase();
   const list=$('q-list');
-  list.innerHTML=p.episodes.map((e,j)=>{
+  list.innerHTML=items(p,cur.k||'bio').map((e,j)=>{
     if(f&&!(rowTitle(p,e)+' '+e.title+' '+(e.author||'')).toLowerCase().includes(f))return '';
     const active=j===i;
     return `<button class="q-row press ${active?'active':''}" data-j="${j}">
@@ -1429,11 +1726,15 @@ paintTabs();
    JSON is cached independently — a fresh page with a stale episodes.json shows
    the old titles and looks like the deploy silently did nothing. */
 Promise.all([fetch('episodes.json?v='+BUILD).then(r=>r.json()),
-             fetch('portraits.json?v='+BUILD).then(r=>r.json())])
-.then(([d,pr])=>{
-  DATA=d;PORTRAITS=pr;
-  DATA.people.forEach(p=>{p.slug=slug(p.name);p.shortName=p.name.split(' - ')[0]});
-  renderBrowse();
+             fetch('portraits.json?v='+BUILD).then(r=>r.json()),
+             fetch('media.json?v='+BUILD).then(r=>r.ok?r.json():{people:{}}).catch(()=>({people:{}}))])
+.then(([d,pr,md])=>{
+  DATA=d;
+  /* versioned so a regraded portrait never hides behind the old cached file */
+  PORTRAITS=Object.fromEntries(Object.entries(pr).map(([k,v])=>[k,v+'?v='+BUILD]));
+  DATA.people.forEach(p=>{p.slug=slug(p.name);p.shortName=p.name.split(' - ')[0];
+    p.media=(md.people||{})[p.name]||{}; });
+  renderBrowse(); renderSidebar();
   wireScroll($('browse')); wireScroll($('playlists')); wireScroll($('settings'));
 
   const m=location.hash.match(/^#\/p\/(.+)$/);
@@ -1443,8 +1744,8 @@ Promise.all([fetch('episodes.json?v='+BUILD).then(r=>r.json()),
 
   const last=store.get('last',null);
   if(last){const p=DATA.people.find(x=>x.slug===last.slug);
-    if(p&&p.episodes[last.i]){cur={p,i:last.i};document.body.classList.add('has-track');
-      const e=p.episodes[last.i];
+    if(p&&items(p,last.k||'bio')[last.i]){cur={p,i:last.i,k:last.k||'bio'};document.body.classList.add('has-track');
+      const e=curEp();
       audio.src=e.url;audio.preload='none';
       paintShells();
       const sv=pos(p,e);
@@ -1456,6 +1757,7 @@ Promise.all([fetch('episodes.json?v='+BUILD).then(r=>r.json()),
     }}
 
   /* static-state hooks for pixel verification — never call audio.play() */
+  if(qs.get('kind')) curKind=qs.get('kind');
   const st=qs.get('state');
   if(st){
     const p=curDetail||DATA.people.slice().sort((a,b)=>b.episodes.length-a.episodes.length)[0];
