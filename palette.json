@@ -1,0 +1,157 @@
+{
+ "Alexander the Great": [
+  1,
+  0.55,
+  "crimson"
+ ],
+ "Napoleon": [
+  19,
+  0.29,
+  "umber"
+ ],
+ "Elon Musk": [
+  16,
+  0.47,
+  "ember"
+ ],
+ "Jeff Bezos": [
+  207,
+  0.45,
+  "azure"
+ ],
+ "Bill Gates": [
+  33,
+  0.5,
+  "bronze"
+ ],
+ "Jensen Huang": [
+  147,
+  0.14,
+  "sage"
+ ],
+ "Mark Zuckerberg": [
+  1,
+  0.55,
+  "crimson"
+ ],
+ "Steve Jobs": [
+  29,
+  0.2,
+  "sand"
+ ],
+ "John D. Rockefeller": [
+  16,
+  0.47,
+  "ember"
+ ],
+ "Andrew Carnegie": [
+  207,
+  0.45,
+  "azure"
+ ],
+ "Henry Ford": [
+  33,
+  0.5,
+  "bronze"
+ ],
+ "Nikola Tesla": [
+  207,
+  0.45,
+  "azure"
+ ],
+ "J. Robert Oppenheimer": [
+  147,
+  0.14,
+  "sage"
+ ],
+ "Claude Shannon": [
+  220,
+  0.06,
+  "graphite"
+ ],
+ "Vannevar Bush": [
+  99,
+  0.4,
+  "moss"
+ ],
+ "Alfred Lee Loomis": [
+  207,
+  0.45,
+  "azure"
+ ],
+ "Kelly Johnson - Skunk Works": [
+  220,
+  0.06,
+  "graphite"
+ ],
+ "Edwin Land - Polaroid": [
+  147,
+  0.14,
+  "sage"
+ ],
+ "Ed Catmull - Pixar": [
+  147,
+  0.14,
+  "sage"
+ ],
+ "Demis Hassabis - DeepMind": [
+  147,
+  0.14,
+  "sage"
+ ],
+ "Bill Walsh": [
+  207,
+  0.45,
+  "azure"
+ ],
+ "Jim Simons": [
+  33,
+  0.5,
+  "bronze"
+ ],
+ "Intel - Noyce Grove Shockley": [
+  1,
+  0.55,
+  "crimson"
+ ],
+ "Winston Churchill": [
+  220,
+  0.06,
+  "graphite"
+ ],
+ "Charles de Gaulle": [
+  33,
+  0.5,
+  "bronze"
+ ],
+ "Peter Thiel": [
+  29,
+  0.2,
+  "sand"
+ ],
+ "Cornelius Vanderbilt": [
+  31,
+  0.7,
+  "amber"
+ ],
+ "J.P. Morgan": [
+  99,
+  0.4,
+  "moss"
+ ],
+ "The Rothschilds": [
+  19,
+  0.29,
+  "umber"
+ ],
+ "Jacob Fugger": [
+  33,
+  0.5,
+  "bronze"
+ ],
+ "James J. Hill": [
+  31,
+  0.7,
+  "amber"
+ ]
+}

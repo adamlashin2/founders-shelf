@@ -1,0 +1,414 @@
+{
+ "people": {
+  "Steve Jobs": {
+   "speeches": [
+    {
+     "id": "speeches:stanford-2005",
+     "title": "Stanford Commencement Address",
+     "sub": "Stanford University · June 2005",
+     "url": "media/steve-jobs/speeches/stanford-2005.mp3",
+     "source": {
+      "from": "https://youtu.be/UF8uR6Z6KLc",
+      "channel": "Stanford",
+      "source_title": "Steve Jobs' 2005 Stanford Commencement Address"
+     },
+     "sec": 904
+    },
+    {
+     "id": "speeches:think-different-1997",
+     "title": "Think Different, internal meeting",
+     "sub": "Apple · September 1997",
+     "url": "media/steve-jobs/speeches/think-different-1997.mp3",
+     "source": {
+      "from": "https://youtu.be/keCwRdbwNQY",
+      "channel": "Rene Brokop",
+      "source_title": "Best marketing strategy ever! Steve Jobs Think different / Crazy ones speech (with real subtitles)"
+     },
+     "sec": 420
+    }
+   ],
+   "edits": [
+    {
+     "id": "edits:edit-1",
+     "title": "Stay hungry, stay foolish",
+     "sub": "Edit",
+     "url": "media/steve-jobs/edits/edit-1.mp3",
+     "source": {
+      "from": "https://youtu.be/_fDEpfGO_cI",
+      "channel": "Aspivion",
+      "source_title": "The pain of chasing your dreams"
+     },
+     "sec": 273
+    }
+   ],
+   "letters": [
+    {
+     "id": "letters:thoughts-on-flash",
+     "title": "Thoughts on Flash",
+     "sub": "Open letter · April 2010",
+     "url": "media/steve-jobs/letters/thoughts-on-flash.mp3",
+     "source": {
+      "from": "https://web.archive.org/web/20100501000000id_/http://www.apple.com/hotnews/thoughts-on-flash/",
+      "narrated": "en-US-AndrewNeural",
+      "words": 1681
+     },
+     "sec": 672
+    }
+   ]
+  },
+  "Jeff Bezos": {
+   "speeches": [
+    {
+     "id": "speeches:princeton-2010",
+     "title": "We Are What We Choose",
+     "sub": "Princeton Baccalaureate · May 2010",
+     "url": "media/jeff-bezos/speeches/princeton-2010.mp3",
+     "source": {
+      "from": "https://youtu.be/vBmavNoChZc",
+      "channel": "princetonacademics",
+      "source_title": "Amazon founder and CEO Jeff Bezos delivers graduation speech at Princeton University"
+     },
+     "sec": 1124
+    }
+   ],
+   "edits": [
+    {
+     "id": "edits:edit-1",
+     "title": "Regret minimization",
+     "sub": "Edit",
+     "url": "media/jeff-bezos/edits/edit-1.mp3",
+     "source": {
+      "from": "https://youtu.be/U-z4PHy4WyM",
+      "channel": "Mustafa OKUDUCU",
+      "source_title": "Jeff Bezos - Gangsta's Paradise"
+     },
+     "sec": 218
+    }
+   ],
+   "letters": [
+    {
+     "id": "letters:shareholders-1997",
+     "title": "1997 Letter to Shareholders",
+     "sub": "Amazon.com · It's All About the Long Term",
+     "url": "media/jeff-bezos/letters/shareholders-1997.mp3",
+     "source": {
+      "from": "https://s2.q4cdn.com/299287126/files/doc_financials/annual/Shareholderletter97.pdf",
+      "narrated": "en-US-AndrewNeural",
+      "words": 1621
+     },
+     "sec": 660
+    }
+   ]
+  },
+  "Elon Musk": {
+   "speeches": [
+    {
+     "id": "speeches:usc-2014",
+     "title": "USC Commencement Address",
+     "sub": "USC Marshall · May 2014",
+     "url": "media/elon-musk/speeches/usc-2014.mp3",
+     "source": {
+      "from": "https://youtu.be/e7Qh-vwpYH8",
+      "channel": "USC",
+      "source_title": "Elon Musk USC Commencement Speech | USC Marshall School of Business Undergraduate Commencement 2014"
+     },
+     "sec": 377
+    }
+   ],
+   "edits": [
+    {
+     "id": "edits:edit-1",
+     "title": "2008",
+     "sub": "Edit",
+     "url": "media/elon-musk/edits/edit-1.mp3",
+     "source": {
+      "from": "https://youtu.be/43TmnIaL3n4",
+      "channel": "BlockVestor",
+      "source_title": "Elon Musk - I Don't Ever Give Up | Gangsta's Paradise"
+     },
+     "sec": 189
+    }
+   ],
+   "letters": [
+    {
+     "id": "letters:master-plan-2006",
+     "title": "The Secret Tesla Motors Master Plan",
+     "sub": "Tesla blog · August 2006",
+     "url": "media/elon-musk/letters/master-plan-2006.mp3",
+     "source": {
+      "from": "https://web.archive.org/web/2012id_/http://www.teslamotors.com/blog/secret-tesla-motors-master-plan-just-between-you-and-me",
+      "narrated": "en-US-AndrewNeural",
+      "words": 1365
+     },
+     "sec": 568
+    }
+   ]
+  },
+  "Bill Gates": {
+   "speeches": [
+    {
+     "id": "speeches:harvard-2007",
+     "title": "Harvard Commencement Address",
+     "sub": "Harvard University · June 2007",
+     "url": "media/bill-gates/speeches/harvard-2007.mp3",
+     "source": {
+      "from": "https://youtu.be/zPx5N6Lh3sw",
+      "channel": "Harvard University",
+      "source_title": "Bill Gates Harvard Commencement Address 2007"
+     },
+     "sec": 2152
+    }
+   ]
+  },
+  "Mark Zuckerberg": {
+   "speeches": [
+    {
+     "id": "speeches:harvard-2017",
+     "title": "Harvard Commencement Address",
+     "sub": "Harvard University · May 2017",
+     "url": "media/mark-zuckerberg/speeches/harvard-2017.mp3",
+     "source": {
+      "from": "https://youtu.be/QM8l623AouM",
+      "channel": "ABC News",
+      "source_title": "Mark Zuckerberg Harvard Commencement Speech 2017 FACEBOOK CEO'S FULL SPEECH"
+     },
+     "sec": 2087
+    }
+   ]
+  },
+  "Jensen Huang": {
+   "speeches": [
+    {
+     "id": "speeches:caltech-2024",
+     "title": "Caltech Commencement Address",
+     "sub": "Caltech · June 2024",
+     "url": "media/jensen-huang/speeches/caltech-2024.mp3",
+     "source": {
+      "from": "https://youtu.be/53iujxhGRsE",
+      "channel": "9696-official",
+      "source_title": "NVIDIA CEO Jensen Huang's Caltech 2024 Commencement Speech"
+     },
+     "sec": 1922
+    }
+   ],
+   "edits": [
+    {
+     "id": "edits:edit-1",
+     "title": "Pain and suffering",
+     "sub": "Edit",
+     "url": "media/jensen-huang/edits/edit-1.mp3",
+     "source": {
+      "from": "https://youtu.be/H59NGQcliS8",
+      "channel": "Juwen Hendricks",
+      "source_title": "Nvidia CEO Jensen Huang on Why Greatness Involves Struggle, Pain and Suffering.mp4"
+     },
+     "sec": 70
+    }
+   ]
+  },
+  "Peter Thiel": {
+   "speeches": [
+    {
+     "id": "speeches:hamilton-2016",
+     "title": "Hamilton College Commencement",
+     "sub": "Hamilton College · May 2016",
+     "url": "media/peter-thiel/speeches/hamilton-2016.mp3",
+     "source": {
+      "from": "https://youtu.be/id4ywg5oemc",
+      "channel": "Hamilton College",
+      "source_title": "Remarks by Commencement Speaker Peter Thiel"
+     },
+     "sec": 662
+    }
+   ]
+  },
+  "Winston Churchill": {
+   "speeches": [
+    {
+     "id": "speeches:blood-toil-1940",
+     "title": "Blood, Toil, Tears and Sweat",
+     "sub": "House of Commons · 13 May 1940",
+     "url": "media/winston-churchill/speeches/blood-toil-1940.mp3",
+     "source": {
+      "from": "https://youtu.be/fKBR0igDPfM",
+      "channel": "Quill",
+      "source_title": "Winston Churchill's \"Blood, Toil, Tears and Sweat\" Speech - Written form & Audio"
+     },
+     "sec": 235
+    },
+    {
+     "id": "speeches:beaches-1940",
+     "title": "We Shall Fight on the Beaches",
+     "sub": "House of Commons · 4 June 1940",
+     "url": "media/winston-churchill/speeches/beaches-1940.mp3",
+     "source": {
+      "from": "https://youtu.be/MkTw3_PmKtc",
+      "channel": "Jimmy Thatcher",
+      "source_title": "Winston S Churchill: We Shall Fight on the Beaches"
+     },
+     "sec": 144
+    },
+    {
+     "id": "speeches:finest-hour-1940",
+     "title": "Their Finest Hour",
+     "sub": "House of Commons · 18 June 1940",
+     "url": "media/winston-churchill/speeches/finest-hour-1940.mp3",
+     "source": {
+      "from": "https://youtu.be/jB5wZtV1MWM",
+      "channel": "Jonathan Thomas",
+      "source_title": "Winston Churchill - Their Finest Hour Speech - Complete"
+     },
+     "sec": 1803
+    }
+   ],
+   "edits": [
+    {
+     "id": "edits:edit-1",
+     "title": "Never surrender",
+     "sub": "Edit",
+     "url": "media/winston-churchill/edits/edit-1.mp3",
+     "source": {
+      "from": "https://youtu.be/FHQ6jL5r6nE",
+      "channel": "VopHisX",
+      "source_title": "Winston Churchill Never Lose Edit - Bootleg Mov (Slowed)"
+     },
+     "sec": 62
+    }
+   ]
+  },
+  "Charles de Gaulle": {
+   "speeches": [
+    {
+     "id": "speeches:appel-1940",
+     "title": "Appeal to the French",
+     "sub": "BBC London · June 1940 · French",
+     "url": "media/charles-de-gaulle/speeches/appel-1940.mp3",
+     "source": {
+      "from": "https://youtu.be/AUS5LHDkwP0",
+      "channel": "France Culture",
+      "source_title": "De Gaulle. L'appel du 18 juin - #CulturePrime"
+     },
+     "sec": 231
+    }
+   ]
+  },
+  "J. Robert Oppenheimer": {
+   "speeches": [
+    {
+     "id": "speeches:become-death-1965",
+     "title": "Now I Am Become Death",
+     "sub": "NBC, The Decision to Drop the Bomb · 1965",
+     "url": "media/j-robert-oppenheimer/speeches/become-death-1965.mp3",
+     "source": {
+      "from": "https://youtu.be/eCWBAX9Ihw0",
+      "channel": "Nineteenth century videos. Back to life.",
+      "source_title": "[4K, 50 fps, colorized] (1965) J. Robert Oppenheimer �Now I am become death...�"
+     },
+     "sec": 66
+    }
+   ],
+   "edits": [
+    {
+     "id": "edits:edit-1",
+     "title": "Destroyer of worlds",
+     "sub": "Edit",
+     "url": "media/j-robert-oppenheimer/edits/edit-1.mp3",
+     "source": {
+      "from": "https://youtu.be/uRJQJcy3f8w",
+      "channel": "Phased",
+      "source_title": "3 Minutes of Oppenheimer in 4K | IMAX"
+     },
+     "sec": 210
+    }
+   ]
+  },
+  "Napoleon": {
+   "edits": [
+    {
+     "id": "edits:edit-1",
+     "title": "Impossible is not French",
+     "sub": "Edit",
+     "url": "media/napoleon/edits/edit-1.mp3",
+     "source": {
+      "from": "https://youtu.be/7dNWPzSCwBQ",
+      "channel": " The Ammontine Code",
+      "source_title": "My Enemies are Many, My Equals are None - Napoleon"
+     },
+     "sec": 58
+    }
+   ],
+   "letters": [
+    {
+     "id": "letters:josephine-1796-waking",
+     "title": "My waking thoughts are all of thee",
+     "sub": "To Josephine · Paris, 1796 · translated",
+     "url": "media/napoleon/letters/josephine-1796-waking.mp3",
+     "source": {
+      "from": "https://www.gutenberg.org/cache/epub/37499/pg37499.txt",
+      "narrated": "en-GB-RyanNeural",
+      "words": 137
+     },
+     "sec": 50
+    },
+    {
+     "id": "letters:josephine-1796-port-maurice",
+     "title": "To live for Josephine",
+     "sub": "To Josephine · Port Maurice, April 1796 · translated",
+     "url": "media/napoleon/letters/josephine-1796-port-maurice.mp3",
+     "source": {
+      "from": "https://www.gutenberg.org/cache/epub/37499/pg37499.txt",
+      "narrated": "en-GB-RyanNeural",
+      "words": 695
+     },
+     "sec": 236
+    }
+   ]
+  },
+  "Alexander the Great": {
+   "speeches": [
+    {
+     "id": "speeches:opis-324bc",
+     "title": "The Speech at Opis",
+     "sub": "To the mutinous army · 324 BC · Arrian, tr. Chinnock",
+     "url": "media/alexander-the-great/speeches/opis-324bc.mp3",
+     "source": {
+      "from": "https://www.gutenberg.org/cache/epub/46976/pg46976.txt",
+      "narrated": "en-GB-RyanNeural",
+      "words": 1328
+     },
+     "sec": 425
+    }
+   ],
+   "edits": [
+    {
+     "id": "edits:edit-1",
+     "title": "Undefeated",
+     "sub": "Edit",
+     "url": "media/alexander-the-great/edits/edit-1.mp3",
+     "source": {
+      "from": "https://youtu.be/Qf9M6wS7meY",
+      "channel": "HistoryMinspire",
+      "source_title": "   -  || 4"
+     },
+     "sec": 82
+    }
+   ]
+  },
+  "John D. Rockefeller": {
+   "edits": [
+    {
+     "id": "edits:edit-1",
+     "title": "The richest man in history",
+     "sub": "Edit",
+     "url": "media/john-d-rockefeller/edits/edit-1.mp3",
+     "source": {
+      "from": "https://youtu.be/qXTw2zxfek4",
+      "channel": "CONTCT",
+      "source_title": "Succession Intro (Rockefellers)"
+     },
+     "sec": 90
+    }
+   ]
+  }
+ }
+}
