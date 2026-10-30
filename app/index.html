@@ -12,7 +12,6 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=5">
 <link rel="icon" type="image/png" href="assets/icon-192.png?v=5">
-<script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
 <style>
 /* =============================================================================
    THE GREATS — design system
@@ -70,19 +69,29 @@
   --g-shadow:inset 0 .5px 0 rgba(255,255,255,.30), inset 0 -.5px 0 rgba(255,255,255,.08), 0 10px 30px rgba(0,0,0,.45);
   --g-rim:linear-gradient(160deg,rgba(255,255,255,.50),rgba(255,255,255,.10) 30%,rgba(255,255,255,0) 52%,rgba(255,255,255,.06) 74%,rgba(255,255,255,.24));
 
-  /* ---------- motion: critically damped (1.0, 0.4s), integrated to linear() ---------- */
-  --spring:cubic-bezier(.22,1,.36,1);
-  --dur:.42s;
+  /* ---------- motion: MEASURED from Apple screen recordings (this repo, commit 8d7f1ed) ----------
+     push: translateX 100% -> 0 over 417ms, geometric decay r=0.795/frame = critically damped,
+           tau 69ms, no overshoot; reaches 90% at ~150ms. Pop and every in-page morph ride it.
+     sheet: translateY over 533ms, same spring (decay 0.80/frame). */
+  --spring:cubic-bezier(.205,1.128,.496,.968);
+  --sheet:cubic-bezier(.096,1.094,.369,.971);
+  --dur:.417s; --dur-sheet:.533s;
 }
 @supports (animation-timing-function:linear(0,1)){:root{
-  --spring:linear(0, .0175, .0623, .1251, .1997, .2808, .3644, .4472, .5268, .6014, .6699, .7317,
-    .7864, .8341, .8751, .9097, .9385, .9622, .9815, .9969, 1.009, 1.0184, 1.0254, 1.0304, 1.0338,
-    1.0359, 1.037, 1.0373, 1.037, 1.0362, 1.0351, 1.0338, 1.0323, 1.0307, 1.0291, 1.0275, 1.026, 1.0246,
-    1.0232, 1.022, 1);
+  --spring:linear(0 0%, .2051 4%, .3641 8%, .4906 12%, .5983 16%, .6863 20%,
+    .7573 24%, .8137 28%, .8581 32%, .8923 36%, .9188 40%, .9393 44%, .9547 48%,
+    .9658 52%, .9744 56%, .9812 60%, .9863 64%, .9897 68%, .9923 72%, .9949 76%,
+    .9957 80%, .9974 84%, .9974 88%, .9983 92%, .9991 96%, 1 100%);
+  --sheet:linear(0 0%, .2694 3.125%, .4664 6.25%, .5442 9.375%, .6572 12.5%,
+    .7231 15.62%, .7867 18.75%, .8428 21.88%, .8728 25%, .8878 28.12%, .9028 31.25%,
+    .9147 34.38%, .9281 37.5%, .9475 40.62%, .9562 43.75%, .9656 46.87%, .9735 50%,
+    .9795 53.12%, .9842 56.25%, .9878 59.38%, .9905 62.5%, .9929 65.62%, .9945 68.75%,
+    .9957 71.87%, .9968 75%, .9976 78.12%, .998 81.25%, .9984 84.37%, .9988 87.5%,
+    .9992 90.62%, .9992 93.75%, .9996 96.87%, 1 100%);
 }}
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{--gh:0;--gs:0;transition:--gh .9s var(--spring),--gs .9s var(--spring)}
+html{--gh:0;--gs:0}
 html,body{height:100%;color:var(--label)}
 /* C x B ground: the figure's hue at mid-dark lightness, falling to near black.
    Lightness ramp from the C references (L .31 -> .17), saturation from B (.1-.5) */
@@ -133,8 +142,8 @@ img{display:block;-webkit-user-drag:none;user-select:none}
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 
 /* =============================== BUTTONS ================================ */
-.press{transition:transform .18s var(--spring),opacity .18s,background-color .2s}
-.press:active{transform:scale(.96);opacity:.85}
+.press{transition:transform .3s var(--spring),opacity .3s var(--spring),background-color .2s}
+.press:active{transform:scale(.97);opacity:.8;transition:transform .1s ease-out,opacity .1s ease-out}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:22px;
   font-size:17px;font-weight:600;letter-spacing:-.43px;white-space:nowrap}
 .btn-primary{background:var(--ivory);color:#1a1612}                       /* iOS 26 album "Play" pill */
@@ -286,7 +295,7 @@ img{display:block;-webkit-user-drag:none;user-select:none}
 #dock{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:0 20px calc(20px + var(--safe-b) * .3);pointer-events:none}
 #dock>*{pointer-events:auto}
 #mini{display:flex;align-items:center;gap:10px;width:100%;height:var(--minih);border-radius:22px;padding:0 10px 0 6px;margin-bottom:6px;text-align:left;
-  transform:translateY(160%);opacity:0;transition:transform .5s var(--spring),opacity .3s}
+  transform:translateY(160%);opacity:0;transition:transform var(--dur) var(--spring),opacity .2s}
 body.has-track #mini{transform:none;opacity:1}
 #mini .art{width:31px;height:31px;border-radius:7px;overflow:hidden;flex:none;background:#222}
 #mini .art img{width:100%;height:100%;object-fit:cover;object-position:top}
@@ -302,7 +311,7 @@ body.has-track #mini{transform:none;opacity:1}
 .tab.on{color:#fff}
 .tab:not(.on){color:rgba(255,255,255,.62)}
 #tabhl{position:absolute;top:4px;bottom:4px;left:4px;border-radius:25px;background:var(--fill2);
-  transition:transform var(--dur) var(--spring),width var(--dur) var(--spring);z-index:-1}
+  transition:transform .35s var(--spring),width .35s var(--spring);z-index:-1}
 #tabsearch{width:60px;height:60px;border-radius:30px;display:flex;align-items:center;justify-content:center}
 #tabsearch.on{color:var(--red)}
 #topnav{display:none}
@@ -314,6 +323,7 @@ body.has-track #mini{transform:none;opacity:1}
 #np .npbg{position:absolute;inset:-25%;z-index:-1}
 #np .npbg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(80px) brightness(.45) saturate(1.6);
   animation:drift 22s ease-in-out infinite alternate}
+#np:not(.show) .npbg img{animation-play-state:paused}   /* no background work while the player is closed */
 #np .npbg img+img{animation-duration:31s;animation-direction:alternate-reverse;opacity:.6;mix-blend-mode:screen}
 @keyframes drift{0%{transform:scale(1.1) rotate(0)}50%{transform:scale(1.35) rotate(12deg) translate(4%,-3%)}100%{transform:scale(1.2) rotate(-8deg) translate(-5%,4%)}}
 #np .grab{width:36px;height:5px;border-radius:3px;background:rgba(255,255,255,.35);margin:0 auto;flex:none}
@@ -350,21 +360,25 @@ body:not(.playing) #np .art{transform:scale(.86)}
 /* =============================== MOTION ================================= */
 /* card -> page zoom (iOS 18 zoom transition) on the View Transitions API */
 ::view-transition-group(*){animation-duration:var(--dur);animation-timing-function:var(--spring)}
-::view-transition-old(root),::view-transition-new(root){animation-duration:.32s}
-html.vt-push::view-transition-old(root){animation:.42s var(--spring) both vt-out}
-html.vt-push::view-transition-new(root){animation:.42s var(--spring) both vt-in}
-html.vt-pop::view-transition-old(root){animation:.42s var(--spring) both vt-in-r}
-html.vt-pop::view-transition-new(root){animation:.42s var(--spring) both vt-out-r}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.2s}
+html.vt-push::view-transition-old(root){animation:var(--dur) var(--spring) both vt-out}
+html.vt-push::view-transition-new(root){animation:var(--dur) var(--spring) both vt-in}
+html.vt-pop::view-transition-old(root){animation:var(--dur) var(--spring) both vt-in-r}
+html.vt-pop::view-transition-new(root){animation:var(--dur) var(--spring) both vt-out-r}
+/* zoom: the portrait and the name morph; the rest of the page fades fast underneath */
+html.vt-zoom::view-transition-group(hero),html.vt-zoom::view-transition-group(heroname){animation-duration:var(--dur);animation-timing-function:var(--spring)}
+::view-transition-old(heroname),::view-transition-new(heroname){height:100%;width:auto;object-fit:none}
+::view-transition-image-pair(hero){isolation:isolate}
 @keyframes vt-in{from{transform:translateX(100%)}}
 @keyframes vt-out{to{transform:translateX(-28%);filter:brightness(.6)}}
 @keyframes vt-in-r{to{transform:translateX(100%)}}
 @keyframes vt-out-r{from{transform:translateX(-28%);filter:brightness(.6)}}
-html.vt-zoom::view-transition-old(root){animation:.3s ease both vt-fade}
-html.vt-zoom::view-transition-new(root){animation:.3s ease both vt-fadein}
+html.vt-zoom::view-transition-old(root){animation:.18s ease-out both vt-fade}
+html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fadein}
 @keyframes vt-fade{to{opacity:0}} @keyframes vt-fadein{from{opacity:0}}
 ::view-transition-old(hero),::view-transition-new(hero){height:100%;object-fit:cover;overflow:hidden}
 ::view-transition-group(dock),::view-transition-group(topnav){animation:none}
-.rise{animation:rise .55s var(--spring) both}
+.rise{}
 @keyframes rise{from{opacity:0;transform:translateY(14px);filter:blur(4px)}}
 
 
@@ -457,6 +471,9 @@ html.vt-zoom::view-transition-new(root){animation:.3s ease both vt-fadein}
   .pdesk .nm{font-family:'Instrument Serif',Georgia,serif;font-size:88px;line-height:84px;letter-spacing:-.02em}
 }
 .pdesk{display:none}
+.ph>img{view-transition-name:hero}
+.ph .nm{view-transition-name:heroname;width:max-content;max-width:100%}
+@media (min-width:900px){ .ph>img,.ph .nm{view-transition-name:none} .pdesk .card img{view-transition-name:hero} .pdesk .nm{view-transition-name:heroname;width:max-content;max-width:100%} }
 
 /* =============================== DESKTOP ================================ */
 @media (min-width:900px){
@@ -625,7 +642,7 @@ const SHELF_TINT={business:['#c2410c','#7c2d12'],military:['#b91c1c','#450a0a'],
   money:['#a16207','#422006'],systems:['#6d28d9','#2e1065']};
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261030-2100';
+const BUILD='20261030-2200';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -707,12 +724,20 @@ function render(r,kind='none',zoomEl=null){
   const doc=document.documentElement;
   if(!document.startViewTransition||kind==='none'||document.hidden||matchMedia('(prefers-reduced-motion: reduce)').matches){ paint(); return; }
   doc.classList.remove('vt-push','vt-pop','vt-zoom');
-  const k=zoomEl?'zoom':kind==='push'?'push':kind==='pop'?'pop':null; if(k) doc.classList.add('vt-'+k);
-  if(zoomEl) zoomEl.style.viewTransitionName='hero';
-  const t=document.startViewTransition(()=>{ if(zoomEl) zoomEl.style.viewTransitionName=''; paint(); });
+  /* tab switches are instant, as on iOS: no transition at all */
+  if(kind==='tab'){ paint(); return; }
+  /* popping back from a figure: morph the hero back into that figure's card */
+  const backTo=kind==='pop'&&prev&&prev.startsWith('p/')?prev.slice(2):null;
+  const k=zoomEl||backTo?'zoom':kind==='push'?'push':kind==='pop'?'pop':null; if(k) doc.classList.add('vt-'+k);
+  const nameEl=zoomEl&&zoomEl.closest('[data-p]')?.querySelector('.t-card,.rn');
+  if(zoomEl){ zoomEl.style.viewTransitionName='hero'; if(nameEl) nameEl.style.viewTransitionName='heroname'; }
+  const t=document.startViewTransition(()=>{ if(zoomEl){ zoomEl.style.viewTransitionName=''; if(nameEl) nameEl.style.viewTransitionName=''; } paint();
+    if(backTo){ const card=[...document.querySelectorAll(`#view [data-p="${backTo}"]`)].find(c=>{ const r=c.getBoundingClientRect(); return r.bottom>0&&r.top<innerHeight&&r.width; });
+      const im=card&&card.querySelector('img'); if(im){ im.style.viewTransitionName='hero'; const nm=card.querySelector('.t-card,.rn'); if(nm) nm.style.viewTransitionName='heroname';
+        t.finished.finally(()=>{ im.style.viewTransitionName=''; if(nm) nm.style.viewTransitionName=''; }); } } });
   /* never let a stalled transition leave a stale snapshot on screen */
   t.ready.catch(()=>{}); t.updateCallbackDone.catch(()=>{});
-  const cap=setTimeout(()=>{ try{ t.skipTransition(); }catch(e){} },900);
+  const cap=setTimeout(()=>{ try{ t.skipTransition(); }catch(e){} },700);
   t.finished.catch(()=>{}).finally(()=>{ clearTimeout(cap); doc.classList.remove('vt-push','vt-pop','vt-zoom'); });
 }
 let pendingZoom=null;
@@ -880,7 +905,7 @@ function pagePerson(p){
     <div class="hrow bleed" style="gap:16px">${p.episodes.map((e,i)=>book(p,'bio',e,i)).join('')}</div></section>`;
   const more=['speeches','edits','letters'].map(k=>{ const L=items(p,k); return L.length?`<section class="sect">${shead(KLABEL[k])}<div class="rows">${L.map((e,i)=>erow(p,k,e,i)).join('')}</div></section>`:''; }).join('');
   const about=`<section class="sect"><h2 class="t-sect">Biography</h2><p class="t-sub" style="color:rgba(255,255,255,.75);margin-top:8px;white-space:pre-line">${esc(m.bio)}</p></section>`;
-  return `<div class="ph"><img src="${P[p.name]}" alt="" id="pimg" style="view-transition-name:hero">
+  return `<div class="ph"><img src="${P[p.name]}" alt="" id="pimg">
       <div class="top"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button>
         <button class="btn-icon glass press" data-a="about" aria-label="About">${IC.more(20)}</button></div>
       <div class="bot" data-title="${esc(p.shortName)}"><div class="t-eyebrow" style="color:rgba(255,255,255,.6)">${esc(shelf)}</div>
@@ -945,7 +970,7 @@ function pageSystem(){
 function bind(el,r){
   el.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>openPerson(b.dataset.p,b));
   el.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
-  el.querySelectorAll('[data-ep]').forEach(b=>b.onclick=()=>{ const [s,k,i]=b.dataset.ep.split('|'); const p=BYSLUG[s];
+  el.querySelectorAll('[data-ep]').forEach(b=>b.onclick=()=>{ npFrom=b.querySelector('.cover,.lead,img'); const [s,k,i]=b.dataset.ep.split('|'); const p=BYSLUG[s];
     if(cur&&cur.p===p&&cur.k===k&&cur.i===+i){ toggle(); return; } playEp(p,+i,k); openNP(); });
   el.querySelectorAll('[data-fil]').forEach(b=>b.onclick=()=>{ figFilter=b.dataset.fil; render('figures','none'); });
   el.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>act(b.dataset.a,r));
@@ -972,13 +997,17 @@ let toastT=0;
 function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('on'),1800); }
 
 /* ============================== sheets (spring) ============================== */
-const M=window.Motion;
-/* Apple: sheet damping 0.8 response 0.3 -> k=(2pi/.3)^2=438.6, c=2*.8*sqrt(k)=33.5 */
-const SHEET={type:'spring',stiffness:438.6,damping:33.5}, SNAP={type:'spring',stiffness:246.7,damping:31.4};
+/* Motion runs on the Web Animations API (compositor, promise-based), driven by the
+   curves MEASURED from Apple recordings (see :root): --sheet 533ms, --spring 417ms. */
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const EASE={sheet:()=>css('--sheet'),push:()=>css('--spring')};
+function anim(el,frames,dur,ease){ const a=el.animate(frames,{duration:dur,easing:ease,fill:'forwards'});
+  return a.finished.then(()=>{ try{ a.commitStyles(); }catch(e){} a.cancel(); }).catch(()=>{}); }
+const cur_t=el=>{ const m=new DOMMatrix(getComputedStyle(el).transform); return m.m42; };   /* live y, for interruptions */
 function slide(el,show){ if(show) el.classList.add('show');
-  const to=show?'0%':'105%';
-  if(M&&M.animate) Promise.resolve(M.animate(el,{transform:`translateY(${to})`},SHEET)).then(()=>{ if(!show) el.classList.remove('show'); });
-  else { el.style.transform=`translateY(${to})`; if(!show) el.classList.remove('show'); } }
+  const from=`translateY(${show?(el.getBoundingClientRect().height? cur_t(el):0)+'px':cur_t(el)+'px'})`;
+  return anim(el,[{transform:show?'translateY(105%)':from},{transform:show?'translateY(0%)':'translateY(105%)'}],show?533:417,show?EASE.sheet():EASE.push())
+    .then(()=>{ if(!show) el.classList.remove('show'); }); }
 function openSheet(title,html){ $('sht').textContent=title; $('shb').innerHTML=html; $('scrim').classList.add('on'); slide($('sheet'),true); }
 function closeSheet(){ $('scrim').classList.remove('on'); slide($('sheet'),false); }
 $('shx').innerHTML=IC.x(15); $('shx').onclick=closeSheet; $('scrim').onclick=()=>{ closeSheet(); };
@@ -1044,11 +1073,23 @@ let scrubbing=false, scrubT=0;
 function paintTime(){ if(!cur) return; const e=curEp(); const d=isFinite(audio.duration)&&audio.duration?audio.duration:(e.sec||1);
   const t=scrubbing?scrubT:(audio.currentTime||pos(cur.p,e)); if(!scrubbing) $('scrubi').style.width=(100*t/d)+'%';
   $('tel').textContent=fmtClock(t); $('trem').textContent='-'+fmtClock(d-t); }
+/* FLIP: the Now Playing artwork grows out of the element that was tapped (mini player art, a book
+   cover, a row thumbnail) on the sheet spring, while the sheet itself slides up underneath it */
+let npFrom=null;
+function flipArt(fromEl){ const art=document.querySelector('#np .art'); if(!fromEl||!art) return;
+  const a=fromEl.getBoundingClientRect(), b=art.getBoundingClientRect(); if(!a.width||!b.width) return;
+  const sx=a.width/b.width, sy=a.height/b.height, dx=a.left-b.left, dy=a.top-b.top;
+  art.style.transformOrigin='0 0';
+  anim(art,[{transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`,borderRadius:'8px'},{transform:'translate(0,0) scale(1,1)',borderRadius:'18px'}],533,EASE.sheet()); }
 function openNP(){ const np=$('np'); if(cur) ground(cur.p); np.classList.add('show'); document.body.classList.add('np-open');
-  if(M&&M.animate) M.animate(np,{transform:'translateY(0%)'},SHEET); else np.style.transform='none'; }
+  const from=npFrom||document.querySelector('#mini .art'); npFrom=null;
+  /* measure the art's resting rect first, then start sheet + art together */
+  np.style.transform='translateY(0%)'; const art=document.querySelector('#np .art'); const restT=art.getBoundingClientRect();
+  np.style.transform=''; anim(np,[{transform:'translateY(102%)'},{transform:'translateY(0%)'}],533,EASE.sheet());
+  if(from){ const a=from.getBoundingClientRect(); if(a.width){ const sx=a.width/restT.width, sy=a.height/restT.height;
+    art.style.transformOrigin='0 0'; anim(art,[{transform:`translate(${a.left-restT.left}px,${a.top-restT.top}px) scale(${sx},${sy})`,borderRadius:'8px'},{transform:'none',borderRadius:'18px'}],533,EASE.sheet()); } } }
 function closeNP(){ const np=$('np'); ground(route.startsWith('p/')?BYSLUG[route.slice(2)]:route==='home'?featured():null); document.body.classList.remove('np-open');
-  if(M&&M.animate) Promise.resolve(M.animate(np,{transform:'translateY(102%)'},SNAP)).then(()=>np.classList.remove('show'));
-  else { np.style.transform='translateY(102%)'; np.classList.remove('show'); } }
+  const y=cur_t(np); anim(np,[{transform:`translateY(${y}px)`},{transform:'translateY(102%)'}],417,EASE.push()).then(()=>{ np.classList.remove('show'); np.style.transform='translateY(102%)'; }); }
 function cycleSleep(){ const o=[0,15,30,60]; sleepMin=o[(o.indexOf(sleepMin)+1)%o.length]; sleepUntil=sleepMin?Date.now()+sleepMin*6e4:null; paintNP(); toast(sleepMin?`Sleep in ${sleepMin} minutes`:'Sleep timer off'); }
 $('npclose').onclick=closeNP;
 $('npplay').onclick=toggle; $('nprw').onclick=()=>audio.currentTime=Math.max(0,audio.currentTime-30); $('npff').onclick=()=>audio.currentTime+=15;
@@ -1074,7 +1115,7 @@ $('mini').onclick=ev=>{ const a=ev.target.closest('[data-a]')?.dataset.a;
   window.addEventListener('pointerup',e=>{ if(y0===null) return; const dy=e.clientY-y0; y0=null;
     /* Apple's momentum projection: v/1000 * d/(1-d), d=0.998 */
     const proj=dy+(v/1000)*.998/(1-.998);
-    if(proj>innerHeight*.35) closeNP(); else if(M&&M.animate) M.animate(np,{transform:'translateY(0%)'},{...SNAP,velocity:v}); else np.style.transform='none'; });
+    if(proj>innerHeight*.35) closeNP(); else { const yy=cur_t(np); np.style.transform=''; anim(np,[{transform:`translateY(${yy}px)`},{transform:'translateY(0%)'}],417,EASE.push()); } });
 })();
 document.addEventListener('keydown',e=>{ if(e.target.matches('input')) return;
   if(e.code==='Space'){ e.preventDefault(); toggle(); } else if(e.key==='Escape'){ if($('sheet').classList.contains('show')) closeSheet(); else if(document.body.classList.contains('np-open')) closeNP(); else if(depth(route)) back(); } });

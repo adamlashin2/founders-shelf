@@ -49,6 +49,23 @@ The live, rendered version is in the app: **Library → ⚙ → Design system** 
 | Spring runtime | Motion `motion@11.11.13` (jsDelivr, pinned) |
 | Page morphs | View Transitions API (card → page zoom, push / pop), capped at 900 ms, skipped when hidden or reduced-motion |
 
+## Motion (measured, 2026-10-30)
+
+Curves are the ones measured frame-by-frame from Apple screen recordings earlier in this repo (commit `8d7f1ed`):
+push = critically damped spring, τ 69 ms, 417 ms, no overshoot; sheet = same spring over 533 ms. All of it runs on the Web
+Animations API / View Transitions (compositor-driven), no animation library.
+
+| Motion | What morphs | 90 % | 99 % |
+|---|---|---|---|
+| Card → figure page | portrait + name (`hero`, `heroname`), page fades 200 ms underneath | — | 417 ms |
+| Back | the page's portrait shrinks back into its card | — | 417 ms |
+| Open Now Playing | sheet slides up; art grows out of whatever was tapped (mini player art, book jacket, row thumbnail) | 156–168 ms | 326–340 ms |
+| Close Now Playing / sheets | slide away on the push curve; drag-to-dismiss uses Apple's momentum projection | 169–181 ms | 291–302 ms |
+| Tab switch | none — instant, as on iOS | — | — |
+| Press | scale .97 on pointer-down in 100 ms, release on the spring | | |
+
+Sampled per frame in headless Chromium by `D:/tmp/oa/tools/motion_probe.py`. Decorative loops (Now Playing backdrop) pause while hidden.
+
 ## Type (iOS Large)
 
 | Style | Size / leading | Weight | Tracking |
