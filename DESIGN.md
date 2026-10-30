@@ -1,5 +1,40 @@
 # The Greats — design system
 
+**System v6 (2026-10-31): built only from the 17 references Adam approved** (round 1: 8, 9, 14, 26; round 2: 5, 6, 10, 11,
+16, 18, 22, 23, 24, maybes 14, 15; restored 39, 80; copies in `D:/tmp/oa/approved`). What they share: the portrait is the
+card, the photo dissolves into the ground, a soft light ground with two-tone black type, a tiny floating icon tab bar,
+ranked portrait cards. Replay ships the same design light (pin `4591630998046678144`) and dark (pin `1046946244645170140`),
+so v6 is one design in two appearances: it follows the system setting, or Settings → Appearance (System / Light / Dark).
+
+| Token / component | Light | Dark | Measured from |
+|---|---|---|---|
+| Ground | `#f7f7f7` | `#000` | pin 80; pin 39 |
+| Panel | `#fff` | `#1c1c1e` | pin 80 card; pin 39 panel |
+| Inner tile | `#ededed` | `#323234` | pin 9 card ground; pin 39 play tile |
+| Second tone / meta | `#828282` | `#69696b` | pin 80 headline; pin 39 placeholder |
+| Hairline | `#e8e8e8` | white 8% | pin 80 chip rim |
+| Portrait card | 205×313, corner 24, 12 apart, meta on the photo | same | pin 9 (353px = 393pt) |
+| Recent card | 116×160, corner 16, 8 apart, 13pt semibold caption + grey meta | same | pin 9 |
+| Tab bar | one floating icon pill, 52 tall, plus a search circle | same | pin 9 (~151×47) |
+| Dissolving portrait | featured portrait masked into the ground behind the Home title | same | pins 6, 11 |
+
+Text on photographs stays white in both appearances; Now Playing stays dark (immersive).
+
+**Liquid Glass (2026-10-31)** — every overlay and button, measured from Adam's blessed pins `39828777963914523` (glass pills,
+3565px) and `10062799163732573` (iOS 26 Control Centre): fill ~3% white over blur 16 + saturate 1.7; hairline rim at ~60% white
+top-left falling to ~30% at the bottom (`--lg-rim`); inner hairline ~19%. Floating bars (tab pill, search, mini player, top bar,
+toast) carry more tint (22,22,24 @ 46%, blur 24) because they sit over busy content. The tab selection is a clear glass lens
+(pin `217650594489716463`). Card overlays use a progressive blur (blur 22, masked over the bottom 42%) under a lighter scrim
+instead of a black gradient. Controls on photographs always use the dark-adapted glass.
+
+**Desktop shell + artwork cards (2026-10-31)** — desktop (≥900px) is an iPadOS 26 floating sidebar, measured from pin
+`4604649247285910912` (Photos, 735px = 820pt): inset ~10, 272 wide, corner 26, `#101010` @ 88% on black (glass in light);
+rows 42 tall on a 43 pitch with a `#2f2f2f` selection pill; sections Library / Archive; Settings pinned at the foot. Content fills
+the window to its right; the mini player floats centred over the content (pins `1122663013395119080`, `4608589877548880960`).
+Books, speeches, letters and edits no longer render as empty grey tiles: each is the figure's portrait with a progressive blur
+and the title in white serif (refs `1016054365936791041`, `805299977152614362`), with a small glass kind label. v5 below still holds for panels,
+two-tone intro, text tabs, hairline circles, pills and the waveform audio card.
+
 **System v5 (2026-10-31): Adam's two picks become the operating system.** Pins `808888783111165642` (dark journal) and
 `355714070590901781` (light assistant), chosen from ~270 Pinterest candidates. Values measured by script from the pin images
 (`D:/tmp/oa/ds`), not by eye; the CSS block "SYSTEM v5" in `app/index.html` carries them.

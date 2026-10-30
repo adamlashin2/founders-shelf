@@ -9,6 +9,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="The Greats">
 <meta name="theme-color" content="#000000">
+<script>/* appearance before first paint: saved choice, else the system setting */
+(function(){var t=null;try{t=JSON.parse(localStorage.getItem('fs.theme'))}catch(e){}
+var light=t==='light'||(t!=='dark'&&matchMedia('(prefers-color-scheme: light)').matches);
+document.documentElement.classList.toggle('light',light);})();</script>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=5">
 <link rel="icon" type="image/png" href="assets/icon-192.png?v=5">
@@ -54,6 +58,7 @@
   --panel:#1c1c1e;                    /* panel fill                        */
   --panel2:#323234;                   /* inner square (play tile)          */
   --dim:#69696b;                      /* second tone of large text, placeholders */
+  --text2:rgba(255,255,255,.75);      /* long-form copy on the ground      */
 
   /* ---------- type: HIG iOS Large table + SF Pro tracking ---------- */
   --f:"SF Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
@@ -804,6 +809,233 @@ html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fad
 .speed button.on{color:#fff}
 .sheet{background:rgba(28,28,30,.92)}
 
+/* =========================== SYSTEM v6 ===============================
+   Built only from the 17 references Adam approved on 2026-10-30
+   (D:/tmp/oa/approved). Measured by script; pin 746260600795600117 gave
+   the Home grammar at 353px = 393pt. Two appearances of one design, the way
+   Apple Music Replay ships it (pins 1046946244645170140 / 4591630998046678144). */
+
+/* portrait cards (pin 746260600795600117: 205x313, ~24 corners, 12pt apart,
+   meta overlaid bottom-left in white with a grey second tone) */
+.fc,.fcw{width:205px;height:313px;border-radius:24px}
+.fc .in{left:14px;right:14px;bottom:14px}
+.fc .in .t-card{font-size:26px!important;line-height:27px!important}
+.hrow:has(.fcw){gap:12px}
+@media (min-width:900px){.fc,.fcw{width:260px;height:396px}}
+/* recent cards (116x160, 8pt apart, 13pt semibold caption + grey meta) */
+.tile{width:116px}
+.tile .art{aspect-ratio:116/160;border-radius:16px}
+.tile .tt{font-weight:600;margin-top:8px}
+.hrow:has(>.tile){gap:8px}
+@media (min-width:900px){.tile{width:150px}}
+
+/* the portrait dissolves into the ground behind the title (pins 746260600795600118, 320670435991878838) */
+.content{position:relative;isolation:isolate}
+.veil{position:absolute;right:0;top:0;width:min(62%,560px);height:calc(var(--safe-t) + 190px);z-index:-1;pointer-events:none;overflow:hidden;
+  -webkit-mask:radial-gradient(75% 85% at 78% 22%,#000 25%,transparent 72%);mask:radial-gradient(75% 85% at 78% 22%,#000 25%,transparent 72%)}
+.veil img{position:absolute;right:-4%;top:-10%;height:150%;width:auto;max-width:none;filter:grayscale(1);opacity:.5;mix-blend-mode:screen}
+@media (min-width:900px){.veil{height:300px}}
+/* text on photographs is white in both appearances */
+.pcard .ov,.fc .in,.ph .bot,.ph .top,.rcard,.hero .cap,.wide .art{color:#fff}
+
+/* tab bar: one small floating pill of icons (pin 746260600795600117, ~151x47) */
+#tabs{justify-content:center;gap:8px}
+#tabbar{flex:none;height:52px;border-radius:26px;padding:4px}
+.tab{width:56px;flex:none}
+.tab .lb{display:none}
+#tabhl{top:4px;bottom:4px;border-radius:22px}
+#tabsearch{width:52px;height:52px;border-radius:26px}
+
+/* ---------- light appearance (pins 355714070590901781, 746260600795600117) ---------- */
+html.light{color-scheme:light;
+  --bg:#f7f7f7;                       /* measured ground                   */
+  --label:#000;
+  --label2:#828282;                   /* measured second tone              */
+  --label3:rgba(0,0,0,.3);
+  --dim:#828282;
+  --text2:rgba(0,0,0,.72);
+  --panel:#fff;                       /* measured card                     */
+  --panel2:#ededed;                   /* measured portrait-card ground     */
+  --raised:#fff;
+  --hair:#e8e8e8;                     /* measured chip rim                 */
+  --sep:rgba(0,0,0,.07);
+  --red:#111; --ivory:#111;
+  --fill:rgba(0,0,0,.05); --fill2:rgba(0,0,0,.07); --fill3:rgba(0,0,0,.035)}
+html.light .glass{background:rgba(255,255,255,.82);box-shadow:inset 0 0 0 1px rgba(0,0,0,.05),0 10px 30px rgba(0,0,0,.08)}
+html.light .btn-primary,html.light .btn-red{background:#000;color:#fff}
+html.light .btn-tinted,html.light .chip.on,html.light .intro b,html.light .search input,html.light .grow .ico,html.light .cover,html.light .cover .ti,
+html.light .letter-object,html.light .speech-object,html.light .edit-object,html.light .edit-object .tape-label{color:#000}
+html.light .circ{color:#000;background:#fff;box-shadow:inset 0 0 0 1px var(--hair)}
+html.light .ltitle .btn-icon.glass,html.light .ptop .btn-icon.glass{background:#fff;color:#000;box-shadow:inset 0 0 0 1px var(--hair)}
+html.light .ph .top .btn-icon.glass{background:rgba(28,28,30,.55);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+html.light .acard,html.light .erows,html.light .group,html.light .cp,html.light .empty-state,html.light .search,html.light .archive-tile,
+html.light .artifact-card .object-stage,html.light .hist-object{box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05)}
+html.light .acard .atile{background:#1c1c1e}
+html.light .wave i{background:rgba(0,0,0,.16)} html.light .wave .wv.on i{background:#000}
+html.light .edit-object .wave i{background:rgba(0,0,0,.35)}
+html.light .cover .pr{background:rgba(0,0,0,.08)} html.light .cover .pr i{background:#000} html.light .cover .dn{background:#000;color:#fff}
+html.light .cat::before{background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.9) 55%,rgba(255,255,255,.1) 100%)}
+html.light .cat .sub{color:var(--label2)} html.light .cat .mark{color:rgba(0,0,0,.06)}
+html.light .hist-progress{background:rgba(0,0,0,.08)} html.light .hist-progress i{background:#000}
+html.light .textbtn,html.light .hist-action{color:var(--label2)}
+html.light .badge{background:#000;color:#fff}
+html.light .cp .chip2{background:rgba(0,0,0,.06)}
+html.light #tabbar{background:rgba(255,255,255,.86)}
+html.light #tabhl{background:#ededed}
+html.light .tab.on{color:#000} html.light .tab:not(.on){color:rgba(0,0,0,.42)}
+html.light #tabsearch{color:#000}
+html.light .navbar::before{background:rgba(247,247,247,.8)}
+html.light #topnav button.on{color:#000;background:rgba(0,0,0,.06);box-shadow:none}
+html.light #topnav .lg{color:#000}
+html.light .sheet{background:rgba(255,255,255,.96)}
+html.light .scrim{background:rgba(0,0,0,.2)}
+html.light .loading-shell .skeleton{background:rgba(0,0,0,.06);border-color:transparent}
+html.light .veil img{mix-blend-mode:multiply;opacity:.3}
+html.light :focus-visible{outline-color:#000}
+html.light ::selection{background:rgba(0,0,0,.12)}
+
+/* =========================== LIQUID GLASS ============================
+   Measured from Adam's blessed pins 39828777963914523 (glass pills, 3565px)
+   and 10062799163732573 (iOS 26 Control Centre): fill ~3% white over a heavy
+   blur; a hairline rim at ~60% white top-left falling to ~30% at the bottom;
+   a second inner hairline at ~19%. No drop shadow on dark; a soft one on light. */
+:root{--lg-fill:rgba(255,255,255,.03);--lg-blur:blur(16px) saturate(1.7) brightness(1.06);
+  --lg-rim:linear-gradient(150deg,rgba(255,255,255,.62),rgba(255,255,255,.2) 30%,rgba(255,255,255,.07) 55%,rgba(255,255,255,.3));
+  --lg-inner:inset 0 1px 1px rgba(255,255,255,.19),inset 0 -1px 1px rgba(255,255,255,.06);
+  --lg-drop:0 8px 28px rgba(0,0,0,.28)}
+html.light{--lg-fill:rgba(255,255,255,.55);--lg-blur:blur(16px) saturate(1.8);
+  --lg-rim:linear-gradient(150deg,rgba(255,255,255,1),rgba(255,255,255,.5) 35%,rgba(0,0,0,.06) 60%,rgba(255,255,255,.7));
+  --lg-inner:inset 0 1px 1px rgba(255,255,255,.9),inset 0 -1px 1px rgba(0,0,0,.03);--lg-drop:0 8px 26px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06)}
+.lg,#tabbar,#tabsearch,#mini,.btn-icon.glass,.btn-glass{position:relative}
+.glass,.lg{isolation:isolate;background:var(--lg-fill);-webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);
+  box-shadow:var(--lg-inner),var(--lg-drop)}
+.glass::after,.lg::after{content:"";display:block;position:absolute;inset:0;border-radius:inherit;pointer-events:none;padding:1px;background:var(--lg-rim);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+html.light .glass{background:var(--lg-fill);box-shadow:var(--lg-inner),var(--lg-drop)}
+/* on photographs controls are always the dark-adapted glass, in either appearance */
+.ph .top .btn-icon.glass,html.light .ph .top .btn-icon.glass,.fcfav,.pill.ghost{background:rgba(255,255,255,.03);color:#fff;
+  -webkit-backdrop-filter:blur(16px) saturate(1.7) brightness(1.06);backdrop-filter:blur(16px) saturate(1.7) brightness(1.06);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.19),inset 0 -1px 1px rgba(255,255,255,.06),0 6px 20px rgba(0,0,0,.18)}
+.fcfav::after,.pill.ghost::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;padding:1px;
+  background:linear-gradient(150deg,rgba(255,255,255,.62),rgba(255,255,255,.2) 30%,rgba(255,255,255,.07) 55%,rgba(255,255,255,.3));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.pill.ghost{position:relative}
+/* tab pill: the selection is a clear glass lens, not a grey lozenge (pin 217650594489716463) */
+/* floating bars sit over busy content, so they carry more tint (iOS deepens glass over content) */
+#tabbar,#tabsearch,#mini,#topnav,.toast{background:rgba(22,22,24,.46);-webkit-backdrop-filter:blur(24px) saturate(1.8);backdrop-filter:blur(24px) saturate(1.8)}
+html.light #tabbar,html.light #tabsearch,html.light #mini,html.light #topnav,html.light .toast{background:rgba(255,255,255,.68)}
+#tabhl,html.light #tabhl{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),inset 0 1px 1px rgba(255,255,255,.35),0 2px 8px rgba(0,0,0,.18)}
+html.light #tabhl{background:rgba(255,255,255,.7);box-shadow:inset 0 0 0 1px rgba(255,255,255,1),0 2px 10px rgba(0,0,0,.1)}
+/* hairline circles on the ground become small glass buttons */
+.circ{background:var(--lg-fill);-webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);box-shadow:var(--lg-inner),inset 0 0 0 1px rgba(255,255,255,.12)}
+html.light .circ{background:#fff;box-shadow:var(--lg-inner),inset 0 0 0 1px var(--hair),0 2px 8px rgba(0,0,0,.05)}
+.sheet{background:rgba(28,28,30,.72)} html.light .sheet{background:rgba(255,255,255,.82)}
+/* Now Playing is immersive and stays dark in either appearance */
+html.light #np{color-scheme:dark;color:#fff;--label:#fff;--label2:#8e8e93;--dim:#69696b;--text2:rgba(255,255,255,.75);
+  --panel:#1c1c1e;--panel2:#323234;--hair:rgba(255,255,255,.08);--sep:rgba(255,255,255,.08)}
+html.light #np .cover,html.light #np .cover .ti{color:#fff}
+html.light #np .btn-icon{background:var(--panel);color:#fff}
+
+/* card overlays: progressive blur instead of a black scrim (iOS 26 album pages) */
+.fc::before{background:linear-gradient(transparent 55%,rgba(0,0,0,.42))}
+.pcard .art::before{background:linear-gradient(transparent 60%,rgba(0,0,0,.4))}
+.ph::before{background:linear-gradient(rgba(0,0,0,.22),transparent 18%,transparent 55%,rgba(0,0,0,.45) 85%,rgba(0,0,0,.6))}
+.fc::after,.pcard .art::after,.ph::after{content:"";position:absolute;top:auto;left:0;right:0;bottom:0;height:42%;z-index:1;pointer-events:none;box-shadow:none;border-radius:0;
+  -webkit-backdrop-filter:blur(22px) saturate(1.3);backdrop-filter:blur(22px) saturate(1.3);
+  -webkit-mask:linear-gradient(transparent,#000 70%);mask:linear-gradient(transparent,#000 70%)}
+.ph::after{height:48%}
+.ph .bot{z-index:2} .ph .top{z-index:3}
+
+/* =========================== DESKTOP SHELL ===========================
+   iPadOS 26 floating sidebar, measured from pin 4604649247285910912
+   (Photos, 735px = 820pt): panel inset ~9pt, ~271pt wide, #101010 on #000;
+   rows 42pt on a 43pt pitch; selection a #2f2f2f pill inset 16pt; content
+   ~25pt to the right; section headers grey. Player floats over content
+   (pin 1122663013395119080 Music, pin 4608589877548880960). */
+@media (min-width:900px){
+  :root{--sbw:272px;--sbx:10px;--cx:calc(var(--sbw) + var(--sbx) + 28px);--m:0px}
+  #topnav{display:flex!important;flex-direction:column;align-items:stretch;gap:0;position:fixed;z-index:46;
+    left:var(--sbx);top:var(--sbx);bottom:var(--sbx);width:var(--sbw);height:auto;transform:none;border-radius:26px;padding:14px 12px;overflow-y:auto}
+  html:not(.light) #topnav{background:rgba(16,16,16,.88)}
+  #topnav .lg{display:flex;align-items:center;gap:10px;height:44px;padding:0 6px;margin-bottom:10px;border-radius:12px;font-size:22px;background:none!important}
+  #topnav .lg img{width:30px;height:30px;border-radius:8px}
+  #topnav .nav-primary,#topnav .nav-tools{display:flex;flex-direction:column;gap:1px;justify-content:flex-start}
+  #topnav .nav-tools{margin-top:auto;padding-top:12px}
+  #topnav button:not(.lg){height:42px;width:100%;padding:0 14px;border-radius:21px;gap:12px;justify-content:flex-start;
+    font-size:17px;font-weight:400;letter-spacing:-.43px;color:var(--label)}
+  #topnav button:not(.lg) .sfi{color:var(--label2)}
+  #topnav button.on{background:#2f2f2f;color:#fff;box-shadow:none}
+  #topnav button.on .sfi{color:#fff}
+  html.light #topnav button.on{background:rgba(0,0,0,.07);color:#000} html.light #topnav button.on .sfi{color:#000}
+  #topnav .nav-sect{margin:18px 14px 6px;font-size:15px;font-weight:600;letter-spacing:-.2px;color:var(--label2)}
+  @media (hover:hover){#topnav button:not(.on):not(.lg):hover{background:var(--fill3)}}
+
+  .page{padding-left:var(--cx);padding-right:32px}
+  .content{max-width:none;margin:0}
+  .ltitle{padding-top:40px;padding-left:0;padding-right:0}
+  .wrap{padding:0}
+  .hrow{padding:0;scroll-padding:0}
+  .bleed{margin:0}
+  .veil{right:0}
+  .ptop{left:calc(var(--cx) - 4px)!important;top:16px!important}
+  .ltitle:has(+ .ptop),.content:has(.ptop) .ltitle{padding-top:76px}
+  .pdesk{max-width:none;margin:0;padding:40px 0 0;grid-template-columns:minmax(320px,420px) minmax(0,1fr)}
+  .pdesk .ptop{position:fixed}
+  .pdesk>div>.ptop{display:none}
+  .settings,.libwrap{max-width:820px!important;margin:0}
+  .intro{max-width:620px}
+  /* the player floats centred over the content column */
+  #dock{left:var(--cx);right:32px;padding:0 0 18px}
+  #mini{width:min(760px,100%)}
+  body.np-open #view{filter:none}
+  /* archive tiles get room on wide screens */
+  .archive-showcase{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .artifact-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+}
+
+/* =========================== ARTWORK CARDS ===========================
+   Books and archive items carry real artwork (refs pin 1016054365936791041,
+   805299977152614362): the figure's portrait, a progressive blur at the foot,
+   the title in white serif — the same grammar as the approved portrait cards. */
+.cover{position:relative;overflow:hidden;background:#1c1c1e!important;color:#fff!important}
+.cover .cimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%;filter:grayscale(1) contrast(1.05)}
+.cover::before{content:"";display:block!important;position:absolute;inset:0;width:auto;z-index:1;box-shadow:none;
+  background:linear-gradient(transparent 35%,rgba(0,0,0,.55) 75%,rgba(0,0,0,.72))}
+.cover::after{content:"";display:block!important;position:absolute;left:0;right:0;top:auto;bottom:0;height:55%;width:auto;z-index:1;opacity:1;
+  background:none;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);-webkit-mask:linear-gradient(transparent,#000 60%);mask:linear-gradient(transparent,#000 60%)}
+.cover .ti,.cover .au,.cover .pr,.cover .dn{z-index:2}
+.cover .ti,html.light .cover .ti{top:auto;bottom:30px;color:#fff!important;font-size:17px;line-height:18px;-webkit-line-clamp:4}
+.cover .au,html.light .cover .au{color:rgba(255,255,255,.7)!important;bottom:12px}
+.cover .pr{background:rgba(255,255,255,.2)!important} .cover .pr i{background:#fff!important}
+.cover .dn{background:#fff!important;color:#000!important}
+.cover.cur{box-shadow:inset 0 0 0 2px #fff}
+.art-obj{position:relative;display:block;width:100%;height:100%;overflow:hidden;border-radius:var(--r-panel);background:#1c1c1e;color:#fff}
+.art-obj img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%;filter:grayscale(1) contrast(1.05)}
+.art-obj::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(transparent 40%,rgba(0,0,0,.6))}
+.art-obj::after{content:"";position:absolute;left:0;right:0;bottom:0;height:50%;z-index:1;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  -webkit-mask:linear-gradient(transparent,#000 60%);mask:linear-gradient(transparent,#000 60%)}
+.art-obj .ak{position:absolute;z-index:2;left:12px;top:12px;height:26px;padding:0 10px;border-radius:13px;display:flex;align-items:center;
+  font-size:12px;font-weight:600;letter-spacing:.02em;color:#fff;background:rgba(255,255,255,.08);
+  -webkit-backdrop-filter:blur(16px) saturate(1.7);backdrop-filter:blur(16px) saturate(1.7);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),inset 0 1px 1px rgba(255,255,255,.3)}
+.art-obj .object-title{position:absolute;z-index:2;left:14px;right:14px;bottom:14px;margin:0;font-family:'Instrument Serif',Georgia,serif;font-size:22px;line-height:23px;color:#fff;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.artifact-card .object-stage{padding:0;background:none!important;box-shadow:none!important}
+.artifact-card .object-stage .art-obj,.archive-tile .object-stage .art-obj{width:100%;height:100%}
+.archive-tile .object-stage{height:auto;aspect-ratio:4/5}
+.hist-object .art-obj{border-radius:inherit}
+.hist-object .art-obj .ak,.hist-object .art-obj .object-title{display:none}
+@media (max-width:679px){.archive-tile .object-stage{aspect-ratio:auto;height:144px}.art-obj .object-title{font-size:18px;line-height:19px}}
+
+/* light figure page on desktop: controls are not on the photo there */
+html.light .pdesk .pill:not(.ghost){background:#000;color:#fff}
+html.light .pdesk .pill.ghost{background:#fff;color:#000;box-shadow:inset 0 0 0 1px var(--hair),0 2px 8px rgba(0,0,0,.05)}
+html.light .pdesk .pill.ghost::after{display:none}
+html.light .pdesk .stats b{color:#000} html.light .pdesk .stats span{color:var(--label2)}
+.art-obj .ak{background:rgba(0,0,0,.28)}
+/* search field: no browser ring; a quiet focus ring on the field */
+.search input:focus,.search input:focus-visible{outline:none}
+.search:focus-within{box-shadow:0 0 0 3px rgba(127,127,127,.25)}
+
 /* phone / desktop variants */
 .desk{display:none}
 @media (min-width:900px){ .mob{display:none!important} .desk{display:block} }
@@ -947,7 +1179,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261031-0200';
+const BUILD='20261031-0500';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -956,6 +1188,12 @@ const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"
 const store={ get(k,d){try{const v=localStorage.getItem('fs.'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
   set(k,v){try{localStorage.setItem('fs.'+k,JSON.stringify(v))}catch(e){}},
   remove(k){try{localStorage.removeItem('fs.'+k)}catch(e){}} };
+/* appearance: saved choice, else follow the system setting live */
+const lightMQ=matchMedia('(prefers-color-scheme: light)');
+function applyTheme(){ const t=store.get('theme','system'), light=t==='light'||(t==='system'&&lightMQ.matches);
+  document.documentElement.classList.toggle('light',light);
+  document.querySelector('meta[name="theme-color"]').content=light?'#f7f7f7':'#000000'; }
+lightMQ.addEventListener('change',applyTheme); applyTheme();
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const fmtDur=s=>{s=Math.max(0,Math.round(s||0));const h=~~(s/3600),m=~~((s%3600)/60);return h?h+' hr '+(m?m+' min':''):m+' min'};
 const fmtClock=s=>{s=Math.max(0,Math.round(s||0));const h=~~(s/3600),m=~~((s%3600)/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
@@ -974,7 +1212,7 @@ const pal=p=>[0,0];   /* monochrome: one neutral ground for every figure */
 const tone=p=>{ const [h,s]=pal(p); return `--h:${h};--s:${s}`; };
 /* set the page ground: one figure's hue, or the neutral graphite ground */
 function ground(p){ const [h,s]=p?pal(p):[220,.06]; const d=document.documentElement.style; d.setProperty('--gh',h); d.setProperty('--gs',s);
-  document.querySelector('meta[name=theme-color]').content=`hsl(${h} ${Math.round(s*90)}% 17%)`; }
+  document.querySelector('meta[name=theme-color]').content=document.documentElement.classList.contains('light')?'#f7f7f7':'#000000'; }
 function epTitle(p, e){
   const t = e.title;
   const short = p.shortName || p.name;
@@ -1084,10 +1322,13 @@ function paintChrome(){
   $('tabsearch').innerHTML=IC.search(26); $('tabsearch').classList.toggle('on',active==='search'); $('tabsearch').setAttribute('aria-keyshortcuts','Control+F Meta+F');
   if(active==='search') $('tabsearch').setAttribute('aria-current','page'); else $('tabsearch').removeAttribute('aria-current');
   $('tabsearch').onclick=()=>go('search');
+  /* desktop: iPadOS 26 sidebar (refs pin 4604649247285910912 Photos, 1122663013395119080 Music) */
+  const sb=(id,l,ic,extra='')=>{ const on=active===id||route===id; return `<button class="press${on?' on':''}" data-t="${id}"${on?' aria-current="page"':''}${extra}>${ic}<span>${l}</span></button>`; };
   $('topnav').innerHTML=`<button class="lg press" data-t="home" aria-label="The Greats"><img src="assets/icon-192.png?v=5" alt=""><span>The Greats</span></button>`+
-    `<div class="nav-primary">${TABS.map(([id,l])=>`<button class="press${active===id?' on':''}" data-t="${id}"${active===id?' aria-current="page"':''}>${l}</button>`).join('')}</div>`+
-    `<div class="nav-tools"><button class="press${active==='search'?' on':''}" data-t="search" aria-keyshortcuts="Control+F Meta+F" title="Search (⌘F)"${active==='search'?' aria-current="page"':''}>${IC.search(16)}<span>Search</span></button>`+
-    `<button class="press${active==='settings'?' on':''}" data-t="settings" aria-label="Settings" aria-keyshortcuts="Control+, Meta+," title="Settings (⌘,)"${active==='settings'?' aria-current="page"':''}>${IC.gear(17)}</button></div>`;
+    `<div class="nav-primary">${sb('search','Search',IC.search(19),' aria-keyshortcuts="Control+F Meta+F" title="Search (⌘F)"')}${TABS.map(([id,l,ic])=>sb(id,l,IC[ic](19))).join('')}</div>`+
+    `<div class="nav-sect">Library</div><div class="nav-primary">${sb('l/favs','Favourites',IC.star(18))}${sb('l/continue','Continue',IC.play(16))}${sb('l/finished','Finished',IC.check(17))}</div>`+
+    `<div class="nav-sect">Archive</div><div class="nav-primary">${sb('l/speeches','Speeches',sfi('speaker_2_fill',18))}${sb('l/letters','Letters',sfi('list_bullet',18))}${sb('l/edits','Edits',sfi('shuffle',17))}</div>`+
+    `<div class="nav-tools">${sb('settings','Settings',IC.gear(18),' aria-keyshortcuts="Control+, Meta+," title="Settings (⌘,)"')}</div>`;
   $('topnav').querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>go(b.dataset.t));
 }
 
@@ -1109,7 +1350,7 @@ function cover(p,k,e,i,{cls=''}={}){
   const isCur=cur&&cur.p===p&&cur.k===k&&cur.i===i, dn=done(p,e), ps=pos(p,e), st=ps>60&&!dn;
   const title=(e.book&&e.book.trim())||rowTitle(p,e);
   const [jacket,ink]=JACKETS[objectSeed(title+p.name)%JACKETS.length];
-  return `<span class="cover${isCur?' cur':''} ${cls}" style="--jacket:${jacket};--ink:${ink}"><span class="no">The Greats · ${e.n?'No. '+e.n:KLABEL[k]}</span>
+  return `<span class="cover${isCur?' cur':''} ${cls}" style="--jacket:${jacket};--ink:${ink}"><img class="cimg" src="${P[p.name]}" alt="" loading="lazy"><span class="no">The Greats · ${e.n?'No. '+e.n:KLABEL[k]}</span>
     <span class="ti">${esc(title)}</span><span class="mark" aria-hidden="true">${esc(p.shortName[0]||'G')}</span><span class="au">${esc((e.author||'').trim()||p.shortName)}</span>
     ${dn?`<span class="dn">${IC.check(11)}</span>`:''}${st?`<span class="pr"><i style="width:${Math.min(99,100*ps/(e.sec||1))}%"></i></span>`:''}</span>`;
 }
@@ -1118,9 +1359,8 @@ const book=(p,k,e,i)=>`<button class="book press" data-ep="${p.slug}|${k}|${i}">
 function artifactVisual(p,k,e,i){
   const title=rowTitle(p,e), date=e.date?mon(e.date):'Archive', seed=objectSeed(title+p.name);
   if(k==='bio') return cover(p,k,e,i);
-  if(k==='letters') return `<span class="archive-object letter-object"><span class="kicker">Private correspondence</span><span class="date">${esc(date)}</span><span class="object-title">${esc(title)}</span><span class="signature">${esc(p.shortName)}</span><span class="stamp">The Greats<br>Archive</span></span>`;
-  if(k==='edits') return `<span class="archive-object edit-object"><span class="tape-label"><span class="object-title">${esc(title)}</span><span class="wave" aria-hidden="true">${Array.from({length:24},(_,n)=>`<i style="height:${5+((seed+n*17)%13)}px"></i>`).join('')}</span><span class="reels"><i class="reel"></i><i class="window"></i><i class="reel"></i></span></span></span>`;
-  return `<span class="archive-object speech-object"><span class="kicker">Archive broadcast · ${esc(date)}</span><span class="object-title">${esc(title)}</span><span class="speaker">${esc(p.shortName)}</span><i class="mic" aria-hidden="true"></i></span>`;
+  /* speech, letter, edit: the speaker's portrait is the artwork; the kind is a small glass label */
+  return `<span class="archive-object art-obj"><img src="${P[p.name]}" alt="" loading="lazy"><span class="ak">${({speeches:'Speech',letters:'Letter',edits:'Edit'})[k]||esc(KLABEL[k])}</span><span class="object-title">${esc(title)}</span></span>`;
 }
 const artifactCard=(p,k,e,i)=>`<button class="artifact-card press" data-ep="${p.slug}|${k}|${i}"><span class="object-stage">${artifactVisual(p,k,e,i)}</span>
   <span><span class="t-head clamp2" style="display:block">${esc(rowTitle(p,e))}</span><span class="t-foot c2" style="display:block;margin-top:3px">${esc(p.shortName)} · ${fmtDur(e.sec)}</span></span></button>`;
@@ -1195,6 +1435,7 @@ function pageHome(){
   const pop=[featured(),...byCount.filter(p=>p!==featured())].slice(0,8);
   const focus=cont[0]||{p:featured(),k:'bio',e:featured().episodes[0],i:0};
   return `<div class="content">
+  <div class="veil" aria-hidden="true"><img src="${P[focus.p.name]}" alt=""></div>
   <div class="ltitle" data-title="The Greats"><h1 class="t-page" style="font-size:52px;line-height:52px">The Greats</h1>
     <button class="btn-icon glass press mob" data-go="settings" aria-label="Settings">${IC.gear(19)}</button></div>
   <div class="wrap rise"><p class="intro"><b>Study the lives that shaped the world.</b> Listen closely, return often, and carry the best ideas into your own work.</p>
@@ -1284,7 +1525,7 @@ function pagePerson(p){
   const books=`<section class="sect"><div class="${'wrap'}" style="padding:0">${shead('Books')}</div>
     <div class="hrow bleed" style="gap:16px">${p.episodes.map((e,i)=>book(p,'bio',e,i)).join('')}</div></section>`;
   const more=['speeches','edits','letters'].map(k=>{ const L=items(p,k); return L.length?`<section class="sect">${shead(KLABEL[k])}<div class="artifact-grid">${L.map((e,i)=>artifactCard(p,k,e,i)).join('')}</div></section>`:''; }).join('');
-  const about=`<section class="sect"><h2 class="t-sect">Biography</h2><p class="t-sub" style="color:rgba(255,255,255,.75);margin-top:8px;white-space:pre-line">${esc(m.bio)}</p></section>`;
+  const about=`<section class="sect"><h2 class="t-sect">Biography</h2><p class="t-sub" style="color:var(--text2);margin-top:8px;white-space:pre-line">${esc(m.bio)}</p></section>`;
   return `<div class="ph"><img src="${P[p.name]}" alt="" id="pimg">
       <div class="top"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button>
         <button class="btn-icon glass press" data-a="about" aria-label="About">${IC.more(20)}</button></div>
@@ -1295,7 +1536,7 @@ function pagePerson(p){
       <div><div class="ptop" style="position:fixed;top:14px;left:var(--m);z-index:50"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
         <div class="t-eyebrow c2" data-title="${esc(p.shortName)}">${esc(shelf)} · ${esc(m.sub)}</div>
         <h1 class="nm" style="margin-top:10px">${esc(p.shortName)}</h1>
-        <p class="t-body" style="color:rgba(255,255,255,.75);margin-top:18px;max-width:620px">${esc(quote)}</p>${stats}
+        <p class="t-body" style="color:var(--text2);margin-top:18px;max-width:620px">${esc(quote)}</p>${stats}
         <div style="max-width:420px">${acts}</div>${books}${more}${about}</div></div>`;
 }
 function pageList(id){
@@ -1320,6 +1561,7 @@ function pageSettings(){
     <div class="ptop" style="position:fixed"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
     <div class="wrap rise" style="margin-top:16px">
       <div class="t-foot gh">PLAYBACK</div><div class="group">${g('speaker_2_fill','Default speed',sp+'×','speed')}${g('moon_zzz_fill','Sleep timer',sleepMin?sleepMin+' min':'Off','sleep')}</div>
+      <div class="t-foot gh" style="margin-top:28px">DISPLAY</div><div class="group">${g('moon_fill','Appearance',{system:'System',light:'Light',dark:'Dark'}[store.get('theme','system')],'theme')}</div>
       <div class="t-foot gh" style="margin-top:28px">LIBRARY</div><div class="group">${g('clock','Reset listening data…',saved+' records','reset','destructive')}${g('star_fill','Favourites',favs.length,'favs')}</div>
       <div class="t-foot gf">Reset removes history, saved positions, and completion status, but keeps favourites. You’ll confirm before anything is removed.</div>
       <div class="t-foot gh" style="margin-top:28px">ABOUT</div><div class="group">${g('square_grid_2x2_fill','Design system','','system')}${g('info_circle','Version',BUILD,'update')}</div>
@@ -1328,20 +1570,23 @@ function pageSettings(){
 function pageSystem(){
   const types=[['t-display','Display','40 / 46 Bold'],['t-large','Large Title','34 / 41 Bold'],['t-title1','Title 1','28 / 34 Bold'],['t-title2','Title 2','22 / 28 Bold'],['t-title3','Title 3','20 / 25 Semibold'],
     ['t-head','Headline','17 / 22 Semibold'],['t-body','Body','17 / 22'],['t-callout','Callout','16 / 21'],['t-sub','Subhead','15 / 20'],['t-foot','Footnote','13 / 18'],['t-cap1','Caption 1','12 / 16'],['t-cap2','Caption 2','11 / 13']];
-  const sw=[['--bg','#000'],['--label','#fff'],['--label2','systemGray'],['--red','accent'],['--fill','glass fill'],['--fill2','selected'],['--raised','grouped'],['--hair','card rim']];
+  const sw=[['--bg','ground'],['--panel','panel'],['--panel2','inner tile'],['--label','text'],['--dim','second tone'],['--label2','meta'],['--hair','hairline'],['--sep','divider']];
   return `<div class="content"><div class="ltitle" data-title="Design System"><h1 class="t-page">Design System</h1></div>
   <div class="ptop" style="position:fixed"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
   <div class="wrap rise">
-   <p class="t-sub c2" style="margin-top:6px">Type from Apple’s HIG iOS table and SF Pro tracking table. Colour, radii and sizes measured from iOS 26 / iPadOS 26 Apple Music screenshots.</p>
+   <p class="t-sub c2" style="margin-top:6px">System v6, built only from the 17 references you approved and measured from them by script. One design in two appearances, following the system setting or the choice in Settings. Serif for names, SF for everything you operate.</p>
    <section class="sect">${shead('Type')}<div class="group" style="padding:6px 16px">${types.map(([c,l,s])=>`<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 0;box-shadow:inset 0 -.5px 0 var(--sep)"><span class="${c} trunc">${l}</span><span class="t-cap1 c2 num" style="flex:none">${s}</span></div>`).join('')}</div></section>
    <section class="sect">${shead('Colour')}<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">${sw.map(([v,l])=>`<div><div style="aspect-ratio:1;border-radius:12px;background:var(${v});box-shadow:inset 0 0 0 1px var(--hair)"></div><div class="t-cap1" style="margin-top:6px">${v}</div><div class="t-cap2 c2">${l}</div></div>`).join('')}</div></section>
    <section class="sect">${shead('Buttons')}<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-     <button class="btn btn-primary press">${IC.play(15)} Play</button><button class="btn btn-tinted press">${IC.shuffle(15)} Shuffle</button><button class="btn btn-red press">Subscribe</button>
-     <button class="btn btn-glass glass press">Glass</button><button class="btn btn-tinted btn-sm press">Play</button><button class="btn-play press">${IC.play(26)}</button>
-     <button class="btn-icon glass press">${IC.back(20)}</button><button class="btn-icon sm glass press">${IC.star(17)}</button><button class="chip on">Selected</button><button class="chip">Chip</button><button class="textbtn">See All</button></div></section>
-   <section class="sect">${shead('Cards')}<div class="hrow bleed">${DATA.people.slice(0,3).map(tile).join('')}${pcard(DATA.people[7])}</div></section>
+     <button class="btn btn-primary press">${IC.play(14)} Play</button><button class="btn btn-tinted press">${IC.shuffle(15)} Shuffle</button><button class="btn-play press">${IC.play(26)}</button>
+     <button class="circ press" aria-label="History">${IC.clock(18)}</button><button class="circ press" aria-label="Search">${IC.search(18)}</button><button class="btn-icon press" aria-label="Back">${IC.back(20)}</button></div>
+     <div class="hrow bleed" style="margin-top:14px"><button class="chip on">Selected</button><button class="chip">Tab</button><button class="chip">Tab</button></div>
+     <p class="intro" style="font-size:24px"><b>Two-tone text.</b> White or black lead, then the second tone.</p></section>
+   <section class="sect">${shead('Audio card')}${acard({p:DATA.people[7],k:'bio',e:DATA.people[7].episodes[0],i:0})}</section>
+   <section class="sect">${shead('Portrait cards')}<div class="hrow bleed">${DATA.people.slice(0,3).map(fcard).join('')}</div></section>
+   <section class="sect">${shead('Recent cards')}<div class="hrow bleed">${DATA.people.slice(3,9).map(tile).join('')}</div></section>
    <section class="sect">${shead('Rows')}<div class="rows">${erow(DATA.people[7],'bio',DATA.people[7].episodes[0],0)}${erow(DATA.people[7],'bio',DATA.people[7].episodes[1],1,{num:false,lead:true})}</div></section>
-   <section class="sect">${shead('Materials')}<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="group" style="min-height:110px;padding:18px"><div class="t-head">Content</div><div class="t-foot c2" style="margin-top:4px">Opaque, quiet, readable.</div></div><div class="glass" style="min-height:110px;padding:18px;border-radius:18px"><div class="t-head">Controls</div><div class="t-foot c2" style="margin-top:4px">Glass only for functional chrome.</div></div></div></section>
+   <section class="sect">${shead('Materials')}<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="group" style="min-height:110px;padding:18px"><div class="t-head">Panel</div><div class="t-foot c2" style="margin-top:4px">Flat, 20pt corners, 8pt apart.</div></div><div class="glass" style="min-height:110px;padding:18px;border-radius:20px"><div class="t-head">Floating chrome</div><div class="t-foot c2" style="margin-top:4px">Tab pill, mini player, top bar.</div></div></div></section>
    <section class="sect">${shead('Motion')}<p class="t-sub c2">Critically damped spring (damping 1.0, response 0.4s) for everything; sheets 0.8 / 0.3s. Cards zoom into their page with the View Transitions API; pages push and pop; data arrives by focus.</p></section>
   </div></div>`;
 }
@@ -1371,6 +1616,7 @@ function act(a,r){
   else if(a==='shuffle'&&p){ shuffleOn=true; playEp(p,~~(Math.random()*p.episodes.length),'bio'); openNP(); }
   else if(a==='speed'){ const o=[1,1.25,1.5,1.75,2]; const n=o[(o.indexOf(store.get('speed',1))+1)%o.length]; store.set('speed',n); audio.playbackRate=n; paintNP(); render(r,'none'); }
   else if(a==='sleep'){ cycleSleep(); render(r,'none'); }
+  else if(a==='theme'){ const o=['system','light','dark']; store.set('theme',o[(o.indexOf(store.get('theme','system'))+1)%3]); applyTheme(); render(r,'none'); }
   else if(a==='history-clear') clearHistoryTimeline();
   else if(a==='reset') confirmResetListeningData();
   else if(a==='favs') go('l/favs');
@@ -1410,7 +1656,7 @@ function closeSheet(){ const sheet=$('sheet'); $('scrim').classList.remove('on')
 $('shx').innerHTML=IC.x(15); $('shx').onclick=closeSheet; $('scrim').onclick=()=>{ closeSheet(); };
 function openAbout(p){ const m=meta(p);
   openSheet(p.shortName,`<div style="display:flex;gap:14px;align-items:center"><img src="${P[p.name]}" style="width:76px;height:76px;border-radius:38px;object-fit:cover;object-position:top"><div><div class="t-head">${esc(m.sub)}</div><div class="t-foot c2">${p.episodes.length} books · ${hours(p)} hours</div></div></div>
-  <p class="t-body" style="white-space:pre-line;margin-top:18px;color:rgba(255,255,255,.9)">${esc(m.bio)}</p>`); }
+  <p class="t-body" style="white-space:pre-line;margin-top:18px;color:var(--text2)">${esc(m.bio)}</p>`); }
 function openQueue(){ if(!cur) return; const L=items(cur.p,cur.k);
   openSheet('Up Next',`<div class="t-foot c2" style="margin-bottom:6px">${esc(cur.p.shortName)} · ${KLABEL[cur.k]}</div><div class="rows">${L.map((e,i)=>erow(cur.p,cur.k,e,i)).join('')}</div>`);
   bind($('shb'),'queue'); }
