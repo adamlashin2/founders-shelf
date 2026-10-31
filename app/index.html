@@ -1262,7 +1262,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261031-0800';
+const BUILD='20261031-0900';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -1378,6 +1378,47 @@ async function renderNow(r,kind){
 navEl().addEventListener('ionNavDidChange',()=>{ const pg=activePage(); if(!pg) return; const r=pg.dataset.route;
   if(r&&r!==route&&navStack.length>1&&navStack[navStack.length-2]===r){ navStack.pop(); route=r; if(!depth(r)) lastTab=r;
     ground(r.startsWith('p/')?BYSLUG[r.slice(2)]:r==='home'?featured():null); showing(pg,r,'pop'); navSync=true; history.back(); } });
+
+/* ===================== screen A -> screen B: Apple's zoom transition =====================
+   Apple, WWDC24 "Enhance your UI animations and transitions" (10145): "the cell you tap morphs
+   into the incoming view"; continuously interactive; the source is looked up again on zoom-out by
+   a stable identifier. Curve: Apple's default spring, WWDC23 "Animate with springs" (10158):
+   bounce 0, stiffness = (2pi/duration)^2, damping = 4pi/duration, mass 1, duration 0.5s
+   (Apple's own zoom-session example). Computed, not eyeballed: 98.6% at 0.5s, settles at 735ms.
+   Runs on Ionic's animation engine, so ion-nav's edge swipe scrubs it with the finger.
+   Cards zoom into their figure page; rows and lists keep Ionic's iOS slide (Apple's drill-down). */
+const APPLE_SPRING={dur:735,ease:'linear(0 0%, 0.0278 2.8%, 0.0942 5.6%, 0.1804 8.3%, 0.2739 11.1%, 0.3671 13.9%, 0.4553 16.7%, 0.5360 19.4%, 0.6080 22.2%, 0.6712 25.0%, 0.7259 27.8%, 0.7727 30.6%, 0.8123 33.3%, 0.8456 36.1%, 0.8735 38.9%, 0.8967 41.7%, 0.9158 44.4%, 0.9316 47.2%, 0.9445 50.0%, 0.9551 52.8%, 0.9638 55.6%, 0.9708 58.3%, 0.9765 61.1%, 0.9811 63.9%, 0.9848 66.7%, 0.9879 69.4%, 0.9903 72.2%, 0.9922 75.0%, 0.9938 77.8%, 0.9950 80.6%, 0.9960 83.3%, 0.9969 86.1%, 0.9975 88.9%, 0.9980 91.7%, 0.9984 94.4%, 0.9987 97.2%, 1 100%)'};
+let ION=null;
+import('https://cdn.jsdelivr.net/npm/@ionic/core@9.0.10/dist/esm/index.js').then(m=>{ ION=m;
+  customElements.whenDefined('ion-nav').then(()=>{ navEl().animation=navAnimation; }); }).catch(()=>{});
+/* the card for a figure, on the page underneath: matched by the figure's id (Apple: stable identifier) */
+function zoomSource(view,slug){
+  if(!view||!slug) return null;
+  return [...view.querySelectorAll(`[data-p="${slug}"]`)].map(c=>c.querySelector('.art')||c).find(c=>{ const r=c.getBoundingClientRect();
+    return r.width>40&&r.height>40&&r.bottom>0&&r.top<innerHeight; })||null; }
+function navAnimation(baseEl,opts){
+  const back=opts.direction==='back', fig=back?opts.leavingEl:opts.enteringEl, other=back?opts.enteringEl:opts.leavingEl;
+  const route=fig&&fig.dataset.route||'', slug=route.startsWith('p/')?route.slice(2):null;
+  const src=slug&&zoomSource(other,slug);
+  if(!src||!ION) return ION?ION.iosTransitionAnimation(baseEl,opts):null;
+  const figPage=fig.querySelector(':scope>.page'), otherPage=other.querySelector(':scope>.page');
+  const box=baseEl.getBoundingClientRect(), c=src.getBoundingClientRect();
+  const W=box.width, H=box.height, s=c.width/W, r=parseFloat(getComputedStyle(src).borderRadius)||20;
+  /* the figure page, drawn at the card's size and place, clipped to the card's shape */
+  const small={transform:`translate(${c.left-box.left}px,${c.top-box.top}px) scale(${s})`,clipPath:`inset(0px 0px ${Math.max(0,H-c.height/s)}px 0px round ${r/s}px)`,opacity:'1'};
+  const full={transform:'translate(0px,0px) scale(1)',clipPath:'inset(0px 0px 0px 0px round 0px)',opacity:'1'};
+  const figAni=ION.createAnimation().addElement(figPage).beforeStyles({'transform-origin':'0 0'}).afterClearStyles(['transform-origin','clip-path'])
+    .keyframes(back?[{offset:0,...full},{offset:1,...small}]:[{offset:0,...small},{offset:1,...full}]);
+  /* the screen it came from recedes and dims toward the ground */
+  const rest={transform:'scale(1)',opacity:'1'}, away={transform:'scale(.94)',opacity:'.45'};
+  const otherAni=ION.createAnimation().addElement(otherPage).beforeStyles({'transform-origin':'50% 40%'}).afterClearStyles(['transform-origin'])
+    .keyframes(back?[{offset:0,...away},{offset:1,...rest}]:[{offset:0,...rest},{offset:1,...away}]);
+  /* the card itself is the thing that becomes the page: hide it while its page is in flight */
+  const srcAni=ION.createAnimation().addElement(src).beforeStyles({visibility:'hidden'}).afterClearStyles(['visibility']);
+  /* Ionic keeps the entering view at opacity 0 until its transition starts (ios.transition: beforeRemoveClass) */
+  return ION.createAnimation().addElement(opts.enteringEl).beforeRemoveClass('ion-page-invisible')
+    .duration(APPLE_SPRING.dur).easing(APPLE_SPRING.ease).fill('both').addAnimation([figAni,otherAni,srcAni]);
+}
 
 /* ===================== in-place morph (no page rebuild snap) =====================
    Filters, favourites, settings rows and history filters update the live page element in place:

@@ -115,6 +115,15 @@ The live, rendered version is in the app: **Library → ⚙ → Design system** 
 | Runtime | Web Animations API plus View Transitions (card → page zoom, push / pop), compositor-driven and skipped for reduced motion |
 | Frontier object pass | Pinterest brief `The Greats — tactile archive pass` (`f1a2ef57-0b39-44b9-9067-8557d6d9fa26`); references listed above were interpreted as material and hierarchy cues, not copied layouts |
 
+## Screen A → screen B (2026-10-31) — current
+Navigation runs on @ionic/core 9.0.10 (`ion-nav`, `ion-modal`), the library itself. Cards zoom into their figure page:
+the whole page grows from the card's rect and shape and the card hides while it is in flight; back shrinks it into the same
+card, found again by the figure's id (Apple WWDC24 10145: "the cell you tap morphs into the incoming view"). Curve: Apple's
+default spring from WWDC23 10158 — bounce 0, stiffness (2π/0.5)², damping 4π/0.5 — sampled into CSS `linear()`: 98.6% at
+0.5 s, settles at 735 ms. Rows and lists use Ionic's iOS slide. Ionic's edge swipe scrubs either one. Now Playing and sheets
+are `ion-modal` cards (app recedes to 0.915). Ionic needs `--ion-safe-area-*` defined and `ion-modal .ion-page{height:100%}`
+when core.css isn't loaded; custom scrollers carry `.ion-content-scroll-host`.
+
 ## Navigation motion (2026-10-31) — supersedes the View Transitions table below
 
 Ported from Ionic Framework's iOS transition and swipe-back gesture (github.com/ionic-team/ionic-framework,
