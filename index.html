@@ -9,6 +9,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="The Greats">
 <meta name="theme-color" content="#000000">
+<script>window.Ionic={config:{mode:"ios",swipeBackEnabled:true,animated:true}};</script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@9.0.10/dist/ionic/ionic.esm.js"></script>
+<script>/* appearance before first paint: saved choice, else the system setting */
+(function(){var t=null;try{t=JSON.parse(localStorage.getItem('fs.theme'))}catch(e){}
+var light=t==='light'||(t!=='dark'&&matchMedia('(prefers-color-scheme: light)').matches);
+document.documentElement.classList.toggle('light',light);})();</script>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=5">
 <link rel="icon" type="image/png" href="assets/icon-192.png?v=5">
@@ -47,19 +53,28 @@
   --fill:hsl(var(--gh) calc(var(--gs)*35%) 80% / .12);   /* C: panel = ground, desaturated, lifted */
   --fill2:hsl(var(--gh) calc(var(--gs)*30%) 90% / .20);
   --fill3:rgba(255,255,255,.06);
-  --hair:rgba(255,255,255,.12);       /* measured: Replay card rim         */
-  --sep:rgba(255,255,255,.09);
-  --raised:hsl(var(--gh) calc(var(--gs)*40%) 70% / .09);
+  --hair:rgba(255,255,255,.08);       /* pin 355714070590901781: chip rim #e8e8e8 on #f7f7f7, inverted */
+  --sep:rgba(255,255,255,.08);
+  --raised:#1c1c1e;
+  /* v5 surfaces, measured by script from pin 808888783111165642 (dark journal) */
+  --panel:#1c1c1e;                    /* panel fill                        */
+  --panel2:#323234;                   /* inner square (play tile)          */
+  --dim:#69696b;                      /* second tone of large text, placeholders */
+  --text2:rgba(255,255,255,.75);      /* long-form copy on the ground      */
 
   /* ---------- type: HIG iOS Large table + SF Pro tracking ---------- */
   --f:"SF Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 
   /* ---------- space & shape ---------- */
-  --m:18px;                           /* measured side margin (H, A)       */
-  --r-hero:19px;                      /* measured hero card                */
-  --r-card:14px;                      /* measured Replay card              */
-  --r-tile:9px;
-  --r-row:18px;
+  --m:12px;                           /* measured panel inset 12pt (pin 808888783111165642) */
+  --gap:8px;                          /* measured gap between panels       */
+  --r-panel:20px;                     /* measured panel corner             */
+  --r-big:28px;                       /* measured card corner (pin 355714070590901781) */
+  --r-inner:12px;                     /* measured play tile corner         */
+  --r-hero:28px;
+  --r-card:20px;
+  --r-tile:14px;
+  --r-row:20px;
   --tabh:58px;                        /* measured tab bar                  */
   --minih:50px;                       /* 44pt controls plus player chrome  */
   --safe-t:env(safe-area-inset-top,0px);
@@ -96,10 +111,7 @@ html{--gh:0;--gs:0}
 html,body{height:100%;color:var(--label);color-scheme:dark}
 /* Neutral graphite media-room ground. Hue properties remain registered so a
    future contextual transition cannot cut between frames. */
-body{background:
-  radial-gradient(120% 70% at 50% -10%,hsl(var(--gh) calc(var(--gs)*100%) 30%),transparent 70%),
-  linear-gradient(hsl(var(--gh) calc(var(--gs)*90%) 17%),hsl(var(--gh) calc(var(--gs)*70%) 8%) 60%,hsl(var(--gh) calc(var(--gs)*50%) 5%));
-  background-attachment:fixed}
+body{background:var(--bg)}          /* flat black ground, as measured */
 body{font-family:var(--f);overscroll-behavior:none;-webkit-font-smoothing:antialiased;overflow:hidden}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 input{font:inherit;color:inherit;outline:none;border:0;background:none}
@@ -144,8 +156,14 @@ img{display:block;-webkit-user-drag:none;user-select:none}
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 
 /* =============================== BUTTONS ================================ */
-.press{transition:transform .3s var(--spring),opacity .3s var(--spring),background-color .2s}
-.press:active{transform:scale(.97);opacity:.8;transition:transform .1s ease-out,opacity .1s ease-out}
+.press{position:relative;transition:transform .3s var(--spring),opacity .3s var(--spring),background-color .2s,color .2s,box-shadow .25s}
+.press:active{transform:scale(.965);opacity:.82;transition:transform .09s ease-out,opacity .09s ease-out}
+.press:disabled{cursor:default;opacity:.36}
+@media (hover:hover){
+  .btn-primary:hover,.pill:not(.ghost):hover{background:#fff;box-shadow:0 10px 30px rgba(243,237,228,.18)}
+  .btn-tinted:hover,.btn-icon:hover,.chip:hover,.textbtn:hover{background-color:rgba(255,255,255,.12);color:#fff}
+  .press:not(:disabled):focus-visible{box-shadow:0 0 0 4px rgba(243,237,228,.16)}
+}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:22px;
   font-size:17px;font-weight:600;letter-spacing:-.43px;white-space:nowrap}
 .btn-primary{background:var(--ivory);color:#1a1612}                       /* iOS 26 album "Play" pill */
@@ -163,7 +181,7 @@ img{display:block;-webkit-user-drag:none;user-select:none}
 .textbtn{min-height:44px;display:inline-flex;align-items:center;color:rgba(255,255,255,.7);font-size:17px;letter-spacing:-.43px}
 
 /* =============================== LAYOUT ================================= */
-.page{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+.page{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;background:var(--bg);
   padding:0 0 calc(var(--tabh) + var(--minih) + 60px + var(--safe-b))}
 .content{min-width:0;overflow-x:clip}
 .wrap{padding:0 var(--m)}
@@ -174,6 +192,49 @@ img{display:block;-webkit-user-drag:none;user-select:none}
 .shead .sfi{color:var(--label2)}
 .hrow{display:flex;gap:12px;max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-inline:contain;padding:0 var(--m);scroll-snap-type:x mandatory;scroll-padding:0 var(--m)}
 .hrow>*{scroll-snap-align:start;flex:none}
+
+/* The app's purpose is a practice, not a feed. One calm orienting surface leads
+   into the next useful listening action; the archive remains the visual hero. */
+.purpose-card{position:relative;min-height:360px;margin-top:12px;border-radius:28px;overflow:hidden;display:flex;align-items:flex-end;padding:26px;
+  background:#111;box-shadow:inset 0 0 0 1px var(--hair),0 24px 70px rgba(0,0,0,.32)}
+.purpose-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%;filter:grayscale(1) contrast(1.04);opacity:.62;transition:transform .8s var(--spring)}
+.purpose-card::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,5,6,.96) 0%,rgba(5,5,6,.78) 58%,rgba(5,5,6,.18)),linear-gradient(transparent 46%,rgba(0,0,0,.56));pointer-events:none}
+.purpose-copy{position:relative;z-index:1;max-width:620px}
+.purpose-copy h2{font-family:'Instrument Serif',Georgia,serif;font-size:46px;line-height:45px;font-weight:400;letter-spacing:-.02em;text-wrap:balance;margin-top:9px}
+.purpose-copy p{max-width:500px;margin-top:12px;color:rgba(255,255,255,.7)}
+.purpose-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:22px}
+.purpose-stat{display:inline-flex;align-items:center;gap:7px;min-height:44px;color:rgba(255,255,255,.62)}
+.purpose-stat b{color:#fff;font-weight:600}
+@media (hover:hover){.purpose-card:hover>img{transform:scale(1.025)}}
+
+/* YouTube-like chronology, expressed with this product's physical objects. */
+.history-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-top:6px}
+.history-head p{max-width:570px;margin-top:7px;color:var(--label2)}
+.history-tools{display:flex;align-items:center;gap:8px;flex:none}
+.history-filters{display:flex;gap:8px;overflow-x:auto;margin-top:22px;padding-bottom:2px}
+.history-section{margin-top:28px}
+.history-section-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px}
+.history-list{display:flex;flex-direction:column}
+.history-item{display:flex;align-items:center;gap:8px;min-width:0;padding:10px 0;box-shadow:inset 0 -.5px 0 var(--sep)}
+.history-item:last-child{box-shadow:none}
+.hist-main{display:flex;align-items:center;gap:14px;flex:1;min-width:0;text-align:left;border-radius:16px;padding:4px}
+.hist-object{position:relative;width:84px;height:72px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden;
+  background:radial-gradient(circle at 50% 12%,rgba(255,255,255,.10),transparent 48%),rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.hist-object .cover{width:42px}
+.hist-object .letter-object{width:46px;height:61px;padding:7px 6px;border-radius:2px}.hist-object .letter-object>*{display:none}
+.hist-object .edit-object{width:66px;height:47px;padding:5px;border-radius:6px}.hist-object .edit-object .tape-label{height:28px;padding:3px}.hist-object .edit-object .object-title,.hist-object .edit-object .wave{display:none}.hist-object .edit-object .reels{margin-top:3px}.hist-object .edit-object .reel{width:12px;height:12px;border-width:3px;box-shadow:0 0 0 1px #8d8375}.hist-object .edit-object .window{width:18px;height:8px}
+.hist-object .speech-object{width:48px;height:57px;padding:6px}.hist-object .speech-object .kicker,.hist-object .speech-object .speaker,.hist-object .speech-object .mic{display:none}.hist-object .speech-object .object-title{margin-top:7px;font-size:8px;line-height:8px;-webkit-line-clamp:4}
+.hist-copy{flex:1;min-width:0}
+.hist-meta{display:flex;align-items:center;gap:7px;margin-top:4px;color:var(--label2)}
+.hist-kind{color:#c9a96f;text-transform:uppercase;letter-spacing:.08em;font-size:10px;font-weight:700}
+.hist-progress{height:3px;margin-top:8px;border-radius:2px;background:rgba(255,255,255,.10);overflow:hidden;max-width:420px}.hist-progress i{display:block;height:100%;background:var(--ivory);border-radius:inherit}
+.hist-actions{display:flex;align-items:center;gap:2px;flex:none}
+.hist-action{width:44px;height:44px;border-radius:22px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.72)}
+@media (hover:hover){.hist-main:hover{background:rgba(255,255,255,.055)}.hist-action:hover{background:rgba(255,255,255,.09);color:#fff}.history-item:hover .hist-object{box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}}
+@media (max-width:520px){
+  .purpose-card{min-height:420px;padding:22px}.purpose-card::after{background:linear-gradient(0deg,rgba(5,5,6,.97) 0%,rgba(5,5,6,.78) 55%,rgba(5,5,6,.12))}.purpose-card>img{object-position:center top}.purpose-copy h2{font-size:39px;line-height:39px}
+  .history-head{display:block}.history-tools{margin-top:14px}.history-item{gap:2px}.hist-main{gap:10px;padding-left:0}.hist-object{width:68px;height:64px}.hist-actions{gap:0}.hist-copy .t-head{font-size:15px;line-height:19px}.hist-meta{gap:5px}
+}
 
 /* large title + collapsing glass nav bar (scroll edge effect) */
 .ltitle{display:flex;align-items:flex-end;justify-content:space-between;padding:calc(var(--safe-t) + 54px) var(--m) 6px}
@@ -378,8 +439,10 @@ body:not(.playing) #np .art{transform:scale(.86)}
 .sheet-actions .btn{width:100%}
 .btn-danger{background:var(--danger);color:#fff}
 .toast{position:fixed;left:50%;top:calc(var(--safe-t) + 12px);z-index:90;transform:translate(-50%,-160%);height:44px;border-radius:22px;
-  padding:0 18px;display:flex;align-items:center;gap:8px;transition:transform .5s var(--spring)}
+  padding:0 10px 0 18px;display:flex;align-items:center;gap:12px;transition:transform .5s var(--spring);white-space:nowrap}
 .toast.on{transform:translate(-50%,0)}
+.toast button{display:none;min-width:58px;height:34px;padding:0 12px;border-radius:17px;background:rgba(255,255,255,.14);font-size:13px;font-weight:650;color:#fff}
+.toast.has-action button{display:inline-flex;align-items:center;justify-content:center}
 
 /* =============================== MOTION ================================= */
 /* card -> page zoom (iOS 18 zoom transition) on the View Transitions API */
@@ -389,6 +452,8 @@ html.vt-push::view-transition-old(root){animation:var(--dur) var(--spring) both 
 html.vt-push::view-transition-new(root){animation:var(--dur) var(--spring) both vt-in}
 html.vt-pop::view-transition-old(root){animation:var(--dur) var(--spring) both vt-in-r}
 html.vt-pop::view-transition-new(root){animation:var(--dur) var(--spring) both vt-out-r}
+html.vt-tab::view-transition-old(root){animation:.14s ease-out both vt-tab-old}
+html.vt-tab::view-transition-new(root){animation:.22s ease-out both vt-tab-new}
 /* zoom: the portrait and the name morph; the rest of the page fades fast underneath */
 html.vt-zoom::view-transition-group(hero),html.vt-zoom::view-transition-group(heroname){animation-duration:var(--dur);animation-timing-function:var(--spring)}
 ::view-transition-old(heroname),::view-transition-new(heroname){height:100%;width:auto;object-fit:none}
@@ -397,11 +462,14 @@ html.vt-zoom::view-transition-group(hero),html.vt-zoom::view-transition-group(he
 @keyframes vt-out{to{transform:translateX(-28%);filter:brightness(.6)}}
 @keyframes vt-in-r{to{transform:translateX(100%)}}
 @keyframes vt-out-r{from{transform:translateX(-28%);filter:brightness(.6)}}
+@keyframes vt-tab-old{to{opacity:0;transform:scale(.994)}}
+@keyframes vt-tab-new{from{opacity:0;transform:scale(1.006)}}
 html.vt-zoom::view-transition-old(root){animation:.18s ease-out both vt-fade}
 html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fadein}
 @keyframes vt-fade{to{opacity:0}} @keyframes vt-fadein{from{opacity:0}}
 ::view-transition-old(hero),::view-transition-new(hero){height:100%;object-fit:cover;overflow:hidden}
 ::view-transition-group(dock),::view-transition-group(topnav){animation:none}
+#dock{view-transition-name:dock}#topnav{view-transition-name:topnav}
 .rise{}
 @keyframes rise{from{opacity:0;transform:translateY(14px);filter:blur(4px)}}
 
@@ -615,6 +683,442 @@ html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fad
   .sheet{left:calc(50% - 260px);right:auto;width:520px;bottom:auto;top:50%;border-radius:28px;max-height:80vh}
   .settings,.libwrap{max-width:760px!important}
 }
+/* =========================== SYSTEM v5 ===============================
+   Adam's picks (2026-10-30): pin 808888783111165642 (dark journal) and
+   pin 355714070590901781 (light assistant). Every value below was measured
+   by script from those images (D:/tmp/oa/ds): flat panels on black, 20pt
+   corners, 8pt gaps, 16pt panel padding, two-tone large text, text tabs,
+   hairline circle buttons, one white pill. No textures, no rims, no gradients. */
+
+/* floating chrome: quiet frosted panel, hairline instead of a specular rim */
+.glass{background:rgba(28,28,30,.78);box-shadow:inset 0 0 0 1px var(--hair),0 12px 32px rgba(0,0,0,.4)}
+.glass::after{display:none}
+
+/* panels */
+.panel{background:var(--panel);border-radius:var(--r-panel)}
+.label-up{font-size:13px;line-height:16px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--label2)}
+
+/* buttons: white pill (measured 38pt, raised to the 44pt target), hairline circles */
+.btn{height:44px;border-radius:22px;font-size:15px;font-weight:600;letter-spacing:-.23px}
+.btn-primary,.btn-red{background:#fff;color:#000}
+.btn-tinted{background:var(--panel);color:#fff;box-shadow:inset 0 0 0 1px var(--hair)}
+.btn-play,.bigplay{background:#fff;color:#000;box-shadow:none}
+.btn-icon{background:var(--panel);box-shadow:inset 0 0 0 1px var(--hair)}
+.btn-icon.glass{background:rgba(28,28,30,.62)}
+.circ{width:48px;height:48px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none;
+  color:rgba(255,255,255,.86);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}   /* measured 47-48pt, hairline */
+@media (hover:hover){
+  .btn-primary:hover,.pill:not(.ghost):hover{background:#fff;box-shadow:0 8px 24px rgba(255,255,255,.12)}
+  .btn-tinted:hover,.btn-icon:hover,.circ:hover{background-color:#2a2a2c;color:#fff}
+  .chip:hover{background:none;color:#fff}
+}
+
+/* text tabs replace filled chips (measured: 24pt, active white, rest #69696b) */
+.chip,.chip.on{height:44px;padding:0 6px;border-radius:0;background:none;box-shadow:none;font-size:22px;font-weight:600;letter-spacing:-.4px;color:var(--dim)}
+.chip.on{color:#fff}
+.hrow:has(>.chip){gap:10px!important;padding:0 calc(var(--m) - 6px)}
+.history-filters{gap:10px;margin-left:-6px}
+
+/* fields */
+.search{height:52px;border-radius:var(--r-panel);padding:0 16px;background:var(--panel);color:var(--dim)}
+.search input::placeholder{color:var(--dim)}
+
+/* two-tone intro (measured: 24/29, white lead then #828282-equivalent grey) */
+.intro{margin-top:14px;font-size:24px;line-height:29px;font-weight:500;letter-spacing:-.45px;color:var(--dim);text-wrap:pretty;max-width:560px}
+.intro b{color:#fff;font-weight:500}
+.intro-acts{display:flex;align-items:center;gap:8px;margin-top:18px;flex-wrap:wrap}
+.intro-acts .btn{padding:0 20px}
+
+/* audio card (measured: panel, 51pt play tile r12, 13pt title, grey time, waveform) */
+.acard{display:block;width:100%;margin-top:var(--gap);padding:12px;border-radius:var(--r-panel);background:var(--panel);text-align:left}
+.acard .ahead{display:flex;align-items:center;gap:14px}
+.acard .atile{position:relative;width:52px;height:52px;border-radius:var(--r-inner);overflow:hidden;flex:none;background:var(--panel2);display:flex;align-items:center;justify-content:center;color:#fff}
+.acard .atile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%;opacity:.55}
+.acard .atile .sfi,.acard .atile svg{position:relative}
+.acard .amid{flex:1;min-width:0}
+.acard .atitle{display:block;font-size:15px;line-height:20px;font-weight:600;letter-spacing:-.23px}
+.acard .atime{display:block;font-size:13px;line-height:18px;color:var(--label2)}
+.wave{position:relative;display:block;height:40px;margin:14px 4px 4px;overflow:hidden}
+.wave .wv{position:absolute;inset:0;display:flex;align-items:center;gap:3px}
+.wave i{flex:none;width:3px;border-radius:2px;background:rgba(255,255,255,.3)}
+.wave .wv.on i{background:#fff}
+
+/* cards */
+.fc,.fcw{border-radius:var(--r-big)}
+.fc{box-shadow:none}
+.pcard .art{border-radius:var(--r-panel)}
+.tile .art{border-radius:var(--r-tile)}
+.hero::after,.rcard::after,.tile .art::after,.pcard .art::after,.wide .art::after{box-shadow:none}
+.fcfav{background:rgba(28,28,30,.55);box-shadow:inset 0 0 0 1px var(--hair)}
+.cat{border-radius:var(--r-panel);background:var(--panel)}
+.cat::before{background:linear-gradient(90deg,var(--panel) 0%,rgba(28,28,30,.88) 55%,rgba(28,28,30,.1) 100%)}
+.cat::after,.cat .bgc{display:none}
+.cat .mark{color:rgba(255,255,255,.07)}
+
+/* rows inside panels (measured: inset divider, 16pt padding) */
+.erows{background:var(--panel);border-radius:var(--r-panel);padding:0 16px}
+.er{min-height:60px;box-shadow:inset 0 -1px 0 var(--sep)}
+.er:last-child{box-shadow:none}
+.er .l{font-size:20px;line-height:26px;font-weight:600;letter-spacing:-.4px}
+.er .l sup{color:var(--dim);font-weight:500}
+.er .r{color:var(--dim)}
+.cp{padding:12px;border-radius:var(--r-panel);background:var(--panel)}
+.group{background:var(--panel);border-radius:var(--r-panel)}
+.grow .ico{width:32px;height:32px;border-radius:9px;background:var(--panel2);box-shadow:none;color:rgba(255,255,255,.86)}
+.gh{padding:0 16px 8px;font-size:13px;letter-spacing:.04em}
+.empty-state{background:var(--panel);border:0;border-radius:var(--r-panel)}
+
+/* archive objects: flat panels, one serif title, no paper, tape or ink */
+.cover{--jacket:var(--panel2);--ink:#fff;background:var(--panel2)!important;color:#fff;border-radius:var(--r-inner);transform:none;box-shadow:none}
+.cover::before,.cover::after,.cover .mark{display:none}
+.cover .no,.cover .au{color:rgba(255,255,255,.5);letter-spacing:.06em}
+.cover .ti{color:#fff;left:14px;right:14px}
+.cover .no,.cover .au{left:14px}
+.cover .pr{background:rgba(255,255,255,.1)} .cover .pr i{background:#fff}
+.cover .dn{background:#fff;color:#000}
+.cover.cur{box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+@media (hover:hover){.book:hover .cover,.artifact-card:hover .cover{transform:translateY(-3px);box-shadow:none}}
+.letter-object,.speech-object,.edit-object{background:var(--panel2);color:#fff;border-radius:var(--r-inner);box-shadow:none;transform:none}
+.letter-object::before,.speech-object::before,.letter-object .stamp,.letter-object .signature,.speech-object .mic,.edit-object .reels{display:none}
+.letter-object .kicker,.letter-object .date,.speech-object .kicker,.speech-object .speaker,.cover .no{display:none}
+.letter-object .object-title,.speech-object .object-title{margin-top:0}
+.letter-object,.speech-object{display:flex;flex-direction:column;justify-content:flex-end}
+.cover .ti{top:16px}
+.edit-object .tape-label{background:none;box-shadow:none;color:#fff;padding:0;height:auto}
+.edit-object .object-title{font-family:'Instrument Serif',Georgia,serif;font-size:18px;line-height:19px;font-weight:400;letter-spacing:0;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.edit-object .wave{display:flex;align-items:center;height:34px;margin:12px 0 0;gap:2px}
+.edit-object .wave i{width:3px;background:rgba(255,255,255,.6)}
+.artifact-card .object-stage,.archive-tile{background:var(--panel);box-shadow:none;border-radius:var(--r-panel)}
+.artifact-card .object-stage::after{display:none}
+.hist-object{background:var(--panel);box-shadow:none;border-radius:var(--r-inner)}
+.hist-kind{color:var(--label2)}
+.hist-progress i,.wide .art .bar i{background:#fff}
+.t-eyebrow[style*="#c9a96f"]{color:var(--label2)!important}
+
+/* person */
+.ph{margin:calc(var(--safe-t) + 6px) var(--m) 0;border-radius:var(--r-big)}
+.pill{height:50px;border-radius:25px}
+.pill.ghost{width:50px;background:rgba(28,28,30,.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+
+/* dock */
+#tabbar{background:rgba(28,28,30,.82)}
+#tabhl{background:var(--panel2)}
+#mini{border-radius:var(--r-panel)}
+
+/* now playing */
+#np .art{border-radius:var(--r-panel);background:var(--panel);box-shadow:none}
+.speed button,.speed button.on{height:44px;border-radius:0;background:none;box-shadow:none;font-size:17px;font-weight:600;color:var(--dim)}
+.speed button.on{color:#fff}
+.sheet{background:rgba(28,28,30,.92)}
+
+/* =========================== SYSTEM v6 ===============================
+   Built only from the 17 references Adam approved on 2026-10-30
+   (D:/tmp/oa/approved). Measured by script; pin 746260600795600117 gave
+   the Home grammar at 353px = 393pt. Two appearances of one design, the way
+   Apple Music Replay ships it (pins 1046946244645170140 / 4591630998046678144). */
+
+/* portrait cards (pin 746260600795600117: 205x313, ~24 corners, 12pt apart,
+   meta overlaid bottom-left in white with a grey second tone) */
+.fc,.fcw{width:205px;height:313px;border-radius:24px}
+.fc .in{left:14px;right:14px;bottom:14px}
+.fc .in .t-card{font-size:26px!important;line-height:27px!important}
+.hrow:has(.fcw){gap:12px}
+@media (min-width:900px){.fc,.fcw{width:260px;height:396px}}
+/* recent cards (116x160, 8pt apart, 13pt semibold caption + grey meta) */
+.tile{width:116px}
+.tile .art{aspect-ratio:116/160;border-radius:16px}
+.tile .tt{font-weight:600;margin-top:8px}
+.hrow:has(>.tile){gap:8px}
+@media (min-width:900px){.tile{width:150px}}
+
+/* the portrait dissolves into the ground behind the title (pins 746260600795600118, 320670435991878838) */
+.content{position:relative;isolation:isolate}
+.veil{position:absolute;right:0;top:0;width:min(62%,560px);height:calc(var(--safe-t) + 190px);z-index:-1;pointer-events:none;overflow:hidden;
+  -webkit-mask:radial-gradient(75% 85% at 78% 22%,#000 25%,transparent 72%);mask:radial-gradient(75% 85% at 78% 22%,#000 25%,transparent 72%)}
+.veil img{position:absolute;right:-4%;top:-10%;height:150%;width:auto;max-width:none;filter:grayscale(1);opacity:.5;mix-blend-mode:screen}
+@media (min-width:900px){.veil{height:300px}}
+/* text on photographs is white in both appearances */
+.pcard .ov,.fc .in,.ph .bot,.ph .top,.rcard,.hero .cap,.wide .art{color:#fff}
+
+/* tab bar: one small floating pill of icons (pin 746260600795600117, ~151x47) */
+#tabs{justify-content:center;gap:8px}
+#tabbar{flex:none;height:52px;border-radius:26px;padding:4px}
+.tab{width:56px;flex:none}
+.tab .lb{display:none}
+#tabhl{top:4px;bottom:4px;border-radius:22px}
+#tabsearch{width:52px;height:52px;border-radius:26px}
+
+/* ---------- light appearance (pins 355714070590901781, 746260600795600117) ---------- */
+html.light{color-scheme:light;
+  --bg:#f7f7f7;                       /* measured ground                   */
+  --label:#000;
+  --label2:#828282;                   /* measured second tone              */
+  --label3:rgba(0,0,0,.3);
+  --dim:#828282;
+  --text2:rgba(0,0,0,.72);
+  --panel:#fff;                       /* measured card                     */
+  --panel2:#ededed;                   /* measured portrait-card ground     */
+  --raised:#fff;
+  --hair:#e8e8e8;                     /* measured chip rim                 */
+  --sep:rgba(0,0,0,.07);
+  --red:#111; --ivory:#111;
+  --fill:rgba(0,0,0,.05); --fill2:rgba(0,0,0,.07); --fill3:rgba(0,0,0,.035)}
+html.light .glass{background:rgba(255,255,255,.82);box-shadow:inset 0 0 0 1px rgba(0,0,0,.05),0 10px 30px rgba(0,0,0,.08)}
+html.light .btn-primary,html.light .btn-red{background:#000;color:#fff}
+html.light .btn-tinted,html.light .chip.on,html.light .intro b,html.light .search input,html.light .grow .ico,html.light .cover,html.light .cover .ti,
+html.light .letter-object,html.light .speech-object,html.light .edit-object,html.light .edit-object .tape-label{color:#000}
+html.light .circ{color:#000;background:#fff;box-shadow:inset 0 0 0 1px var(--hair)}
+html.light .ltitle .btn-icon.glass,html.light .ptop .btn-icon.glass{background:#fff;color:#000;box-shadow:inset 0 0 0 1px var(--hair)}
+html.light .ph .top .btn-icon.glass{background:rgba(28,28,30,.55);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+html.light .acard,html.light .erows,html.light .group,html.light .cp,html.light .empty-state,html.light .search,html.light .archive-tile,
+html.light .artifact-card .object-stage,html.light .hist-object{box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05)}
+html.light .acard .atile{background:#1c1c1e}
+html.light .wave i{background:rgba(0,0,0,.16)} html.light .wave .wv.on i{background:#000}
+html.light .edit-object .wave i{background:rgba(0,0,0,.35)}
+html.light .cover .pr{background:rgba(0,0,0,.08)} html.light .cover .pr i{background:#000} html.light .cover .dn{background:#000;color:#fff}
+html.light .cat::before{background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.9) 55%,rgba(255,255,255,.1) 100%)}
+html.light .cat .sub{color:var(--label2)} html.light .cat .mark{color:rgba(0,0,0,.06)}
+html.light .hist-progress{background:rgba(0,0,0,.08)} html.light .hist-progress i{background:#000}
+html.light .textbtn,html.light .hist-action{color:var(--label2)}
+html.light .badge{background:#000;color:#fff}
+html.light .cp .chip2{background:rgba(0,0,0,.06)}
+html.light #tabbar{background:rgba(255,255,255,.86)}
+html.light #tabhl{background:#ededed}
+html.light .tab.on{color:#000} html.light .tab:not(.on){color:rgba(0,0,0,.42)}
+html.light #tabsearch{color:#000}
+html.light .navbar::before{background:rgba(247,247,247,.8)}
+html.light #topnav button.on{color:#000;background:rgba(0,0,0,.06);box-shadow:none}
+html.light #topnav .lg{color:#000}
+html.light .sheet{background:rgba(255,255,255,.96)}
+html.light .scrim{background:rgba(0,0,0,.2)}
+html.light .loading-shell .skeleton{background:rgba(0,0,0,.06);border-color:transparent}
+html.light .veil img{mix-blend-mode:multiply;opacity:.3}
+html.light :focus-visible{outline-color:#000}
+html.light ::selection{background:rgba(0,0,0,.12)}
+
+/* =========================== LIQUID GLASS ============================
+   Measured from Adam's blessed pins 39828777963914523 (glass pills, 3565px)
+   and 10062799163732573 (iOS 26 Control Centre): fill ~3% white over a heavy
+   blur; a hairline rim at ~60% white top-left falling to ~30% at the bottom;
+   a second inner hairline at ~19%. No drop shadow on dark; a soft one on light. */
+:root{--lg-fill:rgba(40,40,44,.52);--lg-blur:blur(30px) saturate(1.6);   /* frosted (Adam 2026-10-31): heavy blur + real tint, rim kept */
+  --lg-rim:linear-gradient(150deg,rgba(255,255,255,.62),rgba(255,255,255,.2) 30%,rgba(255,255,255,.07) 55%,rgba(255,255,255,.3));
+  --lg-inner:inset 0 1px 1px rgba(255,255,255,.19),inset 0 -1px 1px rgba(255,255,255,.06);
+  --lg-drop:0 8px 28px rgba(0,0,0,.28)}
+html.light{--lg-fill:rgba(250,250,252,.72);--lg-blur:blur(30px) saturate(1.8);
+  --lg-rim:linear-gradient(150deg,rgba(255,255,255,1),rgba(255,255,255,.5) 35%,rgba(0,0,0,.06) 60%,rgba(255,255,255,.7));
+  --lg-inner:inset 0 1px 1px rgba(255,255,255,.9),inset 0 -1px 1px rgba(0,0,0,.03);--lg-drop:0 8px 26px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06)}
+#tabbar,#tabsearch,#mini,.btn-icon.glass,.btn-glass{position:relative}
+.glass{isolation:isolate;background:var(--lg-fill);-webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);
+  box-shadow:var(--lg-inner),var(--lg-drop)}
+.glass::after{content:"";display:block;position:absolute;inset:0;border-radius:inherit;pointer-events:none;padding:1px;background:var(--lg-rim);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+html.light .glass{background:var(--lg-fill);box-shadow:var(--lg-inner),var(--lg-drop)}
+/* on photographs controls are always the dark-adapted glass, in either appearance */
+.ph .top .btn-icon.glass,html.light .ph .top .btn-icon.glass,.fcfav,.pill.ghost{background:rgba(40,40,44,.42);color:#fff;
+  -webkit-backdrop-filter:blur(26px) saturate(1.6);backdrop-filter:blur(26px) saturate(1.6);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.19),inset 0 -1px 1px rgba(255,255,255,.06),0 6px 20px rgba(0,0,0,.18)}
+.fcfav::after,.pill.ghost::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;padding:1px;
+  background:linear-gradient(150deg,rgba(255,255,255,.62),rgba(255,255,255,.2) 30%,rgba(255,255,255,.07) 55%,rgba(255,255,255,.3));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.pill.ghost{position:relative}
+/* tab pill: the selection is a clear glass lens, not a grey lozenge (pin 217650594489716463) */
+/* floating bars sit over busy content, so they carry more tint (iOS deepens glass over content) */
+#tabbar,#tabsearch,#mini,#topnav,.toast{background:rgba(30,30,32,.62);-webkit-backdrop-filter:blur(34px) saturate(1.7);backdrop-filter:blur(34px) saturate(1.7)}
+html.light #tabbar,html.light #tabsearch,html.light #mini,html.light #topnav,html.light .toast{background:rgba(250,250,252,.78)}
+#tabhl,html.light #tabhl{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),inset 0 1px 1px rgba(255,255,255,.35),0 2px 8px rgba(0,0,0,.18)}
+html.light #tabhl{background:rgba(255,255,255,.7);box-shadow:inset 0 0 0 1px rgba(255,255,255,1),0 2px 10px rgba(0,0,0,.1)}
+/* hairline circles on the ground become small glass buttons */
+.circ{background:var(--lg-fill);-webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);box-shadow:var(--lg-inner),inset 0 0 0 1px rgba(255,255,255,.12)}
+html.light .circ{background:#fff;box-shadow:var(--lg-inner),inset 0 0 0 1px var(--hair),0 2px 8px rgba(0,0,0,.05)}
+.sheet{background:rgba(28,28,30,.72)} html.light .sheet{background:rgba(255,255,255,.82)}
+/* Now Playing is immersive and stays dark in either appearance */
+html.light #np{color-scheme:dark;color:#fff;--label:#fff;--label2:#8e8e93;--dim:#69696b;--text2:rgba(255,255,255,.75);
+  --panel:#1c1c1e;--panel2:#323234;--hair:rgba(255,255,255,.08);--sep:rgba(255,255,255,.08)}
+html.light #np .cover,html.light #np .cover .ti{color:#fff}
+html.light #np .btn-icon{background:var(--panel);color:#fff}
+
+/* card overlays: progressive blur instead of a black scrim (iOS 26 album pages) */
+.fc::before{background:linear-gradient(transparent 55%,rgba(0,0,0,.42))}
+.pcard .art::before{background:linear-gradient(transparent 60%,rgba(0,0,0,.4))}
+.ph::before{background:linear-gradient(rgba(0,0,0,.22),transparent 18%,transparent 55%,rgba(0,0,0,.45) 85%,rgba(0,0,0,.6))}
+.fc::after,.pcard .art::after,.ph::after{content:"";position:absolute;top:auto;left:0;right:0;bottom:0;height:42%;z-index:1;pointer-events:none;box-shadow:none;border-radius:0;
+  -webkit-backdrop-filter:blur(22px) saturate(1.3);backdrop-filter:blur(22px) saturate(1.3);
+  -webkit-mask:linear-gradient(transparent,#000 70%);mask:linear-gradient(transparent,#000 70%)}
+.ph::after{height:48%}
+.ph .bot{z-index:2} .ph .top{z-index:3}
+
+/* =========================== DESKTOP SHELL ===========================
+   iPadOS 26 floating sidebar, measured from pin 4604649247285910912
+   (Photos, 735px = 820pt): panel inset ~9pt, ~271pt wide, #101010 on #000;
+   rows 42pt on a 43pt pitch; selection a #2f2f2f pill inset 16pt; content
+   ~25pt to the right; section headers grey. Player floats over content
+   (pin 1122663013395119080 Music, pin 4608589877548880960). */
+@media (min-width:900px){
+  :root{--sbw:272px;--sbx:10px;--cx:calc(var(--sbw) + var(--sbx) + 28px);--m:0px}
+  #topnav{display:flex!important;flex-direction:column;align-items:stretch;gap:0;position:fixed;z-index:46;
+    left:var(--sbx);top:var(--sbx);bottom:var(--sbx);width:var(--sbw);height:auto;transform:none;border-radius:26px;padding:14px 12px;overflow-y:auto}
+  html:not(.light) #topnav{background:rgba(24,24,26,.72)}
+  /* logo row: app mark + wordmark, no box (it was picking up the old .lg glass utility) */
+  #topnav .lg{display:flex;align-items:center;gap:11px;height:48px;padding:0 8px;margin:0 0 12px;border-radius:14px;background:none!important;box-shadow:none!important;
+    color:var(--label);font-family:'Instrument Serif',Georgia,serif;font-size:25px;line-height:1;letter-spacing:-.01em}
+  #topnav .lg::after{display:none!important}
+  #topnav .lg img{width:32px;height:32px;border-radius:9px;box-shadow:inset 0 0 0 1px var(--hair),0 2px 8px rgba(0,0,0,.25)}
+  #topnav .nav-primary,#topnav .nav-tools{display:flex;flex-direction:column;gap:1px;justify-content:flex-start}
+  #topnav .nav-tools{margin-top:auto;padding-top:12px}
+  #topnav button:not(.lg){height:42px;width:100%;padding:0 14px;border-radius:21px;gap:12px;justify-content:flex-start;
+    font-size:17px;font-weight:400;letter-spacing:-.43px;color:var(--label)}
+  #topnav button:not(.lg) .sfi{color:var(--label2)}
+  #topnav button.on{background:#2f2f2f;color:#fff;box-shadow:none}
+  #topnav button.on .sfi{color:#fff}
+  html.light #topnav button.on{background:rgba(0,0,0,.07);color:#000} html.light #topnav button.on .sfi{color:#000}
+  #topnav .nav-sect{margin:18px 14px 6px;font-size:15px;font-weight:600;letter-spacing:-.2px;color:var(--label2)}
+  @media (hover:hover){#topnav button:not(.on):not(.lg):hover{background:var(--fill3)}}
+
+  .page{padding-left:var(--cx);padding-right:32px}
+  .content{max-width:none;margin:0}
+  .ltitle{padding-top:40px;padding-left:0;padding-right:0}
+  .wrap{padding:0}
+  .hrow{padding:0;scroll-padding:0}
+  .bleed{margin:0}
+  .veil{right:0}
+  .ptop{left:calc(var(--cx) - 4px)!important;top:16px!important}
+  .ltitle:has(+ .ptop),.content:has(.ptop) .ltitle{padding-top:76px}
+  .pdesk{max-width:none;margin:0;padding:40px 0 0;grid-template-columns:minmax(320px,420px) minmax(0,1fr)}
+  .pdesk .ptop{position:fixed}
+  .pdesk>div>.ptop{display:none}
+  .settings,.libwrap{max-width:820px!important;margin:0}
+  .intro{max-width:620px}
+  /* the player floats centred over the content column */
+  #dock{left:var(--cx);right:32px;padding:0 0 18px}
+  #mini{width:min(760px,100%)}
+  body.np-open #view{filter:none}
+  /* archive tiles get room on wide screens */
+  .archive-showcase{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .artifact-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+}
+
+/* =========================== ARTWORK CARDS ===========================
+   Books and archive items carry real artwork (refs pin 1016054365936791041,
+   805299977152614362): the figure's portrait, a progressive blur at the foot,
+   the title in white serif — the same grammar as the approved portrait cards. */
+.cover{position:relative;overflow:hidden;background:#1c1c1e!important;color:#fff!important}
+.cover .cimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%;filter:grayscale(1) contrast(1.05)}
+.cover::before{content:"";display:block!important;position:absolute;inset:0;width:auto;z-index:1;box-shadow:none;
+  background:linear-gradient(transparent 35%,rgba(0,0,0,.55) 75%,rgba(0,0,0,.72))}
+.cover::after{content:"";display:block!important;position:absolute;left:0;right:0;top:auto;bottom:0;height:55%;width:auto;z-index:1;opacity:1;
+  background:none;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);-webkit-mask:linear-gradient(transparent,#000 60%);mask:linear-gradient(transparent,#000 60%)}
+.cover .ti,.cover .au,.cover .pr,.cover .dn{z-index:2}
+.cover .ti,html.light .cover .ti{top:auto;bottom:30px;color:#fff!important;font-size:17px;line-height:18px;-webkit-line-clamp:4}
+.cover .au,html.light .cover .au{color:rgba(255,255,255,.7)!important;bottom:12px}
+.cover .pr{background:rgba(255,255,255,.2)!important} .cover .pr i{background:#fff!important}
+.cover .dn{background:#fff!important;color:#000!important}
+.cover.cur{box-shadow:inset 0 0 0 2px #fff}
+.art-obj{position:relative;display:block;width:100%;height:100%;overflow:hidden;border-radius:var(--r-panel);background:#1c1c1e;color:#fff}
+.art-obj img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%;filter:grayscale(1) contrast(1.05)}
+.art-obj::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(transparent 40%,rgba(0,0,0,.6))}
+.art-obj::after{content:"";position:absolute;left:0;right:0;bottom:0;height:50%;z-index:1;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  -webkit-mask:linear-gradient(transparent,#000 60%);mask:linear-gradient(transparent,#000 60%)}
+.art-obj .ak{position:absolute;z-index:2;left:12px;top:12px;height:26px;padding:0 10px;border-radius:13px;display:flex;align-items:center;
+  font-size:12px;font-weight:600;letter-spacing:.02em;color:#fff;background:rgba(255,255,255,.08);
+  -webkit-backdrop-filter:blur(16px) saturate(1.7);backdrop-filter:blur(16px) saturate(1.7);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),inset 0 1px 1px rgba(255,255,255,.3)}
+.art-obj .object-title{position:absolute;z-index:2;left:14px;right:14px;bottom:14px;margin:0;font-family:'Instrument Serif',Georgia,serif;font-size:22px;line-height:23px;color:#fff;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.artifact-card .object-stage{padding:0;background:none!important;box-shadow:none!important}
+.artifact-card .object-stage .art-obj,.archive-tile .object-stage .art-obj{width:100%;height:100%}
+.archive-tile .object-stage{height:auto;aspect-ratio:4/5}
+.hist-object .art-obj{border-radius:inherit}
+.hist-object .art-obj .ak,.hist-object .art-obj .object-title{display:none}
+@media (max-width:679px){.archive-tile .object-stage{aspect-ratio:auto;height:144px}.art-obj .object-title{font-size:18px;line-height:19px}}
+
+/* light figure page on desktop: controls are not on the photo there */
+html.light .pdesk .pill:not(.ghost){background:#000;color:#fff}
+html.light .pdesk .pill.ghost{background:#fff;color:#000;box-shadow:inset 0 0 0 1px var(--hair),0 2px 8px rgba(0,0,0,.05)}
+html.light .pdesk .pill.ghost::after{display:none}
+html.light .pdesk .stats b{color:#000} html.light .pdesk .stats span{color:var(--label2)}
+.art-obj .ak{background:rgba(40,40,44,.45);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6)}
+/* performance: grid and cover cards fade with a gradient instead of a live backdrop blur per card
+   (rAF probe 2026-10-31: per-card backdrop-filter made the zoom drop to 117ms frames) */
+.cover::after,.art-obj::after,.pcard .art::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  background:linear-gradient(transparent,rgba(0,0,0,.35))!important;-webkit-mask:none!important;mask:none!important}
+/* search field: no browser ring; a quiet focus ring on the field */
+.search input:focus,.search input:focus-visible{outline:none}
+.search:focus-within{box-shadow:0 0 0 3px rgba(127,127,127,.25)}
+
+/* navigation motion layers (Ionic iOS transition: cover + edge shadow on the entering page) */
+/* fixed inside a transformed page = pinned to the page box regardless of its scroll; it sits just left of the
+   entering page, so the cover darkens the page underneath and the shadow falls on the entering edge */
+/* the app owns horizontal drags (swipe-back); the browser's own history swipe is off */
+html,body{overscroll-behavior-x:none}
+.page{touch-action:pan-y}
+.hrow{touch-action:pan-x pan-y}
+.nav-fx{position:fixed;top:0;bottom:0;left:-100%;width:100%;z-index:100;pointer-events:none}
+.nav-fx .nav-cover{position:absolute;inset:0;background:#000;opacity:0}
+.nav-fx .nav-shadow{position:absolute;top:0;bottom:0;right:0;width:10px;opacity:0;
+  background:linear-gradient(to left,rgba(0,0,0,.24),rgba(0,0,0,0))}
+.zoomfly{position:fixed;z-index:80;overflow:hidden;pointer-events:none;transform-origin:0 0;background:#111}
+.zoomfly img{width:100%;height:100%;object-fit:cover;object-position:center 14%}
+
+
+/* ===================== motion polish (values from Ionic source, 2026-10-31) ===================== */
+#view{position:fixed;inset:0;display:block;contain:layout size style}
+/* Ionic page container (core.css .ion-page), but block layout and our own scroller */
+.nav-view.ion-page{position:absolute;inset:0;display:block;contain:layout size style;z-index:0}
+.page.ion-page{position:absolute;inset:0;display:block;z-index:0}
+.ion-page-hidden{display:none!important}
+.ion-page-invisible{opacity:0}
+ion-nav:not(.hydrated) .page{position:absolute;inset:0}
+body.presenting{background:#000}
+body.presenting #view{overflow:hidden}
+/* tab lens and sidebar pill slide (persisted elements, so these transitions actually run) */
+#tabhl{transition:transform .4s cubic-bezier(0.32,0.72,0,1),width .4s cubic-bezier(0.32,0.72,0,1),opacity .2s!important}
+#sbhl{display:none}
+@media (min-width:900px){
+  #topnav{position:fixed}
+  #sbhl{display:block;position:absolute;left:0;top:0;z-index:0;border-radius:21px;background:#2f2f2f;pointer-events:none;
+    transition:transform .4s cubic-bezier(0.32,0.72,0,1),height .4s cubic-bezier(0.32,0.72,0,1),width .4s cubic-bezier(0.32,0.72,0,1),opacity .2s}
+  html.light #sbhl{background:rgba(0,0,0,.07)}
+  #topnav button.on:not(.lg){background:transparent!important}
+  #topnav button:not(.lg),#topnav .nav-sect{position:relative;z-index:1}
+}
+/* text tabs: a capsule marks the selection and slides (Ionic segment: 260ms cubic-bezier(0.4,0,0.2,1)) */
+.chip,.chip.on{position:relative;isolation:isolate;padding:0 14px;border-radius:22px;transition:color .1s linear}
+.chip.on::before{content:"";position:absolute;inset:2px 0;border-radius:20px;background:rgba(255,255,255,.12);z-index:-1}
+html.light .chip.on::before{background:rgba(0,0,0,.06)}
+.chip.seg-moving::before{opacity:0}
+.hrow:has(>.chip){gap:2px!important;padding:0 calc(var(--m) - 14px)}
+.history-filters{gap:2px;margin-left:-14px}
+.seg-fly{position:fixed;z-index:60;pointer-events:none;border-radius:22px;background:rgba(255,255,255,.12);transform-origin:0 50%}
+html.light .seg-fly{background:rgba(0,0,0,.06)}
+/* toast (Ionic toast ios.enter 400ms cubic-bezier(.155,1.105,.295,1.12); ios.leave 300ms cubic-bezier(.36,.66,.04,1)) */
+.toast{opacity:.01;transition:transform .3s cubic-bezier(.36,.66,.04,1),opacity .3s cubic-bezier(.36,.66,.04,1)}
+.toast.on{opacity:1;transition:transform .4s cubic-bezier(.155,1.105,.295,1.12),opacity .4s cubic-bezier(.155,1.105,.295,1.12)}
+/* large title hand-off is scroll-driven now */
+.navbar{transition:none}
+#nbt{display:inline-block}
+/* appearance change: the whole UI crossfades (system appearance switch) */
+html.vt-theme::view-transition-old(root),html.vt-theme::view-transition-new(root){animation-duration:.32s;animation-timing-function:ease}
+
+
+/* ===================== Ionic modal hosting ===================== */
+:root{--ion-safe-area-top:env(safe-area-inset-top,0px);--ion-safe-area-bottom:env(safe-area-inset-bottom,0px);--ion-safe-area-left:env(safe-area-inset-left,0px);--ion-safe-area-right:env(safe-area-inset-right,0px)}  /* Ionic's own sizing reads these (core.css) */
+ion-modal.greats-modal{--background:transparent;--backdrop-opacity:.4}
+ion-modal.sheet-modal{--background:var(--panel)}
+ion-modal .ion-page{position:relative;height:100%;contain:layout style}  /* core.css: ion-modal>.ion-page (incl. Ionic's delegate host) */
+ion-modal.np-modal{--background:#0b0b0c}
+/* the mini player and tab bar belong to the app behind the card */
+#dock{transition:opacity .25s ease}
+body.modal-open #dock{opacity:0;pointer-events:none}
+ion-modal #np,ion-modal .sheet{position:relative!important;inset:auto!important;left:auto!important;top:auto!important;right:auto!important;bottom:auto!important;
+  width:100%!important;height:100%!important;max-height:none!important;transform:none!important;visibility:visible!important;border-radius:0!important;box-shadow:none!important}
+ion-modal .sheet{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+ion-modal .sheet::after{display:none}
+#scrim{display:none}
+@media (min-width:768px){
+  ion-modal.np-modal{--width:min(980px,calc(100vw - 64px));--height:min(580px,calc(100vh - 84px));--border-radius:32px}
+  ion-modal.sheet-modal{--width:520px;--height:min(640px,80vh);--border-radius:28px}
+}
+
 /* phone / desktop variants */
 .desk{display:none}
 @media (min-width:900px){ .mob{display:none!important} .desk{display:block} }
@@ -638,10 +1142,10 @@ html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fad
 </style>
 </head>
 <body>
-<main id="view" aria-busy="true"><div class="page"><div class="content loading-shell" role="status" aria-live="polite">
+<ion-nav id="view" swipe-gesture="true" aria-busy="true"><div class="page"><div class="content loading-shell" role="status" aria-live="polite">
   <div class="ltitle"><h1 class="t-page" style="font-size:52px;line-height:52px">The Greats.</h1></div>
   <div class="wrap"><div class="skeleton search-skeleton"></div><div class="skeleton line-skeleton"></div><div class="skeleton card-skeleton"></div><span class="sr-only">Loading the archive</span></div>
-</div></div></main>
+</div></div></ion-nav>
 <div class="navbar" id="navbar"><span class="t-head" id="nbt"></span></div>
 
 <nav id="topnav" class="glass" aria-label="Sections"></nav>
@@ -664,7 +1168,7 @@ html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fad
 </div>
 
 <!-- now playing (#3 layout, #13 speed chips) -->
-<section id="np" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Now playing">
+<section id="np" class="ion-content-scroll-host" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Now playing">
   <div class="npbg"><img id="npbg1" src="assets/icon-192.png?v=5" alt=""><img id="npbg2" src="assets/icon-192.png?v=5" alt=""></div>
   <div class="nphead"><button class="btn-icon sm press" id="npclose" aria-label="Close" style="background:rgba(255,255,255,.08)"></button>
     <div class="nptabs"><span class="on">Now Playing</span><button id="nptabq">Up Next</button></div>
@@ -693,9 +1197,9 @@ html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fad
 <div class="scrim" id="scrim"></div>
 <section class="sheet glass" id="sheet" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="sht">
   <div class="sh-h"><div class="t-title3" id="sht"></div><button class="btn-icon sm glass press" id="shx" aria-label="Close"></button></div>
-  <div class="sh-b" id="shb"></div>
+  <div class="sh-b ion-content-scroll-host" id="shb"></div>
 </section>
-<div class="toast glass t-sub" id="toast" role="status" aria-live="polite"></div>
+<div class="toast glass t-sub" id="toast" role="status" aria-live="polite"><span id="toastmsg"></span><button id="toastact" class="press" type="button"></button></div>
 <audio id="audio" preload="none"></audio>
 
 <script>
@@ -758,14 +1262,21 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261030-2350';
+const BUILD='20261031-0800';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 const store={ get(k,d){try{const v=localStorage.getItem('fs.'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},
-  set(k,v){try{localStorage.setItem('fs.'+k,JSON.stringify(v))}catch(e){}} };
+  set(k,v){try{localStorage.setItem('fs.'+k,JSON.stringify(v))}catch(e){}},
+  remove(k){try{localStorage.removeItem('fs.'+k)}catch(e){}} };
+/* appearance: saved choice, else follow the system setting live */
+const lightMQ=matchMedia('(prefers-color-scheme: light)');
+function applyTheme(){ const t=store.get('theme','system'), light=t==='light'||(t==='system'&&lightMQ.matches);
+  document.documentElement.classList.toggle('light',light);
+  document.querySelector('meta[name="theme-color"]').content=light?'#f7f7f7':'#000000'; }
+lightMQ.addEventListener('change',applyTheme); applyTheme();
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const fmtDur=s=>{s=Math.max(0,Math.round(s||0));const h=~~(s/3600),m=~~((s%3600)/60);return h?h+' hr '+(m?m+' min':''):m+' min'};
 const fmtClock=s=>{s=Math.max(0,Math.round(s||0));const h=~~(s/3600),m=~~((s%3600)/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
@@ -784,7 +1295,7 @@ const pal=p=>[0,0];   /* monochrome: one neutral ground for every figure */
 const tone=p=>{ const [h,s]=pal(p); return `--h:${h};--s:${s}`; };
 /* set the page ground: one figure's hue, or the neutral graphite ground */
 function ground(p){ const [h,s]=p?pal(p):[220,.06]; const d=document.documentElement.style; d.setProperty('--gh',h); d.setProperty('--gs',s);
-  document.querySelector('meta[name=theme-color]').content=`hsl(${h} ${Math.round(s*90)}% 17%)`; }
+  document.querySelector('meta[name=theme-color]').content=document.documentElement.classList.contains('light')?'#f7f7f7':'#000000'; }
 function epTitle(p, e){
   const t = e.title;
   const short = p.shortName || p.name;
@@ -822,40 +1333,104 @@ const rowSub = (p, e) => {
 
 
 /* ============================== router ============================== */
-/* routes: home | figures | library | search | p/<slug> | l/<list> | settings | system */
-const TABS=[['home','Home','house'],['figures','Figures','people'],['library','Library','grid']];
+/* routes: home | figures | library | history | search | p/<slug> | l/<list> | settings | system */
+const TABS=[['home','Home','house'],['figures','Greats','people'],['library','Library','grid'],['history','History','clock']];
 let route=null, tabOf={home:'home'}, scrollMem={}, lastTab='home';
 const parse=h=>{ h=(h||'').replace(/^#\/?/,''); return h||'home'; };
 const depth=r=>r.includes('/')||r==='settings'||r==='system'?1:0;
 function go(r){ if(('#/'+r)!==location.hash) location.hash='/'+r; else render(r,'none'); }
 function back(){ if(history.length>1) history.back(); else go(lastTab); }
-window.addEventListener('hashchange',()=>{ const r=parse(location.hash); const kind=!route?'none':depth(r)>depth(route)?'push':depth(r)<depth(route)?'pop':'tab'; render(r,kind); });
-
-function render(r,kind='none',zoomEl=null){
-  const prev=route; if(prev){ const pg=$('view').firstElementChild; if(pg) scrollMem[prev]=pg.scrollTop; }
+/* ===================== navigation: Ionic ion-nav (the library itself, not a port) =====================
+   @ionic/core 9.0.10 from jsDelivr. ion-nav runs Ionic's own iOS page transition and its own
+   edge swipe-back gesture; previous pages stay alive in the DOM, so back reveals the real page
+   at its real scroll position. The app keeps its hash routes and syncs them to the nav stack. */
+let navStack=[], pendingPush=false, navSync=false;
+const navEl=()=>$('view');
+/* each nav view wraps the scrolling page: Ionic's iOS transition animates ':scope > .ion-page' (ios.transition.ts) */
+const activePage=()=>{ const vs=[...navEl().children].filter(c=>c.classList.contains('nav-view')&&!c.classList.contains('ion-page-hidden')); const v=vs[vs.length-1]; return v?v.querySelector(':scope>.page'):null; };
+window.addEventListener('hashchange',()=>{ const r=parse(location.hash);
+  if(navSync){ navSync=false; return; }               /* the swipe gesture already popped the page */
+  const back=navStack.length>1&&navStack[navStack.length-2]===r, pushed=pendingPush; pendingPush=false;
+  const kind=!route?'none':back?'pop':pushed||depth(r)>depth(route)?'push':depth(r)<depth(route)?'pop':'tab';
+  if(kind==='push') navStack.push(r); else if(kind==='pop') navStack.pop(); else navStack=[r];
+  render(r,kind); });
+function pageFor(r){ const pg=build(r); pg.classList.add('ion-page'); pg.dataset.route=r;
+  const v=document.createElement('div'); v.className='nav-view ion-page'; v.dataset.route=r; v.appendChild(pg); return v; }
+function showing(pg,r,kind){ paintChrome(); if(kind!=='pop') pg.scrollTop=kind==='tab'?(scrollMem[r]||0):0; if(!pg.__wired){ pg.__wired=true; wireNav(pg); } else wireNav(pg); }
+let navQueue=Promise.resolve();
+function render(r,kind='none'){
+  navQueue=navQueue.then(()=>renderNow(r,kind)).catch(e=>console.error(e)); return navQueue; }
+async function renderNow(r,kind){
+  const nav=navEl(), cur=activePage(); if(route&&cur) scrollMem[route]=cur.scrollTop;
   route=r; if(!depth(r)) lastTab=r==='search'?'search':r;
   ground(r.startsWith('p/')?BYSLUG[r.slice(2)]:r==='home'?featured():null);
-  const paint=()=>{ $('view').setAttribute('aria-busy','false'); $('view').innerHTML=''; $('view').appendChild(build(r)); paintChrome();
-    const pg=$('view').firstElementChild; if(pg){ pg.scrollTop=(kind==='pop'||kind==='tab')?(scrollMem[r]||0):0; wireNav(pg); } };
-  const doc=document.documentElement;
-  if(!document.startViewTransition||kind==='none'||document.hidden||matchMedia('(prefers-reduced-motion: reduce)').matches){ paint(); return; }
-  doc.classList.remove('vt-push','vt-pop','vt-zoom');
-  /* tab switches are instant, as on iOS: no transition at all */
-  if(kind==='tab'){ paint(); return; }
-  /* popping back from a figure: morph the hero back into that figure's card */
-  const backTo=kind==='pop'&&prev&&prev.startsWith('p/')?prev.slice(2):null;
-  const k=zoomEl||backTo?'zoom':kind==='push'?'push':kind==='pop'?'pop':null; if(k) doc.classList.add('vt-'+k);
-  const nameEl=zoomEl&&zoomEl.closest('[data-p]')?.querySelector('.t-card,.rn');
-  if(zoomEl){ zoomEl.style.viewTransitionName='hero'; if(nameEl) nameEl.style.viewTransitionName='heroname'; }
-  const t=document.startViewTransition(()=>{ if(zoomEl){ zoomEl.style.viewTransitionName=''; if(nameEl) nameEl.style.viewTransitionName=''; } paint();
-    if(backTo){ const card=[...document.querySelectorAll(`#view [data-p="${backTo}"]`)].find(c=>{ const r=c.getBoundingClientRect(); return r.bottom>0&&r.top<innerHeight&&r.width; });
-      const im=card&&card.querySelector('img'); if(im){ im.style.viewTransitionName='hero'; const nm=card.querySelector('.t-card,.rn'); if(nm) nm.style.viewTransitionName='heroname';
-        t.finished.finally(()=>{ im.style.viewTransitionName=''; if(nm) nm.style.viewTransitionName=''; }); } } });
-  /* never let a stalled transition leave a stale snapshot on screen */
-  t.ready.catch(()=>{}); t.updateCallbackDone.catch(()=>{});
-  const cap=setTimeout(()=>{ try{ t.skipTransition(); }catch(e){} },700);
-  t.finished.catch(()=>{}).finally(()=>{ clearTimeout(cap); doc.classList.remove('vt-push','vt-pop','vt-zoom'); });
+  nav.setAttribute('aria-busy','false');
+  const animated=!matchMedia('(prefers-reduced-motion: reduce)').matches&&!document.hidden;
+  if(kind==='pop'){
+    if(!(await nav.canGoBack())) await nav.insert(0,pageFor(r));
+    paintChrome(); await nav.pop({animated}); const pg=activePage(); if(pg) showing(pg,r,'pop'); return; }
+  const v=pageFor(r), pg=v.firstElementChild;
+  if(kind==='push'){ paintChrome(); await nav.push(v,null,{animated}); }
+  else { await nav.setRoot(v,null,{animated:false}); }
+  showing(pg,r,kind);
 }
+/* Ionic's swipe-back pops the nav itself; bring the URL and chrome along */
+navEl().addEventListener('ionNavDidChange',()=>{ const pg=activePage(); if(!pg) return; const r=pg.dataset.route;
+  if(r&&r!==route&&navStack.length>1&&navStack[navStack.length-2]===r){ navStack.pop(); route=r; if(!depth(r)) lastTab=r;
+    ground(r.startsWith('p/')?BYSLUG[r.slice(2)]:r==='home'?featured():null); showing(pg,r,'pop'); navSync=true; history.back(); } });
+
+/* ===================== in-place morph (no page rebuild snap) =====================
+   Filters, favourites, settings rows and history filters update the live page element in place:
+   scroll is kept, moved items FLIP, new items rise in; the selected text tab's capsule slides
+   (Ionic segment indicator: transform 260ms cubic-bezier(0.4,0,0.2,1)). */
+const KEYS=['data-p','data-ep','data-history-item','data-fil','data-hfil','data-a','data-go','data-favp'];
+function keyed(root){ const m=new Map(), seen={};
+  root.querySelectorAll(KEYS.map(k=>`[${k}]`).join(',')).forEach(el=>{ const k=KEYS.find(a=>el.hasAttribute(a)); const id=k+'='+el.getAttribute(k);
+    seen[id]=(seen[id]||0)+1; m.set(id+'#'+seen[id],el); }); return m; }
+function morph(r){
+  const pg=activePage(); if(!pg||pg.dataset.route!==r) return render(r,'none');
+  const before=new Map(), vh=innerHeight;
+  keyed(pg).forEach((el,id)=>{ const b=el.getBoundingClientRect(); if(b.bottom>-200&&b.top<vh+200&&b.width) before.set(id,b); });
+  const segFrom=pg.querySelector('.chip.on')?.getBoundingClientRect(), st=pg.scrollTop;
+  route=r; pg.innerHTML=build(r).innerHTML; setTimeout(()=>bind(pg,r),0); paintChrome(); pg.scrollTop=st; wireNav(pg);
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const ease='cubic-bezier(0.32,0.72,0,1)';
+  let n=0;
+  keyed(pg).forEach((el,id)=>{ const a=el.getBoundingClientRect(); if(!(a.bottom>0&&a.top<vh&&a.width)) return;
+    const b=before.get(id);
+    if(b){ const dx=b.left-a.left, dy=b.top-a.top, sx=b.width/a.width, sy=b.height/a.height;
+      if(Math.abs(dx)>.5||Math.abs(dy)>.5||Math.abs(sx-1)>.01||Math.abs(sy-1)>.01)
+        el.animate([{transformOrigin:'0 0',transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`},{transformOrigin:'0 0',transform:'none'}],{duration:400,easing:ease}); }
+    else el.animate([{opacity:0,transform:'translateY(10px) scale(.97)'},{opacity:1,transform:'none'}],{duration:260,easing:ease,fill:'backwards',delay:Math.min(n++*18,160)}); });
+  const segOn=pg.querySelector('.chip.on');
+  if(segFrom&&segOn){ const a=segOn.getBoundingClientRect();
+    if(Math.abs(a.left-segFrom.left)>.5||Math.abs(a.width-segFrom.width)>.5){
+      const cap=document.createElement('i'); cap.className='seg-fly';
+      cap.style.cssText=`left:${a.left}px;top:${a.top}px;width:${a.width}px;height:${a.height}px`; document.body.appendChild(cap);
+      segOn.classList.add('seg-moving');
+      cap.animate([{transform:`translateX(${segFrom.left-a.left}px) scaleX(${segFrom.width/a.width})`},{transform:'none'}],{duration:260,easing:'cubic-bezier(0.4,0,0.2,1)'})
+        .finished.then(()=>{ cap.remove(); segOn.classList.remove('seg-moving'); });
+      segOn.animate([{color:'var(--dim)'},{color:'var(--label)'}],{duration:160,easing:'linear'}); } }
+}
+
+/* ===================== card modal (Ionic modal ios.enter / ios.leave) =====================
+   500ms cubic-bezier(0.32,0.72,0,1) in and out; on phones the page behind drops by
+   max(30px, safe-area-top) and scales to 0.915 from the top centre with a 10px top radius and
+   contrast(.85), over black (SwipeToCloseDefaults.MIN_PRESENTING_SCALE = 0.915). */
+const MODAL={dur:500,ease:'cubic-bezier(0.32,0.72,0,1)',scale:.915};
+let presented=0;
+function presentBehind(on){
+  if(innerWidth>=768) return Promise.resolve();
+  presented+=on?1:-1; if(on&&presented>1) return Promise.resolve(); if(!on&&presented>0) return Promise.resolve();
+  const els=[$('view'),$('dock')], y='max(30px, env(safe-area-inset-top))';
+  const card={transform:`translateY(${y}) scale(${MODAL.scale})`,borderRadius:'10px 10px 0 0',filter:'contrast(.85)'};
+  const flat={transform:'translateY(0) scale(1)',borderRadius:'0px',filter:'contrast(1)'};
+  document.body.classList.add('presenting');
+  const as=els.map(el=>{ el.style.transformOrigin=el.id==='dock'?`50% ${-el.getBoundingClientRect().top}px`:'top center'; const a=el.animate(on?[flat,card]:[card,flat],{duration:MODAL.dur,easing:MODAL.ease,fill:'forwards'}); return a; });
+  return Promise.all(as.map(a=>a.finished.catch(()=>{}))).then(()=>{ if(!on){ as.forEach(a=>a.cancel()); document.body.classList.remove('presenting'); } });
+}
+
+
 let pendingZoom=null;
 function openPerson(s,el){ pendingZoom=el?el.querySelector('img'):null; go('p/'+s); }
 window.addEventListener('hashchange',()=>{},{capture:true});
@@ -865,6 +1440,7 @@ function build(r){
   if(r==='home') el.innerHTML=pageHome();
   else if(r==='figures') el.innerHTML=pageFigures();
   else if(r==='library') el.innerHTML=pageLibrary();
+  else if(r==='history') el.innerHTML=pageHistory();
   else if(r==='search') el.innerHTML=pageSearch();
   else if(r==='settings') el.innerHTML=pageSettings();
   else if(r==='system') el.innerHTML=pageSystem();
@@ -878,8 +1454,10 @@ function build(r){
 function wireNav(pg){
   const nb=$('navbar'), t=pg.querySelector('[data-title]');
   $('nbt').textContent=t?t.dataset.title:'';
-  nb.innerHTML=`<span class="t-head" id="nbt">${esc(t?t.dataset.title:'')}</span>`+(depth(route)?`<button class="btn-icon press nb-back" data-a="back">${IC.back(20)}</button>`:'');
-  const on=()=>nb.classList.toggle('on',pg.scrollTop>(t?t.offsetTop+t.offsetHeight-10:60));
+  nb.innerHTML=`<span class="t-head" id="nbt">${esc(t?t.dataset.title:'')}</span>`+(depth(route)?`<button class="btn-icon press nb-back" data-a="back" aria-label="Back">${IC.back(20)}</button>`:'');
+  const thr=t?t.offsetTop+t.offsetHeight-10:60, nbt=nb.querySelector('#nbt');
+  const on=()=>{ const p=Math.max(0,Math.min(1,(pg.scrollTop-thr+28)/28)); nb.style.opacity=p; nb.classList.toggle('on',p>.5);
+    if(nbt) nbt.style.transform=`translateY(${(1-p)*6}px)`; };
   pg.addEventListener('scroll',on,{passive:true}); on();
   nb.querySelector('[data-a=back]')?.addEventListener('click',back);
 }
@@ -888,18 +1466,27 @@ function wireNav(pg){
 function paintChrome(){
   const active=depth(route)?(route.startsWith('p/')?'figures':route==='settings'||route==='system'?'settings':route.startsWith('l/')?'library':lastTab):route;
   const tb=$('tabbar');
-  tb.innerHTML='<span id="tabhl"></span>'+TABS.map(([id,l,ic])=>`<button class="tab press${active===id?' on':''}" data-t="${id}"${active===id?' aria-current="page"':''}>${IC[ic](24)}<span class="lb">${l}</span></button>`).join('');
+  const keepHL=$('tabhl')||Object.assign(document.createElement('span'),{id:'tabhl'});
+  tb.innerHTML=TABS.map(([id,l,ic])=>`<button class="tab press${active===id?' on':''}" data-t="${id}"${active===id?' aria-current="page"':''}>${IC[ic](24)}<span class="lb">${l}</span></button>`).join('');
+  tb.prepend(keepHL);
   tb.querySelectorAll('.tab').forEach(b=>b.onclick=()=>go(b.dataset.t));
   const on=tb.querySelector('.tab.on'), hl=$('tabhl');
   placeHL();
   $('tabsearch').innerHTML=IC.search(26); $('tabsearch').classList.toggle('on',active==='search'); $('tabsearch').setAttribute('aria-keyshortcuts','Control+F Meta+F');
   if(active==='search') $('tabsearch').setAttribute('aria-current','page'); else $('tabsearch').removeAttribute('aria-current');
   $('tabsearch').onclick=()=>go('search');
+  /* desktop: iPadOS 26 sidebar (refs pin 4604649247285910912 Photos, 1122663013395119080 Music) */
+  const sb=(id,l,ic,extra='')=>{ const on=active===id||route===id; return `<button class="press${on?' on':''}" data-t="${id}"${on?' aria-current="page"':''}${extra}>${ic}<span>${l}</span></button>`; };
   $('topnav').innerHTML=`<button class="lg press" data-t="home" aria-label="The Greats"><img src="assets/icon-192.png?v=5" alt=""><span>The Greats</span></button>`+
-    `<div class="nav-primary">${TABS.map(([id,l])=>`<button class="press${active===id?' on':''}" data-t="${id}"${active===id?' aria-current="page"':''}>${l}</button>`).join('')}</div>`+
-    `<div class="nav-tools"><button class="press${active==='search'?' on':''}" data-t="search" aria-keyshortcuts="Control+F Meta+F" title="Search (⌘F)"${active==='search'?' aria-current="page"':''}>${IC.search(16)}<span>Search</span></button>`+
-    `<button class="press${active==='settings'?' on':''}" data-t="settings" aria-label="Settings" aria-keyshortcuts="Control+, Meta+," title="Settings (⌘,)"${active==='settings'?' aria-current="page"':''}>${IC.gear(17)}</button></div>`;
+    `<div class="nav-primary">${sb('search','Search',IC.search(19),' aria-keyshortcuts="Control+F Meta+F" title="Search (⌘F)"')}${TABS.map(([id,l,ic])=>sb(id,l,IC[ic](19))).join('')}</div>`+
+    `<div class="nav-sect">Library</div><div class="nav-primary">${sb('l/favs','Favourites',IC.star(18))}${sb('l/continue','Continue',IC.play(16))}${sb('l/finished','Finished',IC.check(17))}</div>`+
+    `<div class="nav-sect">Archive</div><div class="nav-primary">${sb('l/speeches','Speeches',sfi('speaker_2_fill',18))}${sb('l/letters','Letters',sfi('list_bullet',18))}${sb('l/edits','Edits',sfi('shuffle',17))}</div>`+
+    `<div class="nav-tools">${sb('settings','Settings',IC.gear(18),' aria-keyshortcuts="Control+, Meta+," title="Settings (⌘,)"')}</div>`;
   $('topnav').querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>go(b.dataset.t));
+  { const tn=$('topnav'); let pill=window.__sbhl; if(!pill){ pill=document.createElement('span'); pill.id='sbhl'; window.__sbhl=pill; }
+    tn.prepend(pill); const onB=tn.querySelector('button.on:not(.lg)');
+    if(onB&&onB.offsetWidth){ pill.style.opacity=1; pill.style.height=onB.offsetHeight+'px'; pill.style.width=onB.offsetWidth+'px';
+      pill.style.transform=`translate(${onB.offsetLeft}px,${onB.offsetTop}px)`; } else pill.style.opacity=0; }
 }
 
 /* the travelling tab highlight: placed synchronously (layout is sync), and again on resize */
@@ -907,7 +1494,7 @@ function placeHL(){ const on=document.querySelector('#tabbar .tab.on'), hl=$('ta
   if(!on||!on.offsetWidth){ hl.style.opacity=0; return; } hl.style.opacity=1; hl.style.width=on.offsetWidth+'px'; hl.style.transform=`translateX(${on.offsetLeft-4}px)`; }
 window.addEventListener('resize',placeHL);
 /* ============================== components ============================== */
-const img=(p,cls='')=>`<img src="${P[p.name]}" alt="" loading="lazy"${cls?` class="${cls}"`:''}>`;
+const img=(p,cls='')=>`<img src="${P[p.name]}" alt="" decoding="async"${cls?` class="${cls}"`:''}>`;
 const shead=(t,link)=>`<div class="shead"><h2 class="t-sect">${esc(t)}${link?IC.chev(15):''}</h2>${link?`<button class="textbtn t-sub" data-go="${link}">See All</button>`:''}</div>`;
 const tile=p=>`<button class="tile press" data-p="${p.slug}" style="${tone(p)}"><span class="art toned">${p.episodes.some(e=>e.date>='2026-01-01')?'<span class="badge">NEW</span>':''}${img(p)}</span>
   <span class="tt t-foot trunc">${esc(p.shortName)}</span><span class="t-foot c2 trunc" style="display:block">${esc(meta(p).sub)}</span></button>`;
@@ -920,7 +1507,7 @@ function cover(p,k,e,i,{cls=''}={}){
   const isCur=cur&&cur.p===p&&cur.k===k&&cur.i===i, dn=done(p,e), ps=pos(p,e), st=ps>60&&!dn;
   const title=(e.book&&e.book.trim())||rowTitle(p,e);
   const [jacket,ink]=JACKETS[objectSeed(title+p.name)%JACKETS.length];
-  return `<span class="cover${isCur?' cur':''} ${cls}" style="--jacket:${jacket};--ink:${ink}"><span class="no">The Greats · ${e.n?'No. '+e.n:KLABEL[k]}</span>
+  return `<span class="cover${isCur?' cur':''} ${cls}" style="--jacket:${jacket};--ink:${ink}"><img class="cimg" src="${P[p.name]}" alt="" decoding="async"><span class="no">The Greats · ${e.n?'No. '+e.n:KLABEL[k]}</span>
     <span class="ti">${esc(title)}</span><span class="mark" aria-hidden="true">${esc(p.shortName[0]||'G')}</span><span class="au">${esc((e.author||'').trim()||p.shortName)}</span>
     ${dn?`<span class="dn">${IC.check(11)}</span>`:''}${st?`<span class="pr"><i style="width:${Math.min(99,100*ps/(e.sec||1))}%"></i></span>`:''}</span>`;
 }
@@ -929,9 +1516,8 @@ const book=(p,k,e,i)=>`<button class="book press" data-ep="${p.slug}|${k}|${i}">
 function artifactVisual(p,k,e,i){
   const title=rowTitle(p,e), date=e.date?mon(e.date):'Archive', seed=objectSeed(title+p.name);
   if(k==='bio') return cover(p,k,e,i);
-  if(k==='letters') return `<span class="archive-object letter-object"><span class="kicker">Private correspondence</span><span class="date">${esc(date)}</span><span class="object-title">${esc(title)}</span><span class="signature">${esc(p.shortName)}</span><span class="stamp">The Greats<br>Archive</span></span>`;
-  if(k==='edits') return `<span class="archive-object edit-object"><span class="tape-label"><span class="object-title">${esc(title)}</span><span class="wave" aria-hidden="true">${Array.from({length:24},(_,n)=>`<i style="height:${5+((seed+n*17)%13)}px"></i>`).join('')}</span><span class="reels"><i class="reel"></i><i class="window"></i><i class="reel"></i></span></span></span>`;
-  return `<span class="archive-object speech-object"><span class="kicker">Archive broadcast · ${esc(date)}</span><span class="object-title">${esc(title)}</span><span class="speaker">${esc(p.shortName)}</span><i class="mic" aria-hidden="true"></i></span>`;
+  /* speech, letter, edit: the speaker's portrait is the artwork; the kind is a small glass label */
+  return `<span class="archive-object art-obj"><img src="${P[p.name]}" alt="" decoding="async"><span class="ak">${({speeches:'Speech',letters:'Letter',edits:'Edit'})[k]||esc(KLABEL[k])}</span><span class="object-title">${esc(title)}</span></span>`;
 }
 const artifactCard=(p,k,e,i)=>`<button class="artifact-card press" data-ep="${p.slug}|${k}|${i}"><span class="object-stage">${artifactVisual(p,k,e,i)}</span>
   <span><span class="t-head clamp2" style="display:block">${esc(rowTitle(p,e))}</span><span class="t-foot c2" style="display:block;margin-top:3px">${esc(p.shortName)} · ${fmtDur(e.sec)}</span></span></button>`;
@@ -953,6 +1539,44 @@ function continueList(){
   const out=[]; DATA.people.forEach(p=>KINDS.forEach(([k])=>items(p,k).forEach((e,i)=>{ const ps=pos(p,e); if(ps>60&&!done(p,e)) out.push({p,k,e,i,ps,t:store.get('t.'+epKey(p,e),0)}); })));
   return out.sort((a,b)=>b.t-a.t);
 }
+function historyList(){
+  const out=[]; DATA.people.forEach(p=>KINDS.forEach(([k])=>items(p,k).forEach((e,i)=>{ const t=store.get('t.'+epKey(p,e),0); if(t) out.push({p,k,e,i,t,ps:pos(p,e),dn:done(p,e)}); })));
+  return out.sort((a,b)=>b.t-a.t);
+}
+function historyBucket(t){
+  const d=new Date(t), now=new Date(), today=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+  if(t>=today) return 'Today';
+  if(t>=today-6*864e5) return 'This week';
+  return d.toLocaleDateString(undefined,{month:'long',year:'numeric'});
+}
+function historyWhen(t){
+  const d=new Date(t), now=new Date(), today=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+  if(t>=today) return d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+  if(t>=today-6*864e5) return d.toLocaleDateString(undefined,{weekday:'short'});
+  return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+}
+function historyRow(h){
+  const {p,k,e,i,ps,dn}=h, isCur=cur&&cur.p===p&&cur.k===k&&cur.i===i;
+  const progress=dn?100:Math.min(99,Math.round(100*ps/(e.sec||1)));
+  const action=isCur&&!audio.paused?'Pause':ps>60&&!dn?'Resume':dn?'Play Again':'Play';
+  return `<article class="history-item" data-history-item="${p.slug}|${k}|${i}">
+    <button class="hist-main press" data-ep="${p.slug}|${k}|${i}" aria-label="${action} ${esc(rowTitle(p,e))} by ${esc(p.shortName)}">
+      <span class="hist-object" aria-hidden="true">${artifactVisual(p,k,e,i)}</span>
+      <span class="hist-copy"><span class="t-head clamp2" style="display:block">${esc(rowTitle(p,e))}</span>
+        <span class="hist-meta t-foot"><span>${esc(p.shortName)}</span><span aria-hidden="true">·</span><span class="hist-kind">${esc(KLABEL[k])}</span><span aria-hidden="true">·</span><span>${historyWhen(h.t)}</span></span>
+        ${progress?`<span class="hist-progress" aria-hidden="true"><i style="width:${progress}%"></i></span>`:''}
+      </span></button>
+    <span class="hist-actions"><button class="hist-action press" data-ep="${p.slug}|${k}|${i}" aria-label="${action}">${isCur&&!audio.paused?IC.pause(17):IC.play(17)}</button>
+      <button class="hist-action press" data-hmore="${p.slug}|${k}|${i}" aria-label="More actions for ${esc(rowTitle(p,e))}">${IC.more(18)}</button></span>
+  </article>`;
+}
+/* audio card (pin 808888783111165642): play tile, title, time, a waveform that fills with progress */
+const wavebars=(s,n,prog)=>{ const bars=Array.from({length:n},(_,k)=>`<i style="height:${22+((s+k*37)%61)}%"></i>`).join('');
+  return `<span class="wv">${bars}</span>${prog?`<span class="wv on" style="clip-path:inset(0 ${100-100*prog}% 0 0)">${bars}</span>`:''}`; };
+const acard=f=>{ const pr=Math.min(1,pos(f.p,f.e)/(f.e.sec||1)), t=rowTitle(f.p,f.e);
+  return `<button class="acard press" data-ep="${f.p.slug}|${f.k}|${f.i}"><span class="ahead"><span class="atile">${img(f.p)}${IC.play(18)}</span>
+    <span class="amid"><span class="atitle trunc">${esc(t)}</span><span class="atime num">${esc(f.p.shortName)} · ${fmtDur(f.e.sec)}</span></span></span>
+    <span class="wave" aria-hidden="true">${wavebars(objectSeed(t),200,pr)}</span></button>`; };
 const wide=c=>`<button class="wide press" data-ep="${c.p.slug}|${c.k}|${c.i}" style="${tone(c.p)}"><span class="art toned">${img(c.p)}<span class="bar"><i style="width:${Math.min(99,100*c.ps/(c.e.sec||1))}%"></i></span></span>
   <span class="tt t-sub trunc" style="font-weight:600">${esc(rowTitle(c.p,c.e))}</span><span class="t-foot c2 trunc" style="display:block">${esc(c.p.shortName)} · ${fmtDur((c.e.sec||0)-c.ps)} left</span></button>`;
 
@@ -963,13 +1587,21 @@ function pageHome(){
   const byCount=DATA.people.slice().sort((a,b)=>b.episodes.length-a.episodes.length);
   const recent=DATA.people.flatMap(p=>p.episodes.map((e,i)=>({p,e,i}))).filter(r=>r.e.date).sort((a,b)=>b.e.date.localeCompare(a.e.date)).slice(0,8);
   const cont=continueList().slice(0,10);
+  const history=historyList(), weekStart=Date.now()-7*864e5, studied=history.filter(x=>x.t>=weekStart).length;
   const fav=DATA.people.filter(p=>favs.includes(p.name));
   const pop=[featured(),...byCount.filter(p=>p!==featured())].slice(0,8);
+  const focus=cont[0]||{p:featured(),k:'bio',e:featured().episodes[0],i:0};
   return `<div class="content">
-  <div class="ltitle" data-title="The Greats"><h1 class="t-page" style="font-size:52px;line-height:52px">The Greats.</h1>
+  <div class="veil" aria-hidden="true"><img src="${P[focus.p.name]}" alt=""></div>
+  <div class="ltitle" data-title="The Greats"><h1 class="t-page" style="font-size:52px;line-height:52px">The Greats</h1>
     <button class="btn-icon glass press mob" data-go="settings" aria-label="Settings">${IC.gear(19)}</button></div>
-  <div class="wrap"><button class="search press" data-go="search" style="width:100%;margin-top:10px">${IC.search(17)}<span class="t-body c2">Figures, books, speeches</span></button></div>
-  <section class="sect"><div class="wrap">${shead('Popular this week')}</div><div class="hrow rise">${pop.map(fcard).join('')}</div></section>
+  <div class="wrap rise"><p class="intro"><b>Study the lives that shaped the world.</b> Listen closely, return often, and carry the best ideas into your own work.</p>
+    <div class="intro-acts"><button class="btn btn-primary press" data-ep="${focus.p.slug}|${focus.k}|${focus.i}">${IC.play(14)} ${cont.length?'Continue':'Today’s study'}</button>
+      <button class="circ press" data-go="history" aria-label="History, ${studied} studied this week">${IC.clock(18)}</button>
+      <button class="circ press" data-go="search" aria-label="Search">${IC.search(18)}</button>
+      <button class="circ press" data-go="l/favs" aria-label="Favourites">${IC.star(18)}</button></div>
+    ${acard(focus)}</div>
+  <section class="sect"><div class="wrap">${shead('Choose a great')}</div><div class="hrow rise">${pop.map(fcard).join('')}</div></section>
   ${cont.length?`<section class="sect"><div class="wrap">${shead('Continue')}</div><div class="hrow">${cont.map(c=>book(c.p,c.k,c.e,c.i)).join('')}</div></section>`:''}
   <section class="sect"><div class="wrap">${shead('Shelves')}</div>
     <div class="hrow" style="gap:8px">${SECTIONS.map(([k,l])=>`<button class="chip press" data-go="l/shelf-${k}">${l}</button>`).join('')}</div></section>
@@ -978,15 +1610,15 @@ function pageHome(){
   ${SECTIONS.map(([k,l])=>{ const ps=DATA.people.filter(p=>meta(p).cat===k); return ps.length?`<section class="sect"><div class="wrap">${shead(l,'l/shelf-'+k)}</div><div class="hrow">${ps.map(tile).join('')}</div></section>`:''; }).join('')}
   </div>`;
 }
-let figFilter='all', searchQuery='';
+let figFilter='all', historyFilter='all', searchQuery='';
 function pageFigures(){
   const ps=DATA.people.filter(p=>figFilter==='all'||meta(p).cat===figFilter);
-  return `<div class="content"><div class="ltitle" data-title="Figures"><h1 class="t-page">Figures</h1><span class="t-sub c2 num">${ps.length}</span></div>
+  return `<div class="content"><div class="ltitle" data-title="Greats"><h1 class="t-page">Greats</h1><span class="t-sub c2 num">${ps.length}</span></div>
   <div class="hrow" style="gap:8px;margin-top:6px">${[['all','All'],...SECTIONS].map(([k,l])=>`<button class="chip press${figFilter===k?' on':''}" data-fil="${k}" aria-pressed="${figFilter===k}">${l}</button>`).join('')}</div>
   <div class="wrap rise" style="margin-top:20px"><div class="pgrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:22px 14px">${ps.map(pcard).join('')}</div></div></div>`;
 }
 function pageLibrary(){
-  const cont=continueList(); let fin=0; DATA.people.forEach(p=>KINDS.forEach(([k])=>items(p,k).forEach(e=>{ if(done(p,e)) fin++; })));
+  const cont=continueList(), hist=historyList(); let fin=0; DATA.people.forEach(p=>KINDS.forEach(([k])=>items(p,k).forEach(e=>{ if(done(p,e)) fin++; })));
   const cnt=k=>DATA.people.reduce((t,p)=>t+items(p,k).length,0);
   const sample=k=>{ for(const p of DATA.people){ const e=items(p,k)[0]; if(e) return {p,e}; } return null; };
   const archives=['speeches','letters','edits'].map(k=>({k,n:cnt(k),x:sample(k)}));
@@ -999,28 +1631,41 @@ function pageLibrary(){
       <button class="cp press" data-ep="${now.p.slug}|${now.k}|${now.i}">${cover(now.p,now.k,now.e,now.i)}
         <span style="flex:1;min-width:0"><span class="t-head clamp2" style="display:block">${esc(rowTitle(now.p,now.e))}</span><span class="t-foot c2">${esc(now.p.shortName)}</span>
         <span class="chip2">${IC.play(10)} ${pct}% complete</span></span></button>`:''}
-    <div class="erows" style="margin-top:22px">${er('Favourites',favs.length,'l/favs')}${er('Continue',cont.length,'l/continue')}${er('Finished',fin,'l/finished')}</div>
+    <div class="erows" style="margin-top:22px">${er('History',hist.length,'history')}${er('Favourites',favs.length,'l/favs')}${er('Continue',cont.length,'l/continue')}${er('Finished',fin,'l/finished')}</div>
     <section class="sect"><div class="shead"><h2 class="t-sect">The archive</h2><span class="t-foot c2">Recorded history</span></div>
       <div class="archive-showcase">${archives.map(({k,n,x})=>`<button class="archive-tile press" data-go="l/${k}"><span class="object-stage">${x?artifactVisual(x.p,k,x.e,0):''}</span>
         <span class="archive-meta"><span><span class="t-title3" style="display:block">${esc(KLABEL[k])}</span><span class="t-foot c2">${k==='letters'?'Original words':k==='edits'?'Condensed ideas':'Voices in context'}</span></span><span class="t-foot c2 num">${n}</span></span></button>`).join('')}</div></section>
-    ${cont.length?`<section class="sect">${shead('Recents')}<div class="rows">${cont.slice(0,6).map(r=>erow(r.p,r.k,r.e,r.i,{num:false,lead:true})).join('')}</div></section>`:''}
   </div></div>`;
+}
+function pageHistory(){
+  const all=historyList();
+  const visible=all.filter(h=>historyFilter==='progress'?(!h.dn&&h.ps>0):historyFilter==='finished'?h.dn:true);
+  const groups=[]; visible.forEach(h=>{ const label=historyBucket(h.t); let g=groups.find(x=>x.label===label); if(!g){g={label,items:[]};groups.push(g)} g.items.push(h); });
+  const filters=[['all','All'],['progress','In Progress'],['finished','Finished']];
+  const body=groups.length?groups.map(g=>`<section class="history-section"><div class="history-section-title"><h2 class="t-title3">${esc(g.label)}</h2><span class="t-foot c2 num">${g.items.length}</span></div><div class="history-list">${g.items.map(historyRow).join('')}</div></section>`).join(''):
+    empty(historyFilter==='all'?'Your history starts here':'Nothing in this view',historyFilter==='all'?'Play a book, speech, letter, or edit and it will appear here in order.':'Try another filter or choose something new to study.','Choose a great','figures');
+  return `<div class="content"><div class="ltitle" data-title="History"><h1 class="t-page">History</h1>
+    <button class="btn-icon glass press mob" data-go="settings" aria-label="Settings">${IC.gear(19)}</button></div>
+    <div class="wrap rise"><div class="history-head"><div><div class="t-eyebrow" style="color:#c9a96f">Your practice</div><p class="t-body">What you return to shapes you. Resume an idea, revisit a life, or remove what no longer belongs.</p></div>
+      <div class="history-tools"><button class="btn btn-tinted btn-sm press" data-a="history-clear"${all.length?'':' disabled aria-disabled="true"'}>Clear History</button></div></div>
+      <div class="history-filters" role="group" aria-label="History filter">${filters.map(([id,label])=>`<button class="chip press${historyFilter===id?' on':''}" data-hfil="${id}" aria-pressed="${historyFilter===id}">${label}</button>`).join('')}</div>
+      <div id="history-results">${body}</div></div></div>`;
 }
 function pageSearch(){
   const kindCount=k=>DATA.people.reduce((n,p)=>n+items(p,k).length,0);
   return `<div class="content"><div class="ltitle" data-title="Search"><h1 class="t-page">Search</h1></div>
-  <div class="wrap"><label class="search">${IC.search(17)}<span class="sr-only">Search figures, books, and speeches</span><input id="q" type="search" value="${esc(searchQuery)}" placeholder="Figures, books, speeches" autocomplete="off" aria-keyshortcuts="Control+F Meta+F"></label>
+  <div class="wrap"><label class="search">${IC.search(17)}<span class="sr-only">Search greats, books, and speeches</span><input id="q" type="search" value="${esc(searchQuery)}" placeholder="Greats, books, speeches" autocomplete="off" aria-keyshortcuts="Control+F Meta+F"></label>
   <div id="qres">${searchResults(searchQuery)}</div>
   <section class="sect rise" id="cats"${searchQuery?' style="display:none"':''}>${shead('Browse Shelves')}
     <div class="cats" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">${SECTIONS.map(([k,l])=>{ const ps=DATA.people.filter(x=>meta(x).cat===k),p=ps[0];
-      return `<button class="cat press" data-go="l/shelf-${k}"><span class="bgc"></span>${p?img(p):''}<span class="copy"><span class="t-eyebrow c2">Shelf</span><span class="tt t-head">${l}</span><span class="sub t-foot">${ps.length} figures</span></span></button>`; }).join('')}
+      return `<button class="cat press" data-go="l/shelf-${k}"><span class="bgc"></span>${p?img(p):''}<span class="copy"><span class="t-eyebrow c2">Shelf</span><span class="tt t-head">${l}</span><span class="sub t-foot">${ps.length} greats</span></span></button>`; }).join('')}
       ${KINDS.slice(1).map(([k,l])=>`<button class="cat press" data-go="l/${k}"><span class="bgc"></span><span class="mark" aria-hidden="true">${l[0]}</span><span class="copy"><span class="t-eyebrow c2">Archive</span><span class="tt t-head">${l}</span><span class="sub t-foot">${kindCount(k)} recordings</span></span></button>`).join('')}</div></section></div></div>`;
 }
 function searchResults(q){
   q=q.trim().toLowerCase(); if(!q) return '';
   const ps=DATA.people.filter(p=>(p.name+' '+meta(p).sub).toLowerCase().includes(q)).slice(0,8);
   const eps=[]; DATA.people.forEach(p=>KINDS.forEach(([k])=>items(p,k).forEach((e,i)=>{ if((rowTitle(p,e)+' '+(e.author||'')+' '+(e.sub||'')).toLowerCase().includes(q)) eps.push({p,k,e,i}); })));
-  return `${ps.length?`<section class="sect">${shead('Figures')}<div class="hrow bleed">${ps.map(tile).join('')}</div></section>`:''}
+  return `${ps.length?`<section class="sect">${shead('Greats')}<div class="hrow bleed">${ps.map(tile).join('')}</div></section>`:''}
     ${eps.length?`<section class="sect">${shead('Episodes')}<div class="rows">${eps.slice(0,30).map(r=>erow(r.p,r.k,r.e,r.i,{num:false,lead:true})).join('')}</div></section>`:''}
     ${!ps.length&&!eps.length?`<div class="t-sub c2" style="text-align:center;padding:40px 0">No results for “${esc(q)}”</div>`:''}`;
 }
@@ -1037,7 +1682,7 @@ function pagePerson(p){
   const books=`<section class="sect"><div class="${'wrap'}" style="padding:0">${shead('Books')}</div>
     <div class="hrow bleed" style="gap:16px">${p.episodes.map((e,i)=>book(p,'bio',e,i)).join('')}</div></section>`;
   const more=['speeches','edits','letters'].map(k=>{ const L=items(p,k); return L.length?`<section class="sect">${shead(KLABEL[k])}<div class="artifact-grid">${L.map((e,i)=>artifactCard(p,k,e,i)).join('')}</div></section>`:''; }).join('');
-  const about=`<section class="sect"><h2 class="t-sect">Biography</h2><p class="t-sub" style="color:rgba(255,255,255,.75);margin-top:8px;white-space:pre-line">${esc(m.bio)}</p></section>`;
+  const about=`<section class="sect"><h2 class="t-sect">Biography</h2><p class="t-sub" style="color:var(--text2);margin-top:8px;white-space:pre-line">${esc(m.bio)}</p></section>`;
   return `<div class="ph"><img src="${P[p.name]}" alt="" id="pimg">
       <div class="top"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button>
         <button class="btn-icon glass press" data-a="about" aria-label="About">${IC.more(20)}</button></div>
@@ -1048,53 +1693,57 @@ function pagePerson(p){
       <div><div class="ptop" style="position:fixed;top:14px;left:var(--m);z-index:50"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
         <div class="t-eyebrow c2" data-title="${esc(p.shortName)}">${esc(shelf)} · ${esc(m.sub)}</div>
         <h1 class="nm" style="margin-top:10px">${esc(p.shortName)}</h1>
-        <p class="t-body" style="color:rgba(255,255,255,.75);margin-top:18px;max-width:620px">${esc(quote)}</p>${stats}
+        <p class="t-body" style="color:var(--text2);margin-top:18px;max-width:620px">${esc(quote)}</p>${stats}
         <div style="max-width:420px">${acts}</div>${books}${more}${about}</div></div>`;
 }
 function pageList(id){
   let title='', body='';
   const grid=ps=>`<div class="pgrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:22px 14px">${ps.map(pcard).join('')}</div>`;
-  if(id==='favs'){ title='Favourites'; const ps=DATA.people.filter(p=>favs.includes(p.name)); body=ps.length?grid(ps):empty('No favourites yet','Save a figure and they’ll stay close at hand.','Browse figures','figures'); }
+  if(id==='favs'){ title='Favourites'; const ps=DATA.people.filter(p=>favs.includes(p.name)); body=ps.length?grid(ps):empty('No favourites yet','Save a great and they’ll stay close at hand.','Browse Greats','figures'); }
   else if(id==='continue'){ title='Continue Listening'; const c=continueList(); body=c.length?`<div class="rows">${c.map(r=>erow(r.p,r.k,r.e,r.i,{num:false,lead:true})).join('')}</div>`:empty('Nothing in progress','Start an episode and your place will appear here.','Find something to play','search'); }
   else if(id==='finished'){ title='Finished'; const f=[]; DATA.people.forEach(p=>KINDS.forEach(([k])=>items(p,k).forEach((e,i)=>{ if(done(p,e)) f.push({p,k,e,i}); })));
     body=f.length?`<div class="rows">${f.map(r=>erow(r.p,r.k,r.e,r.i,{num:false,lead:true})).join('')}</div>`:empty('Nothing finished yet','Completed episodes are kept here.','Browse the archive','search'); }
   else if(id.startsWith('shelf-')){ const k=id.slice(6); title=(SECTIONS.find(s=>s[0]===k)||['',''])[1]; body=grid(DATA.people.filter(p=>meta(p).cat===k)); }
   else if(KLABEL[id]){ title=KLABEL[id]; const r=[]; DATA.people.forEach(p=>items(p,id).forEach((e,i)=>r.push({p,e,i})));
-    body=r.length?`<div class="artifact-grid">${r.map(x=>artifactCard(x.p,id,x.e,x.i)).join('')}</div>`:empty(`No ${title.toLowerCase()} yet`,'They appear here as the archive grows.','Browse figures','figures'); }
+    body=r.length?`<div class="artifact-grid">${r.map(x=>artifactCard(x.p,id,x.e,x.i)).join('')}</div>`:empty(`No ${title.toLowerCase()} yet`,'They appear here as the archive grows.','Browse Greats','figures'); }
   return `<div class="content"><div class="ltitle" data-title="${esc(title)}"><h1 class="t-page">${esc(title)}</h1></div>
     <div class="ptop" style="position:fixed"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
     <div class="wrap rise" style="margin-top:12px">${body}</div></div>`;
 }
 const empty=(t,s,label,goTo)=>`<div class="empty-state"><div class="t-title3">${t}</div><div class="t-sub c2" style="margin-top:6px;max-width:340px">${s}</div>${label?`<button class="btn btn-primary press" data-go="${goTo}">${label}</button>`:''}</div>`;
 function pageSettings(){
-  const sp=store.get('speed',1), saved=Object.keys(localStorage).filter(k=>k.startsWith('fs.pos.')).length;
-  const g=(ico,l,v,a,cls='')=>`<button class="grow press${cls?' '+cls:''}" data-a="${a}"${a==='clear'&&!saved?' disabled aria-disabled="true"':''}><span class="ico">${sfi(ico,17)}</span><span class="mid"><span class="t-body">${l}</span><span class="t-body c2 num" style="display:flex;align-items:center;gap:6px">${v}${IC.chev(13)}</span></span></button>`;
+  const sp=store.get('speed',1), saved=Object.keys(localStorage).filter(k=>/^fs\.(pos|done|t)\./.test(k)).length;
+  const g=(ico,l,v,a,cls='')=>`<button class="grow press${cls?' '+cls:''}" data-a="${a}"${a==='reset'&&!saved?' disabled aria-disabled="true"':''}><span class="ico">${sfi(ico,17)}</span><span class="mid"><span class="t-body">${l}</span><span class="t-body c2 num" style="display:flex;align-items:center;gap:6px">${v}${IC.chev(13)}</span></span></button>`;
   return `<div class="content settings"><div class="ltitle" data-title="Settings"><h1 class="t-page">Settings</h1></div>
     <div class="ptop" style="position:fixed"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
     <div class="wrap rise" style="margin-top:16px">
       <div class="t-foot gh">PLAYBACK</div><div class="group">${g('speaker_2_fill','Default speed',sp+'×','speed')}${g('moon_zzz_fill','Sleep timer',sleepMin?sleepMin+' min':'Off','sleep')}</div>
-      <div class="t-foot gh" style="margin-top:28px">LIBRARY</div><div class="group">${g('clock','Clear listening history…',saved+' saved','clear','destructive')}${g('star_fill','Favourites',favs.length,'favs')}</div>
-      <div class="t-foot gf">Clearing history removes saved positions, not favourites. You’ll confirm before anything is removed.</div>
+      <div class="t-foot gh" style="margin-top:28px">DISPLAY</div><div class="group">${g('moon_fill','Appearance',{system:'System',light:'Light',dark:'Dark'}[store.get('theme','system')],'theme')}</div>
+      <div class="t-foot gh" style="margin-top:28px">LIBRARY</div><div class="group">${g('clock','Reset listening data…',saved+' records','reset','destructive')}${g('star_fill','Favourites',favs.length,'favs')}</div>
+      <div class="t-foot gf">Reset removes history, saved positions, and completion status, but keeps favourites. You’ll confirm before anything is removed.</div>
       <div class="t-foot gh" style="margin-top:28px">ABOUT</div><div class="group">${g('square_grid_2x2_fill','Design system','','system')}${g('info_circle','Version',BUILD,'update')}</div>
     </div></div>`;
 }
 function pageSystem(){
   const types=[['t-display','Display','40 / 46 Bold'],['t-large','Large Title','34 / 41 Bold'],['t-title1','Title 1','28 / 34 Bold'],['t-title2','Title 2','22 / 28 Bold'],['t-title3','Title 3','20 / 25 Semibold'],
     ['t-head','Headline','17 / 22 Semibold'],['t-body','Body','17 / 22'],['t-callout','Callout','16 / 21'],['t-sub','Subhead','15 / 20'],['t-foot','Footnote','13 / 18'],['t-cap1','Caption 1','12 / 16'],['t-cap2','Caption 2','11 / 13']];
-  const sw=[['--bg','#000'],['--label','#fff'],['--label2','systemGray'],['--red','accent'],['--fill','glass fill'],['--fill2','selected'],['--raised','grouped'],['--hair','card rim']];
+  const sw=[['--bg','ground'],['--panel','panel'],['--panel2','inner tile'],['--label','text'],['--dim','second tone'],['--label2','meta'],['--hair','hairline'],['--sep','divider']];
   return `<div class="content"><div class="ltitle" data-title="Design System"><h1 class="t-page">Design System</h1></div>
   <div class="ptop" style="position:fixed"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
   <div class="wrap rise">
-   <p class="t-sub c2" style="margin-top:6px">Type from Apple’s HIG iOS table and SF Pro tracking table. Colour, radii and sizes measured from iOS 26 / iPadOS 26 Apple Music screenshots.</p>
+   <p class="t-sub c2" style="margin-top:6px">System v6, built only from the 17 references you approved and measured from them by script. One design in two appearances, following the system setting or the choice in Settings. Serif for names, SF for everything you operate.</p>
    <section class="sect">${shead('Type')}<div class="group" style="padding:6px 16px">${types.map(([c,l,s])=>`<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 0;box-shadow:inset 0 -.5px 0 var(--sep)"><span class="${c} trunc">${l}</span><span class="t-cap1 c2 num" style="flex:none">${s}</span></div>`).join('')}</div></section>
    <section class="sect">${shead('Colour')}<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">${sw.map(([v,l])=>`<div><div style="aspect-ratio:1;border-radius:12px;background:var(${v});box-shadow:inset 0 0 0 1px var(--hair)"></div><div class="t-cap1" style="margin-top:6px">${v}</div><div class="t-cap2 c2">${l}</div></div>`).join('')}</div></section>
    <section class="sect">${shead('Buttons')}<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-     <button class="btn btn-primary press">${IC.play(15)} Play</button><button class="btn btn-tinted press">${IC.shuffle(15)} Shuffle</button><button class="btn btn-red press">Subscribe</button>
-     <button class="btn btn-glass glass press">Glass</button><button class="btn btn-tinted btn-sm press">Play</button><button class="btn-play press">${IC.play(26)}</button>
-     <button class="btn-icon glass press">${IC.back(20)}</button><button class="btn-icon sm glass press">${IC.star(17)}</button><button class="chip on">Selected</button><button class="chip">Chip</button><button class="textbtn">See All</button></div></section>
-   <section class="sect">${shead('Cards')}<div class="hrow bleed">${DATA.people.slice(0,3).map(tile).join('')}${pcard(DATA.people[7])}</div></section>
+     <button class="btn btn-primary press">${IC.play(14)} Play</button><button class="btn btn-tinted press">${IC.shuffle(15)} Shuffle</button><button class="btn-play press">${IC.play(26)}</button>
+     <button class="circ press" aria-label="History">${IC.clock(18)}</button><button class="circ press" aria-label="Search">${IC.search(18)}</button><button class="btn-icon press" aria-label="Back">${IC.back(20)}</button></div>
+     <div class="hrow bleed" style="margin-top:14px"><button class="chip on">Selected</button><button class="chip">Tab</button><button class="chip">Tab</button></div>
+     <p class="intro" style="font-size:24px"><b>Two-tone text.</b> White or black lead, then the second tone.</p></section>
+   <section class="sect">${shead('Audio card')}${acard({p:DATA.people[7],k:'bio',e:DATA.people[7].episodes[0],i:0})}</section>
+   <section class="sect">${shead('Portrait cards')}<div class="hrow bleed">${DATA.people.slice(0,3).map(fcard).join('')}</div></section>
+   <section class="sect">${shead('Recent cards')}<div class="hrow bleed">${DATA.people.slice(3,9).map(tile).join('')}</div></section>
    <section class="sect">${shead('Rows')}<div class="rows">${erow(DATA.people[7],'bio',DATA.people[7].episodes[0],0)}${erow(DATA.people[7],'bio',DATA.people[7].episodes[1],1,{num:false,lead:true})}</div></section>
-   <section class="sect">${shead('Materials')}<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="group" style="min-height:110px;padding:18px"><div class="t-head">Content</div><div class="t-foot c2" style="margin-top:4px">Opaque, quiet, readable.</div></div><div class="glass" style="min-height:110px;padding:18px;border-radius:18px"><div class="t-head">Controls</div><div class="t-foot c2" style="margin-top:4px">Glass only for functional chrome.</div></div></div></section>
+   <section class="sect">${shead('Materials')}<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="group" style="min-height:110px;padding:18px"><div class="t-head">Panel</div><div class="t-foot c2" style="margin-top:4px">Flat, 20pt corners, 8pt apart.</div></div><div class="glass" style="min-height:110px;padding:18px;border-radius:20px"><div class="t-head">Floating chrome</div><div class="t-foot c2" style="margin-top:4px">Tab pill, mini player, top bar.</div></div></div></section>
    <section class="sect">${shead('Motion')}<p class="t-sub c2">Critically damped spring (damping 1.0, response 0.4s) for everything; sheets 0.8 / 0.3s. Cards zoom into their page with the View Transitions API; pages push and pop; data arrives by focus.</p></section>
   </div></div>`;
 }
@@ -1104,10 +1753,12 @@ function bind(el,r){
   el.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>openPerson(b.dataset.p,b));
   el.querySelectorAll('[data-favp]').forEach(b=>b.onclick=()=>{ const p=BYSLUG[b.dataset.favp]; if(!p) return; toggleFav(p.name);
     const on=favs.includes(p.name); b.innerHTML=IC.star(18,on); b.setAttribute('aria-pressed',String(on)); b.setAttribute('aria-label',`${on?'Remove '+p.shortName+' from':'Add '+p.shortName+' to'} Favourites`); });
-  el.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  el.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ pendingPush=true; go(b.dataset.go); });
   el.querySelectorAll('[data-ep]').forEach(b=>b.onclick=()=>{ npFrom=b.querySelector('.cover,.lead,img'); const [s,k,i]=b.dataset.ep.split('|'); const p=BYSLUG[s];
     if(cur&&cur.p===p&&cur.k===k&&cur.i===+i){ toggle(); return; } playEp(p,+i,k); openNP(); });
-  el.querySelectorAll('[data-fil]').forEach(b=>b.onclick=()=>{ figFilter=b.dataset.fil; render('figures','none'); });
+  el.querySelectorAll('[data-fil]').forEach(b=>b.onclick=()=>{ figFilter=b.dataset.fil; morph('figures'); });
+  el.querySelectorAll('[data-hfil]').forEach(b=>b.onclick=()=>{ historyFilter=b.dataset.hfil; morph('history'); });
+  el.querySelectorAll('[data-hmore]').forEach(b=>b.onclick=()=>openHistoryMenu(b.dataset.hmore));
   el.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>act(b.dataset.a,r));
   const q=el.querySelector('#q'); if(q){ q.oninput=()=>{ searchQuery=q.value; $('qres').innerHTML=searchResults(searchQuery); $('cats').style.display=searchQuery.trim()?'none':''; bind($('qres'),r); };
     if(matchMedia('(min-width:900px) and (hover:hover) and (pointer:fine)').matches) q.focus(); }
@@ -1116,21 +1767,28 @@ function bind(el,r){
 function act(a,r){
   const p=r.startsWith('p/')?BYSLUG[r.slice(2)]:null;
   if(a==='back') back();
-  else if(a==='fav'&&p){ toggleFav(p.name); render(r,'none'); }
+  else if(a==='fav'&&p){ toggleFav(p.name); morph(r); }
   else if(a==='about'&&p) openAbout(p);
   else if(a==='play'&&p){ playEp(p,resumeIndex(p),'bio'); openNP(); }
   else if(a==='shuffle'&&p){ shuffleOn=true; playEp(p,~~(Math.random()*p.episodes.length),'bio'); openNP(); }
-  else if(a==='speed'){ const o=[1,1.25,1.5,1.75,2]; const n=o[(o.indexOf(store.get('speed',1))+1)%o.length]; store.set('speed',n); audio.playbackRate=n; paintNP(); render(r,'none'); }
-  else if(a==='sleep'){ cycleSleep(); render(r,'none'); }
-  else if(a==='clear') confirmClearHistory();
+  else if(a==='speed'){ const o=[1,1.25,1.5,1.75,2]; const n=o[(o.indexOf(store.get('speed',1))+1)%o.length]; store.set('speed',n); audio.playbackRate=n; paintNP(); morph(r); }
+  else if(a==='sleep'){ cycleSleep(); morph(r); }
+  else if(a==='theme'){ const o=['system','light','dark']; store.set('theme',o[(o.indexOf(store.get('theme','system'))+1)%3]); const sw=()=>{ applyTheme(); morph(r); }; if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches){ document.documentElement.classList.add('vt-theme'); const t=document.startViewTransition(sw); t.finished.finally(()=>document.documentElement.classList.remove('vt-theme')); } else sw(); }
+  else if(a==='history-clear') clearHistoryTimeline();
+  else if(a==='reset') confirmResetListeningData();
   else if(a==='favs') go('l/favs');
   else if(a==='system') go('system');
   else if(a==='update'){ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(x=>x.text()).then(v=>{ v=v.trim(); if(v&&v!==BUILD){ sessionStorage.removeItem('tg.reloaded'); location.reload(); } else toast('You’re on the latest version'); }).catch(()=>toast('Offline')); }
 }
 function toggleFav(n){ const on=!favs.includes(n); favs=on?[...favs,n]:favs.filter(x=>x!==n); store.set('favs',favs); toast(on?'Added to Favourites':'Removed from Favourites'); }
 function resumeIndex(p){ const L=p.episodes; let i=L.findIndex(e=>pos(p,e)>60&&!done(p,e)); if(i<0) i=L.findIndex(e=>!done(p,e)); return i<0?0:i; }
-let toastT=0;
-function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('on'),1800); }
+let toastT=0, toastAction=null;
+function toast(t,label='',action=null){
+  const el=$('toast'), button=$('toastact'); $('toastmsg').textContent=t; button.textContent=label; toastAction=action;
+  el.classList.toggle('has-action',!!label&&!!action); el.classList.add('on'); clearTimeout(toastT);
+  button.onclick=()=>{ const run=toastAction; toastAction=null; el.classList.remove('on','has-action'); if(run) run(); };
+  toastT=setTimeout(()=>{ el.classList.remove('on','has-action'); toastAction=null; },action?5000:1800);
+}
 
 /* ============================== sheets (spring) ============================== */
 /* Motion runs on the Web Animations API (compositor, promise-based), driven by the
@@ -1143,28 +1801,79 @@ const cur_t=el=>{ const m=new DOMMatrix(getComputedStyle(el).transform); return 
 const setAppInert=on=>['view','navbar','topnav','dock'].forEach(id=>$(id).inert=on);
 function slide(el,show){ if(show) el.classList.add('show');
   const from=`translateY(${show?(el.getBoundingClientRect().height? cur_t(el):0)+'px':cur_t(el)+'px'})`;
-  return anim(el,[{transform:show?'translateY(105%)':from},{transform:show?'translateY(0%)':'translateY(105%)'}],show?533:417,show?EASE.sheet():EASE.push())
+  presentBehind(show);
+  return anim(el,[{transform:show?'translateY(105%)':from},{transform:show?'translateY(0%)':'translateY(105%)'}],MODAL.dur,MODAL.ease)
     .then(()=>{ if(!show) el.classList.remove('show'); }); }
 let sheetReturnFocus=null;
+/* ===================== overlays: Ionic ion-modal (the library itself) =====================
+   Now Playing is an iOS card modal (presentingElement = the app, swipe down to close);
+   sheets are iOS sheet modals with a grabber (breakpoints 0 / .6 / 1). Ionic runs the motion,
+   the backdrop, swipe-to-close and focus handling. The app's nodes are moved in and back out. */
+async function presentModal(node,{cls='',sheet=false,onGone}={}){
+  await customElements.whenDefined('ion-modal');
+  const m=document.createElement('ion-modal'); m.className='greats-modal '+cls;
+  /* phones: iOS page-sheet card (the app recedes behind it); breakpoint sheets need ion-content and recursed here */
+  if(innerWidth<768) m.presentingElement=navEl();
+  const wrap=document.createElement('div'); wrap.className='ion-page modal-page';
+  const home=node.parentNode, next=node.nextSibling; wrap.appendChild(node); m.appendChild(wrap); document.body.appendChild(m);
+  document.body.classList.add('modal-open');
+  m.addEventListener('ionModalWillDismiss',()=>{ if(document.querySelectorAll('ion-modal.show-modal').length<=1) document.body.classList.remove('modal-open'); },{once:true});
+  m.addEventListener('ionModalDidDismiss',()=>{ try{ if(next&&next.parentNode===home) home.insertBefore(node,next); else home.appendChild(node); }catch(e){ home.appendChild(node); }
+    onGone&&onGone(); requestAnimationFrame(()=>m.isConnected&&m.remove()); },{once:true});
+  await m.present(); return m;
+}
+let sheetModal=null, npModal=null;
 function openSheet(title,html){ const sheet=$('sheet'); sheetReturnFocus=document.activeElement; $('sht').textContent=title; $('shb').innerHTML=html;
-  if(document.body.classList.contains('np-open')) $('np').inert=true; else setAppInert(true);
-  sheet.setAttribute('aria-hidden','false'); $('scrim').classList.add('on'); slide(sheet,true).then(()=>$('shx').focus()); }
-function closeSheet(){ const sheet=$('sheet'); $('scrim').classList.remove('on'); return slide(sheet,false).then(()=>{ sheet.setAttribute('aria-hidden','true');
-  if(document.body.classList.contains('np-open')) $('np').inert=false; else setAppInert(false);
-  if(sheetReturnFocus?.isConnected) sheetReturnFocus.focus(); sheetReturnFocus=null; }); }
-$('shx').innerHTML=IC.x(15); $('shx').onclick=closeSheet; $('scrim').onclick=()=>{ closeSheet(); };
+  sheet.setAttribute('aria-hidden','false'); sheet.classList.add('show');
+  const go=()=>presentModal(sheet,{cls:'sheet-modal',sheet:true,onGone:()=>{ sheet.classList.remove('show'); sheet.setAttribute('aria-hidden','true'); sheetModal=null;
+    if(sheetReturnFocus?.isConnected) sheetReturnFocus.focus(); sheetReturnFocus=null; }}).then(m=>{ sheetModal=m; $('shx').focus(); });
+  return sheetModal?sheetModal.dismiss().then(()=>new Promise(r=>setTimeout(r,0))).then(go):go(); }
+function closeSheet(){ if(!sheetModal) return Promise.resolve(); const m=sheetModal; return new Promise(res=>{ m.addEventListener('ionModalDidDismiss',()=>setTimeout(res,0),{once:true}); m.dismiss(); }); }
+
+$('shx').innerHTML=IC.x(15); $('shx').onclick=closeSheet;
 function openAbout(p){ const m=meta(p);
   openSheet(p.shortName,`<div style="display:flex;gap:14px;align-items:center"><img src="${P[p.name]}" style="width:76px;height:76px;border-radius:38px;object-fit:cover;object-position:top"><div><div class="t-head">${esc(m.sub)}</div><div class="t-foot c2">${p.episodes.length} books · ${hours(p)} hours</div></div></div>
-  <p class="t-body" style="white-space:pre-line;margin-top:18px;color:rgba(255,255,255,.9)">${esc(m.bio)}</p>`); }
+  <p class="t-body" style="white-space:pre-line;margin-top:18px;color:var(--text2)">${esc(m.bio)}</p>`); }
 function openQueue(){ if(!cur) return; const L=items(cur.p,cur.k);
   openSheet('Up Next',`<div class="t-foot c2" style="margin-bottom:6px">${esc(cur.p.shortName)} · ${KLABEL[cur.k]}</div><div class="rows">${L.map((e,i)=>erow(cur.p,cur.k,e,i)).join('')}</div>`);
   bind($('shb'),'queue'); }
-function confirmClearHistory(){
-  openSheet('Clear listening history?',`<p class="t-body c2">Saved positions and completion status will be removed from this device. Your favourites will stay.</p>
-    <div class="sheet-actions"><button class="btn btn-danger press" id="confirm-clear">Clear History</button><button class="btn btn-tinted press" id="cancel-clear">Cancel</button></div>`);
+function confirmResetListeningData(){
+  openSheet('Reset listening data?',`<p class="t-body c2">History, saved positions, and completion status will be removed from this device. Your favourites will stay.</p>
+    <div class="sheet-actions"><button class="btn btn-danger press" id="confirm-clear">Reset Listening Data</button><button class="btn btn-tinted press" id="cancel-clear">Cancel</button></div>`);
   $('cancel-clear').onclick=closeSheet;
   $('confirm-clear').onclick=()=>{ Object.keys(localStorage).filter(k=>/^fs\.(pos|done|t)\./.test(k)).forEach(k=>localStorage.removeItem(k));
-    closeSheet().then(()=>{ toast('Listening history cleared'); render(route,'none'); }); };
+    closeSheet().then(()=>{ toast('Listening data reset'); morph(route); }); };
+}
+
+function historyEntry(token){
+  const [slugValue,k,iValue]=String(token).split('|'), p=BYSLUG[slugValue], i=+iValue, e=p&&items(p,k)[i];
+  return p&&e?{p,k,i,e}:null;
+}
+function updateHistory(mutator){
+  const paint=()=>{ mutator(); if(route==='history'||route==='library') morph(route); };
+  if(document.startViewTransition&&!document.hidden&&!matchMedia('(prefers-reduced-motion: reduce)').matches){ const t=document.startViewTransition(paint); t.ready.catch(()=>{}); t.finished.catch(()=>{}); }
+  else paint();
+}
+function removeHistoryEntry(x){
+  const key='t.'+epKey(x.p,x.e), previous=store.get(key,0);
+  updateHistory(()=>store.remove(key));
+  toast('Removed from History','Undo',()=>updateHistory(()=>store.set(key,previous)));
+}
+function clearHistoryTimeline(){
+  const snapshot=Object.keys(localStorage).filter(k=>k.startsWith('fs.t.')).map(k=>[k,localStorage.getItem(k)]);
+  if(!snapshot.length) return;
+  updateHistory(()=>snapshot.forEach(([k])=>localStorage.removeItem(k)));
+  toast('History cleared','Undo',()=>updateHistory(()=>snapshot.forEach(([k,v])=>localStorage.setItem(k,v))));
+}
+function openHistoryMenu(token){
+  const x=historyEntry(token); if(!x) return; const {p,k,i,e}=x, fav=favs.includes(p.name), ps=pos(p,e);
+  openSheet('History item',`<div style="display:flex;align-items:center;gap:14px"><span class="hist-object" aria-hidden="true">${artifactVisual(p,k,e,i)}</span><span style="min-width:0"><span class="t-head clamp2" style="display:block">${esc(rowTitle(p,e))}</span><span class="t-foot c2" style="display:block;margin-top:3px">${esc(p.shortName)} · ${esc(KLABEL[k])}</span></span></div>
+    <div class="sheet-actions"><button class="btn btn-primary press" id="history-play">${IC.play(15)} ${ps>60&&!done(p,e)?'Resume':'Play'}</button><button class="btn btn-tinted press" id="history-view">View ${esc(p.shortName)}</button>
+      <button class="btn btn-tinted press" id="history-favourite">${fav?'Remove from':'Add to'} Favourites</button><button class="btn textbtn press" id="history-remove" style="color:var(--danger)">Remove from History</button></div>`);
+  $('history-play').onclick=()=>closeSheet().then(()=>{ playEp(p,i,k); openNP(); });
+  $('history-view').onclick=()=>closeSheet().then(()=>go('p/'+p.slug));
+  $('history-favourite').onclick=()=>closeSheet().then(()=>toggleFav(p.name));
+  $('history-remove').onclick=()=>closeSheet().then(()=>removeHistoryEntry(x));
 }
 
 /* ============================== playback ============================== */
@@ -1237,16 +1946,12 @@ function flipArt(fromEl){ const art=document.querySelector('#np .art'); if(!from
   const sx=a.width/b.width, sy=a.height/b.height, dx=a.left-b.left, dy=a.top-b.top;
   art.style.transformOrigin='0 0';
   anim(art,[{transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`,borderRadius:'8px'},{transform:'translate(0,0) scale(1,1)',borderRadius:'18px'}],533,EASE.sheet()); }
-function openNP(){ const np=$('np'); if(cur) ground(cur.p); npReturnFocus=document.activeElement; setAppInert(true); np.setAttribute('aria-hidden','false'); np.classList.add('show'); document.body.classList.add('np-open');
-  const from=npFrom||document.querySelector('#mini .art'); npFrom=null;
-  /* measure the art's resting rect first, then start sheet + art together */
-  np.style.transform='translateY(0%)'; const art=document.querySelector('#np .art'); const restT=art.getBoundingClientRect();
-  $('npclose').focus({preventScroll:true}); np.style.transform=''; anim(np,[{transform:'translateY(102%)'},{transform:'translateY(0%)'}],533,EASE.sheet());
-  if(from){ const a=from.getBoundingClientRect(); if(a.width){ const sx=a.width/restT.width, sy=a.height/restT.height;
-    art.style.transformOrigin='0 0'; anim(art,[{transform:`translate(${a.left-restT.left}px,${a.top-restT.top}px) scale(${sx},${sy})`,borderRadius:'8px'},{transform:'none',borderRadius:'18px'}],533,EASE.sheet()); } } }
-function closeNP(){ const np=$('np'); ground(route.startsWith('p/')?BYSLUG[route.slice(2)]:route==='home'?featured():null); document.body.classList.remove('np-open');
-  const y=cur_t(np); anim(np,[{transform:`translateY(${y}px)`},{transform:'translateY(102%)'}],417,EASE.push()).then(()=>{ np.classList.remove('show'); np.style.transform='translateY(102%)';
-    np.setAttribute('aria-hidden','true'); setAppInert(false); if(npReturnFocus?.isConnected) npReturnFocus.focus(); npReturnFocus=null; }); }
+function openNP(){ if(npModal) return; const np=$('np'); if(cur) ground(cur.p); npReturnFocus=document.activeElement; np.setAttribute('aria-hidden','false'); np.classList.add('show'); document.body.classList.add('np-open');
+  npFrom=null; np.style.transform='';
+  presentModal(np,{cls:'np-modal',onGone:()=>{ ground(route.startsWith('p/')?BYSLUG[route.slice(2)]:route==='home'?featured():null); document.body.classList.remove('np-open');
+    np.classList.remove('show'); np.setAttribute('aria-hidden','true'); npModal=null; if(npReturnFocus?.isConnected) npReturnFocus.focus(); npReturnFocus=null; }})
+    .then(m=>{ npModal=m; $('npclose').focus({preventScroll:true}); }); }
+function closeNP(){ if(npModal) npModal.dismiss(); }
 function cycleSleep(){ const o=[0,15,30,60]; sleepMin=o[(o.indexOf(sleepMin)+1)%o.length]; sleepUntil=sleepMin?Date.now()+sleepMin*6e4:null; paintNP(); toast(sleepMin?`Sleep in ${sleepMin} minutes`:'Sleep timer off'); }
 $('npclose').onclick=closeNP;
 $('npplay').onclick=toggle; $('nprw').onclick=()=>audio.currentTime=Math.max(0,audio.currentTime-30); $('npff').onclick=()=>audio.currentTime+=15;
@@ -1267,16 +1972,7 @@ $('mini').onclick=ev=>{ const a=ev.target.closest('[data-a]')?.dataset.a;
     const ep=curEp(), d=isFinite(audio.duration)&&audio.duration?audio.duration:(ep?.sec||1);
     audio.currentTime=e.key==='Home'?0:e.key==='End'?d:Math.min(d,Math.max(0,audio.currentTime+(e.key==='ArrowLeft'?-10:10))); paintTime(); });
 })();
-/* drag the now-playing sheet down: tracks the finger, springs home or dismisses on velocity */
-(()=>{ const np=$('np'); let y0=null,t0=0,last=0,lt=0,v=0;
-  np.addEventListener('pointerdown',e=>{ if(innerWidth>=900||(e.target.closest('.scrub,button')&&!e.target.closest('#npclose'))) return; y0=e.clientY; t0=lt=performance.now(); last=y0; v=0; });
-  window.addEventListener('pointermove',e=>{ if(y0===null) return; const dy=Math.max(0,e.clientY-y0); const now=performance.now(); v=(e.clientY-last)/Math.max(1,now-lt)*1000; last=e.clientY; lt=now;
-    np.style.transform=`translateY(${dy}px)`; });
-  window.addEventListener('pointerup',e=>{ if(y0===null) return; const dy=e.clientY-y0; y0=null;
-    /* Apple's momentum projection: v/1000 * d/(1-d), d=0.998 */
-    const proj=dy+(v/1000)*.998/(1-.998);
-    if(proj>innerHeight*.35) closeNP(); else { const yy=cur_t(np); np.style.transform=''; anim(np,[{transform:`translateY(${yy}px)`},{transform:'translateY(0%)'}],417,EASE.push()); } });
-})();
+/* drag-to-dismiss for Now Playing and sheets is Ionic's swipe-to-close (ion-modal) */
 document.addEventListener('keydown',e=>{ const modal=$('sheet').classList.contains('show')?$('sheet'):document.body.classList.contains('np-open')?$('np'):null;
   if(e.key==='Tab'&&modal){ const f=[...modal.querySelectorAll('button,[href],input,[tabindex]:not([tabindex="-1"])')].filter(x=>!x.disabled&&x.offsetParent!==null);
     if(f.length){ const first=f[0],last=f[f.length-1]; if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus(); } else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus(); } } }
@@ -1297,7 +1993,7 @@ Promise.all([requiredJSON('episodes.json?v='+BUILD),requiredJSON('portraits.json
   DATA.people.forEach(p=>{ p.slug=slug(p.name); p.shortName=p.name.split(' - ')[0]; p.media=(md.people||{})[p.name]||{}; BYSLUG[p.slug]=p; });
   const last=store.get('last',null);
   if(last&&BYSLUG[last.slug]&&items(BYSLUG[last.slug],last.k||'bio')[last.i]){ cur={p:BYSLUG[last.slug],i:last.i,k:last.k||'bio'}; audio.src=curEp().url; document.body.classList.add('has-track'); paintNP(); }
-  const r=parse(location.hash); render(r,'none');
+  const r=parse(location.hash); navStack=[r]; customElements.whenDefined('ion-nav').then(()=>navEl().componentOnReady()).then(()=>{ navEl().innerHTML=''; render(r,'none'); });
   const st=new URLSearchParams(location.search).get('state');
   if(st==='player'){ if(!cur){ cur={p:BYSLUG['steve-jobs'],i:0,k:'bio'}; document.body.classList.add('has-track'); } paintNP(); openNP(); }
 }).catch(()=>{ const v=$('view'); v.setAttribute('aria-busy','false'); v.innerHTML=`<div class="page"><div class="load-state" role="alert"><h1 class="t-page">The archive couldn’t load.</h1><p class="t-body c2">Check your connection, then try again. Your saved listening state is untouched.</p><button class="btn btn-primary press" id="retry-load">Try Again</button></div></div>`;
