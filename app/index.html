@@ -9,6 +9,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="The Greats">
 <meta name="theme-color" content="#000000">
+<script>window.Ionic={config:{mode:"ios",swipeBackEnabled:true,animated:true}};</script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core@9.0.10/dist/ionic/ionic.esm.js"></script>
 <script>/* appearance before first paint: saved choice, else the system setting */
 (function(){var t=null;try{t=JSON.parse(localStorage.getItem('fs.theme'))}catch(e){}
 var light=t==='light'||(t!=='dark'&&matchMedia('(prefers-color-scheme: light)').matches);
@@ -179,7 +181,7 @@ img{display:block;-webkit-user-drag:none;user-select:none}
 .textbtn{min-height:44px;display:inline-flex;align-items:center;color:rgba(255,255,255,.7);font-size:17px;letter-spacing:-.43px}
 
 /* =============================== LAYOUT ================================= */
-.page{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+.page{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;background:var(--bg);
   padding:0 0 calc(var(--tabh) + var(--minih) + 60px + var(--safe-b))}
 .content{min-width:0;overflow-x:clip}
 .wrap{padding:0 var(--m)}
@@ -899,22 +901,22 @@ html.light ::selection{background:rgba(0,0,0,.12)}
    and 10062799163732573 (iOS 26 Control Centre): fill ~3% white over a heavy
    blur; a hairline rim at ~60% white top-left falling to ~30% at the bottom;
    a second inner hairline at ~19%. No drop shadow on dark; a soft one on light. */
-:root{--lg-fill:rgba(255,255,255,.03);--lg-blur:blur(16px) saturate(1.7) brightness(1.06);
+:root{--lg-fill:rgba(40,40,44,.52);--lg-blur:blur(30px) saturate(1.6);   /* frosted (Adam 2026-10-31): heavy blur + real tint, rim kept */
   --lg-rim:linear-gradient(150deg,rgba(255,255,255,.62),rgba(255,255,255,.2) 30%,rgba(255,255,255,.07) 55%,rgba(255,255,255,.3));
   --lg-inner:inset 0 1px 1px rgba(255,255,255,.19),inset 0 -1px 1px rgba(255,255,255,.06);
   --lg-drop:0 8px 28px rgba(0,0,0,.28)}
-html.light{--lg-fill:rgba(255,255,255,.55);--lg-blur:blur(16px) saturate(1.8);
+html.light{--lg-fill:rgba(250,250,252,.72);--lg-blur:blur(30px) saturate(1.8);
   --lg-rim:linear-gradient(150deg,rgba(255,255,255,1),rgba(255,255,255,.5) 35%,rgba(0,0,0,.06) 60%,rgba(255,255,255,.7));
   --lg-inner:inset 0 1px 1px rgba(255,255,255,.9),inset 0 -1px 1px rgba(0,0,0,.03);--lg-drop:0 8px 26px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06)}
-.lg,#tabbar,#tabsearch,#mini,.btn-icon.glass,.btn-glass{position:relative}
-.glass,.lg{isolation:isolate;background:var(--lg-fill);-webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);
+#tabbar,#tabsearch,#mini,.btn-icon.glass,.btn-glass{position:relative}
+.glass{isolation:isolate;background:var(--lg-fill);-webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);
   box-shadow:var(--lg-inner),var(--lg-drop)}
-.glass::after,.lg::after{content:"";display:block;position:absolute;inset:0;border-radius:inherit;pointer-events:none;padding:1px;background:var(--lg-rim);
+.glass::after{content:"";display:block;position:absolute;inset:0;border-radius:inherit;pointer-events:none;padding:1px;background:var(--lg-rim);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 html.light .glass{background:var(--lg-fill);box-shadow:var(--lg-inner),var(--lg-drop)}
 /* on photographs controls are always the dark-adapted glass, in either appearance */
-.ph .top .btn-icon.glass,html.light .ph .top .btn-icon.glass,.fcfav,.pill.ghost{background:rgba(255,255,255,.03);color:#fff;
-  -webkit-backdrop-filter:blur(16px) saturate(1.7) brightness(1.06);backdrop-filter:blur(16px) saturate(1.7) brightness(1.06);
+.ph .top .btn-icon.glass,html.light .ph .top .btn-icon.glass,.fcfav,.pill.ghost{background:rgba(40,40,44,.42);color:#fff;
+  -webkit-backdrop-filter:blur(26px) saturate(1.6);backdrop-filter:blur(26px) saturate(1.6);
   box-shadow:inset 0 1px 1px rgba(255,255,255,.19),inset 0 -1px 1px rgba(255,255,255,.06),0 6px 20px rgba(0,0,0,.18)}
 .fcfav::after,.pill.ghost::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;padding:1px;
   background:linear-gradient(150deg,rgba(255,255,255,.62),rgba(255,255,255,.2) 30%,rgba(255,255,255,.07) 55%,rgba(255,255,255,.3));
@@ -922,8 +924,8 @@ html.light .glass{background:var(--lg-fill);box-shadow:var(--lg-inner),var(--lg-
 .pill.ghost{position:relative}
 /* tab pill: the selection is a clear glass lens, not a grey lozenge (pin 217650594489716463) */
 /* floating bars sit over busy content, so they carry more tint (iOS deepens glass over content) */
-#tabbar,#tabsearch,#mini,#topnav,.toast{background:rgba(22,22,24,.46);-webkit-backdrop-filter:blur(24px) saturate(1.8);backdrop-filter:blur(24px) saturate(1.8)}
-html.light #tabbar,html.light #tabsearch,html.light #mini,html.light #topnav,html.light .toast{background:rgba(255,255,255,.68)}
+#tabbar,#tabsearch,#mini,#topnav,.toast{background:rgba(30,30,32,.62);-webkit-backdrop-filter:blur(34px) saturate(1.7);backdrop-filter:blur(34px) saturate(1.7)}
+html.light #tabbar,html.light #tabsearch,html.light #mini,html.light #topnav,html.light .toast{background:rgba(250,250,252,.78)}
 #tabhl,html.light #tabhl{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),inset 0 1px 1px rgba(255,255,255,.35),0 2px 8px rgba(0,0,0,.18)}
 html.light #tabhl{background:rgba(255,255,255,.7);box-shadow:inset 0 0 0 1px rgba(255,255,255,1),0 2px 10px rgba(0,0,0,.1)}
 /* hairline circles on the ground become small glass buttons */
@@ -956,9 +958,12 @@ html.light #np .btn-icon{background:var(--panel);color:#fff}
   :root{--sbw:272px;--sbx:10px;--cx:calc(var(--sbw) + var(--sbx) + 28px);--m:0px}
   #topnav{display:flex!important;flex-direction:column;align-items:stretch;gap:0;position:fixed;z-index:46;
     left:var(--sbx);top:var(--sbx);bottom:var(--sbx);width:var(--sbw);height:auto;transform:none;border-radius:26px;padding:14px 12px;overflow-y:auto}
-  html:not(.light) #topnav{background:rgba(16,16,16,.88)}
-  #topnav .lg{display:flex;align-items:center;gap:10px;height:44px;padding:0 6px;margin-bottom:10px;border-radius:12px;font-size:22px;background:none!important}
-  #topnav .lg img{width:30px;height:30px;border-radius:8px}
+  html:not(.light) #topnav{background:rgba(24,24,26,.72)}
+  /* logo row: app mark + wordmark, no box (it was picking up the old .lg glass utility) */
+  #topnav .lg{display:flex;align-items:center;gap:11px;height:48px;padding:0 8px;margin:0 0 12px;border-radius:14px;background:none!important;box-shadow:none!important;
+    color:var(--label);font-family:'Instrument Serif',Georgia,serif;font-size:25px;line-height:1;letter-spacing:-.01em}
+  #topnav .lg::after{display:none!important}
+  #topnav .lg img{width:32px;height:32px;border-radius:9px;box-shadow:inset 0 0 0 1px var(--hair),0 2px 8px rgba(0,0,0,.25)}
   #topnav .nav-primary,#topnav .nav-tools{display:flex;flex-direction:column;gap:1px;justify-content:flex-start}
   #topnav .nav-tools{margin-top:auto;padding-top:12px}
   #topnav button:not(.lg){height:42px;width:100%;padding:0 14px;border-radius:21px;gap:12px;justify-content:flex-start;
@@ -1031,10 +1036,88 @@ html.light .pdesk .pill:not(.ghost){background:#000;color:#fff}
 html.light .pdesk .pill.ghost{background:#fff;color:#000;box-shadow:inset 0 0 0 1px var(--hair),0 2px 8px rgba(0,0,0,.05)}
 html.light .pdesk .pill.ghost::after{display:none}
 html.light .pdesk .stats b{color:#000} html.light .pdesk .stats span{color:var(--label2)}
-.art-obj .ak{background:rgba(0,0,0,.28)}
+.art-obj .ak{background:rgba(40,40,44,.45);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6)}
+/* performance: grid and cover cards fade with a gradient instead of a live backdrop blur per card
+   (rAF probe 2026-10-31: per-card backdrop-filter made the zoom drop to 117ms frames) */
+.cover::after,.art-obj::after,.pcard .art::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  background:linear-gradient(transparent,rgba(0,0,0,.35))!important;-webkit-mask:none!important;mask:none!important}
 /* search field: no browser ring; a quiet focus ring on the field */
 .search input:focus,.search input:focus-visible{outline:none}
 .search:focus-within{box-shadow:0 0 0 3px rgba(127,127,127,.25)}
+
+/* navigation motion layers (Ionic iOS transition: cover + edge shadow on the entering page) */
+/* fixed inside a transformed page = pinned to the page box regardless of its scroll; it sits just left of the
+   entering page, so the cover darkens the page underneath and the shadow falls on the entering edge */
+/* the app owns horizontal drags (swipe-back); the browser's own history swipe is off */
+html,body{overscroll-behavior-x:none}
+.page{touch-action:pan-y}
+.hrow{touch-action:pan-x pan-y}
+.nav-fx{position:fixed;top:0;bottom:0;left:-100%;width:100%;z-index:100;pointer-events:none}
+.nav-fx .nav-cover{position:absolute;inset:0;background:#000;opacity:0}
+.nav-fx .nav-shadow{position:absolute;top:0;bottom:0;right:0;width:10px;opacity:0;
+  background:linear-gradient(to left,rgba(0,0,0,.24),rgba(0,0,0,0))}
+.zoomfly{position:fixed;z-index:80;overflow:hidden;pointer-events:none;transform-origin:0 0;background:#111}
+.zoomfly img{width:100%;height:100%;object-fit:cover;object-position:center 14%}
+
+
+/* ===================== motion polish (values from Ionic source, 2026-10-31) ===================== */
+#view{position:fixed;inset:0;display:block;contain:layout size style}
+/* Ionic page container (core.css .ion-page), but block layout and our own scroller */
+.nav-view.ion-page{position:absolute;inset:0;display:block;contain:layout size style;z-index:0}
+.page.ion-page{position:absolute;inset:0;display:block;z-index:0}
+.ion-page-hidden{display:none!important}
+.ion-page-invisible{opacity:0}
+ion-nav:not(.hydrated) .page{position:absolute;inset:0}
+body.presenting{background:#000}
+body.presenting #view{overflow:hidden}
+/* tab lens and sidebar pill slide (persisted elements, so these transitions actually run) */
+#tabhl{transition:transform .4s cubic-bezier(0.32,0.72,0,1),width .4s cubic-bezier(0.32,0.72,0,1),opacity .2s!important}
+#sbhl{display:none}
+@media (min-width:900px){
+  #topnav{position:fixed}
+  #sbhl{display:block;position:absolute;left:0;top:0;z-index:0;border-radius:21px;background:#2f2f2f;pointer-events:none;
+    transition:transform .4s cubic-bezier(0.32,0.72,0,1),height .4s cubic-bezier(0.32,0.72,0,1),width .4s cubic-bezier(0.32,0.72,0,1),opacity .2s}
+  html.light #sbhl{background:rgba(0,0,0,.07)}
+  #topnav button.on:not(.lg){background:transparent!important}
+  #topnav button:not(.lg),#topnav .nav-sect{position:relative;z-index:1}
+}
+/* text tabs: a capsule marks the selection and slides (Ionic segment: 260ms cubic-bezier(0.4,0,0.2,1)) */
+.chip,.chip.on{position:relative;isolation:isolate;padding:0 14px;border-radius:22px;transition:color .1s linear}
+.chip.on::before{content:"";position:absolute;inset:2px 0;border-radius:20px;background:rgba(255,255,255,.12);z-index:-1}
+html.light .chip.on::before{background:rgba(0,0,0,.06)}
+.chip.seg-moving::before{opacity:0}
+.hrow:has(>.chip){gap:2px!important;padding:0 calc(var(--m) - 14px)}
+.history-filters{gap:2px;margin-left:-14px}
+.seg-fly{position:fixed;z-index:60;pointer-events:none;border-radius:22px;background:rgba(255,255,255,.12);transform-origin:0 50%}
+html.light .seg-fly{background:rgba(0,0,0,.06)}
+/* toast (Ionic toast ios.enter 400ms cubic-bezier(.155,1.105,.295,1.12); ios.leave 300ms cubic-bezier(.36,.66,.04,1)) */
+.toast{opacity:.01;transition:transform .3s cubic-bezier(.36,.66,.04,1),opacity .3s cubic-bezier(.36,.66,.04,1)}
+.toast.on{opacity:1;transition:transform .4s cubic-bezier(.155,1.105,.295,1.12),opacity .4s cubic-bezier(.155,1.105,.295,1.12)}
+/* large title hand-off is scroll-driven now */
+.navbar{transition:none}
+#nbt{display:inline-block}
+/* appearance change: the whole UI crossfades (system appearance switch) */
+html.vt-theme::view-transition-old(root),html.vt-theme::view-transition-new(root){animation-duration:.32s;animation-timing-function:ease}
+
+
+/* ===================== Ionic modal hosting ===================== */
+:root{--ion-safe-area-top:env(safe-area-inset-top,0px);--ion-safe-area-bottom:env(safe-area-inset-bottom,0px);--ion-safe-area-left:env(safe-area-inset-left,0px);--ion-safe-area-right:env(safe-area-inset-right,0px)}  /* Ionic's own sizing reads these (core.css) */
+ion-modal.greats-modal{--background:transparent;--backdrop-opacity:.4}
+ion-modal.sheet-modal{--background:var(--panel)}
+ion-modal .ion-page{position:relative;height:100%;contain:layout style}  /* core.css: ion-modal>.ion-page (incl. Ionic's delegate host) */
+ion-modal.np-modal{--background:#0b0b0c}
+/* the mini player and tab bar belong to the app behind the card */
+#dock{transition:opacity .25s ease}
+body.modal-open #dock{opacity:0;pointer-events:none}
+ion-modal #np,ion-modal .sheet{position:relative!important;inset:auto!important;left:auto!important;top:auto!important;right:auto!important;bottom:auto!important;
+  width:100%!important;height:100%!important;max-height:none!important;transform:none!important;visibility:visible!important;border-radius:0!important;box-shadow:none!important}
+ion-modal .sheet{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+ion-modal .sheet::after{display:none}
+#scrim{display:none}
+@media (min-width:768px){
+  ion-modal.np-modal{--width:min(980px,calc(100vw - 64px));--height:min(580px,calc(100vh - 84px));--border-radius:32px}
+  ion-modal.sheet-modal{--width:520px;--height:min(640px,80vh);--border-radius:28px}
+}
 
 /* phone / desktop variants */
 .desk{display:none}
@@ -1059,10 +1142,10 @@ html.light .pdesk .stats b{color:#000} html.light .pdesk .stats span{color:var(-
 </style>
 </head>
 <body>
-<main id="view" aria-busy="true"><div class="page"><div class="content loading-shell" role="status" aria-live="polite">
+<ion-nav id="view" swipe-gesture="true" aria-busy="true"><div class="page"><div class="content loading-shell" role="status" aria-live="polite">
   <div class="ltitle"><h1 class="t-page" style="font-size:52px;line-height:52px">The Greats.</h1></div>
   <div class="wrap"><div class="skeleton search-skeleton"></div><div class="skeleton line-skeleton"></div><div class="skeleton card-skeleton"></div><span class="sr-only">Loading the archive</span></div>
-</div></div></main>
+</div></div></ion-nav>
 <div class="navbar" id="navbar"><span class="t-head" id="nbt"></span></div>
 
 <nav id="topnav" class="glass" aria-label="Sections"></nav>
@@ -1085,7 +1168,7 @@ html.light .pdesk .stats b{color:#000} html.light .pdesk .stats span{color:var(-
 </div>
 
 <!-- now playing (#3 layout, #13 speed chips) -->
-<section id="np" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Now playing">
+<section id="np" class="ion-content-scroll-host" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Now playing">
   <div class="npbg"><img id="npbg1" src="assets/icon-192.png?v=5" alt=""><img id="npbg2" src="assets/icon-192.png?v=5" alt=""></div>
   <div class="nphead"><button class="btn-icon sm press" id="npclose" aria-label="Close" style="background:rgba(255,255,255,.08)"></button>
     <div class="nptabs"><span class="on">Now Playing</span><button id="nptabq">Up Next</button></div>
@@ -1114,7 +1197,7 @@ html.light .pdesk .stats b{color:#000} html.light .pdesk .stats span{color:var(-
 <div class="scrim" id="scrim"></div>
 <section class="sheet glass" id="sheet" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="sht">
   <div class="sh-h"><div class="t-title3" id="sht"></div><button class="btn-icon sm glass press" id="shx" aria-label="Close"></button></div>
-  <div class="sh-b" id="shb"></div>
+  <div class="sh-b ion-content-scroll-host" id="shb"></div>
 </section>
 <div class="toast glass t-sub" id="toast" role="status" aria-live="polite"><span id="toastmsg"></span><button id="toastact" class="press" type="button"></button></div>
 <audio id="audio" preload="none"></audio>
@@ -1179,7 +1262,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261031-0500';
+const BUILD='20261031-0800';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -1257,31 +1340,97 @@ const parse=h=>{ h=(h||'').replace(/^#\/?/,''); return h||'home'; };
 const depth=r=>r.includes('/')||r==='settings'||r==='system'?1:0;
 function go(r){ if(('#/'+r)!==location.hash) location.hash='/'+r; else render(r,'none'); }
 function back(){ if(history.length>1) history.back(); else go(lastTab); }
-window.addEventListener('hashchange',()=>{ const r=parse(location.hash); const kind=!route?'none':depth(r)>depth(route)?'push':depth(r)<depth(route)?'pop':'tab'; render(r,kind); });
-
-function render(r,kind='none',zoomEl=null){
-  const prev=route; if(prev){ const pg=$('view').firstElementChild; if(pg) scrollMem[prev]=pg.scrollTop; }
+/* ===================== navigation: Ionic ion-nav (the library itself, not a port) =====================
+   @ionic/core 9.0.10 from jsDelivr. ion-nav runs Ionic's own iOS page transition and its own
+   edge swipe-back gesture; previous pages stay alive in the DOM, so back reveals the real page
+   at its real scroll position. The app keeps its hash routes and syncs them to the nav stack. */
+let navStack=[], pendingPush=false, navSync=false;
+const navEl=()=>$('view');
+/* each nav view wraps the scrolling page: Ionic's iOS transition animates ':scope > .ion-page' (ios.transition.ts) */
+const activePage=()=>{ const vs=[...navEl().children].filter(c=>c.classList.contains('nav-view')&&!c.classList.contains('ion-page-hidden')); const v=vs[vs.length-1]; return v?v.querySelector(':scope>.page'):null; };
+window.addEventListener('hashchange',()=>{ const r=parse(location.hash);
+  if(navSync){ navSync=false; return; }               /* the swipe gesture already popped the page */
+  const back=navStack.length>1&&navStack[navStack.length-2]===r, pushed=pendingPush; pendingPush=false;
+  const kind=!route?'none':back?'pop':pushed||depth(r)>depth(route)?'push':depth(r)<depth(route)?'pop':'tab';
+  if(kind==='push') navStack.push(r); else if(kind==='pop') navStack.pop(); else navStack=[r];
+  render(r,kind); });
+function pageFor(r){ const pg=build(r); pg.classList.add('ion-page'); pg.dataset.route=r;
+  const v=document.createElement('div'); v.className='nav-view ion-page'; v.dataset.route=r; v.appendChild(pg); return v; }
+function showing(pg,r,kind){ paintChrome(); if(kind!=='pop') pg.scrollTop=kind==='tab'?(scrollMem[r]||0):0; if(!pg.__wired){ pg.__wired=true; wireNav(pg); } else wireNav(pg); }
+let navQueue=Promise.resolve();
+function render(r,kind='none'){
+  navQueue=navQueue.then(()=>renderNow(r,kind)).catch(e=>console.error(e)); return navQueue; }
+async function renderNow(r,kind){
+  const nav=navEl(), cur=activePage(); if(route&&cur) scrollMem[route]=cur.scrollTop;
   route=r; if(!depth(r)) lastTab=r==='search'?'search':r;
   ground(r.startsWith('p/')?BYSLUG[r.slice(2)]:r==='home'?featured():null);
-  const paint=()=>{ $('view').setAttribute('aria-busy','false'); $('view').innerHTML=''; $('view').appendChild(build(r)); paintChrome();
-    const pg=$('view').firstElementChild; if(pg){ pg.scrollTop=(kind==='pop'||kind==='tab')?(scrollMem[r]||0):0; wireNav(pg); } };
-  const doc=document.documentElement;
-  if(!document.startViewTransition||kind==='none'||document.hidden||matchMedia('(prefers-reduced-motion: reduce)').matches){ paint(); return; }
-  doc.classList.remove('vt-push','vt-pop','vt-zoom','vt-tab');
-  /* popping back from a figure: morph the hero back into that figure's card */
-  const backTo=kind==='pop'&&prev&&prev.startsWith('p/')?prev.slice(2):null;
-  const k=zoomEl||backTo?'zoom':kind==='push'?'push':kind==='pop'?'pop':kind==='tab'?'tab':null; if(k) doc.classList.add('vt-'+k);
-  const nameEl=zoomEl&&zoomEl.closest('[data-p]')?.querySelector('.t-card,.rn');
-  if(zoomEl){ zoomEl.style.viewTransitionName='hero'; if(nameEl) nameEl.style.viewTransitionName='heroname'; }
-  const t=document.startViewTransition(()=>{ if(zoomEl){ zoomEl.style.viewTransitionName=''; if(nameEl) nameEl.style.viewTransitionName=''; } paint();
-    if(backTo){ const card=[...document.querySelectorAll(`#view [data-p="${backTo}"]`)].find(c=>{ const r=c.getBoundingClientRect(); return r.bottom>0&&r.top<innerHeight&&r.width; });
-      const im=card&&card.querySelector('img'); if(im){ im.style.viewTransitionName='hero'; const nm=card.querySelector('.t-card,.rn'); if(nm) nm.style.viewTransitionName='heroname';
-        t.finished.finally(()=>{ im.style.viewTransitionName=''; if(nm) nm.style.viewTransitionName=''; }); } } });
-  /* never let a stalled transition leave a stale snapshot on screen */
-  t.ready.catch(()=>{}); t.updateCallbackDone.catch(()=>{});
-  const cap=setTimeout(()=>{ try{ t.skipTransition(); }catch(e){} },700);
-  t.finished.catch(()=>{}).finally(()=>{ clearTimeout(cap); doc.classList.remove('vt-push','vt-pop','vt-zoom','vt-tab'); });
+  nav.setAttribute('aria-busy','false');
+  const animated=!matchMedia('(prefers-reduced-motion: reduce)').matches&&!document.hidden;
+  if(kind==='pop'){
+    if(!(await nav.canGoBack())) await nav.insert(0,pageFor(r));
+    paintChrome(); await nav.pop({animated}); const pg=activePage(); if(pg) showing(pg,r,'pop'); return; }
+  const v=pageFor(r), pg=v.firstElementChild;
+  if(kind==='push'){ paintChrome(); await nav.push(v,null,{animated}); }
+  else { await nav.setRoot(v,null,{animated:false}); }
+  showing(pg,r,kind);
 }
+/* Ionic's swipe-back pops the nav itself; bring the URL and chrome along */
+navEl().addEventListener('ionNavDidChange',()=>{ const pg=activePage(); if(!pg) return; const r=pg.dataset.route;
+  if(r&&r!==route&&navStack.length>1&&navStack[navStack.length-2]===r){ navStack.pop(); route=r; if(!depth(r)) lastTab=r;
+    ground(r.startsWith('p/')?BYSLUG[r.slice(2)]:r==='home'?featured():null); showing(pg,r,'pop'); navSync=true; history.back(); } });
+
+/* ===================== in-place morph (no page rebuild snap) =====================
+   Filters, favourites, settings rows and history filters update the live page element in place:
+   scroll is kept, moved items FLIP, new items rise in; the selected text tab's capsule slides
+   (Ionic segment indicator: transform 260ms cubic-bezier(0.4,0,0.2,1)). */
+const KEYS=['data-p','data-ep','data-history-item','data-fil','data-hfil','data-a','data-go','data-favp'];
+function keyed(root){ const m=new Map(), seen={};
+  root.querySelectorAll(KEYS.map(k=>`[${k}]`).join(',')).forEach(el=>{ const k=KEYS.find(a=>el.hasAttribute(a)); const id=k+'='+el.getAttribute(k);
+    seen[id]=(seen[id]||0)+1; m.set(id+'#'+seen[id],el); }); return m; }
+function morph(r){
+  const pg=activePage(); if(!pg||pg.dataset.route!==r) return render(r,'none');
+  const before=new Map(), vh=innerHeight;
+  keyed(pg).forEach((el,id)=>{ const b=el.getBoundingClientRect(); if(b.bottom>-200&&b.top<vh+200&&b.width) before.set(id,b); });
+  const segFrom=pg.querySelector('.chip.on')?.getBoundingClientRect(), st=pg.scrollTop;
+  route=r; pg.innerHTML=build(r).innerHTML; setTimeout(()=>bind(pg,r),0); paintChrome(); pg.scrollTop=st; wireNav(pg);
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const ease='cubic-bezier(0.32,0.72,0,1)';
+  let n=0;
+  keyed(pg).forEach((el,id)=>{ const a=el.getBoundingClientRect(); if(!(a.bottom>0&&a.top<vh&&a.width)) return;
+    const b=before.get(id);
+    if(b){ const dx=b.left-a.left, dy=b.top-a.top, sx=b.width/a.width, sy=b.height/a.height;
+      if(Math.abs(dx)>.5||Math.abs(dy)>.5||Math.abs(sx-1)>.01||Math.abs(sy-1)>.01)
+        el.animate([{transformOrigin:'0 0',transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`},{transformOrigin:'0 0',transform:'none'}],{duration:400,easing:ease}); }
+    else el.animate([{opacity:0,transform:'translateY(10px) scale(.97)'},{opacity:1,transform:'none'}],{duration:260,easing:ease,fill:'backwards',delay:Math.min(n++*18,160)}); });
+  const segOn=pg.querySelector('.chip.on');
+  if(segFrom&&segOn){ const a=segOn.getBoundingClientRect();
+    if(Math.abs(a.left-segFrom.left)>.5||Math.abs(a.width-segFrom.width)>.5){
+      const cap=document.createElement('i'); cap.className='seg-fly';
+      cap.style.cssText=`left:${a.left}px;top:${a.top}px;width:${a.width}px;height:${a.height}px`; document.body.appendChild(cap);
+      segOn.classList.add('seg-moving');
+      cap.animate([{transform:`translateX(${segFrom.left-a.left}px) scaleX(${segFrom.width/a.width})`},{transform:'none'}],{duration:260,easing:'cubic-bezier(0.4,0,0.2,1)'})
+        .finished.then(()=>{ cap.remove(); segOn.classList.remove('seg-moving'); });
+      segOn.animate([{color:'var(--dim)'},{color:'var(--label)'}],{duration:160,easing:'linear'}); } }
+}
+
+/* ===================== card modal (Ionic modal ios.enter / ios.leave) =====================
+   500ms cubic-bezier(0.32,0.72,0,1) in and out; on phones the page behind drops by
+   max(30px, safe-area-top) and scales to 0.915 from the top centre with a 10px top radius and
+   contrast(.85), over black (SwipeToCloseDefaults.MIN_PRESENTING_SCALE = 0.915). */
+const MODAL={dur:500,ease:'cubic-bezier(0.32,0.72,0,1)',scale:.915};
+let presented=0;
+function presentBehind(on){
+  if(innerWidth>=768) return Promise.resolve();
+  presented+=on?1:-1; if(on&&presented>1) return Promise.resolve(); if(!on&&presented>0) return Promise.resolve();
+  const els=[$('view'),$('dock')], y='max(30px, env(safe-area-inset-top))';
+  const card={transform:`translateY(${y}) scale(${MODAL.scale})`,borderRadius:'10px 10px 0 0',filter:'contrast(.85)'};
+  const flat={transform:'translateY(0) scale(1)',borderRadius:'0px',filter:'contrast(1)'};
+  document.body.classList.add('presenting');
+  const as=els.map(el=>{ el.style.transformOrigin=el.id==='dock'?`50% ${-el.getBoundingClientRect().top}px`:'top center'; const a=el.animate(on?[flat,card]:[card,flat],{duration:MODAL.dur,easing:MODAL.ease,fill:'forwards'}); return a; });
+  return Promise.all(as.map(a=>a.finished.catch(()=>{}))).then(()=>{ if(!on){ as.forEach(a=>a.cancel()); document.body.classList.remove('presenting'); } });
+}
+
+
 let pendingZoom=null;
 function openPerson(s,el){ pendingZoom=el?el.querySelector('img'):null; go('p/'+s); }
 window.addEventListener('hashchange',()=>{},{capture:true});
@@ -1306,7 +1455,9 @@ function wireNav(pg){
   const nb=$('navbar'), t=pg.querySelector('[data-title]');
   $('nbt').textContent=t?t.dataset.title:'';
   nb.innerHTML=`<span class="t-head" id="nbt">${esc(t?t.dataset.title:'')}</span>`+(depth(route)?`<button class="btn-icon press nb-back" data-a="back" aria-label="Back">${IC.back(20)}</button>`:'');
-  const on=()=>nb.classList.toggle('on',pg.scrollTop>(t?t.offsetTop+t.offsetHeight-10:60));
+  const thr=t?t.offsetTop+t.offsetHeight-10:60, nbt=nb.querySelector('#nbt');
+  const on=()=>{ const p=Math.max(0,Math.min(1,(pg.scrollTop-thr+28)/28)); nb.style.opacity=p; nb.classList.toggle('on',p>.5);
+    if(nbt) nbt.style.transform=`translateY(${(1-p)*6}px)`; };
   pg.addEventListener('scroll',on,{passive:true}); on();
   nb.querySelector('[data-a=back]')?.addEventListener('click',back);
 }
@@ -1315,7 +1466,9 @@ function wireNav(pg){
 function paintChrome(){
   const active=depth(route)?(route.startsWith('p/')?'figures':route==='settings'||route==='system'?'settings':route.startsWith('l/')?'library':lastTab):route;
   const tb=$('tabbar');
-  tb.innerHTML='<span id="tabhl"></span>'+TABS.map(([id,l,ic])=>`<button class="tab press${active===id?' on':''}" data-t="${id}"${active===id?' aria-current="page"':''}>${IC[ic](24)}<span class="lb">${l}</span></button>`).join('');
+  const keepHL=$('tabhl')||Object.assign(document.createElement('span'),{id:'tabhl'});
+  tb.innerHTML=TABS.map(([id,l,ic])=>`<button class="tab press${active===id?' on':''}" data-t="${id}"${active===id?' aria-current="page"':''}>${IC[ic](24)}<span class="lb">${l}</span></button>`).join('');
+  tb.prepend(keepHL);
   tb.querySelectorAll('.tab').forEach(b=>b.onclick=()=>go(b.dataset.t));
   const on=tb.querySelector('.tab.on'), hl=$('tabhl');
   placeHL();
@@ -1330,6 +1483,10 @@ function paintChrome(){
     `<div class="nav-sect">Archive</div><div class="nav-primary">${sb('l/speeches','Speeches',sfi('speaker_2_fill',18))}${sb('l/letters','Letters',sfi('list_bullet',18))}${sb('l/edits','Edits',sfi('shuffle',17))}</div>`+
     `<div class="nav-tools">${sb('settings','Settings',IC.gear(18),' aria-keyshortcuts="Control+, Meta+," title="Settings (⌘,)"')}</div>`;
   $('topnav').querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>go(b.dataset.t));
+  { const tn=$('topnav'); let pill=window.__sbhl; if(!pill){ pill=document.createElement('span'); pill.id='sbhl'; window.__sbhl=pill; }
+    tn.prepend(pill); const onB=tn.querySelector('button.on:not(.lg)');
+    if(onB&&onB.offsetWidth){ pill.style.opacity=1; pill.style.height=onB.offsetHeight+'px'; pill.style.width=onB.offsetWidth+'px';
+      pill.style.transform=`translate(${onB.offsetLeft}px,${onB.offsetTop}px)`; } else pill.style.opacity=0; }
 }
 
 /* the travelling tab highlight: placed synchronously (layout is sync), and again on resize */
@@ -1337,7 +1494,7 @@ function placeHL(){ const on=document.querySelector('#tabbar .tab.on'), hl=$('ta
   if(!on||!on.offsetWidth){ hl.style.opacity=0; return; } hl.style.opacity=1; hl.style.width=on.offsetWidth+'px'; hl.style.transform=`translateX(${on.offsetLeft-4}px)`; }
 window.addEventListener('resize',placeHL);
 /* ============================== components ============================== */
-const img=(p,cls='')=>`<img src="${P[p.name]}" alt="" loading="lazy"${cls?` class="${cls}"`:''}>`;
+const img=(p,cls='')=>`<img src="${P[p.name]}" alt="" decoding="async"${cls?` class="${cls}"`:''}>`;
 const shead=(t,link)=>`<div class="shead"><h2 class="t-sect">${esc(t)}${link?IC.chev(15):''}</h2>${link?`<button class="textbtn t-sub" data-go="${link}">See All</button>`:''}</div>`;
 const tile=p=>`<button class="tile press" data-p="${p.slug}" style="${tone(p)}"><span class="art toned">${p.episodes.some(e=>e.date>='2026-01-01')?'<span class="badge">NEW</span>':''}${img(p)}</span>
   <span class="tt t-foot trunc">${esc(p.shortName)}</span><span class="t-foot c2 trunc" style="display:block">${esc(meta(p).sub)}</span></button>`;
@@ -1350,7 +1507,7 @@ function cover(p,k,e,i,{cls=''}={}){
   const isCur=cur&&cur.p===p&&cur.k===k&&cur.i===i, dn=done(p,e), ps=pos(p,e), st=ps>60&&!dn;
   const title=(e.book&&e.book.trim())||rowTitle(p,e);
   const [jacket,ink]=JACKETS[objectSeed(title+p.name)%JACKETS.length];
-  return `<span class="cover${isCur?' cur':''} ${cls}" style="--jacket:${jacket};--ink:${ink}"><img class="cimg" src="${P[p.name]}" alt="" loading="lazy"><span class="no">The Greats · ${e.n?'No. '+e.n:KLABEL[k]}</span>
+  return `<span class="cover${isCur?' cur':''} ${cls}" style="--jacket:${jacket};--ink:${ink}"><img class="cimg" src="${P[p.name]}" alt="" decoding="async"><span class="no">The Greats · ${e.n?'No. '+e.n:KLABEL[k]}</span>
     <span class="ti">${esc(title)}</span><span class="mark" aria-hidden="true">${esc(p.shortName[0]||'G')}</span><span class="au">${esc((e.author||'').trim()||p.shortName)}</span>
     ${dn?`<span class="dn">${IC.check(11)}</span>`:''}${st?`<span class="pr"><i style="width:${Math.min(99,100*ps/(e.sec||1))}%"></i></span>`:''}</span>`;
 }
@@ -1360,7 +1517,7 @@ function artifactVisual(p,k,e,i){
   const title=rowTitle(p,e), date=e.date?mon(e.date):'Archive', seed=objectSeed(title+p.name);
   if(k==='bio') return cover(p,k,e,i);
   /* speech, letter, edit: the speaker's portrait is the artwork; the kind is a small glass label */
-  return `<span class="archive-object art-obj"><img src="${P[p.name]}" alt="" loading="lazy"><span class="ak">${({speeches:'Speech',letters:'Letter',edits:'Edit'})[k]||esc(KLABEL[k])}</span><span class="object-title">${esc(title)}</span></span>`;
+  return `<span class="archive-object art-obj"><img src="${P[p.name]}" alt="" decoding="async"><span class="ak">${({speeches:'Speech',letters:'Letter',edits:'Edit'})[k]||esc(KLABEL[k])}</span><span class="object-title">${esc(title)}</span></span>`;
 }
 const artifactCard=(p,k,e,i)=>`<button class="artifact-card press" data-ep="${p.slug}|${k}|${i}"><span class="object-stage">${artifactVisual(p,k,e,i)}</span>
   <span><span class="t-head clamp2" style="display:block">${esc(rowTitle(p,e))}</span><span class="t-foot c2" style="display:block;margin-top:3px">${esc(p.shortName)} · ${fmtDur(e.sec)}</span></span></button>`;
@@ -1596,11 +1753,11 @@ function bind(el,r){
   el.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>openPerson(b.dataset.p,b));
   el.querySelectorAll('[data-favp]').forEach(b=>b.onclick=()=>{ const p=BYSLUG[b.dataset.favp]; if(!p) return; toggleFav(p.name);
     const on=favs.includes(p.name); b.innerHTML=IC.star(18,on); b.setAttribute('aria-pressed',String(on)); b.setAttribute('aria-label',`${on?'Remove '+p.shortName+' from':'Add '+p.shortName+' to'} Favourites`); });
-  el.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  el.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ pendingPush=true; go(b.dataset.go); });
   el.querySelectorAll('[data-ep]').forEach(b=>b.onclick=()=>{ npFrom=b.querySelector('.cover,.lead,img'); const [s,k,i]=b.dataset.ep.split('|'); const p=BYSLUG[s];
     if(cur&&cur.p===p&&cur.k===k&&cur.i===+i){ toggle(); return; } playEp(p,+i,k); openNP(); });
-  el.querySelectorAll('[data-fil]').forEach(b=>b.onclick=()=>{ figFilter=b.dataset.fil; render('figures','none'); });
-  el.querySelectorAll('[data-hfil]').forEach(b=>b.onclick=()=>{ historyFilter=b.dataset.hfil; render('history','none'); });
+  el.querySelectorAll('[data-fil]').forEach(b=>b.onclick=()=>{ figFilter=b.dataset.fil; morph('figures'); });
+  el.querySelectorAll('[data-hfil]').forEach(b=>b.onclick=()=>{ historyFilter=b.dataset.hfil; morph('history'); });
   el.querySelectorAll('[data-hmore]').forEach(b=>b.onclick=()=>openHistoryMenu(b.dataset.hmore));
   el.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>act(b.dataset.a,r));
   const q=el.querySelector('#q'); if(q){ q.oninput=()=>{ searchQuery=q.value; $('qres').innerHTML=searchResults(searchQuery); $('cats').style.display=searchQuery.trim()?'none':''; bind($('qres'),r); };
@@ -1610,13 +1767,13 @@ function bind(el,r){
 function act(a,r){
   const p=r.startsWith('p/')?BYSLUG[r.slice(2)]:null;
   if(a==='back') back();
-  else if(a==='fav'&&p){ toggleFav(p.name); render(r,'none'); }
+  else if(a==='fav'&&p){ toggleFav(p.name); morph(r); }
   else if(a==='about'&&p) openAbout(p);
   else if(a==='play'&&p){ playEp(p,resumeIndex(p),'bio'); openNP(); }
   else if(a==='shuffle'&&p){ shuffleOn=true; playEp(p,~~(Math.random()*p.episodes.length),'bio'); openNP(); }
-  else if(a==='speed'){ const o=[1,1.25,1.5,1.75,2]; const n=o[(o.indexOf(store.get('speed',1))+1)%o.length]; store.set('speed',n); audio.playbackRate=n; paintNP(); render(r,'none'); }
-  else if(a==='sleep'){ cycleSleep(); render(r,'none'); }
-  else if(a==='theme'){ const o=['system','light','dark']; store.set('theme',o[(o.indexOf(store.get('theme','system'))+1)%3]); applyTheme(); render(r,'none'); }
+  else if(a==='speed'){ const o=[1,1.25,1.5,1.75,2]; const n=o[(o.indexOf(store.get('speed',1))+1)%o.length]; store.set('speed',n); audio.playbackRate=n; paintNP(); morph(r); }
+  else if(a==='sleep'){ cycleSleep(); morph(r); }
+  else if(a==='theme'){ const o=['system','light','dark']; store.set('theme',o[(o.indexOf(store.get('theme','system'))+1)%3]); const sw=()=>{ applyTheme(); morph(r); }; if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches){ document.documentElement.classList.add('vt-theme'); const t=document.startViewTransition(sw); t.finished.finally(()=>document.documentElement.classList.remove('vt-theme')); } else sw(); }
   else if(a==='history-clear') clearHistoryTimeline();
   else if(a==='reset') confirmResetListeningData();
   else if(a==='favs') go('l/favs');
@@ -1644,16 +1801,36 @@ const cur_t=el=>{ const m=new DOMMatrix(getComputedStyle(el).transform); return 
 const setAppInert=on=>['view','navbar','topnav','dock'].forEach(id=>$(id).inert=on);
 function slide(el,show){ if(show) el.classList.add('show');
   const from=`translateY(${show?(el.getBoundingClientRect().height? cur_t(el):0)+'px':cur_t(el)+'px'})`;
-  return anim(el,[{transform:show?'translateY(105%)':from},{transform:show?'translateY(0%)':'translateY(105%)'}],show?533:417,show?EASE.sheet():EASE.push())
+  presentBehind(show);
+  return anim(el,[{transform:show?'translateY(105%)':from},{transform:show?'translateY(0%)':'translateY(105%)'}],MODAL.dur,MODAL.ease)
     .then(()=>{ if(!show) el.classList.remove('show'); }); }
 let sheetReturnFocus=null;
+/* ===================== overlays: Ionic ion-modal (the library itself) =====================
+   Now Playing is an iOS card modal (presentingElement = the app, swipe down to close);
+   sheets are iOS sheet modals with a grabber (breakpoints 0 / .6 / 1). Ionic runs the motion,
+   the backdrop, swipe-to-close and focus handling. The app's nodes are moved in and back out. */
+async function presentModal(node,{cls='',sheet=false,onGone}={}){
+  await customElements.whenDefined('ion-modal');
+  const m=document.createElement('ion-modal'); m.className='greats-modal '+cls;
+  /* phones: iOS page-sheet card (the app recedes behind it); breakpoint sheets need ion-content and recursed here */
+  if(innerWidth<768) m.presentingElement=navEl();
+  const wrap=document.createElement('div'); wrap.className='ion-page modal-page';
+  const home=node.parentNode, next=node.nextSibling; wrap.appendChild(node); m.appendChild(wrap); document.body.appendChild(m);
+  document.body.classList.add('modal-open');
+  m.addEventListener('ionModalWillDismiss',()=>{ if(document.querySelectorAll('ion-modal.show-modal').length<=1) document.body.classList.remove('modal-open'); },{once:true});
+  m.addEventListener('ionModalDidDismiss',()=>{ try{ if(next&&next.parentNode===home) home.insertBefore(node,next); else home.appendChild(node); }catch(e){ home.appendChild(node); }
+    onGone&&onGone(); requestAnimationFrame(()=>m.isConnected&&m.remove()); },{once:true});
+  await m.present(); return m;
+}
+let sheetModal=null, npModal=null;
 function openSheet(title,html){ const sheet=$('sheet'); sheetReturnFocus=document.activeElement; $('sht').textContent=title; $('shb').innerHTML=html;
-  if(document.body.classList.contains('np-open')) $('np').inert=true; else setAppInert(true);
-  sheet.setAttribute('aria-hidden','false'); $('scrim').classList.add('on'); slide(sheet,true).then(()=>$('shx').focus()); }
-function closeSheet(){ const sheet=$('sheet'); $('scrim').classList.remove('on'); return slide(sheet,false).then(()=>{ sheet.setAttribute('aria-hidden','true');
-  if(document.body.classList.contains('np-open')) $('np').inert=false; else setAppInert(false);
-  if(sheetReturnFocus?.isConnected) sheetReturnFocus.focus(); sheetReturnFocus=null; }); }
-$('shx').innerHTML=IC.x(15); $('shx').onclick=closeSheet; $('scrim').onclick=()=>{ closeSheet(); };
+  sheet.setAttribute('aria-hidden','false'); sheet.classList.add('show');
+  const go=()=>presentModal(sheet,{cls:'sheet-modal',sheet:true,onGone:()=>{ sheet.classList.remove('show'); sheet.setAttribute('aria-hidden','true'); sheetModal=null;
+    if(sheetReturnFocus?.isConnected) sheetReturnFocus.focus(); sheetReturnFocus=null; }}).then(m=>{ sheetModal=m; $('shx').focus(); });
+  return sheetModal?sheetModal.dismiss().then(()=>new Promise(r=>setTimeout(r,0))).then(go):go(); }
+function closeSheet(){ if(!sheetModal) return Promise.resolve(); const m=sheetModal; return new Promise(res=>{ m.addEventListener('ionModalDidDismiss',()=>setTimeout(res,0),{once:true}); m.dismiss(); }); }
+
+$('shx').innerHTML=IC.x(15); $('shx').onclick=closeSheet;
 function openAbout(p){ const m=meta(p);
   openSheet(p.shortName,`<div style="display:flex;gap:14px;align-items:center"><img src="${P[p.name]}" style="width:76px;height:76px;border-radius:38px;object-fit:cover;object-position:top"><div><div class="t-head">${esc(m.sub)}</div><div class="t-foot c2">${p.episodes.length} books · ${hours(p)} hours</div></div></div>
   <p class="t-body" style="white-space:pre-line;margin-top:18px;color:var(--text2)">${esc(m.bio)}</p>`); }
@@ -1665,7 +1842,7 @@ function confirmResetListeningData(){
     <div class="sheet-actions"><button class="btn btn-danger press" id="confirm-clear">Reset Listening Data</button><button class="btn btn-tinted press" id="cancel-clear">Cancel</button></div>`);
   $('cancel-clear').onclick=closeSheet;
   $('confirm-clear').onclick=()=>{ Object.keys(localStorage).filter(k=>/^fs\.(pos|done|t)\./.test(k)).forEach(k=>localStorage.removeItem(k));
-    closeSheet().then(()=>{ toast('Listening data reset'); render(route,'none'); }); };
+    closeSheet().then(()=>{ toast('Listening data reset'); morph(route); }); };
 }
 
 function historyEntry(token){
@@ -1673,7 +1850,7 @@ function historyEntry(token){
   return p&&e?{p,k,i,e}:null;
 }
 function updateHistory(mutator){
-  const paint=()=>{ mutator(); if(route==='history') render('history','none'); else if(route==='library') render('library','none'); };
+  const paint=()=>{ mutator(); if(route==='history'||route==='library') morph(route); };
   if(document.startViewTransition&&!document.hidden&&!matchMedia('(prefers-reduced-motion: reduce)').matches){ const t=document.startViewTransition(paint); t.ready.catch(()=>{}); t.finished.catch(()=>{}); }
   else paint();
 }
@@ -1769,16 +1946,12 @@ function flipArt(fromEl){ const art=document.querySelector('#np .art'); if(!from
   const sx=a.width/b.width, sy=a.height/b.height, dx=a.left-b.left, dy=a.top-b.top;
   art.style.transformOrigin='0 0';
   anim(art,[{transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`,borderRadius:'8px'},{transform:'translate(0,0) scale(1,1)',borderRadius:'18px'}],533,EASE.sheet()); }
-function openNP(){ const np=$('np'); if(cur) ground(cur.p); npReturnFocus=document.activeElement; setAppInert(true); np.setAttribute('aria-hidden','false'); np.classList.add('show'); document.body.classList.add('np-open');
-  const from=npFrom||document.querySelector('#mini .art'); npFrom=null;
-  /* measure the art's resting rect first, then start sheet + art together */
-  np.style.transform='translateY(0%)'; const art=document.querySelector('#np .art'); const restT=art.getBoundingClientRect();
-  $('npclose').focus({preventScroll:true}); np.style.transform=''; anim(np,[{transform:'translateY(102%)'},{transform:'translateY(0%)'}],533,EASE.sheet());
-  if(from){ const a=from.getBoundingClientRect(); if(a.width){ const sx=a.width/restT.width, sy=a.height/restT.height;
-    art.style.transformOrigin='0 0'; anim(art,[{transform:`translate(${a.left-restT.left}px,${a.top-restT.top}px) scale(${sx},${sy})`,borderRadius:'8px'},{transform:'none',borderRadius:'18px'}],533,EASE.sheet()); } } }
-function closeNP(){ const np=$('np'); ground(route.startsWith('p/')?BYSLUG[route.slice(2)]:route==='home'?featured():null); document.body.classList.remove('np-open');
-  const y=cur_t(np); anim(np,[{transform:`translateY(${y}px)`},{transform:'translateY(102%)'}],417,EASE.push()).then(()=>{ np.classList.remove('show'); np.style.transform='translateY(102%)';
-    np.setAttribute('aria-hidden','true'); setAppInert(false); if(npReturnFocus?.isConnected) npReturnFocus.focus(); npReturnFocus=null; }); }
+function openNP(){ if(npModal) return; const np=$('np'); if(cur) ground(cur.p); npReturnFocus=document.activeElement; np.setAttribute('aria-hidden','false'); np.classList.add('show'); document.body.classList.add('np-open');
+  npFrom=null; np.style.transform='';
+  presentModal(np,{cls:'np-modal',onGone:()=>{ ground(route.startsWith('p/')?BYSLUG[route.slice(2)]:route==='home'?featured():null); document.body.classList.remove('np-open');
+    np.classList.remove('show'); np.setAttribute('aria-hidden','true'); npModal=null; if(npReturnFocus?.isConnected) npReturnFocus.focus(); npReturnFocus=null; }})
+    .then(m=>{ npModal=m; $('npclose').focus({preventScroll:true}); }); }
+function closeNP(){ if(npModal) npModal.dismiss(); }
 function cycleSleep(){ const o=[0,15,30,60]; sleepMin=o[(o.indexOf(sleepMin)+1)%o.length]; sleepUntil=sleepMin?Date.now()+sleepMin*6e4:null; paintNP(); toast(sleepMin?`Sleep in ${sleepMin} minutes`:'Sleep timer off'); }
 $('npclose').onclick=closeNP;
 $('npplay').onclick=toggle; $('nprw').onclick=()=>audio.currentTime=Math.max(0,audio.currentTime-30); $('npff').onclick=()=>audio.currentTime+=15;
@@ -1799,16 +1972,7 @@ $('mini').onclick=ev=>{ const a=ev.target.closest('[data-a]')?.dataset.a;
     const ep=curEp(), d=isFinite(audio.duration)&&audio.duration?audio.duration:(ep?.sec||1);
     audio.currentTime=e.key==='Home'?0:e.key==='End'?d:Math.min(d,Math.max(0,audio.currentTime+(e.key==='ArrowLeft'?-10:10))); paintTime(); });
 })();
-/* drag the now-playing sheet down: tracks the finger, springs home or dismisses on velocity */
-(()=>{ const np=$('np'); let y0=null,t0=0,last=0,lt=0,v=0;
-  np.addEventListener('pointerdown',e=>{ if(innerWidth>=900||(e.target.closest('.scrub,button')&&!e.target.closest('#npclose'))) return; y0=e.clientY; t0=lt=performance.now(); last=y0; v=0; });
-  window.addEventListener('pointermove',e=>{ if(y0===null) return; const dy=Math.max(0,e.clientY-y0); const now=performance.now(); v=(e.clientY-last)/Math.max(1,now-lt)*1000; last=e.clientY; lt=now;
-    np.style.transform=`translateY(${dy}px)`; });
-  window.addEventListener('pointerup',e=>{ if(y0===null) return; const dy=e.clientY-y0; y0=null;
-    /* Apple's momentum projection: v/1000 * d/(1-d), d=0.998 */
-    const proj=dy+(v/1000)*.998/(1-.998);
-    if(proj>innerHeight*.35) closeNP(); else { const yy=cur_t(np); np.style.transform=''; anim(np,[{transform:`translateY(${yy}px)`},{transform:'translateY(0%)'}],417,EASE.push()); } });
-})();
+/* drag-to-dismiss for Now Playing and sheets is Ionic's swipe-to-close (ion-modal) */
 document.addEventListener('keydown',e=>{ const modal=$('sheet').classList.contains('show')?$('sheet'):document.body.classList.contains('np-open')?$('np'):null;
   if(e.key==='Tab'&&modal){ const f=[...modal.querySelectorAll('button,[href],input,[tabindex]:not([tabindex="-1"])')].filter(x=>!x.disabled&&x.offsetParent!==null);
     if(f.length){ const first=f[0],last=f[f.length-1]; if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus(); } else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus(); } } }
@@ -1829,7 +1993,7 @@ Promise.all([requiredJSON('episodes.json?v='+BUILD),requiredJSON('portraits.json
   DATA.people.forEach(p=>{ p.slug=slug(p.name); p.shortName=p.name.split(' - ')[0]; p.media=(md.people||{})[p.name]||{}; BYSLUG[p.slug]=p; });
   const last=store.get('last',null);
   if(last&&BYSLUG[last.slug]&&items(BYSLUG[last.slug],last.k||'bio')[last.i]){ cur={p:BYSLUG[last.slug],i:last.i,k:last.k||'bio'}; audio.src=curEp().url; document.body.classList.add('has-track'); paintNP(); }
-  const r=parse(location.hash); render(r,'none');
+  const r=parse(location.hash); navStack=[r]; customElements.whenDefined('ion-nav').then(()=>navEl().componentOnReady()).then(()=>{ navEl().innerHTML=''; render(r,'none'); });
   const st=new URLSearchParams(location.search).get('state');
   if(st==='player'){ if(!cur){ cur={p:BYSLUG['steve-jobs'],i:0,k:'bio'}; document.body.classList.add('has-track'); } paintNP(); openNP(); }
 }).catch(()=>{ const v=$('view'); v.setAttribute('aria-busy','false'); v.innerHTML=`<div class="page"><div class="load-state" role="alert"><h1 class="t-page">The archive couldn’t load.</h1><p class="t-body c2">Check your connection, then try again. Your saved listening state is untouched.</p><button class="btn btn-primary press" id="retry-load">Try Again</button></div></div>`;

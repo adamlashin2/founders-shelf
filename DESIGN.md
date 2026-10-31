@@ -115,6 +115,34 @@ The live, rendered version is in the app: **Library → ⚙ → Design system** 
 | Runtime | Web Animations API plus View Transitions (card → page zoom, push / pop), compositor-driven and skipped for reduced motion |
 | Frontier object pass | Pinterest brief `The Greats — tactile archive pass` (`f1a2ef57-0b39-44b9-9067-8557d6d9fa26`); references listed above were interpreted as material and hierarchy cues, not copied layouts |
 
+## Navigation motion (2026-10-31) — supersedes the View Transitions table below
+
+Ported from Ionic Framework's iOS transition and swipe-back gesture (github.com/ionic-team/ionic-framework,
+`core/src/utils/transition/ios.transition.ts`, `core/src/utils/gesture/swipe-back.ts`), values copied from source:
+540 ms, `cubic-bezier(0.32,0.72,0,1)`; entering page 99.5% → 0; leaving page 0 → −33% and opacity 1 → 0.8; a cover 0 → 0.1
+over the page underneath and an edge shadow 0.03 → 0.7; back is the mirror. Swipe from the left 50px after 10px; completes on
+velocity > 0.2 px/ms or past half the width, else snaps back; remaining time = distance ÷ velocity, capped at 540.
+Live pages move (no snapshots, no crossfades, no capture stall); tab and sidebar switches are instant; card → figure page
+flies the real portrait (transform only) while the page rises in behind it; back flies it into its card.
+Measured with requestAnimationFrame under GPU Chromium: push and back hold 60fps (worst frame 18ms; the old snapshot engine
+had 33–67ms frames and a 470ms freeze opening lists). Remaining long frames are page-build cost at the moment of the tap.
+
+**In-app motion (2026-10-31)**, all values from Ionic source (`segment-button.ios.vars.scss`, `modal/animations/ios.*`,
+`toast/animations/ios.*`, `header.utils.ts`, `swipe-to-close.ts`):
+- State changes (filters, favourites, settings rows, history filters, reset) morph in place: scroll kept, moved items FLIP
+  (400ms, nav curve), new items rise in with a short stagger. No page rebuild snap.
+- Text tabs: a selection capsule slides like the segment indicator, transform 260ms cubic-bezier(0.4,0,0.2,1); label colour 100ms linear.
+- Tab lens and desktop sidebar pill persist across repaints and slide (400ms cubic-bezier(0.32,0.72,0,1)).
+- Sheets and Now Playing are card modals: 500ms cubic-bezier(0.32,0.72,0,1) in and out; on phones the page behind drops by
+  max(30px, safe-area-top) and scales to 0.915 from the top centre, 10px top radius, contrast(.85), over black.
+- Toast: in 400ms cubic-bezier(.155,1.105,.295,1.12) (slight overshoot), out 300ms cubic-bezier(.36,.66,.04,1).
+- Large title hands off to the inline title on scroll (navbar opacity and title offset follow the scroll position).
+- Appearance change crossfades the whole UI (320ms).
+- Links inside page content push (even to a tab destination); back pops to where you came from; tab bar and sidebar are instant.
+
+All glass is frosted (2026-10-31): fill rgba(40,40,44,.52) / light rgba(250,250,252,.72) over blur 30 + saturate; floating bars
+blur 34; rim kept.
+
 ## Motion (measured, 2026-10-30)
 
 Curves are the ones measured frame-by-frame from Apple screen recordings earlier in this repo (commit `8d7f1ed`):
