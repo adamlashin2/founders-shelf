@@ -71,6 +71,6 @@ for person, page in WIKI.items():
         missing.append(person)
     time.sleep(0.5)
 
-with open("app/portraits.json", "w", encoding="utf-8") as f:
+with open("app/data/portraits.json", "w", encoding="utf-8") as f:
     json.dump(manifest, f, indent=1)
 print(f"\n{len(manifest)} portraits, missing: {missing}")

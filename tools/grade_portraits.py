@@ -13,7 +13,7 @@ import json, math, shutil, sys
 from pathlib import Path
 from PIL import Image, ImageOps
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent  # repo root (scripts live in tools/)
 SRC = ROOT / "sources" / "portraits"
 OUT = ROOT / "app" / "assets" / "people"
 PICKS = ROOT / "portrait_picks.json"
@@ -52,7 +52,7 @@ def grade(src, dst, top=0.06):
 
 def main():
     SRC.mkdir(parents=True, exist_ok=True)
-    portraits = json.loads((ROOT / "app" / "portraits.json").read_text(encoding="utf8"))
+    portraits = json.loads((ROOT / "app" / "data" / "portraits.json").read_text(encoding="utf8"))
     picks = json.loads(PICKS.read_text(encoding="utf8")) if PICKS.exists() else {}
     for name, rel in portraits.items():
         fname = Path(rel).name

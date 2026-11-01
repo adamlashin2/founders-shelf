@@ -22,7 +22,7 @@ def ep_title(person_name, short_name, title):
             return m.group(1)
     return title
 
-d = json.load(io.open("app/episodes.json", encoding="utf-8"))
+d = json.load(io.open("app/data/episodes.json", encoding="utf-8"))
 only = sys.argv[1] if len(sys.argv) > 1 else None
 for p in d["people"]:
     if only and only.lower() not in p["name"].lower():

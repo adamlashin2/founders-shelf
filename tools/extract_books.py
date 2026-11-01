@@ -97,7 +97,7 @@ def find_book(desc):
 
 if __name__ == "__main__":
     feed = fetch()
-    data = json.load(io.open("app/episodes.json", encoding="utf-8"))
+    data = json.load(io.open("app/data/episodes.json", encoding="utf-8"))
     hit = miss = 0
     misses = []
     for p in data["people"]:
@@ -113,7 +113,7 @@ if __name__ == "__main__":
             if b: hit += 1
             else:
                 miss += 1; misses.append((p["name"], e["n"], src["desc"][:90]))
-    json.dump(data, io.open("app/episodes.json", "w", encoding="utf-8"),
+    json.dump(data, io.open("app/data/episodes.json", "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
     print(f"book found: {hit}   no book: {miss}\n")
     for name, n, d in misses[:40]:

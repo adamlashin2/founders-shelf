@@ -7,7 +7,7 @@ Reads media_sources.json:  { person: { kind: [item, ...] } }   where an item is
   { id, title, sub, text:{...}, voice } a public text, cut between two markers
                                         and narrated with edge-tts
 
-Writes app/media/<person>/<kind>/<id>.mp3 (mono 64 kbps) and app/media.json.
+Writes app/media/<person>/<kind>/<id>.mp3 (mono 64 kbps) and app/data/media.json.
 Already-built files are skipped, so re-running only fetches what is new.
 Every resolved source (video id, channel, title, text url) is recorded next to
 the item so a bad pick is easy to see and swap.
@@ -15,10 +15,10 @@ the item so a bad pick is easy to see and swap.
 import asyncio, html, io, json, re, subprocess, sys, urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent  # repo root (scripts live in tools/)
 APP = ROOT / "app"
 SRC = ROOT / "media_sources.json"
-OUT = APP / "media.json"
+OUT = APP / "data" / "media.json"
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126 Safari/537.36"}
 SEC_UA = {"User-Agent": "founders-shelf personal research mahmoud.lashin00@gmail.com"}
 LIMITS = {"edits": (30, 420), "speeches": (60, 5400)}   # seconds, for search picks

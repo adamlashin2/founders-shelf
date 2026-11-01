@@ -112,45 +112,33 @@ The live, rendered version is in the app: **Library → ⚙ → Design system** 
 | Colour, radii, component sizes | Measured by script from real iOS 26 / iPadOS 26 Apple Music screenshots on Pinterest: Home `739434832610073940`, artist page `1091911872195345882`, iPad Replay `898890406989751969`, iPhone Replay `1046946244644498781` |
 | Library / Settings / Search patterns | Apple Music Library `769834130101817658`, Apple Games Library `832954893623780849`, Apple Music Search `4591138481938600000` |
 | Motion | Apple *Designing Fluid Interfaces*: default spring damping 1.0 / response 0.4 s; sheets 0.8 / 0.3 s; momentum projection `v/1000·d/(1−d)`, d = 0.998 |
-| Runtime | Web Animations API plus View Transitions (card → page zoom, push / pop), compositor-driven and skipped for reduced motion |
+| Runtime | Ionic's native iOS navigation and modal transitions, plus short CSS state transitions; all nonessential motion is skipped for reduced motion |
 | Frontier object pass | Pinterest brief `The Greats — tactile archive pass` (`f1a2ef57-0b39-44b9-9067-8557d6d9fa26`); references listed above were interpreted as material and hierarchy cues, not copied layouts |
 
 ## Screen A → screen B (2026-10-31) — current
-Navigation runs on @ionic/core 9.0.10 (`ion-nav`, `ion-modal`), the library itself. Cards zoom into their figure page:
-the whole page grows from the card's rect and shape and the card hides while it is in flight; back shrinks it into the same
-card, found again by the figure's id (Apple WWDC24 10145: "the cell you tap morphs into the incoming view"). Curve: Apple's
-default spring from WWDC23 10158 — bounce 0, stiffness (2π/0.5)², damping 4π/0.5 — sampled into CSS `linear()`: 98.6% at
-0.5 s, settles at 735 ms. Rows and lists use Ionic's iOS slide. Ionic's edge swipe scrubs either one. Now Playing and sheets
-are `ion-modal` cards (app recedes to 0.915). Ionic needs `--ion-safe-area-*` defined and `ion-modal .ion-page{height:100%}`
-when core.css isn't loaded; custom scrollers carry `.ion-content-scroll-host`.
+Navigation runs on @ionic/core 9.0.10 (`ion-nav`, `ion-modal`). Figure drill-downs use Ionic's native iOS push/pop and
+interactive edge swipe. Top-level tabs replace the root without a page transition, while the persistent tab or sidebar
+indicator moves for continuity. Now Playing and sheets use `ion-modal`; phone information sheets open at a medium detent
+and remain draggable, and desktop sheets use a compact centred panel.
 
 ## Navigation motion (2026-10-31) — supersedes the View Transitions table below
 
-Ported from Ionic Framework's iOS transition and swipe-back gesture (github.com/ionic-team/ionic-framework,
-`core/src/utils/transition/ios.transition.ts`, `core/src/utils/gesture/swipe-back.ts`), values copied from source:
-540 ms, `cubic-bezier(0.32,0.72,0,1)`; entering page 99.5% → 0; leaving page 0 → −33% and opacity 1 → 0.8; a cover 0 → 0.1
-over the page underneath and an edge shadow 0.03 → 0.7; back is the mirror. Swipe from the left 50px after 10px; completes on
-velocity > 0.2 px/ms or past half the width, else snaps back; remaining time = distance ÷ velocity, capped at 540.
-Live pages move (no snapshots, no crossfades, no capture stall); tab and sidebar switches are instant; card → figure page
-flies the real portrait (transform only) while the page rises in behind it; back flies it into its card.
-Measured with requestAnimationFrame under GPU Chromium: push and back hold 60fps (worst frame 18ms; the old snapshot engine
-had 33–67ms frames and a 470ms freeze opening lists). Remaining long frames are page-build cost at the moment of the tap.
+The push/pop duration and curve are owned by Ionic so the transition remains interruptible and swipe-back stays native.
+Live pages move with no snapshots or capture stalls. Root state changes use a 160 ms opacity settle; tab and sidebar
+indicators use a 240 ms non-bouncing curve. Decorative looping animation is not used.
 
 **In-app motion (2026-10-31)**, all values from Ionic source (`segment-button.ios.vars.scss`, `modal/animations/ios.*`,
 `toast/animations/ios.*`, `header.utils.ts`, `swipe-to-close.ts`):
-- State changes (filters, favourites, settings rows, history filters, reset) morph in place: scroll kept, moved items FLIP
-  (400ms, nav curve), new items rise in with a short stagger. No page rebuild snap.
-- Text tabs: a selection capsule slides like the segment indicator, transform 260ms cubic-bezier(0.4,0,0.2,1); label colour 100ms linear.
-- Tab lens and desktop sidebar pill persist across repaints and slide (400ms cubic-bezier(0.32,0.72,0,1)).
-- Sheets and Now Playing are card modals: 500ms cubic-bezier(0.32,0.72,0,1) in and out; on phones the page behind drops by
-  max(30px, safe-area-top) and scales to 0.915 from the top centre, 10px top radius, contrast(.85), over black.
-- Toast: in 400ms cubic-bezier(.155,1.105,.295,1.12) (slight overshoot), out 300ms cubic-bezier(.36,.66,.04,1).
+- State changes (filters, favourites, settings rows, history filters, reset) preserve scroll and settle with a 160 ms opacity transition.
+- Tab lens and desktop sidebar pill persist across repaints and slide in 240 ms without bounce.
+- Sheets and Now Playing use Ionic's interruptible iOS modal motion; phone information sheets use medium and large detents.
+- Toast visibility settles in 240 ms without overshoot.
 - Large title hands off to the inline title on scroll (navbar opacity and title offset follow the scroll position).
-- Appearance change crossfades the whole UI (320ms).
-- Links inside page content push (even to a tab destination); back pops to where you came from; tab bar and sidebar are instant.
+- Appearance changes repaint directly so theme changes cannot trigger a full-page capture stall.
+- `prefers-reduced-motion` disables nonessential transitions; `prefers-reduced-transparency` replaces blur with opaque surfaces.
 
-All glass is frosted (2026-10-31): fill rgba(40,40,44,.52) / light rgba(250,250,252,.72) over blur 30 + saturate; floating bars
-blur 34; rim kept.
+Liquid Glass is restricted to navigation, controls, compact overlays, and floating bars. The regular surface uses a 28 px
+backdrop blur with restrained saturation and a translucent dark or light fill; text-heavy sheets remain conventional material.
 
 ## Motion (measured, 2026-10-30)
 

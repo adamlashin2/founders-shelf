@@ -6,12 +6,12 @@ Pinterest references that define the direction (brief 26bfecc6), as hue +
 saturation. The app renders each at its own lightness ramp, so only hue and
 saturation are stored. Each shelf owns a subset; figures inside a shelf take
 turns through it so neighbours never share a ground.
-Writes app/palette.json: { name: [hue, sat] }.
+Writes app/data/palette.json: { name: [hue, sat] }.
 """
 import json, re
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent  # repo root (scripts live in tools/)
 G = {  # pin -> measured border median
     "ember":   (16, .47),   # 60  #753e2a
     "umber":   (19, .29),   # 65  #412d24
@@ -32,10 +32,10 @@ SHELF = {"business": ["ember", "azure", "bronze", "sage", "crimson", "sand"],
 
 src = (ROOT / "app/index.html").read_text(encoding="utf8")
 cats = dict(re.findall(r'"([^"]+)":\{cat:"(\w+)"', src))
-order = json.loads((ROOT / "app/episodes.json").read_text(encoding="utf8"))["people"]
+order = json.loads((ROOT / "app/data/episodes.json").read_text(encoding="utf8"))["people"]
 seen, out = {}, {}
 for p in order:
     c = cats.get(p["name"], "business"); n = seen.get(c, 0); seen[c] = n + 1
     g = SHELF[c][n % len(SHELF[c])]; out[p["name"]] = list(G[g]) + [g]
     print(f'{p["name"]:32s} {c:9s} {g}')
-(ROOT / "app/palette.json").write_text(json.dumps(out, indent=1), encoding="utf8")
+(ROOT / "app/data/palette.json").write_text(json.dumps(out, indent=1), encoding="utf8")

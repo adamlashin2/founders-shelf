@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Parse the official Founders feed into app/episodes.json for the shelf app."""
+"""Parse the official Founders feed into app/data/episodes.json for the shelf app."""
 import json, re, sys, urllib.request, xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 
@@ -109,9 +109,9 @@ if __name__ == "__main__":
     data = build(eps)
     n_eps = sum(len(p["episodes"]) for p in data["people"])
     hrs = sum(p["hours"] for p in data["people"])
-    with open("app/episodes.json", "w", encoding="utf-8") as f:
+    with open("app/data/episodes.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
-    print(f"{len(data['people'])} people, {n_eps} episodes, {hrs:.0f}h -> app/episodes.json")
+    print(f"{len(data['people'])} people, {n_eps} episodes, {hrs:.0f}h -> app/data/episodes.json")
     # sample artwork URLs so we can verify they are real per-episode art
     for p in data["people"][:3]:
         e = p["episodes"][0]
