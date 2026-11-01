@@ -28,11 +28,10 @@ document.documentElement.classList.toggle('light',light);})();</script>
    COLOUR measured from real iOS 26 / iPadOS 26 Apple Music screenshots
           (Pinterest pins 739434832610073940, 1091911872195345882,
           898890406989751969, 1046946244644498781).
-   MOTION Apple "Designing Fluid Interfaces": critically damped default
-          (damping 1.0, response 0.4), sheets (0.8, 0.3). Springs run on Motion
-          (motion@11.11.13); page morphs on the View Transitions API.
+   MOTION Ionic's native iOS navigation and sheet transitions. State changes
+          use brief, interruptible opacity and indicator motion only.
    ========================================================================== */
-@font-face{font-family:'SF Pro';src:url('assets/fonts/SF-Pro.woff2') format('woff2');font-weight:100 1000;font-display:block}
+@font-face{font-family:'SF Pro';src:url('assets/fonts/SF-Pro.woff2') format('woff2');font-weight:100 1000;font-display:swap}
 @font-face{font-family:'Instrument Serif';src:url('assets/fonts/InstrumentSerif-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:'Instrument Serif';src:url('assets/fonts/InstrumentSerif-Italic.woff2') format('woff2');font-weight:400;font-style:italic;font-display:swap}
 /* the ground hue is a registered property, so moving between figures MORPHS the
@@ -115,7 +114,7 @@ body{background:var(--bg)}          /* flat black ground, as measured */
 body{font-family:var(--f);overscroll-behavior:none;-webkit-font-smoothing:antialiased;overflow:hidden}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 input{font:inherit;color:inherit;outline:none;border:0;background:none}
-img{display:block;-webkit-user-drag:none;user-select:none}
+img{display:block;background:var(--panel2);-webkit-user-drag:none;user-select:none}
 ::-webkit-scrollbar{display:none}
 ::selection{background:rgba(243,237,228,.35)}
 :focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:8px}
@@ -186,7 +185,7 @@ img{display:block;-webkit-user-drag:none;user-select:none}
 .content{min-width:0;overflow-x:clip}
 .wrap{padding:0 var(--m)}
 .bleed{margin:0 calc(-1 * var(--m))}
-.sect{margin-top:30px}
+.sect{margin-top:30px;content-visibility:auto;contain-intrinsic-size:auto 480px}
 .shead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
 .shead h2{display:flex;align-items:center;gap:3px}
 .shead .sfi{color:var(--label2)}
@@ -239,11 +238,11 @@ img{display:block;-webkit-user-drag:none;user-select:none}
 /* large title + collapsing glass nav bar (scroll edge effect) */
 .ltitle{display:flex;align-items:flex-end;justify-content:space-between;padding:calc(var(--safe-t) + 54px) var(--m) 6px}
 .navbar{position:fixed;left:0;right:0;top:0;z-index:30;height:calc(var(--safe-t) + 50px);padding-top:var(--safe-t);
-  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+  display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,visibility 0s linear .18s}
 .navbar::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(0,0,0,.55);
   -webkit-backdrop-filter:blur(20px) saturate(1.8);backdrop-filter:blur(20px) saturate(1.8);
   -webkit-mask:linear-gradient(#000 70%,transparent);mask:linear-gradient(#000 70%,transparent)}
-.navbar.on{opacity:1;pointer-events:auto}
+.navbar.on{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
 .navbar .nb-back{position:absolute;left:10px;top:calc(var(--safe-t) + 3px)}
 .navbar .nb-r{position:absolute;right:10px;top:calc(var(--safe-t) + 3px)}
 
@@ -282,6 +281,7 @@ img{display:block;-webkit-user-drag:none;user-select:none}
 .tile .tt{display:block;margin-top:7px}
 /* portrait card (Figures grid) */
 .pcard{text-align:left;min-width:0}
+.pgrid>.pcard{content-visibility:auto;contain-intrinsic-size:auto 240px}
 .pcard .art{position:relative;display:block;aspect-ratio:3/4;border-radius:12px;overflow:hidden;background:#111}
 .pcard .tt{display:block;margin-top:8px}
 /* wide continue card */
@@ -399,21 +399,17 @@ body.has-track #mini{transform:none;opacity:1;visibility:visible;pointer-events:
   padding:calc(var(--safe-t) + 10px) 26px calc(26px + var(--safe-b));transform:translateY(102%);visibility:hidden}
 #np.show{visibility:visible}
 #np .npbg{position:absolute;inset:-25%;z-index:-1}
-#np .npbg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(80px) brightness(.45) saturate(1.6);
-  animation:drift 22s ease-in-out infinite alternate}
-#np:not(.show) .npbg img{animation-play-state:paused}   /* no background work while the player is closed */
-#np .npbg img+img{animation-duration:31s;animation-direction:alternate-reverse;opacity:.6;mix-blend-mode:screen}
-@keyframes drift{0%{transform:scale(1.1) rotate(0)}50%{transform:scale(1.35) rotate(12deg) translate(4%,-3%)}100%{transform:scale(1.2) rotate(-8deg) translate(-5%,4%)}}
+#np .npbg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(64px) brightness(.38) saturate(1.25);transform:scale(1.18)}
+#np .npbg img+img{display:none}
 #np .grab{width:36px;height:5px;border-radius:3px;background:rgba(255,255,255,.35);margin:0 auto;flex:none}
 #np .artwrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:26px 0}
 #np .art{height:100%;max-height:460px;aspect-ratio:1;max-width:100%;border-radius:24px;overflow:hidden;display:flex;align-items:center;justify-content:center;
   background:radial-gradient(circle at 50% 15%,rgba(255,255,255,.11),transparent 42%),linear-gradient(145deg,rgba(255,255,255,.075),rgba(0,0,0,.18));
-  box-shadow:0 34px 80px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.10);transition:transform .6s var(--spring)}
+  box-shadow:0 34px 80px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.10)}
 #np .art .cover{width:min(52%,220px)}
 #np .art .letter-object{width:min(48%,190px);height:auto;aspect-ratio:3/4}
 #np .art .edit-object{width:min(68%,280px);height:auto;aspect-ratio:1.4}
 #np .art .speech-object{width:min(50%,205px);height:auto;aspect-ratio:.88}
-body:not(.playing) #np .art{transform:scale(.86)}
 #np .trow2{display:flex;align-items:center;gap:12px;flex:none}
 #np .trow2 .mid{flex:1;min-width:0}
 .scrub{position:relative;height:44px;display:flex;align-items:center;touch-action:none;cursor:pointer;flex:none;margin-top:8px}
@@ -439,39 +435,13 @@ body:not(.playing) #np .art{transform:scale(.86)}
 .sheet-actions .btn{width:100%}
 .btn-danger{background:var(--danger);color:#fff}
 .toast{position:fixed;left:50%;top:calc(var(--safe-t) + 12px);z-index:90;transform:translate(-50%,-160%);height:44px;border-radius:22px;
-  padding:0 10px 0 18px;display:flex;align-items:center;gap:12px;transition:transform .5s var(--spring);white-space:nowrap}
-.toast.on{transform:translate(-50%,0)}
+  padding:0 10px 0 18px;display:flex;align-items:center;gap:12px;opacity:0;visibility:hidden;pointer-events:none;
+  transition:transform .24s cubic-bezier(.2,.8,.2,1),opacity .18s ease,visibility 0s linear .24s;white-space:nowrap}
+.toast.on{transform:translate(-50%,0);opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
 .toast button{display:none;min-width:58px;height:34px;padding:0 12px;border-radius:17px;background:rgba(255,255,255,.14);font-size:13px;font-weight:650;color:#fff}
 .toast.has-action button{display:inline-flex;align-items:center;justify-content:center}
 
-/* =============================== MOTION ================================= */
-/* card -> page zoom (iOS 18 zoom transition) on the View Transitions API */
-::view-transition-group(*){animation-duration:var(--dur);animation-timing-function:var(--spring)}
-::view-transition-old(root),::view-transition-new(root){animation-duration:.2s}
-html.vt-push::view-transition-old(root){animation:var(--dur) var(--spring) both vt-out}
-html.vt-push::view-transition-new(root){animation:var(--dur) var(--spring) both vt-in}
-html.vt-pop::view-transition-old(root){animation:var(--dur) var(--spring) both vt-in-r}
-html.vt-pop::view-transition-new(root){animation:var(--dur) var(--spring) both vt-out-r}
-html.vt-tab::view-transition-old(root){animation:.14s ease-out both vt-tab-old}
-html.vt-tab::view-transition-new(root){animation:.22s ease-out both vt-tab-new}
-/* zoom: the portrait and the name morph; the rest of the page fades fast underneath */
-html.vt-zoom::view-transition-group(hero),html.vt-zoom::view-transition-group(heroname){animation-duration:var(--dur);animation-timing-function:var(--spring)}
-::view-transition-old(heroname),::view-transition-new(heroname){height:100%;width:auto;object-fit:none}
-::view-transition-image-pair(hero){isolation:isolate}
-@keyframes vt-in{from{transform:translateX(100%)}}
-@keyframes vt-out{to{transform:translateX(-28%);filter:brightness(.6)}}
-@keyframes vt-in-r{to{transform:translateX(100%)}}
-@keyframes vt-out-r{from{transform:translateX(-28%);filter:brightness(.6)}}
-@keyframes vt-tab-old{to{opacity:0;transform:scale(.994)}}
-@keyframes vt-tab-new{from{opacity:0;transform:scale(1.006)}}
-html.vt-zoom::view-transition-old(root){animation:.18s ease-out both vt-fade}
-html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fadein}
-@keyframes vt-fade{to{opacity:0}} @keyframes vt-fadein{from{opacity:0}}
-::view-transition-old(hero),::view-transition-new(hero){height:100%;object-fit:cover;overflow:hidden}
-::view-transition-group(dock),::view-transition-group(topnav){animation:none}
-#dock{view-transition-name:dock}#topnav{view-transition-name:topnav}
 .rise{}
-@keyframes rise{from{opacity:0;transform:translateY(14px);filter:blur(4px)}}
 
 
 /* =========================== COMPONENTS v4 ===========================
@@ -620,9 +590,7 @@ html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fad
   .pdesk .nm{font-family:'Instrument Serif',Georgia,serif;font-size:88px;line-height:84px;letter-spacing:-.02em}
 }
 .pdesk{display:none}
-.ph>img{view-transition-name:hero}
-.ph .nm{view-transition-name:heroname;width:max-content;max-width:100%}
-@media (min-width:900px){ .ph>img,.ph .nm{view-transition-name:none} .pdesk .card img{view-transition-name:hero} .pdesk .nm{view-transition-name:heroname;width:max-content;max-width:100%} }
+.ph .nm,.pdesk .nm{width:max-content;max-width:100%}
 
 /* =============================== DESKTOP ================================ */
 @media (min-width:900px){
@@ -689,10 +657,6 @@ html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fad
    by script from those images (D:/tmp/oa/ds): flat panels on black, 20pt
    corners, 8pt gaps, 16pt panel padding, two-tone large text, text tabs,
    hairline circle buttons, one white pill. No textures, no rims, no gradients. */
-
-/* floating chrome: quiet frosted panel, hairline instead of a specular rim */
-.glass{background:rgba(28,28,30,.78);box-shadow:inset 0 0 0 1px var(--hair),0 12px 32px rgba(0,0,0,.4)}
-.glass::after{display:none}
 
 /* panels */
 .panel{background:var(--panel);border-radius:var(--r-panel)}
@@ -852,9 +816,9 @@ html.vt-zoom::view-transition-new(root){animation:.24s ease-out .06s both vt-fad
 html.light{color-scheme:light;
   --bg:#f7f7f7;                       /* measured ground                   */
   --label:#000;
-  --label2:#828282;                   /* measured second tone              */
+  --label2:#6e6e73;                   /* accessible secondary label        */
   --label3:rgba(0,0,0,.3);
-  --dim:#828282;
+  --dim:#6e6e73;
   --text2:rgba(0,0,0,.72);
   --panel:#fff;                       /* measured card                     */
   --panel2:#ededed;                   /* measured portrait-card ground     */
@@ -863,7 +827,6 @@ html.light{color-scheme:light;
   --sep:rgba(0,0,0,.07);
   --red:#111; --ivory:#111;
   --fill:rgba(0,0,0,.05); --fill2:rgba(0,0,0,.07); --fill3:rgba(0,0,0,.035)}
-html.light .glass{background:rgba(255,255,255,.82);box-shadow:inset 0 0 0 1px rgba(0,0,0,.05),0 10px 30px rgba(0,0,0,.08)}
 html.light .btn-primary,html.light .btn-red{background:#000;color:#fff}
 html.light .btn-tinted,html.light .chip.on,html.light .intro b,html.light .search input,html.light .grow .ico,html.light .cover,html.light .cover .ti,
 html.light .letter-object,html.light .speech-object,html.light .edit-object,html.light .edit-object .tape-label{color:#000}
@@ -882,14 +845,12 @@ html.light .hist-progress{background:rgba(0,0,0,.08)} html.light .hist-progress 
 html.light .textbtn,html.light .hist-action{color:var(--label2)}
 html.light .badge{background:#000;color:#fff}
 html.light .cp .chip2{background:rgba(0,0,0,.06)}
-html.light #tabbar{background:rgba(255,255,255,.86)}
 html.light #tabhl{background:#ededed}
 html.light .tab.on{color:#000} html.light .tab:not(.on){color:rgba(0,0,0,.42)}
 html.light #tabsearch{color:#000}
 html.light .navbar::before{background:rgba(247,247,247,.8)}
 html.light #topnav button.on{color:#000;background:rgba(0,0,0,.06);box-shadow:none}
 html.light #topnav .lg{color:#000}
-html.light .sheet{background:rgba(255,255,255,.96)}
 html.light .scrim{background:rgba(0,0,0,.2)}
 html.light .loading-shell .skeleton{background:rgba(0,0,0,.06);border-color:transparent}
 html.light .veil img{mix-blend-mode:multiply;opacity:.3}
@@ -901,11 +862,11 @@ html.light ::selection{background:rgba(0,0,0,.12)}
    and 10062799163732573 (iOS 26 Control Centre): fill ~3% white over a heavy
    blur; a hairline rim at ~60% white top-left falling to ~30% at the bottom;
    a second inner hairline at ~19%. No drop shadow on dark; a soft one on light. */
-:root{--lg-fill:rgba(40,40,44,.52);--lg-blur:blur(30px) saturate(1.6);   /* frosted (Adam 2026-10-31): heavy blur + real tint, rim kept */
+:root{--lg-fill:rgba(32,32,35,.56);--lg-blur:blur(28px) saturate(1.45);
   --lg-rim:linear-gradient(150deg,rgba(255,255,255,.62),rgba(255,255,255,.2) 30%,rgba(255,255,255,.07) 55%,rgba(255,255,255,.3));
   --lg-inner:inset 0 1px 1px rgba(255,255,255,.19),inset 0 -1px 1px rgba(255,255,255,.06);
   --lg-drop:0 8px 28px rgba(0,0,0,.28)}
-html.light{--lg-fill:rgba(250,250,252,.72);--lg-blur:blur(30px) saturate(1.8);
+html.light{--lg-fill:rgba(248,248,250,.6);--lg-blur:blur(28px) saturate(1.45);
   --lg-rim:linear-gradient(150deg,rgba(255,255,255,1),rgba(255,255,255,.5) 35%,rgba(0,0,0,.06) 60%,rgba(255,255,255,.7));
   --lg-inner:inset 0 1px 1px rgba(255,255,255,.9),inset 0 -1px 1px rgba(0,0,0,.03);--lg-drop:0 8px 26px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06)}
 #tabbar,#tabsearch,#mini,.btn-icon.glass,.btn-glass{position:relative}
@@ -924,8 +885,11 @@ html.light .glass{background:var(--lg-fill);box-shadow:var(--lg-inner),var(--lg-
 .pill.ghost{position:relative}
 /* tab pill: the selection is a clear glass lens, not a grey lozenge (pin 217650594489716463) */
 /* floating bars sit over busy content, so they carry more tint (iOS deepens glass over content) */
-#tabbar,#tabsearch,#mini,#topnav,.toast{background:rgba(30,30,32,.62);-webkit-backdrop-filter:blur(34px) saturate(1.7);backdrop-filter:blur(34px) saturate(1.7)}
-html.light #tabbar,html.light #tabsearch,html.light #mini,html.light #topnav,html.light .toast{background:rgba(250,250,252,.78)}
+#tabbar,#tabsearch,#mini,#topnav,.toast{background:rgba(28,28,30,.54);-webkit-backdrop-filter:blur(28px) saturate(1.45);backdrop-filter:blur(28px) saturate(1.45)}
+html.light #tabbar,html.light #tabsearch,html.light #mini,html.light #topnav,html.light .toast{background:rgba(248,248,250,.62)}
+/* The desktop player spans a much wider compositor tile than the phone bars;
+   regular 20 px glass keeps the frost while avoiding a large-kernel repaint. */
+#mini{-webkit-backdrop-filter:blur(20px) saturate(1.4);backdrop-filter:blur(20px) saturate(1.4)}
 #tabhl,html.light #tabhl{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),inset 0 1px 1px rgba(255,255,255,.35),0 2px 8px rgba(0,0,0,.18)}
 html.light #tabhl{background:rgba(255,255,255,.7);box-shadow:inset 0 0 0 1px rgba(255,255,255,1),0 2px 10px rgba(0,0,0,.1)}
 /* hairline circles on the ground become small glass buttons */
@@ -938,14 +902,11 @@ html.light #np{color-scheme:dark;color:#fff;--label:#fff;--label2:#8e8e93;--dim:
 html.light #np .cover,html.light #np .cover .ti{color:#fff}
 html.light #np .btn-icon{background:var(--panel);color:#fff}
 
-/* card overlays: progressive blur instead of a black scrim (iOS 26 album pages) */
+/* Card artwork is content, not chrome: use a gradient for legibility instead of
+   multiplying live backdrop filters across a scrolling collection. */
 .fc::before{background:linear-gradient(transparent 55%,rgba(0,0,0,.42))}
 .pcard .art::before{background:linear-gradient(transparent 60%,rgba(0,0,0,.4))}
 .ph::before{background:linear-gradient(rgba(0,0,0,.22),transparent 18%,transparent 55%,rgba(0,0,0,.45) 85%,rgba(0,0,0,.6))}
-.fc::after,.pcard .art::after,.ph::after{content:"";position:absolute;top:auto;left:0;right:0;bottom:0;height:42%;z-index:1;pointer-events:none;box-shadow:none;border-radius:0;
-  -webkit-backdrop-filter:blur(22px) saturate(1.3);backdrop-filter:blur(22px) saturate(1.3);
-  -webkit-mask:linear-gradient(transparent,#000 70%);mask:linear-gradient(transparent,#000 70%)}
-.ph::after{height:48%}
 .ph .bot{z-index:2} .ph .top{z-index:3}
 
 /* =========================== DESKTOP SHELL ===========================
@@ -958,7 +919,11 @@ html.light #np .btn-icon{background:var(--panel);color:#fff}
   :root{--sbw:272px;--sbx:10px;--cx:calc(var(--sbw) + var(--sbx) + 28px);--m:0px}
   #topnav{display:flex!important;flex-direction:column;align-items:stretch;gap:0;position:fixed;z-index:46;
     left:var(--sbx);top:var(--sbx);bottom:var(--sbx);width:var(--sbw);height:auto;transform:none;border-radius:26px;padding:14px 12px;overflow-y:auto}
-  html:not(.light) #topnav{background:rgba(24,24,26,.72)}
+  /* The sidebar sits over a uniform field, so a full-height backdrop blur has
+     no visible source detail and only forces a costly full-page recomposite. */
+  #topnav{-webkit-backdrop-filter:none;backdrop-filter:none}
+  html:not(.light) #topnav{background:rgba(24,24,26,.9)}
+  html.light #topnav{background:rgba(248,248,250,.92)}
   /* logo row: app mark + wordmark, no box (it was picking up the old .lg glass utility) */
   #topnav .lg{display:flex;align-items:center;gap:11px;height:48px;padding:0 8px;margin:0 0 12px;border-radius:14px;background:none!important;box-shadow:none!important;
     color:var(--label);font-family:'Instrument Serif',Georgia,serif;font-size:25px;line-height:1;letter-spacing:-.01em}
@@ -1036,28 +1001,22 @@ html.light .pdesk .pill:not(.ghost){background:#000;color:#fff}
 html.light .pdesk .pill.ghost{background:#fff;color:#000;box-shadow:inset 0 0 0 1px var(--hair),0 2px 8px rgba(0,0,0,.05)}
 html.light .pdesk .pill.ghost::after{display:none}
 html.light .pdesk .stats b{color:#000} html.light .pdesk .stats span{color:var(--label2)}
-.art-obj .ak{background:rgba(40,40,44,.45);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6)}
+.art-obj .ak{background:rgba(28,28,30,.72);-webkit-backdrop-filter:none;backdrop-filter:none}
 /* performance: grid and cover cards fade with a gradient instead of a live backdrop blur per card
    (rAF probe 2026-10-31: per-card backdrop-filter made the zoom drop to 117ms frames) */
 .cover::after,.art-obj::after,.pcard .art::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
   background:linear-gradient(transparent,rgba(0,0,0,.35))!important;-webkit-mask:none!important;mask:none!important}
+/* Repeated card actions use an opaque material. Liquid Glass is reserved for
+   the persistent navigation and singular overlay controls. */
+.fcfav{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(28,28,30,.74)}
 /* search field: no browser ring; a quiet focus ring on the field */
 .search input:focus,.search input:focus-visible{outline:none}
 .search:focus-within{box-shadow:0 0 0 3px rgba(127,127,127,.25)}
 
-/* navigation motion layers (Ionic iOS transition: cover + edge shadow on the entering page) */
-/* fixed inside a transformed page = pinned to the page box regardless of its scroll; it sits just left of the
-   entering page, so the cover darkens the page underneath and the shadow falls on the entering edge */
 /* the app owns horizontal drags (swipe-back); the browser's own history swipe is off */
 html,body{overscroll-behavior-x:none}
 .page{touch-action:pan-y}
 .hrow{touch-action:pan-x pan-y}
-.nav-fx{position:fixed;top:0;bottom:0;left:-100%;width:100%;z-index:100;pointer-events:none}
-.nav-fx .nav-cover{position:absolute;inset:0;background:#000;opacity:0}
-.nav-fx .nav-shadow{position:absolute;top:0;bottom:0;right:0;width:10px;opacity:0;
-  background:linear-gradient(to left,rgba(0,0,0,.24),rgba(0,0,0,0))}
-.zoomfly{position:fixed;z-index:80;overflow:hidden;pointer-events:none;transform-origin:0 0;background:#111}
-.zoomfly img{width:100%;height:100%;object-fit:cover;object-position:center 14%}
 
 
 /* ===================== motion polish (values from Ionic source, 2026-10-31) ===================== */
@@ -1068,15 +1027,13 @@ html,body{overscroll-behavior-x:none}
 .ion-page-hidden{display:none!important}
 .ion-page-invisible{opacity:0}
 ion-nav:not(.hydrated) .page{position:absolute;inset:0}
-body.presenting{background:#000}
-body.presenting #view{overflow:hidden}
 /* tab lens and sidebar pill slide (persisted elements, so these transitions actually run) */
-#tabhl{transition:transform .4s cubic-bezier(0.32,0.72,0,1),width .4s cubic-bezier(0.32,0.72,0,1),opacity .2s!important}
+#tabhl{transition:transform .24s cubic-bezier(.2,.8,.2,1),width .24s cubic-bezier(.2,.8,.2,1),opacity .16s!important}
 #sbhl{display:none}
 @media (min-width:900px){
   #topnav{position:fixed}
   #sbhl{display:block;position:absolute;left:0;top:0;z-index:0;border-radius:21px;background:#2f2f2f;pointer-events:none;
-    transition:transform .4s cubic-bezier(0.32,0.72,0,1),height .4s cubic-bezier(0.32,0.72,0,1),width .4s cubic-bezier(0.32,0.72,0,1),opacity .2s}
+    transition:transform .24s cubic-bezier(.2,.8,.2,1),height .24s cubic-bezier(.2,.8,.2,1),width .24s cubic-bezier(.2,.8,.2,1),opacity .16s}
   html.light #sbhl{background:rgba(0,0,0,.07)}
   #topnav button.on:not(.lg){background:transparent!important}
   #topnav button:not(.lg),#topnav .nav-sect{position:relative;z-index:1}
@@ -1085,19 +1042,11 @@ body.presenting #view{overflow:hidden}
 .chip,.chip.on{position:relative;isolation:isolate;padding:0 14px;border-radius:22px;transition:color .1s linear}
 .chip.on::before{content:"";position:absolute;inset:2px 0;border-radius:20px;background:rgba(255,255,255,.12);z-index:-1}
 html.light .chip.on::before{background:rgba(0,0,0,.06)}
-.chip.seg-moving::before{opacity:0}
 .hrow:has(>.chip){gap:2px!important;padding:0 calc(var(--m) - 14px)}
 .history-filters{gap:2px;margin-left:-14px}
-.seg-fly{position:fixed;z-index:60;pointer-events:none;border-radius:22px;background:rgba(255,255,255,.12);transform-origin:0 50%}
-html.light .seg-fly{background:rgba(0,0,0,.06)}
-/* toast (Ionic toast ios.enter 400ms cubic-bezier(.155,1.105,.295,1.12); ios.leave 300ms cubic-bezier(.36,.66,.04,1)) */
-.toast{opacity:.01;transition:transform .3s cubic-bezier(.36,.66,.04,1),opacity .3s cubic-bezier(.36,.66,.04,1)}
-.toast.on{opacity:1;transition:transform .4s cubic-bezier(.155,1.105,.295,1.12),opacity .4s cubic-bezier(.155,1.105,.295,1.12)}
+/* toasts use the same short, non-bouncing motion as the rest of the frequent UI */
 /* large title hand-off is scroll-driven now */
-.navbar{transition:none}
 #nbt{display:inline-block}
-/* appearance change: the whole UI crossfades (system appearance switch) */
-html.vt-theme::view-transition-old(root),html.vt-theme::view-transition-new(root){animation-duration:.32s;animation-timing-function:ease}
 
 
 /* ===================== Ionic modal hosting ===================== */
@@ -1116,7 +1065,7 @@ ion-modal .sheet::after{display:none}
 #scrim{display:none}
 @media (min-width:768px){
   ion-modal.np-modal{--width:min(980px,calc(100vw - 64px));--height:min(580px,calc(100vh - 84px));--border-radius:32px}
-  ion-modal.sheet-modal{--width:520px;--height:min(640px,80vh);--border-radius:28px}
+  ion-modal.sheet-modal{--width:520px;--height:min(560px,80vh);--border-radius:28px}
 }
 
 /* phone / desktop variants */
@@ -1127,12 +1076,14 @@ ion-modal .sheet::after{display:none}
   #np .npbg img{animation:none}
 }
 @media (prefers-reduced-transparency:reduce){
-  .glass,.sheet,.fcfav{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:#1c1c1e}
+  .glass,.sheet,.fcfav,.pill.ghost,.circ{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:#1c1c1e}
   .navbar::before{-webkit-backdrop-filter:none;backdrop-filter:none;background:#111}
+  html.light .glass,html.light .sheet,html.light .circ{background:#fff}
 }
 @media (prefers-contrast:more){
   :root{--label2:rgb(190,190,196);--label3:rgba(255,255,255,.62);--sep:rgba(255,255,255,.22);--hair:rgba(255,255,255,.28)}
-  .glass::after{padding:1.5px}
+  .glass{background:rgba(28,28,30,.82)} .glass::after{padding:1.5px}
+  html.light .glass{background:rgba(255,255,255,.9)}
 }
 @media (max-width:359px){
   .ph .nm{font-size:46px;line-height:45px}
@@ -1262,7 +1213,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261031-0900';
+const BUILD='20261101-0100';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -1379,104 +1330,22 @@ navEl().addEventListener('ionNavDidChange',()=>{ const pg=activePage(); if(!pg) 
   if(r&&r!==route&&navStack.length>1&&navStack[navStack.length-2]===r){ navStack.pop(); route=r; if(!depth(r)) lastTab=r;
     ground(r.startsWith('p/')?BYSLUG[r.slice(2)]:r==='home'?featured():null); showing(pg,r,'pop'); navSync=true; history.back(); } });
 
-/* ===================== screen A -> screen B: Apple's zoom transition =====================
-   Apple, WWDC24 "Enhance your UI animations and transitions" (10145): "the cell you tap morphs
-   into the incoming view"; continuously interactive; the source is looked up again on zoom-out by
-   a stable identifier. Curve: Apple's default spring, WWDC23 "Animate with springs" (10158):
-   bounce 0, stiffness = (2pi/duration)^2, damping = 4pi/duration, mass 1, duration 0.5s
-   (Apple's own zoom-session example). Computed, not eyeballed: 98.6% at 0.5s, settles at 735ms.
-   Runs on Ionic's animation engine, so ion-nav's edge swipe scrubs it with the finger.
-   Cards zoom into their figure page; rows and lists keep Ionic's iOS slide (Apple's drill-down). */
-const APPLE_SPRING={dur:735,ease:'linear(0 0%, 0.0278 2.8%, 0.0942 5.6%, 0.1804 8.3%, 0.2739 11.1%, 0.3671 13.9%, 0.4553 16.7%, 0.5360 19.4%, 0.6080 22.2%, 0.6712 25.0%, 0.7259 27.8%, 0.7727 30.6%, 0.8123 33.3%, 0.8456 36.1%, 0.8735 38.9%, 0.8967 41.7%, 0.9158 44.4%, 0.9316 47.2%, 0.9445 50.0%, 0.9551 52.8%, 0.9638 55.6%, 0.9708 58.3%, 0.9765 61.1%, 0.9811 63.9%, 0.9848 66.7%, 0.9879 69.4%, 0.9903 72.2%, 0.9922 75.0%, 0.9938 77.8%, 0.9950 80.6%, 0.9960 83.3%, 0.9969 86.1%, 0.9975 88.9%, 0.9980 91.7%, 0.9984 94.4%, 0.9987 97.2%, 1 100%)'};
-let ION=null;
-import('https://cdn.jsdelivr.net/npm/@ionic/core@9.0.10/dist/esm/index.js').then(m=>{ ION=m;
-  customElements.whenDefined('ion-nav').then(()=>{ navEl().animation=navAnimation; }); }).catch(()=>{});
-/* the card for a figure, on the page underneath: matched by the figure's id (Apple: stable identifier) */
-function zoomSource(view,slug){
-  if(!view||!slug) return null;
-  return [...view.querySelectorAll(`[data-p="${slug}"]`)].map(c=>c.querySelector('.art')||c).find(c=>{ const r=c.getBoundingClientRect();
-    return r.width>40&&r.height>40&&r.bottom>0&&r.top<innerHeight; })||null; }
-function navAnimation(baseEl,opts){
-  const back=opts.direction==='back', fig=back?opts.leavingEl:opts.enteringEl, other=back?opts.enteringEl:opts.leavingEl;
-  const route=fig&&fig.dataset.route||'', slug=route.startsWith('p/')?route.slice(2):null;
-  const src=slug&&zoomSource(other,slug);
-  if(!src||!ION) return ION?ION.iosTransitionAnimation(baseEl,opts):null;
-  const figPage=fig.querySelector(':scope>.page'), otherPage=other.querySelector(':scope>.page');
-  const box=baseEl.getBoundingClientRect(), c=src.getBoundingClientRect();
-  const W=box.width, H=box.height, s=c.width/W, r=parseFloat(getComputedStyle(src).borderRadius)||20;
-  /* the figure page, drawn at the card's size and place, clipped to the card's shape */
-  const small={transform:`translate(${c.left-box.left}px,${c.top-box.top}px) scale(${s})`,clipPath:`inset(0px 0px ${Math.max(0,H-c.height/s)}px 0px round ${r/s}px)`,opacity:'1'};
-  const full={transform:'translate(0px,0px) scale(1)',clipPath:'inset(0px 0px 0px 0px round 0px)',opacity:'1'};
-  const figAni=ION.createAnimation().addElement(figPage).beforeStyles({'transform-origin':'0 0'}).afterClearStyles(['transform-origin','clip-path'])
-    .keyframes(back?[{offset:0,...full},{offset:1,...small}]:[{offset:0,...small},{offset:1,...full}]);
-  /* the screen it came from recedes and dims toward the ground */
-  const rest={transform:'scale(1)',opacity:'1'}, away={transform:'scale(.94)',opacity:'.45'};
-  const otherAni=ION.createAnimation().addElement(otherPage).beforeStyles({'transform-origin':'50% 40%'}).afterClearStyles(['transform-origin'])
-    .keyframes(back?[{offset:0,...away},{offset:1,...rest}]:[{offset:0,...rest},{offset:1,...away}]);
-  /* the card itself is the thing that becomes the page: hide it while its page is in flight */
-  const srcAni=ION.createAnimation().addElement(src).beforeStyles({visibility:'hidden'}).afterClearStyles(['visibility']);
-  /* Ionic keeps the entering view at opacity 0 until its transition starts (ios.transition: beforeRemoveClass) */
-  return ION.createAnimation().addElement(opts.enteringEl).beforeRemoveClass('ion-page-invisible')
-    .duration(APPLE_SPRING.dur).easing(APPLE_SPRING.ease).fill('both').addAnimation([figAni,otherAni,srcAni]);
-}
+/* Ionic owns drill-down motion and swipe-back. Avoid a second custom zoom layer:
+   clipping and scaling two full pages at once caused 100–250 ms frames on image-heavy routes. */
 
-/* ===================== in-place morph (no page rebuild snap) =====================
-   Filters, favourites, settings rows and history filters update the live page element in place:
-   scroll is kept, moved items FLIP, new items rise in; the selected text tab's capsule slides
-   (Ionic segment indicator: transform 260ms cubic-bezier(0.4,0,0.2,1)). */
-const KEYS=['data-p','data-ep','data-history-item','data-fil','data-hfil','data-a','data-go','data-favp'];
-function keyed(root){ const m=new Map(), seen={};
-  root.querySelectorAll(KEYS.map(k=>`[${k}]`).join(',')).forEach(el=>{ const k=KEYS.find(a=>el.hasAttribute(a)); const id=k+'='+el.getAttribute(k);
-    seen[id]=(seen[id]||0)+1; m.set(id+'#'+seen[id],el); }); return m; }
+/* In-place updates keep scroll and focus context. A single page fade avoids running
+   dozens of FLIP animations over image grids and makes rapid filter taps interruptible. */
 function morph(r){
   const pg=activePage(); if(!pg||pg.dataset.route!==r) return render(r,'none');
-  const before=new Map(), vh=innerHeight;
-  keyed(pg).forEach((el,id)=>{ const b=el.getBoundingClientRect(); if(b.bottom>-200&&b.top<vh+200&&b.width) before.set(id,b); });
-  const segFrom=pg.querySelector('.chip.on')?.getBoundingClientRect(), st=pg.scrollTop;
-  route=r; pg.innerHTML=build(r).innerHTML; setTimeout(()=>bind(pg,r),0); paintChrome(); pg.scrollTop=st; wireNav(pg);
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const ease='cubic-bezier(0.32,0.72,0,1)';
-  let n=0;
-  keyed(pg).forEach((el,id)=>{ const a=el.getBoundingClientRect(); if(!(a.bottom>0&&a.top<vh&&a.width)) return;
-    const b=before.get(id);
-    if(b){ const dx=b.left-a.left, dy=b.top-a.top, sx=b.width/a.width, sy=b.height/a.height;
-      if(Math.abs(dx)>.5||Math.abs(dy)>.5||Math.abs(sx-1)>.01||Math.abs(sy-1)>.01)
-        el.animate([{transformOrigin:'0 0',transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`},{transformOrigin:'0 0',transform:'none'}],{duration:400,easing:ease}); }
-    else el.animate([{opacity:0,transform:'translateY(10px) scale(.97)'},{opacity:1,transform:'none'}],{duration:260,easing:ease,fill:'backwards',delay:Math.min(n++*18,160)}); });
-  const segOn=pg.querySelector('.chip.on');
-  if(segFrom&&segOn){ const a=segOn.getBoundingClientRect();
-    if(Math.abs(a.left-segFrom.left)>.5||Math.abs(a.width-segFrom.width)>.5){
-      const cap=document.createElement('i'); cap.className='seg-fly';
-      cap.style.cssText=`left:${a.left}px;top:${a.top}px;width:${a.width}px;height:${a.height}px`; document.body.appendChild(cap);
-      segOn.classList.add('seg-moving');
-      cap.animate([{transform:`translateX(${segFrom.left-a.left}px) scaleX(${segFrom.width/a.width})`},{transform:'none'}],{duration:260,easing:'cubic-bezier(0.4,0,0.2,1)'})
-        .finished.then(()=>{ cap.remove(); segOn.classList.remove('seg-moving'); });
-      segOn.animate([{color:'var(--dim)'},{color:'var(--label)'}],{duration:160,easing:'linear'}); } }
+  const st=pg.scrollTop;
+  route=r; pg.innerHTML=build(r,false).innerHTML; setTimeout(()=>bind(pg,r),0); paintChrome(); pg.scrollTop=st; wireNav(pg);
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches)
+    pg.animate([{opacity:.72},{opacity:1}],{duration:160,easing:'ease-out'});
 }
 
-/* ===================== card modal (Ionic modal ios.enter / ios.leave) =====================
-   500ms cubic-bezier(0.32,0.72,0,1) in and out; on phones the page behind drops by
-   max(30px, safe-area-top) and scales to 0.915 from the top centre with a 10px top radius and
-   contrast(.85), over black (SwipeToCloseDefaults.MIN_PRESENTING_SCALE = 0.915). */
-const MODAL={dur:500,ease:'cubic-bezier(0.32,0.72,0,1)',scale:.915};
-let presented=0;
-function presentBehind(on){
-  if(innerWidth>=768) return Promise.resolve();
-  presented+=on?1:-1; if(on&&presented>1) return Promise.resolve(); if(!on&&presented>0) return Promise.resolve();
-  const els=[$('view'),$('dock')], y='max(30px, env(safe-area-inset-top))';
-  const card={transform:`translateY(${y}) scale(${MODAL.scale})`,borderRadius:'10px 10px 0 0',filter:'contrast(.85)'};
-  const flat={transform:'translateY(0) scale(1)',borderRadius:'0px',filter:'contrast(1)'};
-  document.body.classList.add('presenting');
-  const as=els.map(el=>{ el.style.transformOrigin=el.id==='dock'?`50% ${-el.getBoundingClientRect().top}px`:'top center'; const a=el.animate(on?[flat,card]:[card,flat],{duration:MODAL.dur,easing:MODAL.ease,fill:'forwards'}); return a; });
-  return Promise.all(as.map(a=>a.finished.catch(()=>{}))).then(()=>{ if(!on){ as.forEach(a=>a.cancel()); document.body.classList.remove('presenting'); } });
-}
+function openPerson(s){ go('p/'+s); }
 
-
-let pendingZoom=null;
-function openPerson(s,el){ pendingZoom=el?el.querySelector('img'):null; go('p/'+s); }
-window.addEventListener('hashchange',()=>{},{capture:true});
-
-function build(r){
+function build(r,bindPage=true){
   const el=document.createElement('div'); el.className='page';
   if(r==='home') el.innerHTML=pageHome();
   else if(r==='figures') el.innerHTML=pageFigures();
@@ -1488,7 +1357,7 @@ function build(r){
   else if(r.startsWith('p/')) el.innerHTML=pagePerson(BYSLUG[r.slice(2)]);
   else if(r.startsWith('l/')) el.innerHTML=pageList(r.slice(2));
   else el.innerHTML=pageHome();
-  setTimeout(()=>bind(el,r),0);
+  if(bindPage) setTimeout(()=>bind(el,r),0);
   return el;
 }
 /* large-title pages get a glass nav bar once the title scrolls away */
@@ -1535,7 +1404,8 @@ function placeHL(){ const on=document.querySelector('#tabbar .tab.on'), hl=$('ta
   if(!on||!on.offsetWidth){ hl.style.opacity=0; return; } hl.style.opacity=1; hl.style.width=on.offsetWidth+'px'; hl.style.transform=`translateX(${on.offsetLeft-4}px)`; }
 window.addEventListener('resize',placeHL);
 /* ============================== components ============================== */
-const img=(p,cls='')=>`<img src="${P[p.name]}" alt="" decoding="async"${cls?` class="${cls}"`:''}>`;
+const thumbSrc=p=>P[p.name].replace('/people/','/people/thumbs/').replace(/\.jpg(?=\?)/,'.webp');
+const img=(p,cls='',full=false)=>`<img src="${full?P[p.name]:thumbSrc(p)}" alt="" width="480" height="640" decoding="async" ${full?'fetchpriority="high"':'loading="lazy"'}${cls?` class="${cls}"`:''}>`;
 const shead=(t,link)=>`<div class="shead"><h2 class="t-sect">${esc(t)}${link?IC.chev(15):''}</h2>${link?`<button class="textbtn t-sub" data-go="${link}">See All</button>`:''}</div>`;
 const tile=p=>`<button class="tile press" data-p="${p.slug}" style="${tone(p)}"><span class="art toned">${p.episodes.some(e=>e.date>='2026-01-01')?'<span class="badge">NEW</span>':''}${img(p)}</span>
   <span class="tt t-foot trunc">${esc(p.shortName)}</span><span class="t-foot c2 trunc" style="display:block">${esc(meta(p).sub)}</span></button>`;
@@ -1548,7 +1418,7 @@ function cover(p,k,e,i,{cls=''}={}){
   const isCur=cur&&cur.p===p&&cur.k===k&&cur.i===i, dn=done(p,e), ps=pos(p,e), st=ps>60&&!dn;
   const title=(e.book&&e.book.trim())||rowTitle(p,e);
   const [jacket,ink]=JACKETS[objectSeed(title+p.name)%JACKETS.length];
-  return `<span class="cover${isCur?' cur':''} ${cls}" style="--jacket:${jacket};--ink:${ink}"><img class="cimg" src="${P[p.name]}" alt="" decoding="async"><span class="no">The Greats · ${e.n?'No. '+e.n:KLABEL[k]}</span>
+  return `<span class="cover${isCur?' cur':''} ${cls}" style="--jacket:${jacket};--ink:${ink}"><img class="cimg" src="${thumbSrc(p)}" alt="" width="480" height="640" decoding="async" loading="lazy"><span class="no">The Greats · ${e.n?'No. '+e.n:KLABEL[k]}</span>
     <span class="ti">${esc(title)}</span><span class="mark" aria-hidden="true">${esc(p.shortName[0]||'G')}</span><span class="au">${esc((e.author||'').trim()||p.shortName)}</span>
     ${dn?`<span class="dn">${IC.check(11)}</span>`:''}${st?`<span class="pr"><i style="width:${Math.min(99,100*ps/(e.sec||1))}%"></i></span>`:''}</span>`;
 }
@@ -1558,7 +1428,7 @@ function artifactVisual(p,k,e,i){
   const title=rowTitle(p,e), date=e.date?mon(e.date):'Archive', seed=objectSeed(title+p.name);
   if(k==='bio') return cover(p,k,e,i);
   /* speech, letter, edit: the speaker's portrait is the artwork; the kind is a small glass label */
-  return `<span class="archive-object art-obj"><img src="${P[p.name]}" alt="" decoding="async"><span class="ak">${({speeches:'Speech',letters:'Letter',edits:'Edit'})[k]||esc(KLABEL[k])}</span><span class="object-title">${esc(title)}</span></span>`;
+  return `<span class="archive-object art-obj"><img src="${thumbSrc(p)}" alt="" width="480" height="640" decoding="async" loading="lazy"><span class="ak">${({speeches:'Speech',letters:'Letter',edits:'Edit'})[k]||esc(KLABEL[k])}</span><span class="object-title">${esc(title)}</span></span>`;
 }
 const artifactCard=(p,k,e,i)=>`<button class="artifact-card press" data-ep="${p.slug}|${k}|${i}"><span class="object-stage">${artifactVisual(p,k,e,i)}</span>
   <span><span class="t-head clamp2" style="display:block">${esc(rowTitle(p,e))}</span><span class="t-foot c2" style="display:block;margin-top:3px">${esc(p.shortName)} · ${fmtDur(e.sec)}</span></span></button>`;
@@ -1617,7 +1487,7 @@ const wavebars=(s,n,prog)=>{ const bars=Array.from({length:n},(_,k)=>`<i style="
 const acard=f=>{ const pr=Math.min(1,pos(f.p,f.e)/(f.e.sec||1)), t=rowTitle(f.p,f.e);
   return `<button class="acard press" data-ep="${f.p.slug}|${f.k}|${f.i}"><span class="ahead"><span class="atile">${img(f.p)}${IC.play(18)}</span>
     <span class="amid"><span class="atitle trunc">${esc(t)}</span><span class="atime num">${esc(f.p.shortName)} · ${fmtDur(f.e.sec)}</span></span></span>
-    <span class="wave" aria-hidden="true">${wavebars(objectSeed(t),200,pr)}</span></button>`; };
+    <span class="wave" aria-hidden="true">${wavebars(objectSeed(t),72,pr)}</span></button>`; };
 const wide=c=>`<button class="wide press" data-ep="${c.p.slug}|${c.k}|${c.i}" style="${tone(c.p)}"><span class="art toned">${img(c.p)}<span class="bar"><i style="width:${Math.min(99,100*c.ps/(c.e.sec||1))}%"></i></span></span>
   <span class="tt t-sub trunc" style="font-weight:600">${esc(rowTitle(c.p,c.e))}</span><span class="t-foot c2 trunc" style="display:block">${esc(c.p.shortName)} · ${fmtDur((c.e.sec||0)-c.ps)} left</span></button>`;
 
@@ -1633,7 +1503,7 @@ function pageHome(){
   const pop=[featured(),...byCount.filter(p=>p!==featured())].slice(0,8);
   const focus=cont[0]||{p:featured(),k:'bio',e:featured().episodes[0],i:0};
   return `<div class="content">
-  <div class="veil" aria-hidden="true"><img src="${P[focus.p.name]}" alt=""></div>
+  <div class="veil" aria-hidden="true"><img src="${thumbSrc(focus.p)}" alt="" width="480" height="640" decoding="async"></div>
   <div class="ltitle" data-title="The Greats"><h1 class="t-page" style="font-size:52px;line-height:52px">The Greats</h1>
     <button class="btn-icon glass press mob" data-go="settings" aria-label="Settings">${IC.gear(19)}</button></div>
   <div class="wrap rise"><p class="intro"><b>Study the lives that shaped the world.</b> Listen closely, return often, and carry the best ideas into your own work.</p>
@@ -1648,7 +1518,6 @@ function pageHome(){
     <div class="hrow" style="gap:8px">${SECTIONS.map(([k,l])=>`<button class="chip press" data-go="l/shelf-${k}">${l}</button>`).join('')}</div></section>
   <section class="sect wrap">${shead('New books')}<div class="tlist rows">${recent.map(r=>erow(r.p,'bio',r.e,r.i,{num:false,lead:true})).join('')}</div></section>
   ${fav.length?`<section class="sect"><div class="wrap">${shead('Your favourites','l/favs')}</div><div class="hrow">${fav.map(tile).join('')}</div></section>`:''}
-  ${SECTIONS.map(([k,l])=>{ const ps=DATA.people.filter(p=>meta(p).cat===k); return ps.length?`<section class="sect"><div class="wrap">${shead(l,'l/shelf-'+k)}</div><div class="hrow">${ps.map(tile).join('')}</div></section>`:''; }).join('')}
   </div>`;
 }
 let figFilter='all', historyFilter='all', searchQuery='';
@@ -1724,13 +1593,13 @@ function pagePerson(p){
     <div class="hrow bleed" style="gap:16px">${p.episodes.map((e,i)=>book(p,'bio',e,i)).join('')}</div></section>`;
   const more=['speeches','edits','letters'].map(k=>{ const L=items(p,k); return L.length?`<section class="sect">${shead(KLABEL[k])}<div class="artifact-grid">${L.map((e,i)=>artifactCard(p,k,e,i)).join('')}</div></section>`:''; }).join('');
   const about=`<section class="sect"><h2 class="t-sect">Biography</h2><p class="t-sub" style="color:var(--text2);margin-top:8px;white-space:pre-line">${esc(m.bio)}</p></section>`;
-  return `<div class="ph"><img src="${P[p.name]}" alt="" id="pimg">
+  return `<div class="ph"><img src="${P[p.name]}" alt="" width="900" height="1200" decoding="async" fetchpriority="high" id="pimg">
       <div class="top"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button>
         <button class="btn-icon glass press" data-a="about" aria-label="About">${IC.more(20)}</button></div>
       <div class="bot" data-title="${esc(p.shortName)}"><div class="t-eyebrow" style="color:rgba(255,255,255,.6)">${esc(shelf)}</div>
         <div class="nm" style="margin-top:6px">${esc(p.shortName)}</div><div class="q">${esc(quote)}</div>${stats}${acts}</div></div>
     <div class="wrap mob">${books}${more}${about}</div>
-    <div class="pdesk"><div class="card">${img(p)}</div>
+    <div class="pdesk"><div class="card">${img(p,'',true)}</div>
       <div><div class="ptop" style="position:fixed;top:14px;left:var(--m);z-index:50"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
         <div class="t-eyebrow c2" data-title="${esc(p.shortName)}">${esc(shelf)} · ${esc(m.sub)}</div>
         <h1 class="nm" style="margin-top:10px">${esc(p.shortName)}</h1>
@@ -1785,17 +1654,17 @@ function pageSystem(){
    <section class="sect">${shead('Recent cards')}<div class="hrow bleed">${DATA.people.slice(3,9).map(tile).join('')}</div></section>
    <section class="sect">${shead('Rows')}<div class="rows">${erow(DATA.people[7],'bio',DATA.people[7].episodes[0],0)}${erow(DATA.people[7],'bio',DATA.people[7].episodes[1],1,{num:false,lead:true})}</div></section>
    <section class="sect">${shead('Materials')}<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="group" style="min-height:110px;padding:18px"><div class="t-head">Panel</div><div class="t-foot c2" style="margin-top:4px">Flat, 20pt corners, 8pt apart.</div></div><div class="glass" style="min-height:110px;padding:18px;border-radius:20px"><div class="t-head">Floating chrome</div><div class="t-foot c2" style="margin-top:4px">Tab pill, mini player, top bar.</div></div></div></section>
-   <section class="sect">${shead('Motion')}<p class="t-sub c2">Critically damped spring (damping 1.0, response 0.4s) for everything; sheets 0.8 / 0.3s. Cards zoom into their page with the View Transitions API; pages push and pop; data arrives by focus.</p></section>
+   <section class="sect">${shead('Motion')}<p class="t-sub c2">Brief iOS navigation transitions, interruptible sheets, and immediate state changes. Reduced Motion removes spatial travel.</p></section>
   </div></div>`;
 }
 
 /* ============================== bindings ============================== */
 function bind(el,r){
-  el.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>openPerson(b.dataset.p,b));
+  el.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>openPerson(b.dataset.p));
   el.querySelectorAll('[data-favp]').forEach(b=>b.onclick=()=>{ const p=BYSLUG[b.dataset.favp]; if(!p) return; toggleFav(p.name);
     const on=favs.includes(p.name); b.innerHTML=IC.star(18,on); b.setAttribute('aria-pressed',String(on)); b.setAttribute('aria-label',`${on?'Remove '+p.shortName+' from':'Add '+p.shortName+' to'} Favourites`); });
   el.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{ pendingPush=true; go(b.dataset.go); });
-  el.querySelectorAll('[data-ep]').forEach(b=>b.onclick=()=>{ npFrom=b.querySelector('.cover,.lead,img'); const [s,k,i]=b.dataset.ep.split('|'); const p=BYSLUG[s];
+  el.querySelectorAll('[data-ep]').forEach(b=>b.onclick=()=>{ const [s,k,i]=b.dataset.ep.split('|'); const p=BYSLUG[s];
     if(cur&&cur.p===p&&cur.k===k&&cur.i===+i){ toggle(); return; } playEp(p,+i,k); openNP(); });
   el.querySelectorAll('[data-fil]').forEach(b=>b.onclick=()=>{ figFilter=b.dataset.fil; morph('figures'); });
   el.querySelectorAll('[data-hfil]').forEach(b=>b.onclick=()=>{ historyFilter=b.dataset.hfil; morph('history'); });
@@ -1803,7 +1672,6 @@ function bind(el,r){
   el.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>act(b.dataset.a,r));
   const q=el.querySelector('#q'); if(q){ q.oninput=()=>{ searchQuery=q.value; $('qres').innerHTML=searchResults(searchQuery); $('cats').style.display=searchQuery.trim()?'none':''; bind($('qres'),r); };
     if(matchMedia('(min-width:900px) and (hover:hover) and (pointer:fine)').matches) q.focus(); }
-  if(r.startsWith('p/')){ const pimg=el.querySelector('#pimg'); el.addEventListener('scroll',()=>{ const y=el.scrollTop; if(pimg) pimg.style.transform=y<0?`scale(${1+Math.min(80,-y)*.002})`:`translateY(${y*.35}px)`; },{passive:true}); }
 }
 function act(a,r){
   const p=r.startsWith('p/')?BYSLUG[r.slice(2)]:null;
@@ -1814,7 +1682,7 @@ function act(a,r){
   else if(a==='shuffle'&&p){ shuffleOn=true; playEp(p,~~(Math.random()*p.episodes.length),'bio'); openNP(); }
   else if(a==='speed'){ const o=[1,1.25,1.5,1.75,2]; const n=o[(o.indexOf(store.get('speed',1))+1)%o.length]; store.set('speed',n); audio.playbackRate=n; paintNP(); morph(r); }
   else if(a==='sleep'){ cycleSleep(); morph(r); }
-  else if(a==='theme'){ const o=['system','light','dark']; store.set('theme',o[(o.indexOf(store.get('theme','system'))+1)%3]); const sw=()=>{ applyTheme(); morph(r); }; if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches){ document.documentElement.classList.add('vt-theme'); const t=document.startViewTransition(sw); t.finished.finally(()=>document.documentElement.classList.remove('vt-theme')); } else sw(); }
+  else if(a==='theme'){ const o=['system','light','dark']; store.set('theme',o[(o.indexOf(store.get('theme','system'))+1)%3]); applyTheme(); morph(r); }
   else if(a==='history-clear') clearHistoryTimeline();
   else if(a==='reset') confirmResetListeningData();
   else if(a==='favs') go('l/favs');
@@ -1831,20 +1699,6 @@ function toast(t,label='',action=null){
   toastT=setTimeout(()=>{ el.classList.remove('on','has-action'); toastAction=null; },action?5000:1800);
 }
 
-/* ============================== sheets (spring) ============================== */
-/* Motion runs on the Web Animations API (compositor, promise-based), driven by the
-   curves MEASURED from Apple recordings (see :root): --sheet 533ms, --spring 417ms. */
-const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-const EASE={sheet:()=>css('--sheet'),push:()=>css('--spring')};
-function anim(el,frames,dur,ease){ const a=el.animate(frames,{duration:dur,easing:ease,fill:'forwards'});
-  return a.finished.then(()=>{ try{ a.commitStyles(); }catch(e){} a.cancel(); }).catch(()=>{}); }
-const cur_t=el=>{ const m=new DOMMatrix(getComputedStyle(el).transform); return m.m42; };   /* live y, for interruptions */
-const setAppInert=on=>['view','navbar','topnav','dock'].forEach(id=>$(id).inert=on);
-function slide(el,show){ if(show) el.classList.add('show');
-  const from=`translateY(${show?(el.getBoundingClientRect().height? cur_t(el):0)+'px':cur_t(el)+'px'})`;
-  presentBehind(show);
-  return anim(el,[{transform:show?'translateY(105%)':from},{transform:show?'translateY(0%)':'translateY(105%)'}],MODAL.dur,MODAL.ease)
-    .then(()=>{ if(!show) el.classList.remove('show'); }); }
 let sheetReturnFocus=null;
 /* ===================== overlays: Ionic ion-modal (the library itself) =====================
    Now Playing is an iOS card modal (presentingElement = the app, swipe down to close);
@@ -1853,8 +1707,10 @@ let sheetReturnFocus=null;
 async function presentModal(node,{cls='',sheet=false,onGone}={}){
   await customElements.whenDefined('ion-modal');
   const m=document.createElement('ion-modal'); m.className='greats-modal '+cls;
-  /* phones: iOS page-sheet card (the app recedes behind it); breakpoint sheets need ion-content and recursed here */
-  if(innerWidth<768) m.presentingElement=navEl();
+  if(innerWidth<768&&sheet){
+    m.breakpoints=[0,.55,.9]; m.initialBreakpoint=.55; m.backdropBreakpoint=0;
+    m.handle=true; m.expandToScroll=false;
+  } else if(innerWidth<768) m.presentingElement=navEl();
   const wrap=document.createElement('div'); wrap.className='ion-page modal-page';
   const home=node.parentNode, next=node.nextSibling; wrap.appendChild(node); m.appendChild(wrap); document.body.appendChild(m);
   document.body.classList.add('modal-open');
@@ -1873,7 +1729,7 @@ function closeSheet(){ if(!sheetModal) return Promise.resolve(); const m=sheetMo
 
 $('shx').innerHTML=IC.x(15); $('shx').onclick=closeSheet;
 function openAbout(p){ const m=meta(p);
-  openSheet(p.shortName,`<div style="display:flex;gap:14px;align-items:center"><img src="${P[p.name]}" style="width:76px;height:76px;border-radius:38px;object-fit:cover;object-position:top"><div><div class="t-head">${esc(m.sub)}</div><div class="t-foot c2">${p.episodes.length} books · ${hours(p)} hours</div></div></div>
+  openSheet(p.shortName,`<div style="display:flex;gap:14px;align-items:center"><img src="${thumbSrc(p)}" width="76" height="76" style="width:76px;height:76px;border-radius:38px;object-fit:cover;object-position:top"><div><div class="t-head">${esc(m.sub)}</div><div class="t-foot c2">${p.episodes.length} books · ${hours(p)} hours</div></div></div>
   <p class="t-body" style="white-space:pre-line;margin-top:18px;color:var(--text2)">${esc(m.bio)}</p>`); }
 function openQueue(){ if(!cur) return; const L=items(cur.p,cur.k);
   openSheet('Up Next',`<div class="t-foot c2" style="margin-bottom:6px">${esc(cur.p.shortName)} · ${KLABEL[cur.k]}</div><div class="rows">${L.map((e,i)=>erow(cur.p,cur.k,e,i)).join('')}</div>`);
@@ -1891,9 +1747,7 @@ function historyEntry(token){
   return p&&e?{p,k,i,e}:null;
 }
 function updateHistory(mutator){
-  const paint=()=>{ mutator(); if(route==='history'||route==='library') morph(route); };
-  if(document.startViewTransition&&!document.hidden&&!matchMedia('(prefers-reduced-motion: reduce)').matches){ const t=document.startViewTransition(paint); t.ready.catch(()=>{}); t.finished.catch(()=>{}); }
-  else paint();
+  mutator(); if(route==='history'||route==='library') morph(route);
 }
 function removeHistoryEntry(x){
   const key='t.'+epKey(x.p,x.e), previous=store.get(key,0);
@@ -1952,7 +1806,7 @@ function setSession(p,e){ if(!('mediaSession' in navigator)) return;
 /* ============================== now playing ============================== */
 function paintNP(){
   if(!cur) return; const {p}=cur, e=curEp(), playing=!audio.paused;
-  $('miniimg').src=P[p.name]; $('minit').textContent=rowTitle(p,e); $('minis').textContent=p.shortName;
+  $('miniimg').src=thumbSrc(p); $('minit').textContent=rowTitle(p,e); $('minis').textContent=p.shortName;
   document.querySelector('#mini .tg').innerHTML=playing?IC.pause(20):IC.play(20);
   document.querySelector('#mini .tg').setAttribute('aria-label',playing?'Pause':'Play');
   document.querySelector('#mini .ff').innerHTML=IC.ff(22); document.querySelector('#mini .rw').innerHTML=IC.rw(22); document.querySelector('#mini .q').innerHTML=IC.list(20);
@@ -1979,16 +1833,8 @@ function paintTime(){ if(!cur) return; const e=curEp(); const d=isFinite(audio.d
   $('tel').textContent=fmtClock(t); $('trem').textContent='-'+fmtClock(d-t);
   $('scrub').setAttribute('aria-valuemax',String(Math.round(d))); $('scrub').setAttribute('aria-valuenow',String(Math.round(t)));
   $('scrub').setAttribute('aria-valuetext',`${fmtClock(t)} of ${fmtClock(d)}`); }
-/* FLIP: the Now Playing artwork grows out of the element that was tapped (mini player art, a book
-   cover, a row thumbnail) on the sheet spring, while the sheet itself slides up underneath it */
-let npFrom=null, npReturnFocus=null;
-function flipArt(fromEl){ const art=document.querySelector('#np .art'); if(!fromEl||!art) return;
-  const a=fromEl.getBoundingClientRect(), b=art.getBoundingClientRect(); if(!a.width||!b.width) return;
-  const sx=a.width/b.width, sy=a.height/b.height, dx=a.left-b.left, dy=a.top-b.top;
-  art.style.transformOrigin='0 0';
-  anim(art,[{transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`,borderRadius:'8px'},{transform:'translate(0,0) scale(1,1)',borderRadius:'18px'}],533,EASE.sheet()); }
+let npReturnFocus=null;
 function openNP(){ if(npModal) return; const np=$('np'); if(cur) ground(cur.p); npReturnFocus=document.activeElement; np.setAttribute('aria-hidden','false'); np.classList.add('show'); document.body.classList.add('np-open');
-  npFrom=null; np.style.transform='';
   presentModal(np,{cls:'np-modal',onGone:()=>{ ground(route.startsWith('p/')?BYSLUG[route.slice(2)]:route==='home'?featured():null); document.body.classList.remove('np-open');
     np.classList.remove('show'); np.setAttribute('aria-hidden','true'); npModal=null; if(npReturnFocus?.isConnected) npReturnFocus.focus(); npReturnFocus=null; }})
     .then(m=>{ npModal=m; $('npclose').focus({preventScroll:true}); }); }
@@ -2027,9 +1873,9 @@ document.addEventListener('keydown',e=>{ const modal=$('sheet').classList.contai
 
 /* ============================== boot ============================== */
 const requiredJSON=url=>fetch(url).then(r=>{ if(!r.ok) throw new Error(`Failed to load ${url}`); return r.json(); });
-Promise.all([requiredJSON('episodes.json?v='+BUILD),requiredJSON('portraits.json?v='+BUILD),
-  fetch('media.json?v='+BUILD).then(r=>r.ok?r.json():{people:{}}).catch(()=>({people:{}})),
-  fetch('palette.json?v='+BUILD).then(r=>r.ok?r.json():{}).catch(()=>({}))]).then(([d,pr,md,pl])=>{ PAL=pl;
+Promise.all([requiredJSON('data/episodes.json?v='+BUILD),requiredJSON('data/portraits.json?v='+BUILD),
+  fetch('data/media.json?v='+BUILD).then(r=>r.ok?r.json():{people:{}}).catch(()=>({people:{}})),
+  fetch('data/palette.json?v='+BUILD).then(r=>r.ok?r.json():{}).catch(()=>({}))]).then(([d,pr,md,pl])=>{ PAL=pl;
   DATA=d; P=Object.fromEntries(Object.entries(pr).map(([k,v])=>[k,v+'?v='+BUILD]));
   DATA.people.forEach(p=>{ p.slug=slug(p.name); p.shortName=p.name.split(' - ')[0]; p.media=(md.people||{})[p.name]||{}; BYSLUG[p.slug]=p; });
   const last=store.get('last',null);
@@ -2039,10 +1885,6 @@ Promise.all([requiredJSON('episodes.json?v='+BUILD),requiredJSON('portraits.json
   if(st==='player'){ if(!cur){ cur={p:BYSLUG['steve-jobs'],i:0,k:'bio'}; document.body.classList.add('has-track'); } paintNP(); openNP(); }
 }).catch(()=>{ const v=$('view'); v.setAttribute('aria-busy','false'); v.innerHTML=`<div class="page"><div class="load-state" role="alert"><h1 class="t-page">The archive couldn’t load.</h1><p class="t-body c2">Check your connection, then try again. Your saved listening state is untouched.</p><button class="btn btn-primary press" id="retry-load">Try Again</button></div></div>`;
   $('retry-load').onclick=()=>location.reload(); });
-/* the zoom transition needs the tapped image, which only exists before the hash changes */
-window.addEventListener('hashchange',()=>{},true);
-const _render=render;
-render=function(r,kind,z){ const zoom=pendingZoom; pendingZoom=null; return _render(r,kind,z||(r.startsWith('p/')?zoom:null)); };
 </script>
 </body>
 </html>
