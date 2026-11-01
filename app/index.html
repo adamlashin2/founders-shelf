@@ -1170,6 +1170,256 @@ html.light .seg-fly{background:rgba(0,0,0,.06)}
   .stats{gap:18px}
   .cat .tt{font-size:15px;line-height:19px}
 }
+
+/* =========================== SYSTEM: Aurora (2026-11-01) ===========================
+   Exact style of the reference Adam pasted (ref/aurora.png, iPhone 16 Pro: 517px = 402pt), measured by script.
+   light  ground #FFF · header tint #FFF5F4 → white by 171pt · badge #F33E1B · text #000, meta grey
+          bottom bar #F5F5F2, convex top arc (63pt at the edges, 85pt at the centre), black 32pt centre button
+   photo  frosted white 20% (round buttons), 18% (card, r32), 13% (pill); segmented: translucent track,
+          white selected pill, green #12B901 check; lavender accent; title 37/600 centred
+   type   SF Pro, tight: wordmark 24/650 lowercase · username 14/500 · meta 13/400 grey + 13.5/500 names ·
+          caption 13.5/400 · photo title 37/600 · photo meta 15/400 · segment 14/500 · card body 13/400
+   shape  post 363×223 r22 inset 19, avatar 36 + white ring over the top edge, notch 95×16 bottom-right */
+:root{
+  --bg:#000; --label:#fff; --label2:rgba(255,255,255,.62); --label3:rgba(255,255,255,.4); --ph:rgba(255,255,255,.3);
+  --fill:#1c1c1e; --fill-on:#2c2c2e; --ink:#fff; --on-ink:#000; --sep:rgba(255,255,255,.08); --arc:#3a3a3c;
+  --tint:#1a1312; --bar:#141414; --bar2:#0d0d0d; --red:#f33e1b; --green:#12b901; --lav:#cdd1ff;
+  --chrome:rgba(28,28,30,.9); --text2:rgba(255,255,255,.82);
+  --panel:var(--fill); --panel2:var(--fill); --raised:var(--fill); --dim:var(--label3); --hair:transparent;
+  --lg-fill:var(--chrome); --lg-blur:blur(20px) saturate(1.8);
+}
+@media (max-width:899px){:root{--m:19px}}
+html.light{
+  --bg:#fff; --label:#000; --label2:#5f5f5f; --label3:#9b9b9b; --ph:#b8b8b8;
+  --fill:#f5f5f2; --fill-on:#ebebe7; --ink:#000; --on-ink:#fff; --sep:#efefec; --arc:#e4e4e0;
+  --tint:#fff5f4; --bar:#fff; --bar2:#f3f3f0; --chrome:rgba(245,245,242,.92); --text2:#2a2a2a;
+  --panel:var(--fill); --panel2:var(--fill); --raised:var(--fill); --dim:var(--label3); --hair:transparent;
+  --lg-fill:var(--chrome); --lg-blur:blur(20px) saturate(1.8);
+}
+html{color-scheme:dark} html.light{color-scheme:light}
+body{background:var(--bg);letter-spacing:-.2px}
+img{background:var(--fill)}
+.veil{display:none!important}
+
+/* ---------- page titles: the wordmark style (lowercase, tight, on the header tint) ---------- */
+.ltitle{background:linear-gradient(var(--tint),var(--bg));padding-bottom:14px}
+.ltitle h1.t-page,.wm{font-family:var(--f)!important;font-size:24px!important;line-height:29px!important;font-weight:650!important;letter-spacing:-.6px!important;text-transform:lowercase}
+#nbt{font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.4px;text-transform:lowercase}
+.shead{margin-bottom:12px}
+.shead h2.t-sect,.slabel,.gh{font-family:var(--f);font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.4px;color:var(--label)}
+.gh{padding:0 0 8px}
+.gf{padding:8px 0 0;color:var(--label3);font-size:13px;line-height:18px}
+.t-eyebrow{text-transform:none;letter-spacing:-.15px;font-size:13px;line-height:18px;font-weight:400}
+.c2{color:var(--label2)} .c3{color:var(--label3)}
+.intro{color:var(--label2)} .intro b{color:var(--label)}
+
+/* ---------- home: header bar with the bump, avatar cloud, posts ---------- */
+.home-a{padding-bottom:30px}
+.ahead{position:relative;z-index:2;border-radius:0 0 30px 30px;box-shadow:0 10px 30px rgba(243,62,27,.035);height:calc(var(--safe-t) + 108px);background:linear-gradient(var(--tint),color-mix(in srgb,var(--tint) 55%,var(--bg)))}
+.abar{position:absolute;left:0;right:0;bottom:12px;display:flex;align-items:center;justify-content:space-between;padding:0 18px 0 34px}
+.wm{margin:0}
+.hic{display:flex;align-items:center;gap:6px}
+.hb{position:relative;width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:var(--label)}
+.rb{position:absolute;top:1px;right:0;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--red);color:#fff;font-size:11px;line-height:17px;font-weight:600;text-align:center;letter-spacing:0}
+.me{position:absolute;left:50%;bottom:-48px;transform:translateX(-50%);width:77px;height:77px;border-radius:50%;padding:4px;
+  background:color-mix(in srgb,var(--tint) 55%,var(--bg));z-index:2}
+.mav{display:block;width:100%;height:100%;border-radius:50%;overflow:hidden;background:var(--fill)}
+.mav img,.cav img,.pav img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+.mplus{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--on-ink);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px var(--bg)}
+.cloud{position:relative;height:150px;background:linear-gradient(color-mix(in srgb,var(--tint) 55%,var(--bg)),var(--bg));overflow:hidden}
+.cav{position:absolute;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;opacity:var(--o);background:var(--fill)}
+.cav img{filter:grayscale(.15)}
+.feed{padding:4px var(--m) 0}
+.post{position:relative;margin-top:22px;content-visibility:auto;contain-intrinsic-size:auto 330px}
+.pu{display:flex;align-items:center;gap:6px;position:relative;z-index:2;margin:0 0 -12px 20px;height:36px}
+.pav{width:36px;height:36px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px var(--bg);background:var(--fill);flex:none}
+.pun{font-size:14px;line-height:18px;font-weight:500;letter-spacing:-.25px;color:var(--label);margin-top:-12px}
+.pimg{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:363/223}
+.pim{display:block;width:100%;height:100%}
+.pim img{width:100%;height:100%;object-fit:cover;object-position:center 18%}
+.notch{position:absolute;right:0;bottom:0;width:95px;height:28px;display:flex;align-items:flex-end;justify-content:space-around;padding:0 6px 0 14px;
+  background:var(--bg);border-top-left-radius:16px}
+.notch::before,.notch::after{content:"";position:absolute;width:16px;height:16px;pointer-events:none}
+.notch::before{left:-16px;bottom:0;background:radial-gradient(circle at 0 0,transparent 15.5px,var(--bg) 16px)}
+.notch::after{right:0;top:-16px;background:radial-gradient(circle at 0 0,transparent 15.5px,var(--bg) 16px)}
+.notch button{width:36px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--label);margin-bottom:-6px}
+.notch button:first-child{color:var(--label3)}
+.pmeta{margin-top:10px;font-size:13.5px;line-height:18px;letter-spacing:-.2px}
+.pmeta .g{color:var(--label2);font-size:13px} .pmeta b{font-weight:500;color:var(--label)}
+.pcap{margin-top:3px;font-size:13.5px;line-height:18px;letter-spacing:-.2px;color:var(--label);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media (min-width:900px){
+  .ahead{height:120px}.abar{padding:0 40px}
+  .feed{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 28px;padding:4px 40px 0;max-width:1180px;margin:0 auto}
+  .cloud{max-width:1180px;margin:0 auto}
+}
+
+/* ---------- grids: rounded portrait cards (not circles) ---------- */
+.pcard,.sdisc{display:block;min-width:0;text-align:left}
+html .pcard .art{position:relative;display:block;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--fill)}
+html .pcard .art img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+.pcard .art::after,.pcard .art::before{display:none!important}
+.cn{display:block;margin-top:8px;font-size:14px;line-height:18px;font-weight:500;letter-spacing:-.25px;color:var(--label)}
+.cs{display:block;margin-top:1px;font-size:13px;line-height:17px;color:var(--label2)}
+/* shelves: a tinted tile holding a small cloud of its greats */
+.disc{position:relative;display:block;width:100%;aspect-ratio:1;border-radius:22px;background:linear-gradient(var(--tint),color-mix(in srgb,var(--tint) 40%,var(--bg)));overflow:hidden}
+.av{position:absolute;width:27%;aspect-ratio:1;border-radius:50%;overflow:hidden;transform:translate(-50%,-50%);box-shadow:0 0 0 2px var(--bg);background:var(--fill)}
+.av img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+.dbadge{position:absolute;right:10px;top:10px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--red);color:#fff;font-size:11px;line-height:17px;font-weight:600;text-align:center}
+.pgrid,.cats{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px!important}
+.discrow{gap:12px!important}
+.discrow>.sdisc{width:150px;flex:none}
+@media (min-width:900px){ .pgrid,.cats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:28px 20px!important} }
+
+/* ---------- buttons ---------- */
+html .btn{height:40px;padding:0 18px;border-radius:20px;font-size:15px;font-weight:600;letter-spacing:-.23px;box-shadow:none}
+html .btn-primary,html .btn-red,html.light .btn-primary,html.light .btn-red{background:var(--ink);color:var(--on-ink)}
+html .btn-tinted,html.light .btn-tinted{background:var(--fill);color:var(--label)}
+html .btn-done{width:100%;height:48px;border-radius:24px;font-size:17px;background:var(--fill);color:var(--label)}
+html .btn-play{background:var(--ink);color:var(--on-ink);box-shadow:none}
+html .btn-danger{background:#ff3b30;color:#fff}
+html .circ,html .ltitle .btn-icon.glass,html .ptop .btn-icon.glass,html.light .ltitle .btn-icon.glass,html.light .ptop .btn-icon.glass{
+  background:var(--fill)!important;color:var(--label);box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.ltitle .btn-icon.glass::after,.ptop .btn-icon.glass::after,.circ::after{display:none}
+/* filters: the reference's segmented control, light: translucent track, white selected pill */
+html .chip,html.light .chip{height:36px;padding:0 16px;border-radius:18px;font-size:14px;font-weight:500;letter-spacing:-.2px;background:var(--fill);color:var(--label2);box-shadow:none}
+html .chip.on,html.light .chip.on{background:var(--ink);color:var(--on-ink)}
+.seg-fly,html.light .seg-fly{background:color-mix(in srgb,var(--ink) 14%,transparent);border-radius:18px}
+.textbtn,html.light .textbtn{color:var(--label2)}
+@media (hover:hover){html .btn-tinted:hover,html .chip:not(.on):hover{background-color:var(--fill-on);color:var(--label)} html .btn-primary:hover{opacity:.86;box-shadow:none}}
+
+/* ---------- field ---------- */
+html .search,html.light .search{height:40px;border-radius:20px;padding:0 16px;background:var(--fill);box-shadow:none;color:var(--ph)}
+html .search input,html.light .search input{color:var(--label);font-size:15px;letter-spacing:-.2px}
+.search input::placeholder{color:var(--ph)}
+
+/* ---------- rows: post-header style (avatar + name, grey meta) ---------- */
+html .row{min-height:60px;gap:10px}
+html .row .lead{width:40px;height:40px;border-radius:50%;background:var(--fill)}
+.row .lead.ic{display:flex;align-items:center;justify-content:center;color:var(--label)}
+html .row .mid{padding:9px 0;box-shadow:inset 0 -1px 0 var(--sep)}
+html .row .end{box-shadow:inset 0 -1px 0 var(--sep);color:var(--label3)}
+html .row:last-child .mid,html .row:last-child .end{box-shadow:none}
+.row .mid .t{font-size:15px;line-height:20px;font-weight:500;letter-spacing:-.25px;color:var(--label)}
+.row .mid .s{display:block;margin-top:1px;font-size:13px;line-height:17px;color:var(--label2)}
+.row.cur .t{color:var(--label)}
+.row .prog{left:50px;background:var(--sep)} .row .prog i{background:var(--ink)}
+.rpill{display:inline-flex;align-items:center;height:32px;padding:0 14px;border-radius:16px;background:var(--ink);color:var(--on-ink);font-size:13px;font-weight:600}
+.rpill.off{background:var(--fill);color:var(--ph)}
+@media (hover:hover){html .row:hover{background:none} html .row:hover .t{opacity:.7}}
+.erows{background:none;border-radius:0;padding:0;box-shadow:none}
+html .group,html.light .group{background:none;border-radius:0;box-shadow:none}
+html .grow{min-height:54px;padding-left:0;gap:12px}
+html .grow .ico,html.light .grow .ico{width:34px;height:34px;border-radius:50%;background:var(--fill);color:var(--label);box-shadow:none}
+html .grow.destructive .ico{color:#ff3b30;background:var(--fill)}
+html .grow .mid{padding-right:0;box-shadow:inset 0 -1px 0 var(--sep)} html .grow:last-child .mid{box-shadow:none}
+html .grow .t-body{font-size:15px;letter-spacing:-.25px}
+
+/* ---------- panels and objects ---------- */
+html .acard,html.light .acard,html .cp,html.light .cp,html .artifact-card .object-stage,html.light .artifact-card .object-stage,
+html .archive-tile,html.light .archive-tile{background:var(--fill)!important;box-shadow:none!important;border:0;border-radius:22px}
+html .cp .chip2,html.light .cp .chip2{background:var(--bg)}
+html .hist-object,html.light .hist-object{background:var(--fill);box-shadow:none;border-radius:16px}
+.hist-kind{color:var(--label2);text-transform:none;letter-spacing:-.08px;font-size:13px;font-weight:400}
+html .hist-progress,html.light .hist-progress{background:var(--sep)} html .hist-progress i,html.light .hist-progress i{background:var(--ink)}
+html .hist-action,html.light .hist-action{color:var(--label2)}
+.history-item{box-shadow:inset 0 -1px 0 var(--sep)}
+html .empty-state,html.light .empty-state{background:var(--fill);border:0;border-radius:22px;box-shadow:none}
+.empty-state .t-title3{font-size:17px;line-height:22px;font-weight:600}
+html .empty-state .btn{background:var(--ink);color:var(--on-ink)}
+
+/* ---------- figure page: the photo screen ---------- */
+.fx{position:relative;min-height:100%;color:#fff;background:#0b0f0e}
+.fxbg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.fxbg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 12%;background:#111}
+.fxbg::before{content:"";position:absolute;inset:0;z-index:1;-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);
+  -webkit-mask:linear-gradient(transparent 34%,#000 58%);mask:linear-gradient(transparent 34%,#000 58%)}   /* the reference's soft photo behind the text; the face stays sharp */
+.fxbg::after{z-index:2;content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.18),transparent 22%,transparent 40%,rgba(0,0,0,.55) 66%,rgba(0,0,0,.82))}
+.fxtop{position:fixed;z-index:5;left:20px;right:20px;top:calc(var(--safe-t) + 10px);display:flex;justify-content:space-between;pointer-events:none}
+.fxb{pointer-events:auto;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;
+  background:rgba(255,255,255,.2);-webkit-backdrop-filter:blur(20px) saturate(1.5);backdrop-filter:blur(20px) saturate(1.5)}
+.fxhero{position:relative;z-index:1;min-height:calc(100svh - 92px - var(--safe-b));display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding:calc(var(--safe-t) + 70px) 19px 18px;text-align:center}
+.fxt{font-size:37px;line-height:39px;font-weight:600;letter-spacing:-1px;max-width:300px;text-wrap:balance;text-shadow:0 1px 18px rgba(0,0,0,.25)}
+.fxm{margin-top:12px;font-size:15px;line-height:20px;letter-spacing:-.3px;color:rgba(255,255,255,.62)}
+.seg{display:flex;align-items:center;width:100%;max-width:364px;height:52px;margin-top:22px;padding:3px;border-radius:26px;
+  background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(24px) saturate(1.4);backdrop-filter:blur(24px) saturate(1.4)}
+.seg button{flex:1;height:46px;border-radius:23px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:#fff;font-size:14px;font-weight:500;letter-spacing:-.3px}
+.seg button.on{background:#fff;color:var(--green)}
+.seg .si{width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.35);color:rgba(0,0,0,.6)}
+.seg .si.ok{background:var(--green);color:#fff}
+.seg .faved .si{background:#ffd60a;color:#000}
+.sdiv{width:1px;height:30px;background:rgba(255,255,255,.22);flex:none}
+.fxcard{width:100%;max-width:365px;margin-top:22px;padding:18px 22px 20px;border-radius:32px;background:rgba(255,255,255,.18);
+  -webkit-backdrop-filter:blur(30px) saturate(1.3);backdrop-filter:blur(30px) saturate(1.3);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.fxav{display:block;width:36px;height:36px;margin:0 auto;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.fxav img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+.fxcard .lav{margin-top:8px;font-size:14px;line-height:18px;color:var(--lav);letter-spacing:-.25px}
+.fxcard p{margin-top:4px;font-size:13px;line-height:16px;color:rgba(255,255,255,.82);letter-spacing:-.15px;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.fxpill{margin-top:20px;height:28px;padding:0 6px 0 13px;border-radius:14px;display:inline-flex;align-items:center;gap:7px;font-size:14px;letter-spacing:-.3px;color:#fff;
+  background:rgba(255,255,255,.13);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.fxpill i{width:16px;height:16px;border-radius:50%;background:#fff;color:#000;display:flex;align-items:center;justify-content:center}
+.fxbody{position:relative;z-index:1;margin:8px 10px 0;padding:6px 16px 30px;border-radius:32px;background:rgba(18,22,21,.55);
+  -webkit-backdrop-filter:blur(40px) saturate(1.3);backdrop-filter:blur(40px) saturate(1.3)}
+.fxbody .shead h2.t-sect{color:#fff}
+.fxbody .sect{margin-top:24px}
+.fxbody .t-sub,.fxbody p{color:rgba(255,255,255,.78)}
+.fxbody .c2,.fxbody .t-foot.c2,.fxbody .t-cap1.c2{color:rgba(255,255,255,.55)}
+.fxbody .artifact-card .object-stage{background:rgba(255,255,255,.08)!important}
+.fxbody .bm .t-foot{color:#fff}
+@media (min-width:900px){
+  .fxhero{min-height:calc(100vh - 40px)} .fxbody{max-width:900px;margin:8px auto 0;padding:10px 30px 40px}
+  .fxtop{left:calc(var(--cx) - 4px);right:24px;top:24px}
+  .fxhero{padding-left:calc(var(--sbw) + var(--sbx) + 19px)}
+  .fxbody{margin-left:calc(var(--sbw) + var(--sbx) + 24px);margin-right:24px;max-width:none}
+  .fxbg::before{-webkit-mask:linear-gradient(transparent 52%,#000 74%);mask:linear-gradient(transparent 52%,#000 74%)}
+  .fxbg img{object-position:center 22%}
+}
+html #topnav .lg span{font-family:var(--f);font-size:19px;font-weight:650;letter-spacing:-.5px;text-transform:lowercase}
+#npt{font-family:var(--f)!important;font-size:24px!important;line-height:29px!important;font-weight:600;letter-spacing:-.6px}
+
+/* ---------- bottom bar: convex arc, outline glyphs, black centre button ---------- */
+@media (max-width:899px){
+  #dock{padding:0;bottom:0}
+  #dock::before{display:none}
+  #tabs{position:relative;height:calc(85px + var(--safe-b) * .5);gap:0;align-items:flex-start;padding:0 26px}
+  #tabs::before{content:"";position:absolute;left:-60%;width:220%;top:0;height:402px;border-radius:50%;z-index:-1;
+    background:linear-gradient(var(--bar) 0,var(--bar2) 90px);box-shadow:0 -1px 0 rgba(0,0,0,.04),0 -10px 30px rgba(0,0,0,.07)}
+  html #tabbar{flex:1;height:auto;padding:0;margin-top:30px;background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+    display:flex;align-items:center;justify-content:space-between;border-radius:0}
+  #tabsearch{display:none}
+  #tabhl{display:none}
+  .tab{flex:none;width:52px;height:44px;color:var(--label3)} .tab .lb{display:none}
+  .tab.on,html.light .tab.on{color:var(--label)} html.light .tab:not(.on){color:#8c8c8c}
+  #tabplay{width:42px;height:42px;margin-top:-14px;border-radius:50%;background:var(--ink);color:var(--on-ink);display:flex;align-items:center;justify-content:center;flex:none}
+  #mini{margin:0 14px 8px;width:auto}
+  .page{padding-bottom:calc(85px + var(--minih) + 40px + var(--safe-b))}
+}
+@media (min-width:900px){ #tabplay{display:none} }
+#tabbar,#tabsearch,#mini,#topnav,.toast{box-shadow:none!important;color:var(--label)}
+#mini.glass::after,#topnav.glass::after,.toast.glass::after,#tabbar.glass::after{display:none}
+#mini,.toast{border:1px solid var(--sep)}
+.navbar::before,html.light .navbar::before{background:color-mix(in srgb,var(--bg) 92%,transparent)!important}
+html #topnav button.on,html.light #topnav button.on{color:var(--label);background:var(--bg);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+html #topnav button{color:var(--label2)} html #topnav .lg{color:var(--label)}
+.toast button{background:var(--ink);color:var(--on-ink)}
+
+/* ---------- sheets ---------- */
+ion-modal.greats-modal{--backdrop-opacity:.3}
+ion-modal.sheet-modal{--background:var(--bg);--height:auto;--border-radius:28px}
+ion-modal.sheet-modal::part(handle){width:36px;height:5px;top:7px;background:var(--arc)}
+@media (max-width:767px){
+  ion-modal.sheet-modal{--width:calc(100% - 20px)}
+  ion-modal.sheet-modal::part(content){margin-bottom:calc(10px + var(--safe-b));border-radius:28px}
+}
+ion-modal.sheet-modal .ion-page{display:block;contain:content}
+.sheet{color:var(--label)}
+.sheet .sh-h{justify-content:center;padding:26px 16px 14px;position:relative}
+.sheet .sh-h #sht{font-size:17px;line-height:22px;font-weight:600;letter-spacing:-.4px;text-align:center}
+.sheet .sh-h #shx{display:none}
+.sheet .sh-b{max-height:min(62vh,560px);overflow-y:auto;padding:0 16px 8px}
+.sheet .sh-f{padding:10px 16px 16px}
+.sheet:has(.sheet-actions) .sh-f{display:none}
 </style>
 </head>
 <body>
@@ -1230,6 +1480,7 @@ html.light .seg-fly{background:rgba(0,0,0,.06)}
 <section class="sheet glass" id="sheet" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="sht">
   <div class="sh-h"><div class="t-title3" id="sht"></div><button class="btn-icon sm glass press" id="shx" aria-label="Close"></button></div>
   <div class="sh-b ion-content-scroll-host" id="shb"></div>
+  <div class="sh-f"><button class="btn btn-done press" id="shdone">Done</button></div>
 </section>
 <div class="toast glass t-sub" id="toast" role="status" aria-live="polite"><span id="toastmsg"></span><button id="toastact" class="press" type="button"></button></div>
 <audio id="audio" preload="none"></audio>
@@ -1237,6 +1488,12 @@ html.light .seg-fly{background:rgba(0,0,0,.06)}
 <script>
 /* ============================== icons ============================== */
 const sfi=(n,s,c)=>`<i class="sfi" style="--m:url(assets/sf/${n}.svg);width:${s}px;height:${s}px${c?';background-color:'+c:''}"></i>`;
+const OI={   /* outline glyphs, 1.6 stroke (bottom bar) */
+  home:'<path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/>',
+  person:'<circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/>',
+  books:'<rect x="4" y="4" width="5" height="16" rx="1.5"/><rect x="11" y="4" width="5" height="16" rx="1.5"/><path d="m18 5.2 2.6.8-3.6 14-2.4-.7"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m16.2 16.2 4.3 4.3"/>' };
+const oi=(n,s)=>`<svg class="oi" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${OI[n]}</svg>`;
 const IC={
   play:s=>sfi('play_fill',s), pause:s=>sfi('pause_fill',s), rw:s=>sfi('backward_fill',s), ff:s=>sfi('forward_fill',s),
   star:(s,f)=>sfi(f?'star_fill':'star',s,f?'#FFD60A':null), search:s=>sfi('search',s), back:s=>sfi('chevron_left',s),
@@ -1294,7 +1551,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261101-0400';
+const BUILD='20261101-0700';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -1307,7 +1564,7 @@ const store={ get(k,d){try{const v=localStorage.getItem('fs.'+k);return v===null
 const lightMQ=matchMedia('(prefers-color-scheme: light)');
 function applyTheme(){ const t=store.get('theme','system'), light=t==='light'||(t==='system'&&lightMQ.matches);
   document.documentElement.classList.toggle('light',light);
-  document.querySelector('meta[name="theme-color"]').content=light?'#f7f7f7':'#000000'; }
+  document.querySelector('meta[name="theme-color"]').content=light?'#ffffff':'#000000'; }
 lightMQ.addEventListener('change',applyTheme); applyTheme();
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const fmtDur=s=>{s=Math.max(0,Math.round(s||0));const h=~~(s/3600),m=~~((s%3600)/60);return h?h+' hr '+(m?m+' min':''):m+' min'};
@@ -1367,6 +1624,7 @@ const rowSub = (p, e) => {
 /* ============================== router ============================== */
 /* routes: home | figures | library | history | search | p/<slug> | l/<list> | settings | system */
 const TABS=[['home','Home','house'],['figures','Greats','people'],['library','Library','grid'],['history','History','clock']];
+const BAR=[['home','Home','home'],['figures','Greats','person'],null,['library','Library','books'],['search','Search','search']];
 let route=null, tabOf={home:'home'}, scrollMem={}, lastTab='home';
 const parse=h=>{ h=(h||'').replace(/^#\/?/,''); return h||'home'; };
 const depth=r=>r.includes('/')||r==='settings'||r==='system'?1:0;
@@ -1383,7 +1641,7 @@ const activePage=()=>{ const vs=[...navEl().children].filter(c=>c.classList.cont
 window.addEventListener('hashchange',()=>{ const r=parse(location.hash);
   if(navSync){ navSync=false; return; }               /* the swipe gesture already popped the page */
   const back=navStack.length>1&&navStack[navStack.length-2]===r, pushed=pendingPush; pendingPush=false;
-  const kind=!route?'none':back?'pop':pushed||depth(r)>depth(route)?'push':depth(r)<depth(route)?'pop':'tab';
+  const kind=!route?'none':back?'pop':pushed||depth(r)>depth(route)?'push':depth(r)<depth(route)&&navStack.length<2?'pop':'tab';   /* a different tab from a pushed page is a tab switch, not a pop to whatever is underneath */
   if(kind==='push') navStack.push(r); else if(kind==='pop') navStack.pop(); else navStack=[r];
   render(r,kind); });
 const lastPage={};   /* route -> the page element last built for it; its decoded photos are reused */
@@ -1553,7 +1811,9 @@ function paintChrome(){
   const active=depth(route)?(route.startsWith('p/')?'figures':route==='settings'||route==='system'?'settings':route.startsWith('l/')?'library':lastTab):route;
   const tb=$('tabbar');
   const keepHL=$('tabhl')||Object.assign(document.createElement('span'),{id:'tabhl'});
-  tb.innerHTML=TABS.map(([id,l,ic])=>`<button class="tab press${active===id?' on':''}" data-t="${id}"${active===id?' aria-current="page"':''}>${IC[ic](24)}<span class="lb">${l}</span></button>`).join('');
+  tb.innerHTML=BAR.map(t=>t?`<button class="tab press${active===t[0]?' on':''}" data-t="${t[0]}" aria-label="${t[1]}"${active===t[0]?' aria-current="page"':''}>${oi(t[2],24)}<span class="lb">${t[1]}</span></button>`
+    :`<button id="tabplay" class="press" aria-label="${cur?'Open Now Playing':'Play today’s study'}">${cur&&!audio.paused?IC.pause(15):IC.play(15)}</button>`).join('');
+  $('tabplay').onclick=()=>{ if(cur) openNP(); else { const f=featured(); playEp(f,resumeIndex(f),'bio'); openNP(); } };
   tb.prepend(keepHL);
   tb.querySelectorAll('.tab').forEach(b=>b.onclick=()=>go(b.dataset.t));
   const on=tb.querySelector('.tab.on'), hl=$('tabhl');
@@ -1586,8 +1846,18 @@ const img=(p,cls='',full=false)=>`<img class="fade${cls?' '+cls:''}" src="${full
 const shead=(t,link)=>`<div class="shead"><h2 class="t-sect">${esc(t)}${link?IC.chev(15):''}</h2>${link?`<button class="textbtn t-sub" data-go="${link}">See All</button>`:''}</div>`;
 const tile=p=>`<button class="tile press" data-p="${p.slug}" style="${tone(p)}"><span class="art toned">${p.episodes.some(e=>e.date>='2026-01-01')?'<span class="badge">NEW</span>':''}${img(p)}</span>
   <span class="tt t-foot trunc">${esc(p.shortName)}</span><span class="t-foot c2 trunc" style="display:block">${esc(meta(p).sub)}</span></button>`;
-const pcard=p=>`<button class="pcard press" data-p="${p.slug}"><span class="art">${img(p)}
-  <span class="ov"><span class="t-card">${esc(p.shortName)}</span><span class="t-cap1" style="color:rgba(255,255,255,.65)">${p.episodes.length} book${p.episodes.length>1?'s':''} · ${hours(p)} hr</span></span></span></button>`;
+const pcard=p=>`<button class="pcard press" data-p="${p.slug}"><span class="art">${img(p)}</span>
+  <span class="cn trunc">${esc(p.shortName)}</span><span class="cs trunc">${p.episodes.length} book${p.episodes.length>1?'s':''} · ${hours(p)} hr</span></button>`;
+/* a disc holding a cluster of greats (the reference's "Family" / "Co-workers" circles); positions measured from it */
+const CLUSTER={1:[[50,50]],2:[[36.5,50],[63.5,50]],3:[[37.7,38],[62.3,38],[50,62]],4:[[37.7,37],[62.3,37],[37.7,63],[62.3,63]],
+  5:[[29,38],[50,34],[71,38],[37.7,63],[62.3,63]],6:[[29,38],[50,34],[71,38],[29,62],[50,66],[71,62]]};
+const cluster=ps=>{ const L=ps.slice(0,6), at=CLUSTER[L.length]||[]; return L.map((p,i)=>`<span class="av" style="left:${at[i][0]}%;top:${at[i][1]}%">${img(p)}</span>`).join(''); };
+const sdisc=(go,title,sub,ps,badge=0)=>`<button class="sdisc press" data-go="${go}"><span class="disc">${cluster(ps)}${badge?`<span class="dbadge num">${badge}</span>`:''}</span>
+  <span class="cn trunc">${esc(title)}</span><span class="cs trunc">${esc(sub)}</span></button>`;
+const isNew=p=>p.episodes.some(e=>e.date>='2026-01-01');
+const shelfDiscs=()=>SECTIONS.map(([k,l])=>{ const ps=DATA.people.filter(x=>meta(x).cat===k); return sdisc('l/shelf-'+k,l,ps.length+' greats',ps,ps.filter(isNew).length); }).join('');
+const archiveDiscs=()=>KINDS.slice(1).map(([k,l])=>{ const n=DATA.people.reduce((t,p)=>t+items(p,k).length,0);
+  return sdisc('l/'+k,l,n+' recordings',DATA.people.filter(p=>items(p,k).length)); }).join('');
 const JACKETS=[['#273c4a','#f5efe4'],['#6b2d2b','#f7eadb'],['#40513b','#f2ebda'],['#9c6a2c','#171411'],['#493a5b','#f4ecdf'],['#d8c8a8','#28231d'],['#1f2023','#eee8dc']];
 const objectSeed=s=>[...String(s)].reduce((n,c)=>(n*31+c.charCodeAt(0))>>>0,7);
 /* generated book jacket for one Founders episode */
@@ -1610,18 +1880,19 @@ function artifactVisual(p,k,e,i){
 }
 const artifactCard=(p,k,e,i)=>`<button class="artifact-card press" data-ep="${p.slug}|${k}|${i}"><span class="object-stage">${artifactVisual(p,k,e,i)}</span>
   <span><span class="t-head clamp2" style="display:block">${esc(rowTitle(p,e))}</span><span class="t-foot c2" style="display:block;margin-top:3px">${esc(p.shortName)} · ${fmtDur(e.sec)}</span></span></button>`;
-const fcard=p=>{ const fav=favs.includes(p.name); return `<span class="fcw"><button class="fc press" data-p="${p.slug}">${img(p)}
-  <span class="in"><span class="t-card" style="display:block;font-size:30px;line-height:30px">${esc(p.shortName)}</span>
-  <span class="t-foot" style="display:block;margin-top:6px;color:rgba(255,255,255,.7)">${esc(meta(p).sub)} · ${p.episodes.length} books</span></span></button>
+const fcard=p=>{ const fav=favs.includes(p.name); return `<span class="fcw">${pcard(p)}
   <button class="fcfav press" data-favp="${p.slug}" aria-label="${fav?'Remove '+esc(p.shortName)+' from':'Add '+esc(p.shortName)+' to'} Favourites" aria-pressed="${fav}">${IC.star(18,fav)}</button></span>`; };
-const er=(label,n,go,right='')=>`<button class="er press" data-go="${go}"><span class="l">${esc(label)}${n!=null?`<sup>[${n}]</sup>`:''}</span><span class="r">${right}<span class="arr">${sfi('chevron_right',15)}</span></span></button>`;
+const ER_IC={History:'clock',Favourites:'star',Continue:'play',Finished:'check'};
+const er=(label,n,go)=>`<button class="row lrow press" data-go="${go}"><span class="lead ic">${IC[ER_IC[label]||'clock'](18)}</span>
+  <span class="mid"><span class="t trunc">${esc(label)}</span><span class="s trunc">${n} ${n===1?'item':'items'}</span></span><span class="end">${IC.chev(14)}</span></button>`;
 function erow(p,k,e,i,{num=true,lead=false}={}){
   const isCur=cur&&cur.p===p&&cur.k===k&&cur.i===i, dn=done(p,e), ps=pos(p,e), st=ps>60&&!dn;
   const n=isCur?`<span class="eq${audio.paused?' paused':''}"><i></i><i></i><i></i></span>`:(i+1);
-  const side=st?`<span class="cr t-foot" style="font-weight:600">${fmtDur((e.sec||0)-ps)} left</span>`:dn?IC.check(15):`<span class="t-foot num">${fmtDur(e.sec)}</span>`;
+  const side=lead?`<span class="rpill${dn&&!isCur?' off':''}">${isCur?'Playing':st?'Resume':dn?'Played':'Play'}</span>`
+    :st?`<span class="cr t-foot" style="font-weight:600">${fmtDur((e.sec||0)-ps)} left</span>`:dn?IC.check(15):`<span class="t-foot num">${fmtDur(e.sec)}</span>`;
   return `<button class="row press${isCur?' cur':''}" data-ep="${p.slug}|${k}|${i}">
     ${lead?`<span class="lead toned" style="${tone(p)}">${img(p)}</span>`:''}${num?`<span class="n t-sub num">${n}</span>`:''}
-    <span class="mid"><span class="t t-callout trunc">${esc(rowTitle(p,e))}</span><span class="t-foot c2 trunc">${esc(lead?p.shortName+' · '+mon(e.date):rowSub(p,e))}</span></span>
+    <span class="mid"><span class="t t-callout trunc">${esc(rowTitle(p,e))}</span><span class="s t-foot c2 trunc">${esc(lead?p.shortName+' · '+(e.sec?fmtDur(e.sec):mon(e.date)):rowSub(p,e))}</span></span>
     <span class="end">${side}</span>${st?`<span class="prog"><i style="width:${Math.min(99,100*ps/(e.sec||1))}%"></i></span>`:''}</button>`;
 }
 function continueList(){
@@ -1672,31 +1943,32 @@ const wide=c=>`<button class="wide press" data-ep="${c.p.slug}|${c.k}|${c.i}" st
 /* ============================== pages ============================== */
 function featured(){ const F=['Steve Jobs','Winston Churchill','Napoleon','Alexander the Great','Elon Musk','Jeff Bezos','Jensen Huang','Nikola Tesla','Andrew Carnegie','Peter Thiel','Henry Ford','Charles de Gaulle']
   .map(n=>DATA.people.find(p=>p.name===n)).filter(Boolean); return F[Math.floor(Date.now()/864e5)%F.length]; }
+const CLOUD=[[95.0, 19.1, 23.3, 1], [21.4, 23.4, 28.8, 1], [79.6, 29.2, 21.8, 0.95], [10.2, 37.7, 31.1, 0.84], [33.1, 38.9, 33.4, 0.46], [2.1, 51.0, 34.2, 1], [70.4, 58.0, 31.1, 0.95], [96.9, 58.0, 42.0, 0.87], [86.6, 59.1, 28.0, 0.58], [41.8, 66.9, 24.1, 0.67], [56.1, 71.2, 34.2, 0.6], [19.0, 76.6, 43.5, 0.46], [33.9, 92.9, 28.0, 0.42], [8.3, 98.0, 27.2, 0.47], [93.9, 98.4, 24.9, 0.35], [45.5, 105.4, 20.2, 0.35], [78.5, 105.4, 42.0, 0.38], [61.1, 114.7, 34.2, 0.35], [25.0, 115.9, 28.0, 0.35]];   /* [left%, top pt, diameter pt, opacity] from the reference */
+const badge=n=>n?`<span class="rb num">${n>9?'9+':n}</span>`:'';
+function post(p,i){
+  const m=meta(p), e=p.episodes[resumeIndex(p)]||p.episodes[0], k=p.episodes.indexOf(e), fav=favs.includes(p.name);
+  const quote=(m.bio||'').split(String.fromCharCode(10))[0];
+  return `<article class="post"><button class="pu press" data-go="p/${p.slug}"><span class="pav">${img(p)}</span><span class="pun">${esc(p.shortName)}</span></button>
+    <div class="pimg"><button class="pim press" data-p="${p.slug}" aria-label="${esc(p.shortName)}">${img(p,'',i<2)}</button>
+      <span class="notch"><button class="press" data-ep="${p.slug}|bio|${k}" aria-label="Play ${esc(rowTitle(p,e))}">${IC.play(17)}</button>
+        <button class="press" data-favp="${p.slug}" aria-pressed="${fav}" aria-label="${fav?'Remove '+esc(p.shortName)+' from':'Add '+esc(p.shortName)+' to'} Favourites">${IC.star(18,fav)}</button></span></div>
+    <div class="pmeta"><span class="g">${p.episodes.length} book${p.episodes.length>1?'s':''} ·</span> <b>${esc(rowTitle(p,e))}</b></div>
+    ${quote?`<p class="pcap">${esc(quote)}</p>`:''}</article>`;
+}
 function pageHome(){
-  const byCount=DATA.people.slice().sort((a,b)=>b.episodes.length-a.episodes.length);
-  const recent=DATA.people.flatMap(p=>p.episodes.map((e,i)=>({p,e,i}))).filter(r=>r.e.date).sort((a,b)=>b.e.date.localeCompare(a.e.date)).slice(0,8);
-  const cont=continueList().slice(0,10);
-  const history=historyList(), weekStart=Date.now()-7*864e5, studied=history.filter(x=>x.t>=weekStart).length;
-  const fav=DATA.people.filter(p=>favs.includes(p.name));
-  const pop=[featured(),...byCount.filter(p=>p!==featured())].slice(0,8);
+  const cont=continueList(), history=historyList(), weekStart=Date.now()-7*864e5, studied=history.filter(x=>x.t>=weekStart).length;
   const focus=cont[0]||{p:featured(),k:'bio',e:featured().episodes[0],i:0};
-  return `<div class="content">
-  <div class="veil" aria-hidden="true"><img src="${thumbSrc(focus.p)}" alt="" width="480" height="640" decoding="async"></div>
-  <div class="ltitle" data-title="The Greats"><h1 class="t-page" style="font-size:52px;line-height:52px">The Greats</h1>
-    <button class="btn-icon glass press mob" data-go="settings" aria-label="Settings">${IC.gear(19)}</button></div>
-  <div class="wrap rise"><p class="intro"><b>Study the lives that shaped the world.</b> Listen closely, return often, and carry the best ideas into your own work.</p>
-    <div class="intro-acts"><button class="btn btn-primary press" data-ep="${focus.p.slug}|${focus.k}|${focus.i}">${IC.play(14)} ${cont.length?'Continue':'Today’s study'}</button>
-      <button class="circ press" data-go="history" aria-label="History, ${studied} studied this week">${IC.clock(18)}</button>
-      <button class="circ press" data-go="search" aria-label="Search">${IC.search(18)}</button>
-      <button class="circ press" data-go="l/favs" aria-label="Favourites">${IC.star(18)}</button></div>
-    ${acard(focus)}</div>
-  <section class="sect"><div class="wrap">${shead('Choose a great')}</div><div class="hrow rise">${pop.map(fcard).join('')}</div></section>
-  ${cont.length?`<section class="sect"><div class="wrap">${shead('Continue')}</div><div class="hrow">${cont.map(c=>book(c.p,c.k,c.e,c.i)).join('')}</div></section>`:''}
-  <section class="sect"><div class="wrap">${shead('Shelves')}</div>
-    <div class="hrow shelfrow">${SECTIONS.map(([k,l])=>{ const ps=DATA.people.filter(x=>meta(x).cat===k),p=ps[0];
-      return `<button class="cat press" data-go="l/shelf-${k}"><span class="bgc"></span>${p?img(p):''}<span class="copy"><span class="t-eyebrow c2">Shelf</span><span class="tt t-head">${l}</span><span class="sub t-foot">${ps.length} greats</span></span></button>`; }).join('')}</div></section>
-  <section class="sect"><div class="wrap">${shead('New books')}</div><div class="hrow bookshelf">${recent.map(r=>book(r.p,'bio',r.e,r.i)).join('')}</div></section>
-  ${fav.length?`<section class="sect"><div class="wrap">${shead('Your favourites','l/favs')}</div><div class="hrow">${fav.map(tile).join('')}</div></section>`:''}
+  const byCount=DATA.people.slice().sort((a,b)=>b.episodes.length-a.episodes.length);
+  const order=[focus.p,...cont.map(c=>c.p),featured(),...byCount].filter((p,i,a)=>a.indexOf(p)===i);
+  const others=DATA.people.filter(p=>p!==focus.p);
+  return `<div class="content home-a">
+  <header class="ahead"><div class="abar"><h1 class="wm" data-title="The Greats">the greats</h1>
+    <span class="hic"><button class="hb press" data-go="l/favs" aria-label="Favourites, ${favs.length}">${IC.star(22,favs.length>0)}${badge(favs.length)}</button>
+      <button class="hb press" data-go="history" aria-label="History, ${studied} this week">${IC.clock(22)}${badge(studied)}</button>
+      <button class="hb press mob" data-go="settings" aria-label="Settings">${IC.gear(21)}</button></span></div>
+    <button class="me press" data-ep="${focus.p.slug}|${focus.k}|${focus.i}" aria-label="${cont.length?'Continue':'Play today’s study'}: ${esc(rowTitle(focus.p,focus.e))}"><span class="mav">${img(focus.p)}</span><span class="mplus">${IC.play(10)}</span></button></header>
+  <div class="cloud" aria-label="All greats">${CLOUD.map(([x,y,d,o],n)=>{ const p=others[n%others.length]; return `<button class="cav press" data-p="${p.slug}" aria-label="${esc(p.shortName)}" style="left:${x}%;top:${y}px;width:${d}px;height:${d}px;--o:${o}">${img(p)}</button>`; }).join('')}</div>
+  <div class="feed">${order.slice(0,14).map(post).join('')}</div>
   </div>`;
 }
 let figFilter='all', historyFilter='all', searchQuery='';
@@ -1704,7 +1976,7 @@ function pageFigures(){
   const ps=DATA.people.filter(p=>figFilter==='all'||meta(p).cat===figFilter);
   return `<div class="content"><div class="ltitle" data-title="Greats"><h1 class="t-page">Greats</h1><span class="t-sub c2 num">${ps.length}</span></div>
   <div class="hrow" style="gap:8px;margin-top:6px">${[['all','All'],...SECTIONS].map(([k,l])=>`<button class="chip press${figFilter===k?' on':''}" data-fil="${k}" aria-pressed="${figFilter===k}">${l}</button>`).join('')}</div>
-  <div class="wrap rise" style="margin-top:20px"><div class="pgrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:22px 14px">${ps.map(pcard).join('')}</div></div></div>`;
+  <div class="wrap rise" style="margin-top:20px"><div class="pgrid">${ps.map(pcard).join('')}</div></div></div>`;
 }
 function pageLibrary(){
   const cont=continueList(), hist=historyList(); let fin=0; DATA.people.forEach(p=>KINDS.forEach(([k])=>items(p,k).forEach(e=>{ if(done(p,e)) fin++; })));
@@ -1716,14 +1988,13 @@ function pageLibrary(){
   return `<div class="content libwrap"><div class="ltitle" data-title="Library"><h1 class="t-page">Library</h1>
     <button class="btn-icon glass press mob" data-go="settings" aria-label="Settings">${IC.gear(19)}</button></div>
   <div class="wrap rise">
-    ${now?`<div class="t-foot c2" style="margin:8px 0 10px">Currently playing</div>
+    ${now?`<div class="slabel" style="margin:8px 0 12px">Currently playing</div>
       <button class="cp press" data-ep="${now.p.slug}|${now.k}|${now.i}">${cover(now.p,now.k,now.e,now.i)}
         <span style="flex:1;min-width:0"><span class="t-head clamp2" style="display:block">${esc(rowTitle(now.p,now.e))}</span><span class="t-foot c2">${esc(now.p.shortName)}</span>
         <span class="chip2">${IC.play(10)} ${pct}% complete</span></span></button>`:''}
     <div class="erows" style="margin-top:22px">${er('History',hist.length,'history')}${er('Favourites',favs.length,'l/favs')}${er('Continue',cont.length,'l/continue')}${er('Finished',fin,'l/finished')}</div>
-    <section class="sect"><div class="shead"><h2 class="t-sect">The archive</h2><span class="t-foot c2">Recorded history</span></div>
-      <div class="archive-showcase">${archives.map(({k,n,x})=>`<button class="archive-tile press" data-go="l/${k}"><span class="object-stage">${x?artifactVisual(x.p,k,x.e,0):''}</span>
-        <span class="archive-meta"><span><span class="t-title3" style="display:block">${esc(KLABEL[k])}</span><span class="t-foot c2">${k==='letters'?'Original words':k==='edits'?'Condensed ideas':'Voices in context'}</span></span><span class="t-foot c2 num">${n}</span></span></button>`).join('')}</div></section>
+    <section class="sect">${shead('The archive')}
+      <div class="cats">${archiveDiscs()}</div></section>
   </div></div>`;
 }
 function pageHistory(){
@@ -1735,7 +2006,7 @@ function pageHistory(){
     empty(historyFilter==='all'?'Your history starts here':'Nothing in this view',historyFilter==='all'?'Play a book, speech, letter, or edit and it will appear here in order.':'Try another filter or choose something new to study.','Choose a great','figures');
   return `<div class="content"><div class="ltitle" data-title="History"><h1 class="t-page">History</h1>
     <button class="btn-icon glass press mob" data-go="settings" aria-label="Settings">${IC.gear(19)}</button></div>
-    <div class="wrap rise"><div class="history-head"><div><div class="t-eyebrow" style="color:#c9a96f">Your practice</div><p class="t-body">What you return to shapes you. Resume an idea, revisit a life, or remove what no longer belongs.</p></div>
+    <div class="wrap rise"><div class="history-head"><div><div class="slabel">Your practice</div><p class="t-body">What you return to shapes you. Resume an idea, revisit a life, or remove what no longer belongs.</p></div>
       <div class="history-tools"><button class="btn btn-tinted btn-sm press" data-a="history-clear"${all.length?'':' disabled aria-disabled="true"'}>Clear History</button></div></div>
       <div class="history-filters" role="group" aria-label="History filter">${filters.map(([id,label])=>`<button class="chip press${historyFilter===id?' on':''}" data-hfil="${id}" aria-pressed="${historyFilter===id}">${label}</button>`).join('')}</div>
       <div id="history-results">${body}</div></div></div>`;
@@ -1743,12 +2014,10 @@ function pageHistory(){
 function pageSearch(){
   const kindCount=k=>DATA.people.reduce((n,p)=>n+items(p,k).length,0);
   return `<div class="content"><div class="ltitle" data-title="Search"><h1 class="t-page">Search</h1></div>
-  <div class="wrap"><label class="search">${IC.search(17)}<span class="sr-only">Search greats, books, and speeches</span><input id="q" type="search" value="${esc(searchQuery)}" placeholder="Greats, books, speeches" autocomplete="off" aria-keyshortcuts="Control+F Meta+F"></label>
+  <div class="wrap"><label class="search"><span class="sr-only">Search greats, books, and speeches</span><input id="q" type="search" value="${esc(searchQuery)}" placeholder="Search" autocomplete="off" aria-keyshortcuts="Control+F Meta+F"></label>
   <div id="qres">${searchResults(searchQuery)}</div>
   <section class="sect rise" id="cats"${searchQuery?' style="display:none"':''}>${shead('Browse Shelves')}
-    <div class="cats" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">${SECTIONS.map(([k,l])=>{ const ps=DATA.people.filter(x=>meta(x).cat===k),p=ps[0];
-      return `<button class="cat press" data-go="l/shelf-${k}"><span class="bgc"></span>${p?img(p):''}<span class="copy"><span class="t-eyebrow c2">Shelf</span><span class="tt t-head">${l}</span><span class="sub t-foot">${ps.length} greats</span></span></button>`; }).join('')}
-      ${KINDS.slice(1).map(([k,l])=>`<button class="cat press" data-go="l/${k}"><span class="bgc"></span><span class="mark" aria-hidden="true">${l[0]}</span><span class="copy"><span class="t-eyebrow c2">Archive</span><span class="tt t-head">${l}</span><span class="sub t-foot">${kindCount(k)} recordings</span></span></button>`).join('')}</div></section></div></div>`;
+    <div class="cats">${shelfDiscs()}${archiveDiscs()}</div></section></div></div>`;
 }
 function searchResults(q){
   q=q.trim().toLowerCase(); if(!q) return '';
@@ -1772,22 +2041,21 @@ function pagePerson(p){
     <div class="hrow bleed" style="gap:16px">${p.episodes.map((e,i)=>book(p,'bio',e,i)).join('')}</div></section>`;
   const more=['speeches','edits','letters'].map(k=>{ const L=items(p,k); return L.length?`<section class="sect">${shead(KLABEL[k])}<div class="artifact-grid">${L.map((e,i)=>artifactCard(p,k,e,i)).join('')}</div></section>`:''; }).join('');
   const about=`<section class="sect"><h2 class="t-sect">Biography</h2><p class="t-sub" style="color:var(--text2);margin-top:8px;white-space:pre-line">${esc(m.bio)}</p></section>`;
-  return `<div class="ph"><img src="${P[p.name]}" alt="" width="900" height="1200" decoding="async" fetchpriority="high" id="pimg">
-      <div class="top"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button>
-        <button class="btn-icon glass press" data-a="about" aria-label="About">${IC.more(20)}</button></div>
-      <div class="bot" data-title="${esc(p.shortName)}"><div class="t-eyebrow" style="color:rgba(255,255,255,.6)">${esc(shelf)}</div>
-        <div class="nm" style="margin-top:6px">${esc(p.shortName)}</div><div class="q">${esc(quote)}</div>${stats}${acts}</div></div>
-    <div class="wrap mob">${books}${more}${about}</div>
-    <div class="pdesk"><div class="card">${img(p,'',true)}</div>
-      <div><div class="ptop" style="position:fixed;top:14px;left:var(--m);z-index:50"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
-        <div class="t-eyebrow c2" data-title="${esc(p.shortName)}">${esc(shelf)} · ${esc(m.sub)}</div>
-        <h1 class="nm" style="margin-top:10px">${esc(p.shortName)}</h1>
-        <p class="t-body" style="color:var(--text2);margin-top:18px;max-width:620px">${esc(quote)}</p>${stats}
-        <div style="max-width:420px">${acts}</div>${books}${more}${about}</div></div>`;
+  const kinds=[['bio','Books'],['speeches','Speeches'],['letters','Letters'],['edits','Edits']].filter(([k])=>items(p,k).length);
+  return `<div class="fx"><div class="fxbg" aria-hidden="true">${img(p,'lo')}<img class="fade" src="${P[p.name]}" alt="" width="900" height="1200" decoding="async" fetchpriority="high" id="pimg"></div>
+    <div class="fxtop"><button class="fxb press" data-a="back" aria-label="Back">${IC.back(19)}</button><button class="fxb press" data-a="about" aria-label="About">${IC.more(19)}</button></div>
+    <section class="fxhero"><h1 class="fxt" data-title="${esc(p.shortName)}">${esc(p.shortName)}</h1>
+      <p class="fxm">${esc(shelf)}<br>${p.episodes.length} book${p.episodes.length>1?'s':''} · ${hours(p)} hours${n('letters')?`<br>${n('letters')} letter${n('letters')>1?'s':''}`:n('speeches')?`<br>${n('speeches')} speech${n('speeches')>1?'es':''}`:''}</p>
+      <div class="seg" role="group" aria-label="Actions"><button class="on press" data-a="play"><i class="si ok">${IC.play(9)}</i><span>Play</span></button>
+        <button class="press" data-a="shuffle"><i class="si">${IC.shuffle(9)}</i><span>Shuffle</span></button><span class="sdiv" aria-hidden="true"></span>
+        <button class="press${fav?' faved':''}" data-a="fav" aria-pressed="${fav}"><i class="si">${IC.star(9,fav)}</i><span>${fav?'Saved':'Save'}</span></button></div>
+      <div class="fxcard"><span class="fxav">${img(p)}</span><div class="lav">${esc(m.sub||shelf)}</div><p>${esc(quote)}</p></div>
+      <button class="fxpill press" data-a="scroll">Scroll down for the ${kinds.length>1?'archive':'books'} <i>${IC.down(10)}</i></button></section>
+    <div class="fxbody" id="fxbody">${books}${more}${about}</div></div>`;
 }
 function pageList(id){
   let title='', body='';
-  const grid=ps=>`<div class="pgrid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:22px 14px">${ps.map(pcard).join('')}</div>`;
+  const grid=ps=>`<div class="pgrid">${ps.map(pcard).join('')}</div>`;
   if(id==='favs'){ title='Favourites'; const ps=DATA.people.filter(p=>favs.includes(p.name)); body=ps.length?grid(ps):empty('No favourites yet','Save a great and they’ll stay close at hand.','Browse Greats','figures'); }
   else if(id==='continue'){ title='Continue Listening'; const c=continueList(); body=c.length?`<div class="rows">${c.map(r=>erow(r.p,r.k,r.e,r.i,{num:false,lead:true})).join('')}</div>`:empty('Nothing in progress','Start an episode and your place will appear here.','Find something to play','search'); }
   else if(id==='finished'){ title='Finished'; const f=[]; DATA.people.forEach(p=>KINDS.forEach(([k])=>items(p,k).forEach((e,i)=>{ if(done(p,e)) f.push({p,k,e,i}); })));
@@ -1806,11 +2074,11 @@ function pageSettings(){
   return `<div class="content settings"><div class="ltitle" data-title="Settings"><h1 class="t-page">Settings</h1></div>
     <div class="ptop" style="position:fixed"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
     <div class="wrap rise" style="margin-top:16px">
-      <div class="t-foot gh">PLAYBACK</div><div class="group">${g('speaker_2_fill','Default speed',sp+'×','speed')}${g('moon_zzz_fill','Sleep timer',sleepMin?sleepMin+' min':'Off','sleep')}</div>
-      <div class="t-foot gh" style="margin-top:28px">DISPLAY</div><div class="group">${g('moon_fill','Appearance',{system:'System',light:'Light',dark:'Dark'}[store.get('theme','system')],'theme')}</div>
-      <div class="t-foot gh" style="margin-top:28px">LIBRARY</div><div class="group">${g('clock','Reset listening data…',saved+' records','reset','destructive')}${g('star_fill','Favourites',favs.length,'favs')}</div>
+      <div class="gh">Playback</div><div class="group">${g('speaker_2_fill','Default speed',sp+'×','speed')}${g('moon_zzz_fill','Sleep timer',sleepMin?sleepMin+' min':'Off','sleep')}</div>
+      <div class="gh" style="margin-top:28px">Display</div><div class="group">${g('moon_fill','Appearance',{system:'System',light:'Light',dark:'Dark'}[store.get('theme','system')],'theme')}</div>
+      <div class="gh" style="margin-top:28px">Library</div><div class="group">${g('clock','Reset listening data…',saved+' records','reset','destructive')}${g('star_fill','Favourites',favs.length,'favs')}</div>
       <div class="t-foot gf">Reset removes history, saved positions, and completion status, but keeps favourites. You’ll confirm before anything is removed.</div>
-      <div class="t-foot gh" style="margin-top:28px">ABOUT</div><div class="group">${g('square_grid_2x2_fill','Design system','','system')}${g('info_circle','Version',BUILD,'update')}</div>
+      <div class="gh" style="margin-top:28px">About</div><div class="group">${g('square_grid_2x2_fill','Design system','','system')}${g('info_circle','Version',BUILD,'update')}</div>
     </div></div>`;
 }
 function pageSystem(){
@@ -1857,6 +2125,7 @@ function act(a,r){
   if(a==='back') back();
   else if(a==='fav'&&p){ toggleFav(p.name); morph(r); }
   else if(a==='about'&&p) openAbout(p);
+  else if(a==='scroll'){ const pg=activePage(), t=pg&&pg.querySelector('#fxbody'); if(t) pg.scrollTo({top:t.offsetTop-12,behavior:'smooth'}); }
   else if(a==='play'&&p){ playEp(p,resumeIndex(p),'bio'); openNP(); }
   else if(a==='shuffle'&&p){ shuffleOn=true; playEp(p,~~(Math.random()*p.episodes.length),'bio'); openNP(); }
   else if(a==='speed'){ const o=[1,1.25,1.5,1.75,2]; const n=o[(o.indexOf(store.get('speed',1))+1)%o.length]; store.set('speed',n); audio.playbackRate=n; paintNP(); morph(r); }
@@ -1887,8 +2156,7 @@ async function presentModal(node,{cls='',sheet=false,onGone}={}){
   await customElements.whenDefined('ion-modal');
   const m=document.createElement('ion-modal'); m.className='greats-modal '+cls;
   if(innerWidth<768&&sheet){
-    m.breakpoints=[0,.55,.9]; m.initialBreakpoint=.55; m.backdropBreakpoint=0;
-    m.handle=true; m.expandToScroll=false;
+    m.breakpoints=[0,1]; m.initialBreakpoint=1; m.handle=true;   /* sized to its content (Ionic auto-height sheet) */
   } else if(innerWidth<768) m.presentingElement=navEl();
   const wrap=document.createElement('div'); wrap.className='ion-page modal-page';
   const home=node.parentNode, next=node.nextSibling; wrap.appendChild(node); m.appendChild(wrap); document.body.appendChild(m);
@@ -1906,7 +2174,7 @@ function openSheet(title,html){ const sheet=$('sheet'); sheetReturnFocus=documen
   return sheetModal?sheetModal.dismiss().then(()=>new Promise(r=>setTimeout(r,0))).then(go):go(); }
 function closeSheet(){ if(!sheetModal) return Promise.resolve(); const m=sheetModal; return new Promise(res=>{ m.addEventListener('ionModalDidDismiss',()=>setTimeout(res,0),{once:true}); m.dismiss(); }); }
 
-$('shx').innerHTML=IC.x(15); $('shx').onclick=closeSheet;
+$('shx').innerHTML=IC.x(15); $('shx').onclick=closeSheet; $('shdone').onclick=closeSheet;
 function openAbout(p){ const m=meta(p);
   openSheet(p.shortName,`<div style="display:flex;gap:14px;align-items:center"><img src="${thumbSrc(p)}" width="76" height="76" style="width:76px;height:76px;border-radius:38px;object-fit:cover;object-position:top"><div><div class="t-head">${esc(m.sub)}</div><div class="t-foot c2">${p.episodes.length} books · ${hours(p)} hours</div></div></div>
   <p class="t-body" style="white-space:pre-line;margin-top:18px;color:var(--text2)">${esc(m.bio)}</p>`); }
