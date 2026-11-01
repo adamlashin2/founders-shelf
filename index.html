@@ -1294,7 +1294,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261101-0300';
+const BUILD='20261101-0400';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -1386,9 +1386,11 @@ window.addEventListener('hashchange',()=>{ const r=parse(location.hash);
   const kind=!route?'none':back?'pop':pushed||depth(r)>depth(route)?'push':depth(r)<depth(route)?'pop':'tab';
   if(kind==='push') navStack.push(r); else if(kind==='pop') navStack.pop(); else navStack=[r];
   render(r,kind); });
+const lastPage={};   /* route -> the page element last built for it; its decoded photos are reused */
 function pageFor(r){ const pg=build(r); pg.classList.add('ion-page'); pg.dataset.route=r;
+  const old=lastPage[r]; if(old&&!old.isConnected) keepImgs(pg,old); lastPage[r]=pg;
   const v=document.createElement('div'); v.className='nav-view ion-page'; v.dataset.route=r; v.appendChild(pg); return v; }
-function showing(pg,r,kind){ paintChrome(); revealDecoded(pg); if(kind==='tab'||kind==='none') settle(pg);   /* pushes already move; only instant swaps settle */ if(kind!=='pop') pg.scrollTop=kind==='tab'?(scrollMem[r]||0):0; if(!pg.__wired){ pg.__wired=true; wireNav(pg); } else wireNav(pg); }
+function showing(pg,r,kind){ paintChrome(); revealDecoded(pg); if(kind==='none') settle(pg);   /* tab switches are instant on iOS; only the first screen settles */ if(kind!=='pop') pg.scrollTop=kind==='tab'?(scrollMem[r]||0):0; if(!pg.__wired){ pg.__wired=true; wireNav(pg); } else wireNav(pg); }
 let navQueue=Promise.resolve();
 function render(r,kind='none'){
   navQueue=navQueue.then(()=>renderNow(r,kind)).catch(e=>console.error(e)); return navQueue; }
@@ -1457,9 +1459,18 @@ function navAnimation(baseEl,opts){
 }
 
 /* images: mark decoded (cached images included), so .fade reveals them */
-document.addEventListener('load',e=>{ const t=e.target; if(t.tagName==='IMG'&&t.classList.contains('fade')) t.classList.add('in'); },true);
+const WARM=new Set();   /* srcs the browser has already decoded */
+document.addEventListener('load',e=>{ const t=e.target; if(t.tagName!=='IMG') return; WARM.add(t.getAttribute('src')); if(t.classList.contains('fade')) t.classList.add('in'); },true);
 document.addEventListener('error',e=>{ const t=e.target; if(t.tagName==='IMG'&&t.classList.contains('fade')) t.classList.add('in'); },true);
 const revealDecoded=root=>root.querySelectorAll('img.fade:not(.in)').forEach(i=>{ if(i.complete&&i.naturalWidth) i.classList.add('in'); });
+/* a rebuilt page takes over the old page's decoded <img> elements by src: a new element paints nothing
+   until it decodes again, which reads as a flash on every tab switch and filter */
+function keepImgs(fresh,old){ const pool=new Map();
+  old.querySelectorAll('img.in').forEach(i=>{ const k=i.getAttribute('src'); if(!pool.has(k)) pool.set(k,[]); pool.get(k).push(i); });
+  fresh.querySelectorAll('img').forEach(n=>{ const o=pool.get(n.getAttribute('src'))?.shift(); if(!o) return;
+    o.className=n.className+' in'; for(const a of ['width','height','alt']) if(n.hasAttribute(a)) o.setAttribute(a,n.getAttribute(a)); n.replaceWith(o); });
+  /* photos decoded before but not on the old page: paint in the same frame, not a lazy/async frame later */
+  fresh.querySelectorAll('img:not(.in)').forEach(n=>{ if(!WARM.has(n.getAttribute('src'))) return; n.removeAttribute('loading'); n.decoding='sync'; n.classList.add('in'); }); }
 /* a screen settles in the first time it is shown (not on back, not on in-place updates) */
 function settle(pg){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) return; const c=pg.querySelector(':scope>.content')||pg; c.classList.add('settle');
   setTimeout(()=>c.classList.remove('settle'),1100); }
@@ -1472,12 +1483,22 @@ const KEYS=['data-p','data-ep','data-history-item','data-fil','data-hfil','data-
 function keyed(root){ const m=new Map(), seen={};
   root.querySelectorAll(KEYS.map(k=>`[${k}]`).join(',')).forEach(el=>{ const k=KEYS.find(a=>el.hasAttribute(a)); const id=k+'='+el.getAttribute(k);
     seen[id]=(seen[id]||0)+1; m.set(id+'#'+seen[id],el); }); return m; }
+let morphTok=0;
 function morph(r){
   const pg=activePage(); if(!pg||pg.dataset.route!==r) return render(r,'none');
+  /* photos the new layout needs and the page hasn't decoded yet load first (capped), so incoming
+     cards never arrive as grey boxes that pop */
+  const fresh=build(r,false), have=new Set([...pg.querySelectorAll('img.in')].map(i=>i.getAttribute('src'))), tok=++morphTok;
+  const want=[...new Set([...fresh.querySelectorAll('img')].map(i=>i.getAttribute('src')).filter(s=>s&&!have.has(s)))].slice(0,24);
+  if(!want.length) return morphNow(r,pg,fresh);
+  Promise.race([Promise.all(want.map(s=>{ const i=new Image(); i.src=s; return i.decode().then(()=>WARM.add(s)).catch(()=>{}); })),new Promise(ok=>setTimeout(ok,220))])
+    .then(()=>{ if(tok===morphTok&&activePage()===pg) morphNow(r,pg,fresh); });
+}
+function morphNow(r,pg,fresh){
   const before=new Map(), vh=innerHeight;
   keyed(pg).forEach((el,id)=>{ const b=el.getBoundingClientRect(); if(b.bottom>-200&&b.top<vh+200&&b.width) before.set(id,b); });
   const segFrom=pg.querySelector('.chip.on')?.getBoundingClientRect(), st=pg.scrollTop;
-  route=r; pg.innerHTML=build(r,false).innerHTML; pg.querySelectorAll('img.fade').forEach(i=>i.classList.add('in')); setTimeout(()=>bind(pg,r),0); paintChrome(); pg.scrollTop=st; wireNav(pg);
+  route=r; keepImgs(fresh,pg); pg.replaceChildren(...fresh.childNodes); pg.querySelectorAll('img.fade').forEach(i=>i.classList.add('in')); setTimeout(()=>bind(pg,r),0); paintChrome(); pg.scrollTop=st; wireNav(pg);
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const ease='cubic-bezier(0.32,0.72,0,1)';
   let n=0;
@@ -1486,7 +1507,7 @@ function morph(r){
     if(b){ const dx=b.left-a.left, dy=b.top-a.top, sx=b.width/a.width, sy=b.height/a.height;
       if(Math.abs(dx)>.5||Math.abs(dy)>.5||Math.abs(sx-1)>.01||Math.abs(sy-1)>.01)
         el.animate([{transformOrigin:'0 0',transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`},{transformOrigin:'0 0',transform:'none'}],{duration:400,easing:ease}); }
-    else el.animate([{opacity:0,transform:'translateY(10px) scale(.97)'},{opacity:1,transform:'none'}],{duration:260,easing:ease,fill:'backwards',delay:Math.min(n++*18,160)}); });
+    else el.animate([{opacity:.35,transform:'scale(.96)'},{opacity:1,transform:'none'}],{duration:300,easing:ease,fill:'backwards',delay:Math.min(n++*12,48)}); });   /* never from invisible: an empty frame reads as a flash */
   const segOn=pg.querySelector('.chip.on');
   if(segFrom&&segOn){ const a=segOn.getBoundingClientRect();
     if(Math.abs(a.left-segFrom.left)>.5||Math.abs(a.width-segFrom.width)>.5){
@@ -2100,6 +2121,8 @@ Promise.all([requiredJSON('data/episodes.json?v='+BUILD),requiredJSON('data/port
   const last=store.get('last',null);
   if(last&&BYSLUG[last.slug]&&items(BYSLUG[last.slug],last.k||'bio')[last.i]){ cur={p:BYSLUG[last.slug],i:last.i,k:last.k||'bio'}; audio.src=curEp().url; document.body.classList.add('has-track'); paintNP(); }
   const r=parse(location.hash); navStack=[r]; customElements.whenDefined('ion-nav').then(()=>navEl().componentOnReady()).then(()=>{ navEl().innerHTML=''; render(r,'none'); });
+  /* warm every portrait thumb once the first screen is up, so no tab or filter ever waits on a photo */
+  (window.requestIdleCallback||(f=>setTimeout(f,1200)))(()=>DATA.people.forEach(p=>{ if(P[p.name]){ const i=new Image(), u=thumbSrc(p); i.src=u; i.decode().then(()=>WARM.add(u)).catch(()=>{}); } }),{timeout:2500});
   const st=new URLSearchParams(location.search).get('state');
   if(st==='player'){ if(!cur){ cur={p:BYSLUG['steve-jobs'],i:0,k:'bio'}; document.body.classList.add('has-track'); } paintNP(); openNP(); }
 }).catch(()=>{ const v=$('view'); v.setAttribute('aria-busy','false'); v.innerHTML=`<div class="page"><div class="load-state" role="alert"><h1 class="t-page">The archive couldn’t load.</h1><p class="t-body c2">Check your connection, then try again. Your saved listening state is untouched.</p><button class="btn btn-primary press" id="retry-load">Try Again</button></div></div>`;
