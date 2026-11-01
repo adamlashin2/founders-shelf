@@ -1055,6 +1055,8 @@ ion-modal.greats-modal{--background:transparent;--backdrop-opacity:.4}
 ion-modal.sheet-modal{--background:var(--panel)}
 ion-modal .ion-page{position:relative;height:100%;contain:layout style}  /* core.css: ion-modal>.ion-page (incl. Ionic's delegate host) */
 ion-modal.np-modal{--background:#0b0b0c}
+ion-modal.greats-modal{color:var(--label)}
+ion-modal.np-modal{color:#fff}
 /* the mini player and tab bar belong to the app behind the card */
 #dock{transition:opacity .25s ease}
 body.modal-open #dock{opacity:0;pointer-events:none}
@@ -1067,6 +1069,35 @@ ion-modal .sheet::after{display:none}
   ion-modal.np-modal{--width:min(980px,calc(100vw - 64px));--height:min(580px,calc(100vh - 84px));--border-radius:32px}
   ion-modal.sheet-modal{--width:520px;--height:min(560px,80vh);--border-radius:28px}
 }
+
+
+/* ---------------- frontier pass: glitch fixes ---------------- */
+/* 9. Now Playing artwork: one clean piece of art, no grey box around a smaller cover */
+#np .art{background:none!important;box-shadow:0 30px 70px rgba(0,0,0,.5)!important;aspect-ratio:3/4!important;height:auto!important;width:min(100%,340px)!important;max-height:100%!important}
+#np .art .cover,#np .art .archive-object{width:100%!important;height:100%!important;aspect-ratio:auto!important;border-radius:inherit!important;transform:none!important}
+#np .artwrap{align-items:center}
+/* 10. shelf cards on Home */
+.shelfrow{gap:12px!important}
+.shelfrow .cat{width:240px;aspect-ratio:16/10;flex:none}
+@media (min-width:900px){.shelfrow .cat{width:280px}}
+/* 11. phones: content fades out under the floating tab bar (iOS 26 scroll-edge effect) instead of colliding with it */
+@media (max-width:899px){
+  #dock::before{content:"";position:fixed;left:0;right:0;bottom:0;height:calc(130px + var(--safe-b));z-index:-1;pointer-events:none;
+    background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--bg) 82%,transparent) 55%,var(--bg));
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);-webkit-mask:linear-gradient(transparent,#000 45%);mask:linear-gradient(transparent,#000 45%)}
+}
+/* 18. buffering: the play control shows a spinner while audio waits for data */
+body.buffering #npplay::after,body.buffering #mini .tg::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid transparent;
+  border-top-color:currentColor;animation:spin .8s linear infinite;pointer-events:none}
+#npplay,#mini .tg{position:relative}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* 16. phone mini player: play/pause + skip forward 30 (Apple Podcasts); next/previous live in Now Playing */
+#mini .sk{display:flex}
+@media (max-width:899px){#mini .ff{display:none}}
+@media (min-width:900px){#mini .sk{display:none}}
+#mini .sk span{position:absolute;font-size:9px;font-weight:700;bottom:9px}
+[data-ep]{-webkit-touch-callout:none}   /* long-press opens the episode menu, not the iOS link callout */
+.jump{position:relative}
 
 /* phone / desktop variants */
 .desk{display:none}
@@ -1106,6 +1137,7 @@ ion-modal .sheet::after{display:none}
     <button class="mb rw press" data-a="prev" aria-label="Previous episode"></button>
     <button class="mb tg press" data-a="toggle" aria-label="Play"></button>
     <button class="mb ff press" data-a="next" aria-label="Next episode"></button>
+    <button class="mb sk press" data-a="skip" aria-label="Skip forward 30 seconds"></button>
     <button class="mini-main press" data-a="open" aria-label="Open Now Playing">
       <span class="art toned"><img id="miniimg" src="assets/icon-192.png?v=5" alt=""></span>
       <span class="meta"><span class="t-sub trunc" style="display:block;font-weight:500" id="minit"></span><span class="t-foot c2 trunc" style="display:block" id="minis"></span></span>
@@ -1131,9 +1163,9 @@ ion-modal .sheet::after{display:none}
   <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="Playback position" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"><div class="tr" style="height:4px"><i id="scrubi"></i></div></div>
   <div class="times t-cap1 num"><span id="tel">0:00</span><span id="trem">-0:00</span></div>
   <div class="ctrls" style="padding:10px 30px 0">
-    <button id="nprw" class="press jump" aria-label="Back 30 seconds"></button>
+    <button id="nprw" class="press jump" aria-label="Back 15 seconds"></button>
     <button id="npplay" class="press bigplay" aria-label="Play"></button>
-    <button id="npff" class="press jump" aria-label="Forward 15 seconds"></button>
+    <button id="npff" class="press jump" aria-label="Forward 30 seconds"></button>
   </div>
   <div class="speed" id="npspeeds"></div>
   <div class="bottoms t-foot">
@@ -1213,7 +1245,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261101-0100';
+const BUILD='20261101-0200';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -1515,7 +1547,8 @@ function pageHome(){
   <section class="sect"><div class="wrap">${shead('Choose a great')}</div><div class="hrow rise">${pop.map(fcard).join('')}</div></section>
   ${cont.length?`<section class="sect"><div class="wrap">${shead('Continue')}</div><div class="hrow">${cont.map(c=>book(c.p,c.k,c.e,c.i)).join('')}</div></section>`:''}
   <section class="sect"><div class="wrap">${shead('Shelves')}</div>
-    <div class="hrow" style="gap:8px">${SECTIONS.map(([k,l])=>`<button class="chip press" data-go="l/shelf-${k}">${l}</button>`).join('')}</div></section>
+    <div class="hrow shelfrow">${SECTIONS.map(([k,l])=>{ const ps=DATA.people.filter(x=>meta(x).cat===k),p=ps[0];
+      return `<button class="cat press" data-go="l/shelf-${k}"><span class="bgc"></span>${p?img(p):''}<span class="copy"><span class="t-eyebrow c2">Shelf</span><span class="tt t-head">${l}</span><span class="sub t-foot">${ps.length} greats</span></span></button>`; }).join('')}</div></section>
   <section class="sect wrap">${shead('New books')}<div class="tlist rows">${recent.map(r=>erow(r.p,'bio',r.e,r.i,{num:false,lead:true})).join('')}</div></section>
   ${fav.length?`<section class="sect"><div class="wrap">${shead('Your favourites','l/favs')}</div><div class="hrow">${fav.map(tile).join('')}</div></section>`:''}
   </div>`;
@@ -1723,7 +1756,7 @@ let sheetModal=null, npModal=null;
 function openSheet(title,html){ const sheet=$('sheet'); sheetReturnFocus=document.activeElement; $('sht').textContent=title; $('shb').innerHTML=html;
   sheet.setAttribute('aria-hidden','false'); sheet.classList.add('show');
   const go=()=>presentModal(sheet,{cls:'sheet-modal',sheet:true,onGone:()=>{ sheet.classList.remove('show'); sheet.setAttribute('aria-hidden','true'); sheetModal=null;
-    if(sheetReturnFocus?.isConnected) sheetReturnFocus.focus(); sheetReturnFocus=null; }}).then(m=>{ sheetModal=m; $('shx').focus(); });
+    if(sheetReturnFocus?.isConnected) sheetReturnFocus.focus(); sheetReturnFocus=null; }}).then(m=>{ sheetModal=m; });
   return sheetModal?sheetModal.dismiss().then(()=>new Promise(r=>setTimeout(r,0))).then(go):go(); }
 function closeSheet(){ if(!sheetModal) return Promise.resolve(); const m=sheetModal; return new Promise(res=>{ m.addEventListener('ionModalDidDismiss',()=>setTimeout(res,0),{once:true}); m.dismiss(); }); }
 
@@ -1732,7 +1765,12 @@ function openAbout(p){ const m=meta(p);
   openSheet(p.shortName,`<div style="display:flex;gap:14px;align-items:center"><img src="${thumbSrc(p)}" width="76" height="76" style="width:76px;height:76px;border-radius:38px;object-fit:cover;object-position:top"><div><div class="t-head">${esc(m.sub)}</div><div class="t-foot c2">${p.episodes.length} books · ${hours(p)} hours</div></div></div>
   <p class="t-body" style="white-space:pre-line;margin-top:18px;color:var(--text2)">${esc(m.bio)}</p>`); }
 function openQueue(){ if(!cur) return; const L=items(cur.p,cur.k);
-  openSheet('Up Next',`<div class="t-foot c2" style="margin-bottom:6px">${esc(cur.p.shortName)} · ${KLABEL[cur.k]}</div><div class="rows">${L.map((e,i)=>erow(cur.p,cur.k,e,i)).join('')}</div>`);
+  const q=upNext.map(x=>({p:BYSLUG[x.slug],k:x.k,i:x.i})).filter(x=>x.p&&items(x.p,x.k)[x.i]);
+  openSheet('Up Next',`${q.length?`<div class="shead" style="margin:0 0 4px"><h2 class="t-title3">Your queue</h2><button class="textbtn t-sub" id="q-clear">Clear</button></div>
+      <div class="rows">${q.map(x=>erow(x.p,x.k,items(x.p,x.k)[x.i],x.i,{num:false,lead:true})).join('')}</div>`:''}
+    <div class="t-foot c2" style="margin:${q.length?'22px':'0'} 0 6px">Then from ${esc(cur.p.shortName)} · ${KLABEL[cur.k]}</div><div class="rows">${L.map((e,i)=>erow(cur.p,cur.k,e,i)).join('')}</div>
+    <p class="t-foot c2" style="margin-top:14px">Long-press or right-click any episode to Play Next or Add to Up Next.</p>`);
+  $('q-clear')&&($('q-clear').onclick=()=>{ upNext=[]; saveQueue(); closeSheet().then(()=>toast('Queue cleared')); });
   bind($('shb'),'queue'); }
 function confirmResetListeningData(){
   openSheet('Reset listening data?',`<p class="t-body c2">History, saved positions, and completion status will be removed from this device. Your favourites will stay.</p>
@@ -1772,36 +1810,78 @@ function openHistoryMenu(token){
 }
 
 /* ============================== playback ============================== */
+/* Apple Podcasts defaults: back 15 s, forward 30 s (buttons, lock screen, keyboard) */
+const SKIP={back:15,fwd:30};
+let upNext=store.get('queue',[]);   /* user queue: [{slug,k,i}] — Play Next / Add to Up Next */
+const saveQueue=()=>store.set('queue',upNext);
+function skipBy(sec){ if(!cur) return; const d=isFinite(audio.duration)?audio.duration:Infinity; audio.currentTime=Math.max(0,Math.min(d-1,audio.currentTime+sec)); paintTime(); posState(); }
 function playEp(p,i,k='bio'){
   const e=items(p,k)[i]; if(!e) return;
-  cur={p,i,k}; audio.src=e.url; const start=pos(p,e);
-  audio.play().then(()=>{ if(start>5&&start<(e.sec||1)-20) audio.currentTime=start; }).catch(()=>{});
+  cur={p,i,k}; const start=pos(p,e), resume=start>5&&start<(e.sec||1)-20;
+  /* seek BEFORE playing: a media fragment starts decoding at the saved position (no blip of the intro) */
+  audio.src=e.url+(resume?'#t='+start:''); document.body.classList.add('buffering');
   audio.playbackRate=store.get('speed',1);
+  audio.play().catch(()=>{});
   store.set('last',{slug:p.slug,i,k}); store.set('t.'+epKey(p,e),Date.now());
   document.body.classList.add('has-track'); paintNP(); setSession(p,e); refreshRows();
 }
 function toggle(){ if(!cur) return; audio.paused?audio.play():audio.pause(); }
+/* next: your queue first, then the rest of this figure's list, then the next figure (never a dead end) */
 function next(auto){ if(!cur) return; const L=items(cur.p,cur.k);
+  while(upNext.length){ const q=upNext.shift(); saveQueue(); const p=BYSLUG[q.slug]; if(p&&items(p,q.k)[q.i]){ playEp(p,q.i,q.k); return; } }
   if(shuffleOn&&L.length>1){ let j; do j=~~(Math.random()*L.length); while(j===cur.i); playEp(cur.p,j,cur.k); return; }
-  if(cur.i+1<L.length) playEp(cur.p,cur.i+1,cur.k); }
-function prev(){ if(cur&&audio.currentTime>10){ audio.currentTime=0; return; } if(cur&&cur.i>0) playEp(cur.p,cur.i-1,cur.k); }
+  if(cur.i+1<L.length){ playEp(cur.p,cur.i+1,cur.k); return; }
+  const ps=DATA.people, start=ps.indexOf(cur.p);
+  for(let n=1;n<ps.length;n++){ const p=ps[(start+n)%ps.length], M=items(p,cur.k); const j=M.findIndex(e=>!done(p,e)); if(j>=0){ playEp(p,j,cur.k); toast('Up next: '+p.shortName); return; } }
+  toast('You have finished everything here'); }
+function prev(){ if(cur&&audio.currentTime>10){ audio.currentTime=0; return; } if(cur&&cur.i>0) playEp(cur.p,cur.i-1,cur.k); else if(cur) audio.currentTime=0; }
+function queueEp(p,k,i,front){ const q={slug:p.slug,k,i}; upNext=upNext.filter(x=>!(x.slug===q.slug&&x.k===k&&x.i===i)); front?upNext.unshift(q):upNext.push(q); saveQueue();
+  toast(front?'Playing next':'Added to Up Next'); }
+function markPlayed(p,e,on){ store.set('done.'+epKey(p,e),on); if(on) store.set('pos.'+epKey(p,e),0); toast(on?'Marked as played':'Marked as unplayed'); if(route) morph(route); }
+/* episode menu: long-press (touch) or right-click (desktop) on any episode */
+function openEpisodeMenu(p,k,i){ const e=items(p,k)[i]; if(!e) return; const dn=done(p,e);
+  openSheet(rowTitle(p,e),`<div class="t-foot c2" style="margin-bottom:14px">${esc(p.shortName)} · ${esc(KLABEL[k])} · ${fmtDur(e.sec)}</div>
+    <div class="sheet-actions"><button class="btn btn-primary press" id="em-play">${IC.play(15)} Play</button>
+      <button class="btn btn-tinted press" id="em-next">Play Next</button><button class="btn btn-tinted press" id="em-queue">Add to Up Next</button>
+      <button class="btn btn-tinted press" id="em-done">${dn?'Mark as Unplayed':'Mark as Played'}</button></div>`);
+  $('em-play').onclick=()=>closeSheet().then(()=>playEp(p,i,k)); $('em-next').onclick=()=>closeSheet().then(()=>queueEp(p,k,i,true));
+  $('em-queue').onclick=()=>closeSheet().then(()=>queueEp(p,k,i,false)); $('em-done').onclick=()=>closeSheet().then(()=>markPlayed(p,e,!dn)); }
+const epMenuFrom=el=>{ const [s,k,i]=el.dataset.ep.split('|'); const p=BYSLUG[s]; if(p) openEpisodeMenu(p,k,+i); };
+document.addEventListener('contextmenu',ev=>{ const el=ev.target.closest('[data-ep]'); if(!el) return; ev.preventDefault(); epMenuFrom(el); });
+/* iOS Safari never fires contextmenu on long-press: 500 ms hold opens the menu and swallows the tap */
+(()=>{ let t=null, x0=0, y0=0, fired=false;
+  document.addEventListener('pointerdown',ev=>{ if(ev.pointerType!=='touch') return; const el=ev.target.closest('[data-ep]'); if(!el) return;
+    fired=false; x0=ev.clientX; y0=ev.clientY; clearTimeout(t); t=setTimeout(()=>{ fired=true; navigator.vibrate&&navigator.vibrate(8); epMenuFrom(el); },500); },{passive:true});
+  document.addEventListener('pointermove',ev=>{ if(t&&Math.hypot(ev.clientX-x0,ev.clientY-y0)>10){ clearTimeout(t); t=null; } },{passive:true});
+  ['pointerup','pointercancel'].forEach(n=>document.addEventListener(n,()=>{ clearTimeout(t); t=null; },{passive:true}));
+  document.addEventListener('click',ev=>{ if(fired&&ev.target.closest('[data-ep]')){ ev.preventDefault(); ev.stopPropagation(); fired=false; } },true); })();
 function refreshRows(){ document.querySelectorAll('[data-ep]').forEach(b=>{ const [s,k,i]=b.dataset.ep.split('|'); const on=cur&&cur.p.slug===s&&cur.k===k&&cur.i===+i;
   if(!b.classList.contains('row')) return; b.classList.toggle('cur',on); const n=b.querySelector('.n');
   if(n) n.innerHTML=on?`<span class="eq${audio.paused?' paused':''}"><i></i><i></i><i></i></span>`:(+i+1); }); }
-let saveT=0;
+/* lock screen / control centre scrubber */
+function posState(){ try{ if('mediaSession' in navigator&&isFinite(audio.duration)&&audio.duration>0)
+  navigator.mediaSession.setPositionState({duration:audio.duration,playbackRate:audio.playbackRate,position:Math.min(audio.currentTime,audio.duration)}); }catch(e){} }
+let saveT=0, posT=0;
 audio.addEventListener('timeupdate',()=>{ if(!cur) return; const now=Date.now(), e=curEp();
   if(now-saveT>4000){ saveT=now; store.set('pos.'+epKey(cur.p,e),Math.round(audio.currentTime)); }
+  if(now-posT>5000){ posT=now; posState(); }
   if(sleepUntil&&now>=sleepUntil){ audio.pause(); sleepUntil=null; sleepMin=0; paintNP(); }
   paintTime(); });
 audio.addEventListener('ended',()=>{ if(!cur) return; const e=curEp(); store.set('done.'+epKey(cur.p,e),true); store.set('pos.'+epKey(cur.p,e),0); next(true); });
 audio.addEventListener('play',()=>{ document.body.classList.add('playing'); paintNP(); refreshRows(); });
 audio.addEventListener('pause',()=>{ document.body.classList.remove('playing'); paintNP(); refreshRows(); if(cur) store.set('pos.'+epKey(cur.p,curEp()),Math.round(audio.currentTime)); });
+audio.addEventListener('waiting',()=>document.body.classList.add('buffering'));
+audio.addEventListener('playing',()=>{ document.body.classList.remove('buffering'); posState(); });
+audio.addEventListener('canplay',()=>document.body.classList.remove('buffering'));
+audio.addEventListener('loadedmetadata',posState); audio.addEventListener('ratechange',posState); audio.addEventListener('seeked',posState);
+audio.addEventListener('error',()=>{ document.body.classList.remove('buffering'); if(!cur||!audio.src) return; const c={...cur};
+  toast("This episode couldn't play",'Retry',()=>playEp(c.p,c.i,c.k)); });
 function setSession(p,e){ if(!('mediaSession' in navigator)) return;
   navigator.mediaSession.metadata=new MediaMetadata({title:rowTitle(p,e),artist:p.shortName,album:'The Greats · '+KLABEL[cur.k],artwork:[{src:new URL(P[p.name],location.href).href,sizes:'900x1200',type:'image/jpeg'}]});
-  const h=navigator.mediaSession.setActionHandler.bind(navigator.mediaSession);
+  const h=(a,f)=>{ try{ navigator.mediaSession.setActionHandler(a,f); }catch(e){} };
   h('play',()=>audio.play()); h('pause',()=>audio.pause()); h('previoustrack',prev); h('nexttrack',()=>next(false));
-  h('seekbackward',()=>audio.currentTime=Math.max(0,audio.currentTime-30)); h('seekforward',()=>audio.currentTime+=15);
-  try{ h('seekto',d=>{ if(d.seekTime!=null) audio.currentTime=d.seekTime; }); }catch(e){} }
+  h('seekbackward',d=>skipBy(-(d&&d.seekOffset||SKIP.back))); h('seekforward',d=>skipBy(d&&d.seekOffset||SKIP.fwd));
+  h('seekto',d=>{ if(d.seekTime!=null){ audio.currentTime=d.seekTime; posState(); } }); }
 
 /* ============================== now playing ============================== */
 function paintNP(){
@@ -1815,7 +1895,8 @@ function paintNP(){
   $('npt').textContent=rowTitle(p,e);
   $('npplay').innerHTML=playing?sfi('pause_fill',30):`<span style="transform:translateX(2px);display:flex">${sfi('play_fill',30)}</span>`;
   $('npplay').setAttribute('aria-label',playing?'Pause':'Play');
-  $('nprw').innerHTML=sfi('backward_fill',24)+'<span>30</span>'; $('npff').innerHTML=sfi('forward_fill',24)+'<span>15</span>';
+  $('nprw').innerHTML=sfi('backward_fill',24)+'<span>'+SKIP.back+'</span>'; $('npff').innerHTML=sfi('forward_fill',24)+'<span>'+SKIP.fwd+'</span>';
+  document.querySelector('#mini .sk').innerHTML=sfi('forward_fill',20)+'<span>30</span>';
   const isFav=favs.includes(p.name); $('npfav').innerHTML=IC.star(20,isFav); $('npfav').setAttribute('aria-pressed',String(isFav));
   $('npfav').setAttribute('aria-label',isFav?'Remove from Favourites':'Add to Favourites'); $('npmore').innerHTML=IC.more(17); $('npclose').innerHTML=innerWidth>=900?IC.x(15):IC.down(15);
   const sp=store.get('speed',1); $('npspeeds').innerHTML=[0.75,1,1.25,1.5,2].map(v=>`<button class="press${v===sp?' on':''}" data-sp="${v}" aria-label="Playback speed ${v} times" aria-pressed="${v===sp}">${v}×</button>`).join('');
@@ -1837,18 +1918,18 @@ let npReturnFocus=null;
 function openNP(){ if(npModal) return; const np=$('np'); if(cur) ground(cur.p); npReturnFocus=document.activeElement; np.setAttribute('aria-hidden','false'); np.classList.add('show'); document.body.classList.add('np-open');
   presentModal(np,{cls:'np-modal',onGone:()=>{ ground(route.startsWith('p/')?BYSLUG[route.slice(2)]:route==='home'?featured():null); document.body.classList.remove('np-open');
     np.classList.remove('show'); np.setAttribute('aria-hidden','true'); npModal=null; if(npReturnFocus?.isConnected) npReturnFocus.focus(); npReturnFocus=null; }})
-    .then(m=>{ npModal=m; $('npclose').focus({preventScroll:true}); }); }
+    .then(m=>{ npModal=m; }); }
 function closeNP(){ if(npModal) npModal.dismiss(); }
 function cycleSleep(){ const o=[0,15,30,60]; sleepMin=o[(o.indexOf(sleepMin)+1)%o.length]; sleepUntil=sleepMin?Date.now()+sleepMin*6e4:null; paintNP(); toast(sleepMin?`Sleep in ${sleepMin} minutes`:'Sleep timer off'); }
 $('npclose').onclick=closeNP;
-$('npplay').onclick=toggle; $('nprw').onclick=()=>audio.currentTime=Math.max(0,audio.currentTime-30); $('npff').onclick=()=>audio.currentTime+=15;
+$('npplay').onclick=toggle; $('nprw').onclick=()=>skipBy(-SKIP.back); $('npff').onclick=()=>skipBy(SKIP.fwd);
 $('nptabq').onclick=openQueue;
 $('npspeed').onclick=()=>act('speed',route); $('npsleep').onclick=cycleSleep;
 $('npair').onclick=()=>{ if(audio.remote&&audio.remote.prompt) audio.remote.prompt().catch(()=>{}); else toast('AirPlay is available on Safari'); };
 $('npq').onclick=openQueue; $('npfav').onclick=()=>{ if(cur){ toggleFav(cur.p.name); paintNP(); } };
 $('npmore').onclick=()=>{ if(cur) openAbout(cur.p); };
 $('mini').onclick=ev=>{ const a=ev.target.closest('[data-a]')?.dataset.a;
-  if(a==='toggle') toggle(); else if(a==='next') next(false); else if(a==='prev') prev(); else if(a==='queue') openQueue(); else if(a==='open') openNP(); };
+  if(a==='toggle') toggle(); else if(a==='skip') skipBy(SKIP.fwd); else if(a==='next') next(false); else if(a==='prev') prev(); else if(a==='queue') openQueue(); else if(a==='open') openNP(); };
 /* scrubbing: 1:1 with the pointer, captured */
 (()=>{ const s=$('scrub');
   const at=x=>{ const r=s.getBoundingClientRect(), f=Math.min(1,Math.max(0,(x-r.left)/r.width)); const e=curEp(); const d=isFinite(audio.duration)&&audio.duration?audio.duration:(e?e.sec:1); scrubT=f*d; $('scrubi').style.width=f*100+'%'; paintTime(); };
@@ -1869,7 +1950,9 @@ document.addEventListener('keydown',e=>{ const modal=$('sheet').classList.contai
   if(!modal&&command&&e.key===','){ e.preventDefault(); go('settings'); return; }
   if(!modal&&!editing&&e.key==='/'){ e.preventDefault(); go('search'); setTimeout(()=>$('q')?.focus(),0); return; }
   if(e.target.closest('input,button,[role="slider"],[contenteditable="true"]')) return;
-  if(e.code==='Space'){ e.preventDefault(); toggle(); } });
+  if(e.code==='Space'){ e.preventDefault(); toggle(); return; }
+  if(e.key==='ArrowLeft'){ e.preventDefault(); e.shiftKey?prev():skipBy(-SKIP.back); return; }
+  if(e.key==='ArrowRight'){ e.preventDefault(); e.shiftKey?next(false):skipBy(SKIP.fwd); return; } });
 
 /* ============================== boot ============================== */
 const requiredJSON=url=>fetch(url).then(r=>{ if(!r.ok) throw new Error(`Failed to load ${url}`); return r.json(); });
