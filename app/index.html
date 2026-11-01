@@ -1420,6 +1420,250 @@ ion-modal.sheet-modal .ion-page{display:block;contain:content}
 .sheet .sh-b{max-height:min(62vh,560px);overflow-y:auto;padding:0 16px 8px}
 .sheet .sh-f{padding:10px 16px 16px}
 .sheet:has(.sheet-actions) .sh-f{display:none}
+
+/* ---------- display tier in Instrument Serif (Adam, 2026-11-01): bigger text only, always in its own case — never lowercased ---------- */
+.ltitle h1.t-page,.wm,#nbt,html #topnav .lg span{text-transform:none!important}
+.ltitle h1.t-page,.wm{font-family:'Instrument Serif',Georgia,serif!important;font-size:32px!important;line-height:34px!important;font-weight:400!important;letter-spacing:-.4px!important}
+html #topnav .lg span{font-family:'Instrument Serif',Georgia,serif;font-size:24px;font-weight:400;letter-spacing:-.3px}
+#nbt{font-family:'Instrument Serif',Georgia,serif;font-size:21px;font-weight:400;letter-spacing:-.2px}
+.shead h2.t-sect,.slabel,.gh{font-family:'Instrument Serif',Georgia,serif;font-size:24px;line-height:28px;font-weight:400;letter-spacing:-.3px}
+.fxt{font-family:'Instrument Serif',Georgia,serif;font-size:48px;line-height:46px;font-weight:400;letter-spacing:-.6px}
+#npt{font-family:'Instrument Serif',Georgia,serif!important;font-size:30px!important;line-height:32px!important;font-weight:400!important;letter-spacing:-.3px!important}
+.empty-state .t-title3,.sheet .sh-h #sht{font-family:'Instrument Serif',Georgia,serif;font-size:24px;line-height:28px;font-weight:400;letter-spacing:-.2px}
+
+/* ---------- governed by the aurora system: Pinterest gave structure only (refs 116/123 quote stack, 107 week, 69 library) ---------- */
+/* Home: greeting + quote stack (white card r22, ringed avatar over the top edge like a post, photo card tilted behind) */
+.qs{padding:6px var(--m) 4px}
+.qhi{font-family:'Instrument Serif',Georgia,serif;font-size:34px;line-height:36px;font-weight:400;letter-spacing:-.4px;color:var(--label)}
+.qstack{position:relative;height:250px;margin-top:14px}
+.qback{position:absolute;right:0;top:6px;width:46%;height:220px;border-radius:22px;overflow:hidden;transform:rotate(4deg);transform-origin:80% 90%}
+.qback img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+.qback span{position:absolute;left:12px;bottom:10px;font-size:13px;font-weight:500;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.qcard{position:absolute;left:0;top:22px;width:72%;min-height:200px;padding:30px 18px 16px;border-radius:22px;text-align:left;transform:rotate(-2.5deg);
+  background:var(--bg);box-shadow:0 1px 2px rgba(0,0,0,.06),0 14px 34px rgba(0,0,0,.12);display:flex;flex-direction:column}
+html:not(.light) .qcard{background:#1c1c1e}
+.qav{position:absolute;left:16px;top:-18px;width:36px;height:36px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px var(--bg)}
+html:not(.light) .qav{box-shadow:0 0 0 3px #1c1c1e}
+.qav img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+.qt{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:22px;line-height:25px;letter-spacing:-.2px;color:var(--label)}
+.qn{margin-top:auto;padding-top:12px;font-size:13.5px;font-weight:500;color:var(--label)}
+.qsrc{font-size:13px;color:var(--label2)}
+.pmeta .g{font-size:13px}
+@media (min-width:900px){.qs{max-width:1180px;margin:0 auto;padding:6px 40px 4px}.qstack{max-width:620px}}
+
+/* History: aurora photo screen in miniature — blurred portrait, frosted day pills, white selected pill */
+.night{position:relative;overflow:hidden;margin-top:6px;padding:18px 14px 16px;border-radius:32px;color:#fff;background:#0f1514;isolation:isolate}
+.nbg{position:absolute;inset:0;z-index:-1}
+.nbg img{width:100%;height:100%;object-fit:cover;object-position:center 20%;filter:blur(22px) saturate(1.2) brightness(.55);transform:scale(1.2)}
+.month{font-family:'Instrument Serif',Georgia,serif;font-size:30px;line-height:32px;text-align:center}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:14px;align-items:center}
+.day{display:flex;flex-direction:column;align-items:center;justify-content:center;height:56px;border-radius:16px;position:relative;
+  background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.day i{font-style:normal;font-size:12px;color:rgba(255,255,255,.62)} .day b{font-size:17px;font-weight:600;letter-spacing:-.3px}
+.day.on{height:66px;background:#fff;color:#000} .day.on i{color:rgba(0,0,0,.5)}
+.day.heard::after{content:"";position:absolute;top:6px;right:7px;width:6px;height:6px;border-radius:50%;background:var(--red)}
+.hlabel{margin-top:22px;font-size:13px;color:rgba(255,255,255,.62)}
+.hsum{margin-top:6px;font-size:22px;line-height:28px;font-weight:500;letter-spacing:-.5px;color:rgba(255,255,255,.92)}
+.hsum em{font-family:'Instrument Serif',Georgia,serif;font-size:25px;font-weight:400;letter-spacing:-.2px}
+.hn{white-space:nowrap} .hn i{display:inline-block;width:24px;height:24px;margin:0 4px -5px 2px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.hn i img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+.hstats{display:flex;gap:10px;margin-top:18px;align-items:center}
+.ring{position:relative;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:conic-gradient(var(--green) calc(var(--p)*1%),rgba(255,255,255,.18) 0)}
+.ring::before{content:"";position:absolute;inset:4px;border-radius:50%;background:#1d2422}
+.ring b,.ring i{position:relative;font-size:17px;font-weight:600} .ring i{font-style:normal;font-size:11px;color:rgba(255,255,255,.6);margin-left:1px}
+.hst{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;gap:3px;color:#fff;font-size:14px;font-weight:600;
+  background:rgba(255,255,255,.16);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.hst:disabled{opacity:.4}
+.hist-v2 .history-filters{margin-top:20px}
+.hsec{font-family:'Instrument Serif',Georgia,serif;font-size:24px;line-height:28px;font-weight:400}
+.hist-v2 .history-head{display:none}
+
+/* Library: big serif headline on the aurora tint, a ledge of real covers, count tabs, big-number card with the notch */
+.lhero{margin:0 calc(-1*var(--m));padding:4px var(--m) 0;background:linear-gradient(var(--tint),var(--bg))}
+.lib-v2 .ltitle{padding-bottom:4px}
+.lhead{font-family:'Instrument Serif',Georgia,serif;font-size:44px;line-height:44px;letter-spacing:-.8px;color:var(--label3);max-width:340px;text-wrap:balance}
+.lhead b{font-weight:400;color:var(--label)}
+.ledge{display:flex;gap:10px;align-items:flex-end;overflow-x:auto;margin:18px calc(-1*var(--m)) 0;padding:6px var(--m) 14px;
+  background:linear-gradient(transparent calc(100% - 14px),color-mix(in srgb,var(--label) 7%,transparent) calc(100% - 14px))}
+.lbook{flex:none;width:92px} .lbook .cover{width:92px}
+.ltabs{display:flex;gap:18px;overflow-x:auto;margin-top:18px;padding-bottom:4px}
+.ltab{flex:none;font-size:15px;font-weight:500;letter-spacing:-.25px;color:var(--label)}
+.ltab sup{font-size:11px;color:var(--label3);margin-left:2px}
+.lbig{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;padding:16px;border-radius:22px;background:var(--fill)}
+.lbig .notch{background:var(--bg)}
+.lbig .notch::before,.lbig .notch::after{background:radial-gradient(circle at 0 0,transparent 15.5px,var(--bg) 16px)}
+.lbt{display:flex;flex-direction:column}
+.lk{font-size:15px;font-weight:600;letter-spacing:-.3px} .ls{font-size:13px;color:var(--label2)}
+.lnum{margin-top:auto;font-family:'Instrument Serif',Georgia,serif;font-size:64px;line-height:60px;font-weight:400;letter-spacing:-1px}
+.lu{font-size:13px;color:var(--label2);padding-bottom:22px}
+.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lgrid .cover{width:100%}
+@media (min-width:900px){.lhead{font-size:56px;line-height:56px;max-width:560px}.lbig{max-width:620px}.lbook,.lbook .cover{width:120px}}
+
+.sys-type{display:flex;flex-direction:column;gap:14px}
+.sys-type>div{display:flex;flex-direction:column;gap:2px;padding-bottom:12px;box-shadow:inset 0 -1px 0 var(--sep)}
+.seg button.faved{color:#fff}
+
+/* =========================== audit pass (Codex, 80 findings) — still the aurora system =========================== */
+/* dark: layered near-black with a plum cast so black-and-white portraits never dissolve (4, 5, 11, 33, 42, 62, 68) */
+:root{--bg:#0d0c0e;--fill:#1c1a1e;--fill-on:#2a272c;--sep:rgba(255,255,255,.09);--tint:#241820;--bar:rgba(30,28,33,.86);--bar2:rgba(24,22,27,.92);
+  --label2:rgba(255,255,255,.66);--label3:rgba(255,255,255,.46);--ph:rgba(255,255,255,.42)}
+html:not(.light) .pcard .art,html:not(.light) .pimg,html:not(.light) .artifact-card .object-stage,html:not(.light) .qback{box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 0 0 1px rgba(255,255,255,.05)}
+html:not(.light) .pim img,html:not(.light) .pcard .art img{background:#18161a}
+html:not(.light) ion-modal.sheet-modal::part(content){box-shadow:0 0 0 1px rgba(255,255,255,.1)}
+
+/* header atmosphere on every light route (7) */
+.ltitle{background:linear-gradient(var(--tint) 0,color-mix(in srgb,var(--tint) 45%,var(--bg)) 70%,var(--bg))}
+.content>.ltitle{margin-bottom:2px}
+
+/* bottom bar: shallower, translucent material, crisp centre (10, 11) */
+@media (max-width:899px){
+  #tabs{height:calc(76px + var(--safe-b) * .5)}
+  #tabs::before{height:520px;background:var(--bar);-webkit-backdrop-filter:blur(24px) saturate(1.6);backdrop-filter:blur(24px) saturate(1.6);
+    box-shadow:0 -1px 0 rgba(0,0,0,.05),0 -8px 24px rgba(0,0,0,.06)}
+  html.light #tabs::before{background:rgba(255,255,255,.9)}
+  html #tabbar{margin-top:24px}
+  #tabplay{margin-top:-10px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  /* the photo screen is immersive: the bar steps aside like the reference */
+  #tabs{transition:transform .45s cubic-bezier(0.32,0.72,0,1)}
+  body.on-figure #tabs{transform:translateY(120%)}
+  body.on-figure #mini{transform:translateY(calc(76px + var(--safe-b) * .5))}
+}
+
+/* home: controlled quote stack, quote posts, black favourite in the notch (14, 15, 16, 17) */
+.qback{transform:rotate(3deg)}
+.qback span{left:auto;right:12px;top:12px;bottom:auto}
+.qcard{transform:rotate(-1.5deg);width:74%}
+.qt{font-size:24px;line-height:27px}
+.qpost{margin-top:26px}
+.qcard.flat{position:relative;transform:none;width:100%;min-height:0;left:auto;top:auto;padding:30px 20px 18px;background:var(--fill);box-shadow:none}
+.qcard.flat .qt{font-size:26px;line-height:30px}
+.qcard.flat .qav{box-shadow:0 0 0 3px var(--bg)}
+.notch .sfi{background-color:currentColor!important}
+.notch button{color:var(--label)}
+.notch button:first-child{color:var(--label2)}
+
+/* figure page: face up and out of the title, lighter frosted materials (3, 48-53) */
+.fxbg img{object-position:center 0}
+.fxbg .lo,.fxbg #pimg{height:78%;top:0;bottom:auto;-webkit-mask:linear-gradient(#000 70%,transparent);mask:linear-gradient(#000 70%,transparent)}
+.fxbg::after{background:linear-gradient(rgba(0,0,0,.15),transparent 20%,transparent 42%,rgba(0,0,0,.5) 62%,rgba(0,0,0,.72))}
+.fx{background:radial-gradient(120% 60% at 50% 100%,#24302c,#0d1110 70%)}
+.fxb{background:rgba(255,255,255,.18);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.35)}
+.fxm{font-size:15px;color:rgba(255,255,255,.72)}
+.seg{background:rgba(255,255,255,.16);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.18)}
+.fxcard{background:rgba(255,255,255,.2);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.22)}
+.fxcard p{color:rgba(255,255,255,.9);font-size:14px;line-height:18px}
+.fxcard .lav{font-weight:500}
+.fxav{width:44px;height:44px}
+.fxpill{height:32px;padding:0 7px 0 15px;border-radius:16px;font-size:14px;background:rgba(255,255,255,.18);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.25)}
+@media (max-width:899px){.fxhero{min-height:100svh;padding-bottom:calc(26px + var(--safe-b))}}
+
+/* now playing: the photo screen (9, 55-58) */
+#np .nphead{padding:0 2px}
+#np #npclose,#np #npmore{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.18)!important;box-shadow:inset 0 0 0 .5px rgba(255,255,255,.3)}
+#np .nptabs{height:40px;padding:3px;border-radius:20px;gap:0;background:rgba(255,255,255,.14)}
+#np .nptabs span,#np .nptabs button{min-height:34px;padding:0 14px;border-radius:17px;font-size:14px;font-weight:500;color:#fff}
+#np .nptabs span.on{background:#fff;color:#000}
+#np .art{box-shadow:0 24px 60px rgba(0,0,0,.45)!important;border-radius:22px!important}
+#np .speed{display:flex;justify-content:space-between;align-items:center;height:40px;margin-top:14px;padding:3px;border-radius:20px;background:rgba(255,255,255,.14)}
+#np .speed button{flex:1;height:34px;border-radius:17px;font-size:14px;font-weight:500;color:rgba(255,255,255,.8)}
+#np .speed button.on{background:#fff;color:#000}
+#np .bottoms button{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12)}
+#np .bottoms button.on{background:#fff;color:#000}
+
+/* history: tinted photo panel, simpler week, headline + tokens + duration, larger rows (19-25) */
+.night{border-radius:28px;padding:20px 16px 18px}
+.nbg::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(120,60,80,.35),rgba(20,20,24,.15) 60%)}
+.nbg img{filter:blur(24px) saturate(1.1) brightness(.62)}
+.week{gap:5px}
+.day{height:52px;border-radius:15px;background:rgba(255,255,255,.12)}
+.day.on{height:64px;border-radius:18px}
+.day.on b{font-size:20px}
+.day.heard::after{top:auto;bottom:6px;right:auto;left:50%;transform:translateX(-50%);width:4px;height:4px;background:rgba(255,255,255,.85)}
+.day.on.heard::after{background:var(--red)}
+.hsum{margin-top:20px;font-family:'Instrument Serif',Georgia,serif;font-size:30px;line-height:32px;font-weight:400;letter-spacing:-.4px;color:#fff}
+.hsum em{font-size:30px;color:rgba(255,255,255,.62)}
+.htok{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.htok .hn{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px 0 3px;border-radius:15px;font-size:13px;font-weight:500;background:rgba(255,255,255,.16)}
+.htok .hn i{margin:0;box-shadow:none}
+.hdur{margin-top:10px;font-size:13px;color:rgba(255,255,255,.66)}
+.hstats{margin-top:16px;gap:12px}
+.hpill{height:44px;padding:0 18px;border-radius:22px;background:#fff;color:#000;font-size:15px;font-weight:600;letter-spacing:-.25px;display:inline-flex;align-items:center;gap:8px}
+.hclear{margin-left:auto;font-size:14px}
+.hist-v2 .history-filters{align-items:center}
+.history-item{padding:12px 0}
+html .hist-object{width:72px;height:72px}
+.hist-copy .t-head{font-size:15px;line-height:20px;font-weight:600;letter-spacing:-.25px}
+
+/* library: contrast, normalised covers, pills, a calmer big-number card (26-32) */
+.lhead{color:var(--label2);font-size:42px;line-height:42px}
+.lbook,.lbook .cover{width:88px} .lbook .cover{aspect-ratio:2/3;height:auto}
+.ledge{align-items:flex-end}
+.ltabs{gap:8px}
+.ltab{display:inline-flex;align-items:center;gap:6px}
+.ltab .num{font-size:12px;color:var(--label3)}
+.lbig{grid-template-columns:1.1fr 1fr;align-items:end;padding:18px}
+.lgrid{grid-template-columns:1fr 1fr;gap:10px}
+.lnum{font-size:72px;line-height:66px}
+
+/* grids: rhythm, names, filter-row fade, no duplicated titles (34, 35, 39, 40) */
+.pgrid,.cats{gap:26px 14px!important}
+.cn{font-size:15px;font-weight:600;letter-spacing:-.3px;margin-top:10px}
+.hrow:has(.chip){-webkit-mask:linear-gradient(90deg,#000 88%,transparent);mask:linear-gradient(90deg,#000 88%,transparent)}
+.art-obj .object-title{display:none}
+.artifact-card .t-head{-webkit-line-clamp:2}
+
+/* search: a field that reads as a field, fuller clusters, consistent badges (44-46) */
+html .search,html.light .search{height:44px;border-radius:22px;background:var(--fill);box-shadow:inset 0 0 0 1px var(--sep)}
+html .search input::placeholder{color:var(--label3)}
+.av{width:31%}
+html .sdisc .dbadge{background:var(--red)!important;color:#fff!important;right:12px;top:12px}
+
+/* settings: soft grouped panels, separated destructive action (59-63) */
+.settings .group{background:var(--fill);border-radius:22px;padding:0 0 0 14px}
+.settings .group+.group{margin-top:10px}
+.settings .grow .mid{padding-right:14px}
+.settings .grow.destructive .t-body{color:#ff3b30}
+.settings .gh{margin-top:24px}
+
+/* sheets: pill actions with hierarchy (67-69) */
+.sheet-actions{gap:8px}
+.sheet-actions .btn{height:48px;border-radius:24px;font-size:16px}
+
+/* desktop: one editorial canvas beside a tinted rail (2, 13, 18, 20, 25, 27, 37, 38, 47, 60, 66, 77, 78) */
+@media (min-width:900px){
+  .page>.content{max-width:1080px;margin:0 auto}
+  .page:has(.fx){padding-left:0;padding-right:0}
+  .ltitle{padding-top:40px;border-radius:0 0 28px 28px}
+  .ltitle h1.t-page{font-size:52px!important;line-height:54px!important}
+  .settings .wrap,.hist-v2 .wrap{max-width:760px}
+  .night{padding:28px 30px}
+  .week{max-width:520px;margin-left:auto;margin-right:auto}
+  .hsum{font-size:40px;line-height:42px} .hsum em{font-size:40px}
+  .cloud{height:220px}
+  .home-a .cav{transform:translate(-50%,-50%) scale(1.25)}
+  .qs{max-width:1080px}
+  .qstack{height:300px;max-width:640px}
+  .qback{height:260px}
+  .qt{font-size:30px;line-height:34px}
+  .feed{max-width:1080px}
+  .lhead{font-size:64px;line-height:62px;max-width:720px}
+  .lbook,.lbook .cover{width:128px}
+  .lbig{max-width:720px}
+  .pgrid,.cats{gap:34px 22px!important}
+  .fxhero{padding-left:calc(var(--sbw) + var(--sbx) + 24px);padding-right:24px}
+  .fxbg .lo,.fxbg #pimg{left:calc(var(--sbw) + var(--sbx));width:calc(100% - var(--sbw) - var(--sbx));height:100%;object-position:center 22%;
+    -webkit-mask:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+  .fxcard{max-width:520px} .seg{max-width:520px} .fxt{font-size:64px;line-height:62px;max-width:640px}
+  html.light #topnav,html:not(.light) #topnav{background:linear-gradient(var(--tint),color-mix(in srgb,var(--tint) 30%,var(--bg)))!important}
+  html #topnav .lg span{font-size:28px}
+  html #topnav button:not(.lg){font-size:15px}
+  html #topnav button.on{background:var(--bg)!important;box-shadow:0 1px 3px rgba(0,0,0,.08)!important}
+}
+
+.seg button.faved,html.light .seg button.faved{color:#fff!important}
+html .settings .group,html.light .settings .group{background:var(--fill);border-radius:22px;padding:0 0 0 14px}
 </style>
 </head>
 <body>
@@ -1551,7 +1795,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261101-0700';
+const BUILD='20261101-1000';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -1808,6 +2052,7 @@ function wireNav(pg){
 
 /* ============================== chrome ============================== */
 function paintChrome(){
+  document.body.classList.toggle('on-figure',!!route&&route.startsWith('p/'));
   const active=depth(route)?(route.startsWith('p/')?'figures':route==='settings'||route==='system'?'settings':route.startsWith('l/')?'library':lastTab):route;
   const tb=$('tabbar');
   const keepHL=$('tabhl')||Object.assign(document.createElement('span'),{id:'tabhl'});
@@ -1943,6 +2188,15 @@ const wide=c=>`<button class="wide press" data-ep="${c.p.slug}|${c.k}|${c.i}" st
 /* ============================== pages ============================== */
 function featured(){ const F=['Steve Jobs','Winston Churchill','Napoleon','Alexander the Great','Elon Musk','Jeff Bezos','Jensen Huang','Nikola Tesla','Andrew Carnegie','Peter Thiel','Henry Ford','Charles de Gaulle']
   .map(n=>DATA.people.find(p=>p.name===n)).filter(Boolean); return F[Math.floor(Date.now()/864e5)%F.length]; }
+/* documented quotes (source in the second field) for the Home quote card */
+const QUOTES={'Steve Jobs':['Creativity is just connecting things.','Wired, 1996'],
+  'Napoleon':['Impossible is not French.','Letter, 1813'],
+  'Winston Churchill':['We shall never surrender.','House of Commons, 1940'],
+  'Jeff Bezos':['Day 2 is stasis. Followed by irrelevance.','Letter to shareholders, 2016'],
+  'Elon Musk':['When something is important enough, you do it even if the odds are not in your favor.','60 Minutes, 2014'],
+  'Henry Ford':['Any customer can have a car painted any color that he wants so long as it is black.','My Life and Work, 1922'],
+  'Andrew Carnegie':['Put all your eggs in one basket — and then watch that basket.','Speech, 1885'],
+  'Charlie Munger':['Invert, always invert.','After Carl Jacobi']};
 const CLOUD=[[95.0, 19.1, 23.3, 1], [21.4, 23.4, 28.8, 1], [79.6, 29.2, 21.8, 0.95], [10.2, 37.7, 31.1, 0.84], [33.1, 38.9, 33.4, 0.46], [2.1, 51.0, 34.2, 1], [70.4, 58.0, 31.1, 0.95], [96.9, 58.0, 42.0, 0.87], [86.6, 59.1, 28.0, 0.58], [41.8, 66.9, 24.1, 0.67], [56.1, 71.2, 34.2, 0.6], [19.0, 76.6, 43.5, 0.46], [33.9, 92.9, 28.0, 0.42], [8.3, 98.0, 27.2, 0.47], [93.9, 98.4, 24.9, 0.35], [45.5, 105.4, 20.2, 0.35], [78.5, 105.4, 42.0, 0.38], [61.1, 114.7, 34.2, 0.35], [25.0, 115.9, 28.0, 0.35]];   /* [left%, top pt, diameter pt, opacity] from the reference */
 const badge=n=>n?`<span class="rb num">${n>9?'9+':n}</span>`:'';
 function post(p,i){
@@ -1952,8 +2206,20 @@ function post(p,i){
     <div class="pimg"><button class="pim press" data-p="${p.slug}" aria-label="${esc(p.shortName)}">${img(p,'',i<2)}</button>
       <span class="notch"><button class="press" data-ep="${p.slug}|bio|${k}" aria-label="Play ${esc(rowTitle(p,e))}">${IC.play(17)}</button>
         <button class="press" data-favp="${p.slug}" aria-pressed="${fav}" aria-label="${fav?'Remove '+esc(p.shortName)+' from':'Add '+esc(p.shortName)+' to'} Favourites">${IC.star(18,fav)}</button></span></div>
-    <div class="pmeta"><span class="g">${p.episodes.length} book${p.episodes.length>1?'s':''} ·</span> <b>${esc(rowTitle(p,e))}</b></div>
-    ${quote?`<p class="pcap">${esc(quote)}</p>`:''}</article>`;
+    <div class="pmeta"><b>${esc(rowTitle(p,e))}</b><span class="g"> · ${fmtDur(e.sec)}</span></div></article>`;
+}
+const qpost=p=>{ const [q,src]=QUOTES[p.name]; return `<article class="post qpost"><button class="qcard flat press" data-p="${p.slug}"><span class="qav">${img(p)}</span>
+  <span class="qt">${esc(q)}</span><span class="qn">${esc(p.shortName)}</span><span class="qsrc">${esc(src)}</span></button></article>`; };
+function feedMix(ps){ const qs=DATA.people.filter(p=>QUOTES[p.name]), d=Math.floor(Date.now()/864e5); let k=2;
+  return ps.map((p,i)=>post(p,i)+((i%3===2&&qs.length)?qpost(qs[(d+k++)%qs.length]):'')).join(''); }
+function quoteStack(){
+  const qs=DATA.people.filter(p=>QUOTES[p.name]); if(!qs.length) return '';
+  const d=Math.floor(Date.now()/864e5), p=qs[d%qs.length], back=qs[(d+1)%qs.length], [q,src]=QUOTES[p.name];
+  const h=new Date().getHours(), hi=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
+  return `<section class="qs"><h2 class="qhi">${hi}</h2>
+    <div class="qstack"><button class="qback press" data-p="${back.slug}" aria-label="${esc(back.shortName)}">${img(back)}<span>${esc(back.shortName)}</span></button>
+      <button class="qcard press" data-p="${p.slug}"><span class="qav">${img(p)}</span><span class="qt">${esc(q)}</span>
+        <span class="qn">${esc(p.shortName)}</span><span class="qsrc">${esc(src)}</span></button></div></section>`;
 }
 function pageHome(){
   const cont=continueList(), history=historyList(), weekStart=Date.now()-7*864e5, studied=history.filter(x=>x.t>=weekStart).length;
@@ -1962,13 +2228,14 @@ function pageHome(){
   const order=[focus.p,...cont.map(c=>c.p),featured(),...byCount].filter((p,i,a)=>a.indexOf(p)===i);
   const others=DATA.people.filter(p=>p!==focus.p);
   return `<div class="content home-a">
-  <header class="ahead"><div class="abar"><h1 class="wm" data-title="The Greats">the greats</h1>
+  <header class="ahead"><div class="abar"><h1 class="wm" data-title="The Greats">The Greats</h1>
     <span class="hic"><button class="hb press" data-go="l/favs" aria-label="Favourites, ${favs.length}">${IC.star(22,favs.length>0)}${badge(favs.length)}</button>
       <button class="hb press" data-go="history" aria-label="History, ${studied} this week">${IC.clock(22)}${badge(studied)}</button>
       <button class="hb press mob" data-go="settings" aria-label="Settings">${IC.gear(21)}</button></span></div>
     <button class="me press" data-ep="${focus.p.slug}|${focus.k}|${focus.i}" aria-label="${cont.length?'Continue':'Play today’s study'}: ${esc(rowTitle(focus.p,focus.e))}"><span class="mav">${img(focus.p)}</span><span class="mplus">${IC.play(10)}</span></button></header>
   <div class="cloud" aria-label="All greats">${CLOUD.map(([x,y,d,o],n)=>{ const p=others[n%others.length]; return `<button class="cav press" data-p="${p.slug}" aria-label="${esc(p.shortName)}" style="left:${x}%;top:${y}px;width:${d}px;height:${d}px;--o:${o}">${img(p)}</button>`; }).join('')}</div>
-  <div class="feed">${order.slice(0,14).map(post).join('')}</div>
+  ${quoteStack()}
+  <div class="feed">${feedMix(order.slice(0,14))}</div>
   </div>`;
 }
 let figFilter='all', historyFilter='all', searchQuery='';
@@ -1980,21 +2247,21 @@ function pageFigures(){
 }
 function pageLibrary(){
   const cont=continueList(), hist=historyList(); let fin=0; DATA.people.forEach(p=>KINDS.forEach(([k])=>items(p,k).forEach(e=>{ if(done(p,e)) fin++; })));
-  const cnt=k=>DATA.people.reduce((t,p)=>t+items(p,k).length,0);
-  const sample=k=>{ for(const p of DATA.people){ const e=items(p,k)[0]; if(e) return {p,e}; } return null; };
-  const archives=['speeches','letters','edits'].map(k=>({k,n:cnt(k),x:sample(k)}));
-  const now=cur?{p:cur.p,k:cur.k,e:curEp(),i:cur.i}:cont[0];
-  const pct=now?Math.round(100*(now.p===cur?.p&&now.i===cur?.i?(audio.currentTime||pos(now.p,now.e)):pos(now.p,now.e))/(now.e.sec||1)):0;
-  return `<div class="content libwrap"><div class="ltitle" data-title="Library"><h1 class="t-page">Library</h1>
+  const recent=DATA.people.flatMap(p=>p.episodes.map((e,i)=>({p,e,i}))).filter(r=>r.e.date).sort((a,b)=>b.e.date.localeCompare(a.e.date));
+  const ledge=(cont.length?cont.map(c=>({p:c.p,e:c.e,i:c.i,k:c.k})):recent.map(r=>({...r,k:'bio'}))).slice(0,8);
+  const totalH=Math.round(DATA.people.reduce((t,p)=>t+p.episodes.reduce((u,e)=>u+(e.sec||0),0),0)/3600);
+  const longest=DATA.people.flatMap(p=>p.episodes.map((e,i)=>({p,e,i}))).sort((a,b)=>(b.e.sec||0)-(a.e.sec||0)).slice(0,4);
+  const head=cont.length?`You have <b>${cont.length}</b> book${cont.length>1?'s':''} in progress`:`Your shelf is <b>ready</b> for its first book`;
+  const tab=(label,n,go)=>`<button class="chip ltab press" data-go="${go}">${esc(label)} <span class="num">${n}</span></button>`;
+  return `<div class="content lib-v2"><div class="ltitle" data-title="Library"><h1 class="t-page">Library</h1>
     <button class="btn-icon glass press mob" data-go="settings" aria-label="Settings">${IC.gear(19)}</button></div>
-  <div class="wrap rise">
-    ${now?`<div class="slabel" style="margin:8px 0 12px">Currently playing</div>
-      <button class="cp press" data-ep="${now.p.slug}|${now.k}|${now.i}">${cover(now.p,now.k,now.e,now.i)}
-        <span style="flex:1;min-width:0"><span class="t-head clamp2" style="display:block">${esc(rowTitle(now.p,now.e))}</span><span class="t-foot c2">${esc(now.p.shortName)}</span>
-        <span class="chip2">${IC.play(10)} ${pct}% complete</span></span></button>`:''}
-    <div class="erows" style="margin-top:22px">${er('History',hist.length,'history')}${er('Favourites',favs.length,'l/favs')}${er('Continue',cont.length,'l/continue')}${er('Finished',fin,'l/finished')}</div>
-    <section class="sect">${shead('The archive')}
-      <div class="cats">${archiveDiscs()}</div></section>
+  <div class="wrap rise"><section class="lhero"><p class="lhead">${head}</p>
+      <div class="ledge">${ledge.map(r=>`<button class="lbook press" data-ep="${r.p.slug}|${r.k}|${r.i}" aria-label="${esc(rowTitle(r.p,r.e))}">${cover(r.p,r.k,r.e,r.i)}</button>`).join('')}</div></section>
+    <div class="ltabs">${tab('History',hist.length,'history')}${tab('Favourites',favs.length,'l/favs')}${tab('Continue',cont.length,'l/continue')}${tab('Finished',fin,'l/finished')}</div>
+    <section class="lbig"><div class="lbt"><span class="lk">Every life, read aloud</span><span class="ls">${DATA.people.length} greats</span><b class="lnum num">${totalH}</b><span class="lu">hours in the archive</span></div>
+      <span class="notch"><button class="press" data-ep="${longest[0].p.slug}|bio|${longest[0].i}" aria-label="Play the longest life">${IC.play(17)}</button><button class="press" data-go="figures" aria-label="All greats">${IC.chev(15)}</button></span>
+      <div class="lgrid">${longest.slice(0,2).map(r=>`<button class="press" data-ep="${r.p.slug}|bio|${r.i}" aria-label="${esc(rowTitle(r.p,r.e))}">${cover(r.p,'bio',r.e,r.i)}</button>`).join('')}</div></section>
+    <section class="sect">${shead('Speeches, letters & edits')}<div class="cats">${archiveDiscs()}</div></section>
   </div></div>`;
 }
 function pageHistory(){
@@ -2002,13 +2269,28 @@ function pageHistory(){
   const visible=all.filter(h=>historyFilter==='progress'?(!h.dn&&h.ps>0):historyFilter==='finished'?h.dn:true);
   const groups=[]; visible.forEach(h=>{ const label=historyBucket(h.t); let g=groups.find(x=>x.label===label); if(!g){g={label,items:[]};groups.push(g)} g.items.push(h); });
   const filters=[['all','All'],['progress','In Progress'],['finished','Finished']];
-  const body=groups.length?groups.map(g=>`<section class="history-section"><div class="history-section-title"><h2 class="t-title3">${esc(g.label)}</h2><span class="t-foot c2 num">${g.items.length}</span></div><div class="history-list">${g.items.map(historyRow).join('')}</div></section>`).join(''):
+  const now=new Date(), today=new Date(now.getFullYear(),now.getMonth(),now.getDate()), mon=new Date(today); mon.setDate(today.getDate()-((today.getDay()+6)%7));
+  const days=Array.from({length:7},(_,k)=>{ const d=new Date(mon); d.setDate(mon.getDate()+k); return d; });
+  const dayKey=d=>d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate(), heard=new Set(all.map(h=>dayKey(new Date(h.t))));
+  const week=all.filter(h=>h.t>=mon.getTime()), people=[...new Set(week.map(h=>h.p))], mins=Math.round(week.reduce((t,h)=>t+(h.dn?(h.e.sec||0):h.ps),0)/60);
+  const active=days.filter(d=>heard.has(dayKey(d))).length;
+  const names=people.slice(0,3).map(p=>`<span class="hn"><i>${img(p)}</i>${esc(p.shortName)}</span>`), list=names.length>1?names.slice(0,-1).join(', ')+' and '+names[names.length-1]:names[0];
+  const sentence=people.length?`This week you studied ${list}${people.length>3?` and ${people.length-3} more`:''}, <em>${mins>=60?Math.floor(mins/60)+' h '+(mins%60)+' min':mins+' min'} with the greats.</em>`
+    :`Nothing yet this week. <em>Pick a life and begin.</em>`;
+  const resume=all.find(h=>!h.dn&&h.ps>0);
+  const ring=`<span class="ring" style="--p:${Math.round(100*active/7)}"><b class="num">${active}</b><i>/7</i></span>`;
+  const body=groups.length?groups.map(g=>`<section class="history-section"><div class="history-section-title"><h2 class="hsec">${esc(g.label)}</h2><span class="t-foot c2 num">${g.items.length}</span></div><div class="history-list">${g.items.map(historyRow).join('')}</div></section>`).join(''):
     empty(historyFilter==='all'?'Your history starts here':'Nothing in this view',historyFilter==='all'?'Play a book, speech, letter, or edit and it will appear here in order.':'Try another filter or choose something new to study.','Choose a great','figures');
-  return `<div class="content"><div class="ltitle" data-title="History"><h1 class="t-page">History</h1>
+  return `<div class="content hist-v2"><div class="ltitle" data-title="History"><h1 class="t-page">History</h1>
     <button class="btn-icon glass press mob" data-go="settings" aria-label="Settings">${IC.gear(19)}</button></div>
-    <div class="wrap rise"><div class="history-head"><div><div class="slabel">Your practice</div><p class="t-body">What you return to shapes you. Resume an idea, revisit a life, or remove what no longer belongs.</p></div>
-      <div class="history-tools"><button class="btn btn-tinted btn-sm press" data-a="history-clear"${all.length?'':' disabled aria-disabled="true"'}>Clear History</button></div></div>
-      <div class="history-filters" role="group" aria-label="History filter">${filters.map(([id,label])=>`<button class="chip press${historyFilter===id?' on':''}" data-hfil="${id}" aria-pressed="${historyFilter===id}">${label}</button>`).join('')}</div>
+    <div class="wrap rise"><section class="night"><span class="nbg" aria-hidden="true">${img((all[0]||{}).p||featured())}</span><div class="month">${now.toLocaleDateString(undefined,{month:'long'})}</div>
+      <div class="week">${days.map(d=>{ const on=dayKey(d)===dayKey(today); return `<span class="day${on?' on':''}${heard.has(dayKey(d))?' heard':''}"><i>${d.toLocaleDateString(undefined,{weekday:'narrow'})}</i><b class="num">${d.getDate()}</b></span>`; }).join('')}</div>
+      <p class="hsum">${people.length?`You studied ${people.length} great${people.length>1?'s':''} <em>this week</em>`:'A quiet week <em>so far</em>'}</p>
+      ${people.length?`<div class="htok">${people.slice(0,4).map(p=>`<span class="hn"><i>${img(p)}</i>${esc(p.shortName)}</span>`).join('')}</div>`:''}
+      <div class="hdur">${people.length?`${mins>=60?Math.floor(mins/60)+' h '+(mins%60)+' min':mins+' min'} listened · ${active} of 7 days`:'Pick a life and begin'}</div>
+      <div class="hstats">${ring}${resume?`<button class="hpill press" data-ep="${resume.p.slug}|${resume.k}|${resume.i}">${IC.play(13)} Resume ${esc(resume.p.shortName)}</button>`:`<button class="hpill press" data-go="figures">Choose a great</button>`}</div></section>
+      <div class="history-filters" role="group" aria-label="History filter">${filters.map(([id,label])=>`<button class="chip press${historyFilter===id?' on':''}" data-hfil="${id}" aria-pressed="${historyFilter===id}">${label}</button>`).join('')}
+        ${all.length?`<button class="textbtn hclear press" data-a="history-clear">Clear</button>`:''}</div>
       <div id="history-results">${body}</div></div></div>`;
 }
 function pageSearch(){
@@ -2045,17 +2327,16 @@ function pagePerson(p){
   return `<div class="fx"><div class="fxbg" aria-hidden="true">${img(p,'lo')}<img class="fade" src="${P[p.name]}" alt="" width="900" height="1200" decoding="async" fetchpriority="high" id="pimg"></div>
     <div class="fxtop"><button class="fxb press" data-a="back" aria-label="Back">${IC.back(19)}</button><button class="fxb press" data-a="about" aria-label="About">${IC.more(19)}</button></div>
     <section class="fxhero"><h1 class="fxt" data-title="${esc(p.shortName)}">${esc(p.shortName)}</h1>
-      <p class="fxm">${esc(shelf)}<br>${p.episodes.length} book${p.episodes.length>1?'s':''} · ${hours(p)} hours${n('letters')?`<br>${n('letters')} letter${n('letters')>1?'s':''}`:n('speeches')?`<br>${n('speeches')} speech${n('speeches')>1?'es':''}`:''}</p>
+      <p class="fxm">${esc(shelf)} · ${p.episodes.length} book${p.episodes.length>1?'s':''} · ${hours(p)} h</p>
       <div class="seg" role="group" aria-label="Actions"><button class="on press" data-a="play"><i class="si ok">${IC.play(9)}</i><span>Play</span></button>
-        <button class="press" data-a="shuffle"><i class="si">${IC.shuffle(9)}</i><span>Shuffle</span></button><span class="sdiv" aria-hidden="true"></span>
-        <button class="press${fav?' faved':''}" data-a="fav" aria-pressed="${fav}"><i class="si">${IC.star(9,fav)}</i><span>${fav?'Saved':'Save'}</span></button></div>
+        <button class="press" data-a="shuffle"><i class="si">${IC.shuffle(9)}</i><span>Shuffle</span></button>        <button class="press${fav?' faved':''}" data-a="fav" aria-pressed="${fav}"><i class="si">${IC.star(9,fav)}</i><span>${fav?'Saved':'Save'}</span></button></div>
       <div class="fxcard"><span class="fxav">${img(p)}</span><div class="lav">${esc(m.sub||shelf)}</div><p>${esc(quote)}</p></div>
       <button class="fxpill press" data-a="scroll">Scroll down for the ${kinds.length>1?'archive':'books'} <i>${IC.down(10)}</i></button></section>
     <div class="fxbody" id="fxbody">${books}${more}${about}</div></div>`;
 }
 function pageList(id){
   let title='', body='';
-  const grid=ps=>`<div class="pgrid">${ps.map(pcard).join('')}</div>`;
+  const grid=ps=>ps.length<=3?`<div class="feed" style="padding:0">${ps.map(post).join('')}</div>`:`<div class="pgrid">${ps.map(pcard).join('')}</div>`;
   if(id==='favs'){ title='Favourites'; const ps=DATA.people.filter(p=>favs.includes(p.name)); body=ps.length?grid(ps):empty('No favourites yet','Save a great and they’ll stay close at hand.','Browse Greats','figures'); }
   else if(id==='continue'){ title='Continue Listening'; const c=continueList(); body=c.length?`<div class="rows">${c.map(r=>erow(r.p,r.k,r.e,r.i,{num:false,lead:true})).join('')}</div>`:empty('Nothing in progress','Start an episode and your place will appear here.','Find something to play','search'); }
   else if(id==='finished'){ title='Finished'; const f=[]; DATA.people.forEach(p=>KINDS.forEach(([k])=>items(p,k).forEach((e,i)=>{ if(done(p,e)) f.push({p,k,e,i}); })));
@@ -2063,6 +2344,7 @@ function pageList(id){
   else if(id.startsWith('shelf-')){ const k=id.slice(6); title=(SECTIONS.find(s=>s[0]===k)||['',''])[1]; body=grid(DATA.people.filter(p=>meta(p).cat===k)); }
   else if(KLABEL[id]){ title=KLABEL[id]; const r=[]; DATA.people.forEach(p=>items(p,id).forEach((e,i)=>r.push({p,e,i})));
     body=r.length?`<div class="artifact-grid">${r.map(x=>artifactCard(x.p,id,x.e,x.i)).join('')}</div>`:empty(`No ${title.toLowerCase()} yet`,'They appear here as the archive grows.','Browse Greats','figures'); }
+  if(!title){ title='Not found'; body=empty('Nothing here','This shelf doesn’t exist. Browse the greats instead.','Browse Greats','figures'); }
   return `<div class="content"><div class="ltitle" data-title="${esc(title)}"><h1 class="t-page">${esc(title)}</h1></div>
     <div class="ptop" style="position:fixed"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
     <div class="wrap rise" style="margin-top:12px">${body}</div></div>`;
@@ -2076,32 +2358,28 @@ function pageSettings(){
     <div class="wrap rise" style="margin-top:16px">
       <div class="gh">Playback</div><div class="group">${g('speaker_2_fill','Default speed',sp+'×','speed')}${g('moon_zzz_fill','Sleep timer',sleepMin?sleepMin+' min':'Off','sleep')}</div>
       <div class="gh" style="margin-top:28px">Display</div><div class="group">${g('moon_fill','Appearance',{system:'System',light:'Light',dark:'Dark'}[store.get('theme','system')],'theme')}</div>
-      <div class="gh" style="margin-top:28px">Library</div><div class="group">${g('clock','Reset listening data…',saved+' records','reset','destructive')}${g('star_fill','Favourites',favs.length,'favs')}</div>
+      <div class="gh" style="margin-top:28px">Library</div><div class="group">${g('star_fill','Favourites',favs.length,'favs')}</div><div class="group">${g('clock','Reset listening data…',saved+' records','reset','destructive')}</div>
       <div class="t-foot gf">Reset removes history, saved positions, and completion status, but keeps favourites. You’ll confirm before anything is removed.</div>
       <div class="gh" style="margin-top:28px">About</div><div class="group">${g('square_grid_2x2_fill','Design system','','system')}${g('info_circle','Version',BUILD,'update')}</div>
     </div></div>`;
 }
 function pageSystem(){
-  const types=[['t-display','Display','40 / 46 Bold'],['t-large','Large Title','34 / 41 Bold'],['t-title1','Title 1','28 / 34 Bold'],['t-title2','Title 2','22 / 28 Bold'],['t-title3','Title 3','20 / 25 Semibold'],
-    ['t-head','Headline','17 / 22 Semibold'],['t-body','Body','17 / 22'],['t-callout','Callout','16 / 21'],['t-sub','Subhead','15 / 20'],['t-foot','Footnote','13 / 18'],['t-cap1','Caption 1','12 / 16'],['t-cap2','Caption 2','11 / 13']];
-  const sw=[['--bg','ground'],['--panel','panel'],['--panel2','inner tile'],['--label','text'],['--dim','second tone'],['--label2','meta'],['--hair','hairline'],['--sep','divider']];
+  const sw=[['--bg','ground'],['--tint','header tint'],['--fill','fill'],['--label','text'],['--label2','meta'],['--red','badge'],['--green','selected'],['--lav','accent']];
+  const p=DATA.people.find(x=>x.name==='Napoleon')||DATA.people[0];
   return `<div class="content"><div class="ltitle" data-title="Design System"><h1 class="t-page">Design System</h1></div>
   <div class="ptop" style="position:fixed"><button class="btn-icon glass press" data-a="back" aria-label="Back">${IC.back(20)}</button></div>
   <div class="wrap rise">
-   <p class="t-sub c2" style="margin-top:6px">System v6, built only from the 17 references you approved and measured from them by script. One design in two appearances, following the system setting or the choice in Settings. Serif for names, SF for everything you operate.</p>
-   <section class="sect">${shead('Type')}<div class="group" style="padding:6px 16px">${types.map(([c,l,s])=>`<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 0;box-shadow:inset 0 -.5px 0 var(--sep)"><span class="${c} trunc">${l}</span><span class="t-cap1 c2 num" style="flex:none">${s}</span></div>`).join('')}</div></section>
-   <section class="sect">${shead('Colour')}<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">${sw.map(([v,l])=>`<div><div style="aspect-ratio:1;border-radius:12px;background:var(${v});box-shadow:inset 0 0 0 1px var(--hair)"></div><div class="t-cap1" style="margin-top:6px">${v}</div><div class="t-cap2 c2">${l}</div></div>`).join('')}</div></section>
+   <p class="t-sub c2" style="margin-top:6px">Aurora, measured by script from the reference Adam chose, with Instrument Serif for large display text only. Pinterest supplies structure; this system decides every surface, colour and size.</p>
+   <section class="sect">${shead('Type')}<div class="sys-type">
+     <div><span class="wm" style="font-size:32px">The Greats</span><span class="t-cap1 c2">Serif · 32 · titles, never lowercased</span></div>
+     <div><span class="qt" style="font-size:22px">Creativity is just connecting things.</span><span class="t-cap1 c2">Serif italic · 22 · quotes</span></div>
+     <div><span style="font-size:14px;font-weight:500">Steve Jobs</span><span class="t-cap1 c2">SF 14 / 500 · names</span></div>
+     <div><span style="font-size:13.5px">Napoleon: A Concise Biography · 43 min</span><span class="t-cap1 c2">SF 13.5 · meta</span></div></div></section>
+   <section class="sect">${shead('Colour')}<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">${sw.map(([v,l])=>`<div><div style="aspect-ratio:1;border-radius:22px;background:var(${v});box-shadow:inset 0 0 0 1px var(--sep)"></div><div class="t-cap1" style="margin-top:6px">${v}</div><div class="t-cap2 c2">${l}</div></div>`).join('')}</div></section>
+   <section class="sect">${shead('Post')}<div class="feed" style="padding:0">${post(p,1)}</div></section>
    <section class="sect">${shead('Buttons')}<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-     <button class="btn btn-primary press">${IC.play(14)} Play</button><button class="btn btn-tinted press">${IC.shuffle(15)} Shuffle</button><button class="btn-play press">${IC.play(26)}</button>
-     <button class="circ press" aria-label="History">${IC.clock(18)}</button><button class="circ press" aria-label="Search">${IC.search(18)}</button><button class="btn-icon press" aria-label="Back">${IC.back(20)}</button></div>
-     <div class="hrow bleed" style="margin-top:14px"><button class="chip on">Selected</button><button class="chip">Tab</button><button class="chip">Tab</button></div>
-     <p class="intro" style="font-size:24px"><b>Two-tone text.</b> White or black lead, then the second tone.</p></section>
-   <section class="sect">${shead('Audio card')}${acard({p:DATA.people[7],k:'bio',e:DATA.people[7].episodes[0],i:0})}</section>
-   <section class="sect">${shead('Portrait cards')}<div class="hrow bleed">${DATA.people.slice(0,3).map(fcard).join('')}</div></section>
-   <section class="sect">${shead('Recent cards')}<div class="hrow bleed">${DATA.people.slice(3,9).map(tile).join('')}</div></section>
-   <section class="sect">${shead('Rows')}<div class="rows">${erow(DATA.people[7],'bio',DATA.people[7].episodes[0],0)}${erow(DATA.people[7],'bio',DATA.people[7].episodes[1],1,{num:false,lead:true})}</div></section>
-   <section class="sect">${shead('Materials')}<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="group" style="min-height:110px;padding:18px"><div class="t-head">Panel</div><div class="t-foot c2" style="margin-top:4px">Flat, 20pt corners, 8pt apart.</div></div><div class="glass" style="min-height:110px;padding:18px;border-radius:20px"><div class="t-head">Floating chrome</div><div class="t-foot c2" style="margin-top:4px">Tab pill, mini player, top bar.</div></div></div></section>
-   <section class="sect">${shead('Motion')}<p class="t-sub c2">Brief iOS navigation transitions, interruptible sheets, and immediate state changes. Reduced Motion removes spatial travel.</p></section>
+     <button class="btn btn-primary press">${IC.play(14)} Play</button><button class="btn btn-tinted press">Shuffle</button><span class="rpill">Resume</span><span class="rpill off">Played</span>
+     <button class="chip on">Selected</button><button class="chip">Filter</button></div></section>
   </div></div>`;
 }
 
