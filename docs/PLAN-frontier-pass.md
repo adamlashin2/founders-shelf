@@ -40,6 +40,16 @@ Check: screenshot audit shows none of the above; contrast of modal text ≥ 4.5:
 20. Mark as played / unplayed from the episode menu.
 Check: playback audit script re-run — every row passes, resume first sample == saved position.
 
+## Layer 5 — Expansion: becoming the greats (Adam, 2026-11-01)
+The app exists to make you think like them: books, speeches, letters, edits — plus new ways in.
+22. Letters: today they are text-to-speech placeholders. Real voice — ElevenLabs narration (if a key is available) or
+    real recordings downloaded from the open web; each letter page shows the letter text.
+23. Books: richer book pages (cover, author, why it matters, chapters/episode timestamps).
+24. Read along: transcript / live subtitles on Now Playing, scrolling with the audio, tap a line to seek.
+25. Edits gallery: a visual grid of the short edits (video-first, like Reels), designed from Pinterest refs.
+26. Image gallery per figure: their photographs and artefacts for inspiration, from public-domain sources.
+Each one: Pinterest references first, then build, then the same verification standard.
+
 ## Ship
 21. Full regression (routes × appearances × sizes, navigation, swipe, modals, playback), commit, push, deploy
     gh-pages, confirm live version.txt.
