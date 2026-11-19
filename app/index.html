@@ -1957,6 +1957,239 @@ html .search,html.light .search,.night,.lbig,.empty-state,.artifact-card .object
 @media (hover:hover){.refbook:hover .cover{transform:perspective(700px) rotateY(0) translateY(-5px)}}
 @media (min-width:900px){.reading-shelf .book,.reading-shelf .cover{width:150px}}
 @media (min-width:900px){.page:has(.sys-type){padding-bottom:230px!important}}
+
+/* =========================== APPLE METRICS + SEMANTIC APPEARANCE · 2026-11-19 ===========================
+   One final authority for sizing and appearance. Editorial serif remains a brand
+   moment; everything people operate follows the iOS type, target and material model. */
+:root{
+  color-scheme:dark;
+  --app-bg:#000;
+  --app-surface:#1c1c1e;
+  --app-surface-2:#2c2c2e;
+  --app-label:#fff;
+  --app-label-2:rgb(235 235 245 / .60);
+  --app-label-3:rgb(235 235 245 / .30);
+  --app-separator:rgb(84 84 88 / .65);
+  --app-fill:rgb(120 120 128 / .24);
+  --app-fill-2:rgb(120 120 128 / .18);
+  --app-accent:#30d158;
+  --app-danger:#ff453a;
+  --app-glass:rgb(28 28 30 / .78);
+  --app-glass-strong:rgb(28 28 30 / .90);
+  --app-shadow:0 10px 32px rgb(0 0 0 / .30);
+  --app-card-r:18px;
+  --app-group-r:14px;
+  --app-control-r:12px;
+  --app-margin:16px;
+  --ns-btn-d:44px;
+  --ns-card-x:var(--app-margin);
+  --ns-card-r:var(--app-card-r);
+  --ns-pill-h:44px;
+  --ns-seg-h:60px;
+  --ns-seg-inset:4px;
+  --ns-seg-w:calc(100vw - 2 * var(--app-margin));
+  --ns-info-size:15px;
+  --ns-info-lead:20px;
+  --ns-segment-size:15px;
+  --ns-host-size:13px;
+  --ns-host-lead:18px;
+  --ns-body-size:17px;
+  --ns-body-lead:22px;
+  --ns-cap-h:26px;
+  --ns-on:var(--app-accent);
+  --ns-disc-on:var(--app-accent);
+  --ns-ground-rgb:0 0 0;
+  --ns-fg-rgb:255 255 255;
+  --ns-ink-title:var(--app-label);
+  --ns-ink-host:var(--app-label-2);
+  --ns-ink-p1:rgb(235 235 245 / .86);
+  --ns-ink-p2:rgb(235 235 245 / .70);
+  --ns-glyph:var(--app-label);
+  --ns-seg-off:var(--app-label-2);
+  --ns-pill-fill:#fff;
+  --ns-surface:var(--app-surface);
+  --ns-btn:var(--app-fill);
+  --ns-seg:var(--app-fill-2);
+  --ns-sheet:var(--app-glass-strong);
+  --ns-menu:var(--app-glass-strong);
+  --bg:var(--app-bg);
+  --label:var(--app-label);
+  --label2:var(--app-label-2);
+  --label3:var(--app-label-3);
+  --sep:var(--app-separator);
+  --fill:var(--app-fill);
+  --fill2:var(--app-fill-2);
+  --panel:var(--app-surface);
+  --panel2:var(--app-surface-2);
+  --raised:var(--app-surface);
+  --danger:var(--app-danger);
+  --m:var(--app-margin);
+  --minih:52px;
+}
+html.light{
+  color-scheme:light;
+  --app-bg:#f2f2f7;
+  --app-surface:#fff;
+  --app-surface-2:#e5e5ea;
+  --app-label:#000;
+  --app-label-2:rgb(60 60 67 / .60);
+  --app-label-3:rgb(60 60 67 / .30);
+  --app-separator:rgb(60 60 67 / .29);
+  --app-fill:rgb(120 120 128 / .16);
+  --app-fill-2:rgb(120 120 128 / .12);
+  --app-accent:#248a3d;
+  --app-danger:#ff3b30;
+  --app-glass:rgb(248 248 250 / .78);
+  --app-glass-strong:rgb(248 248 250 / .92);
+  --app-shadow:0 10px 32px rgb(30 30 60 / .10);
+  --ns-ground-rgb:242 242 247;
+  --ns-fg-rgb:0 0 0;
+  --ns-ink-title:var(--app-label);
+  --ns-ink-host:var(--app-label-2);
+  --ns-ink-p1:rgb(60 60 67 / .86);
+  --ns-ink-p2:rgb(60 60 67 / .68);
+  --ns-glyph:var(--app-label);
+  --ns-seg-off:var(--app-label-2);
+  --ns-pill-fill:#fff;
+  --ns-surface:var(--app-surface);
+  --ns-btn:var(--app-fill);
+  --ns-seg:var(--app-fill-2);
+  --ns-sheet:var(--app-glass-strong);
+  --ns-menu:var(--app-glass-strong);
+  --ns-shadow:0 .5px 0 rgb(255 255 255 / .72),0 10px 30px rgb(30 30 60 / .08);
+}
+html.light body.on-photo,html.light body.on-figure,html.light #np{
+  color-scheme:dark;
+  --app-bg:#000;
+  --app-surface:#1c1c1e;
+  --app-surface-2:#2c2c2e;
+  --app-label:#fff;
+  --app-label-2:rgb(235 235 245 / .60);
+  --app-label-3:rgb(235 235 245 / .30);
+  --app-separator:rgb(84 84 88 / .65);
+  --app-fill:rgb(120 120 128 / .24);
+  --app-fill-2:rgb(120 120 128 / .18);
+  --app-accent:#30d158;
+  --app-danger:#ff453a;
+  --app-glass:rgb(28 28 30 / .78);
+  --app-glass-strong:rgb(28 28 30 / .90);
+  --app-shadow:0 10px 32px rgb(0 0 0 / .30);
+  --ns-ink-title:#fff;
+  --ns-fg-rgb:255 255 255;
+  --ns-ink-host:rgb(235 235 245 / .60);
+  --ns-ink-p1:rgb(235 235 245 / .86);
+  --ns-ink-p2:rgb(235 235 245 / .70);
+  --ns-glyph:#fff;
+  --ns-seg-off:rgb(235 235 245 / .60);
+  --ns-on:var(--app-accent);
+  --ns-disc-on:var(--app-accent);
+  --ns-surface:var(--app-surface);
+  --ns-btn:var(--app-fill);
+  --ns-seg:var(--app-fill-2);
+  --bg:var(--app-bg);
+  --label:var(--app-label);
+  --label2:var(--app-label-2);
+  --label3:var(--app-label-3);
+  --sep:var(--app-separator);
+  --fill:var(--app-fill);
+  --fill2:var(--app-fill-2);
+  --panel:var(--app-surface);
+  --panel2:var(--app-surface-2);
+}
+html,body,.page{background:var(--app-bg);color:var(--app-label)}
+body{font-synthesis:none;text-rendering:optimizeLegibility}
+
+/* Type: iOS Large defaults. Serif is reserved for the highest-level editorial voice. */
+.t-large{font-size:34px;line-height:41px}.t-title1{font-size:28px;line-height:34px}.t-title2{font-size:22px;line-height:28px}
+.t-title3{font-size:20px;line-height:25px}.t-head{font-size:17px;line-height:22px}.t-body{font-size:17px;line-height:22px}
+.t-callout{font-size:16px;line-height:21px}.t-sub{font-size:15px;line-height:20px}.t-foot{font-size:13px;line-height:18px}
+.t-cap1{font-size:12px;line-height:16px}.t-cap2{font-size:11px;line-height:13px}
+.ltitle h1.t-page,.wm{font-size:34px!important;line-height:41px!important;letter-spacing:-.35px!important}
+.fxt,.hxt{font-size:46px!important;line-height:48px!important;letter-spacing:-.45px!important}
+.shead h2.t-sect,.hxh,.history-section-title h2{font-family:var(--f)!important;font-size:20px!important;line-height:25px!important;font-weight:600!important;letter-spacing:-.45px!important;color:var(--app-label)!important}
+.slabel,.gh,.hsec{font-family:var(--f)!important;font-size:13px!important;line-height:18px!important;font-weight:500!important;letter-spacing:0!important;color:var(--app-label-2)!important}
+.row .mid .t,.cn,.gt,.hxb{font-size:17px!important;line-height:22px!important;font-weight:600!important;letter-spacing:-.43px!important}
+.row .mid .s,.cs,.gs,.ls,.lu,.hdur,.pmeta .g{font-size:13px;line-height:18px;color:var(--app-label-2)}
+.fxcard p,.empty-state .t-sub{font-size:17px;line-height:22px}
+
+/* Geometry: compact margins, familiar rows, and a restrained radius ladder. */
+.wrap{padding-left:var(--app-margin);padding-right:var(--app-margin)}
+.ltitle{padding-left:var(--app-margin);padding-right:var(--app-margin);padding-bottom:10px!important}
+.sect{margin-top:32px}.shead{margin-bottom:14px}.pgrid,.cats{gap:24px 12px!important}
+.pcard .art,.tile .art,.disc,.lbig,.night,.empty-state,.archive-tile,.artifact-card .object-stage{border-radius:var(--app-card-r)!important}
+.group,.settings .group,.erows,.cp,.acard{border-radius:var(--app-group-r)!important}
+.row{min-height:56px}.grow{min-height:52px}.row .lead{width:44px;height:44px}
+.history-item{min-height:72px;padding:10px 0}.hist-object{border-radius:10px!important}
+.search{height:44px!important;border-radius:12px!important;padding:0 12px;background:var(--app-fill)!important;box-shadow:none!important}
+.search input{font-size:17px;line-height:22px;color:var(--app-label)}
+.chip,.ltab{font-size:15px!important;line-height:20px!important;padding:0 16px!important}
+.btn,.sheet-actions .btn{font-size:17px!important;line-height:22px!important;min-height:44px}
+.nsrow{min-height:52px;font-size:17px;line-height:22px}
+.nsri{width:32px;height:32px;border-radius:9px}
+.settings .group{padding-left:16px!important}.settings .gh{margin-top:28px}
+
+/* Content layer: opaque semantic surfaces. Glass is reserved for functional chrome. */
+.acard,.group,.settings .group,.lbig,.night,.empty-state,.cp,.sys-type>div,.archive-tile,.artifact-card .object-stage,.type-obj,.hist-object{
+  background:var(--app-surface)!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:0!important}
+.lbig,.night{padding:18px!important}.lbig .notch,.notch,.ring::before{background:var(--app-bg)!important}
+.day{background:var(--app-fill)!important;color:var(--app-label)}
+.day.on{background:var(--app-accent)!important;color:#fff!important}.day.on i{color:#fff!important}
+.fxcard,.hxcard,.gplay{background:rgb(255 255 255 / .15)!important;-webkit-backdrop-filter:blur(20px) saturate(1.25)!important;backdrop-filter:blur(20px) saturate(1.25)!important;box-shadow:inset 0 0 0 .5px rgb(255 255 255 / .18)!important}
+
+/* Functional layer: regular material with opaque accessibility fallbacks. */
+#tabbar,#mini,.nsb,.fxb,#np #npclose,#np #npmore,.sheet,.toast{
+  background:var(--app-glass)!important;-webkit-backdrop-filter:blur(24px) saturate(1.35)!important;backdrop-filter:blur(24px) saturate(1.35)!important}
+.nsb,.fxb,#np #npclose,#np #npmore,.circ{width:44px!important;height:44px!important;min-width:44px!important}
+#mini{height:52px!important;border:0!important;border-radius:18px!important;padding:4px 6px!important;box-shadow:var(--app-shadow)!important}
+#mini .art{width:36px;height:36px;border-radius:8px}#mini .mini-main{height:44px}#mini .meta .t-sub{font-size:15px;line-height:18px}#mini .meta .t-foot{font-size:12px;line-height:16px}
+#mini .sk span{font-size:11px;line-height:13px;bottom:7px}
+#np .nptabs,#np .speed{height:52px!important;padding:4px!important;border-radius:18px!important}
+#np .nptabs span,#np .nptabs button,#np .speed button{height:44px!important;min-height:44px!important;border-radius:14px!important;font-size:15px!important}
+#np .ctrls .bigplay{width:72px;height:72px;min-width:72px;border-radius:50%}
+ion-modal.sheet-modal{--background:var(--app-glass-strong);--border-radius:28px}
+.sheet .sh-h{min-height:52px}.sheet .sh-h #sht{font-size:17px;line-height:22px}
+.hpill{flex:1;min-width:0;justify-content:center;padding:0 12px!important;white-space:nowrap}
+
+/* Navigation: four stable top-level destinations with icons and one-word labels. */
+@media (max-width:899px){
+  #tabs{bottom:calc(12px + var(--safe-b));height:60px!important}
+  html #tabbar{width:calc(100vw - 2 * var(--app-margin))!important;height:60px!important;padding:4px!important;border-radius:22px!important;background:var(--app-glass)!important;box-shadow:var(--app-shadow)!important}
+  html .tab{height:52px!important;border-radius:18px!important;gap:1px!important;color:var(--app-label-2)!important}
+  html .tab.on{color:var(--app-accent)!important}
+  .tab .oi{width:23px;height:23px}.tab .lb{display:block!important;font-size:11px;line-height:13px;font-weight:600;letter-spacing:.05px}
+  html #tabhl{top:4px!important;height:52px!important;border-radius:18px!important;background:var(--app-surface)!important;box-shadow:0 1px 4px rgb(0 0 0 / .12)!important}
+  #mini{left:var(--app-margin);right:var(--app-margin);bottom:calc(80px + var(--safe-b));border-radius:18px!important}
+  .page{padding-bottom:calc(80px + var(--minih) + 38px + var(--safe-b))!important}
+  .ltitle{padding-top:calc(max(var(--safe-t),20px) + 64px)!important}
+  .pgrid>.pcard{contain-intrinsic-size:auto 280px}
+  .invc{width:220px;height:360px;border-radius:22px}.inv{padding-left:calc(50% - 110px);padding-right:calc(50% - 110px)}
+  .lhead{font-size:34px!important;line-height:37px!important}.lnum{font-size:64px;line-height:60px}
+}
+@media (min-width:900px){
+  :root{--app-margin:24px;--ns-seg-w:auto}
+  .page>.content{max-width:1120px}
+  html.light #topnav,html:not(.light) #topnav{border-radius:22px!important;background:var(--app-surface)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  html #topnav button:not(.lg){height:44px!important;border-radius:12px!important;font-size:15px}
+  html #topnav button.on{background:var(--app-fill)!important;color:var(--app-label)!important;box-shadow:none!important}
+  .ltitle h1.t-page{font-size:40px!important;line-height:46px!important}.pgrid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .pgrid>.pcard{content-visibility:visible;contain:none}.page:has(.sys-type){padding-bottom:320px!important}
+  .invc{width:230px;height:380px;border-radius:22px}.fxbody{border-radius:24px}
+}
+@media (min-width:680px){.pgrid>.pcard{content-visibility:visible;contain:none}}
+
+/* Pointer, contrast, transparency and motion states. */
+@media (hover:hover){
+  .press:not(:disabled):hover{filter:brightness(1.06)}
+  .pcard:hover .art img,.invc:hover .art img{transform:scale(1.025)}
+}
+@media (prefers-contrast:more){
+  :root{--app-label-2:rgb(255 255 255 / .82);--app-separator:rgb(255 255 255 / .42);--app-glass:rgb(28 28 30 / .96)}
+  html.light{--app-label-2:rgb(0 0 0 / .78);--app-separator:rgb(0 0 0 / .42);--app-glass:rgb(255 255 255 / .97)}
+  #tabbar,#mini,.nsb,.sheet{box-shadow:inset 0 0 0 1px var(--app-separator),var(--app-shadow)!important}
+}
+@media (prefers-reduced-transparency:reduce){
+  #tabbar,#mini,.nsb,.fxb,.fxcard,.hxcard,.gplay,.sheet,.toast{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:var(--app-surface)!important}
+}
 </style>
 </head>
 <body>
@@ -2092,7 +2325,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261119-2330';
+const BUILD='20261119-apple';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -2372,8 +2605,7 @@ function paintChrome(){
 /* the travelling tab highlight: placed synchronously (layout is sync), and again on resize */
 function placeHL(){ const on=document.querySelector('#tabbar .tab.on'), hl=$('tabhl'); if(!hl) return;
   if(!on||!on.offsetWidth){ hl.style.opacity=0; return; } hl.style.opacity=1;
-  /* Notensprung segment-nav: pill = slot × (pill.w / slot of the founding control) = 0.96, centred in its slot */
-  const w=on.offsetWidth*(109.94/((353.2-2*4.74)/3)); hl.style.left='0px'; hl.style.width=w+'px'; hl.style.transform=`translateX(${on.offsetLeft+(on.offsetWidth-w)/2}px)`; }
+  const w=Math.max(0,on.offsetWidth-8); hl.style.left='0px'; hl.style.width=w+'px'; hl.style.transform=`translateX(${on.offsetLeft+4}px)`; }
 window.addEventListener('resize',placeHL);
 /* ============================== components ============================== */
 let COVERS={};
