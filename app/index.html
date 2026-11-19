@@ -1019,7 +1019,7 @@ html,body{overscroll-behavior-x:none}
 .ion-page-invisible{opacity:0}
 ion-nav:not(.hydrated) .page{position:absolute;inset:0}
 /* tab lens and sidebar pill slide (persisted elements, so these transitions actually run) */
-#tabhl{transition:transform .24s cubic-bezier(.2,.8,.2,1),width .24s cubic-bezier(.2,.8,.2,1),opacity .16s!important}
+#tabhl{transition:transform .26s cubic-bezier(.32,.72,0,1),width .26s cubic-bezier(.32,.72,0,1),opacity .14s linear!important}
 #sbhl{display:none}
 @media (min-width:900px){
   #topnav{position:fixed}
@@ -1111,8 +1111,8 @@ img.fade.in{opacity:1}
 
 /* First paint is a single, quiet continuity cue. Staggered section entrances made
    information-dense screens feel like presentation slides. */
-@keyframes settle{from{opacity:.72;transform:translateY(4px)}to{opacity:1;transform:none}}
-.settle{animation:settle .18s cubic-bezier(.2,.8,.2,1) both}
+@keyframes settle{from{opacity:.84}to{opacity:1}}
+.settle{animation:settle .16s ease-out both}
 
 /* real books: the actual cover, bound — spine shading, page block, shadow */
 .cover.real{background:#222!important;border-radius:3px 7px 7px 3px!important;overflow:visible;aspect-ratio:2/3;
@@ -2092,7 +2092,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261119-2130';
+const BUILD='20261119-2330';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -2213,46 +2213,25 @@ navEl().addEventListener('ionNavDidChange',()=>{ const pg=activePage(); if(!pg) 
   if(r&&r!==route&&navStack.length>1&&navStack[navStack.length-2]===r){ navStack.pop(); route=r; if(!depth(r)) lastTab=r;
     ground(r.startsWith('p/')?BYSLUG[r.slice(2)]:r==='home'?featured():null); showing(pg,r,'pop'); navSync=true; history.back(); } });
 
-/* Ionic owns drill-down motion and swipe-back. Avoid a second custom zoom layer:
-   clipping and scaling two full pages at once caused 100–250 ms frames on image-heavy routes. */
-
-/* In-place updates keep scroll and focus context. A single page fade avoids running
-   dozens of FLIP animations over image grids and makes rapid filter taps interruptible. */
-/* ===================== screen A -> screen B: Apple's zoom transition =====================
-   Apple, WWDC24 "Enhance your UI animations and transitions" (10145): "the cell you tap morphs
-   into the incoming view"; continuously interactive; the source is looked up again on zoom-out by
-   a stable identifier. Curve: Apple's default spring, WWDC23 "Animate with springs" (10158):
-   bounce 0, stiffness = (2pi/duration)^2, damping = 4pi/duration, mass 1, duration 0.5s
-   (Apple's own zoom-session example). Computed, not eyeballed: 98.6% at 0.5s, settles at 735ms.
-   Runs on Ionic's animation engine, so ion-nav's edge swipe scrubs it with the finger.
-   Cards zoom into their figure page; rows and lists keep Ionic's iOS slide (Apple's drill-down). */
-const APPLE_SPRING={dur:735,ease:'linear(0 0%, 0.0278 2.8%, 0.0942 5.6%, 0.1804 8.3%, 0.2739 11.1%, 0.3671 13.9%, 0.4553 16.7%, 0.5360 19.4%, 0.6080 22.2%, 0.6712 25.0%, 0.7259 27.8%, 0.7727 30.6%, 0.8123 33.3%, 0.8456 36.1%, 0.8735 38.9%, 0.8967 41.7%, 0.9158 44.4%, 0.9316 47.2%, 0.9445 50.0%, 0.9551 52.8%, 0.9638 55.6%, 0.9708 58.3%, 0.9765 61.1%, 0.9811 63.9%, 0.9848 66.7%, 0.9879 69.4%, 0.9903 72.2%, 0.9922 75.0%, 0.9938 77.8%, 0.9950 80.6%, 0.9960 83.3%, 0.9969 86.1%, 0.9975 88.9%, 0.9980 91.7%, 0.9984 94.4%, 0.9987 97.2%, 1 100%)'};
+/* ===================== screen A -> screen B =====================
+   Hierarchy decides the transition. Ordinary drill-downs use Ionic's maintained iOS
+   push/pop animation. Only a visible portrait card can become a figure page; wide
+   banners, quote cards and small action buttons deliberately keep the standard push. */
+const APPLE_ZOOM={dur:440,ease:'cubic-bezier(.32,.72,0,1)'};
 let ION=null;
 import('https://cdn.jsdelivr.net/npm/@ionic/core@9.0.10/dist/esm/index.js').then(m=>{ ION=m;
   customElements.whenDefined('ion-nav').then(()=>{ navEl().animation=navAnimation; }); }).catch(()=>{});
-/* the card for a figure, on the page underneath: matched by the figure's id (Apple: stable identifier) */
+/* The source is a real portrait/cover object, matched with the figure's stable id. */
 function zoomSource(view,slug){
   if(!view||!slug) return null;
-  return [...view.querySelectorAll(`[data-p="${slug}"]`)].map(c=>c.querySelector('.art')||c).find(c=>{ const r=c.getBoundingClientRect();
+  return [...view.querySelectorAll(`[data-p="${slug}"] .art`)].find(c=>{ const r=c.getBoundingClientRect();
     return r.width>40&&r.height>40&&r.bottom>0&&r.top<innerHeight; })||null; }
 function navAnimation(baseEl,opts){
   const back=opts.direction==='back', fig=back?opts.leavingEl:opts.enteringEl, other=back?opts.enteringEl:opts.leavingEl;
   const route=fig&&fig.dataset.route||'', slug=route.startsWith('p/')?route.slice(2):null;
   const src=slug&&zoomSource(other,slug);
-  if(!src||!ION){
-    if(!ION) return null;
-    const entering=opts.enteringEl, leaving=opts.leavingEl, back=opts.direction==='back';
-    const enterPage=entering?.querySelector(':scope>.page')||entering;
-    const leavePage=leaving?.querySelector(':scope>.page')||leaving;
-    const enterAni=ION.createAnimation().addElement(enterPage).keyframes(back?
-      [{offset:0,opacity:.82,transform:'scale(.996)'},{offset:1,opacity:1,transform:'scale(1)'}]:
-      [{offset:0,opacity:.56,transform:'translateY(5px) scale(.998)'},{offset:1,opacity:1,transform:'translateY(0) scale(1)'}]);
-    const leaveAni=ION.createAnimation().addElement(leavePage).keyframes(back?
-      [{offset:0,opacity:1,transform:'translateY(0)'},{offset:1,opacity:.56,transform:'translateY(5px)'}]:
-      [{offset:0,opacity:1,transform:'scale(1)'},{offset:1,opacity:.84,transform:'scale(.996)'}]);
-    return ION.createAnimation().addElement(entering).beforeRemoveClass('ion-page-invisible')
-      .duration(210).easing('cubic-bezier(.2,.8,.2,1)').fill('both').addAnimation([enterAni,leaveAni]);
-  }
+  if(!ION) return null;
+  if(!src) return ION.iosTransitionAnimation(baseEl,opts);
   const figPage=fig.querySelector(':scope>.page'), otherPage=other.querySelector(':scope>.page');
   const box=baseEl.getBoundingClientRect(), c=src.getBoundingClientRect();
   const W=box.width, H=box.height, s=c.width/W, r=parseFloat(getComputedStyle(src).borderRadius)||20;
@@ -2261,15 +2240,14 @@ function navAnimation(baseEl,opts){
   const full={transform:'translate(0px,0px) scale(1)',clipPath:'inset(0px 0px 0px 0px round 0px)',opacity:'1'};
   const figAni=ION.createAnimation().addElement(figPage).beforeStyles({'transform-origin':'0 0'}).afterClearStyles(['transform-origin','clip-path'])
     .keyframes(back?[{offset:0,...full},{offset:1,...small}]:[{offset:0,...small},{offset:1,...full}]);
-  /* the screen it came from recedes and dims toward the ground */
-  /* dim toward black (Apple's zoom), never by fading toward whatever ground is behind the page */
-  const rest={transform:'scale(1)',filter:'brightness(1)'}, away={transform:'scale(.94)',filter:'brightness(.5)'};
+  /* Preserve context without making the parent look as if it falls away. */
+  const rest={transform:'scale(1)',filter:'brightness(1)'}, away={transform:'scale(.985)',filter:'brightness(.86)'};
   const otherAni=ION.createAnimation().addElement(otherPage).beforeStyles({'transform-origin':'50% 40%'}).afterClearStyles(['transform-origin','filter'])
     .keyframes(back?[{offset:0,...away},{offset:1,...rest}]:[{offset:0,...rest},{offset:1,...away}]);
   /* the card itself is the thing that becomes the page: hide it while its page is in flight */
   const srcAni=ION.createAnimation().addElement(src).beforeStyles({visibility:'hidden'}).afterClearStyles(['visibility']);
   return ION.createAnimation().addElement(opts.enteringEl).beforeRemoveClass('ion-page-invisible')
-    .duration(APPLE_SPRING.dur).easing(APPLE_SPRING.ease).fill('both').addAnimation([figAni,otherAni,srcAni]);
+    .duration(APPLE_ZOOM.dur).easing(APPLE_ZOOM.ease).fill('both').addAnimation([figAni,otherAni,srcAni]);
 }
 
 /* images: mark decoded (cached images included), so .fade reveals them */
@@ -2289,14 +2267,9 @@ function keepImgs(fresh,old){ const pool=new Map();
 function settle(pg){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) return; const c=pg.querySelector(':scope>.content')||pg; c.classList.add('settle');
   setTimeout(()=>c.classList.remove('settle'),240); }
 
-/* ===================== in-place morph (no page rebuild snap) =====================
-   Filters, favourites, settings rows and history filters update the live page element in place:
-   scroll is kept, moved items FLIP, new items rise in; the selected text tab's capsule slides
-   (Ionic segment indicator: transform 260ms cubic-bezier(0.4,0,0.2,1)). */
-const KEYS=['data-p','data-ep','data-history-item','data-fil','data-hfil','data-a','data-go','data-favp'];
-function keyed(root){ const m=new Map(), seen={};
-  root.querySelectorAll(KEYS.map(k=>`[${k}]`).join(',')).forEach(el=>{ const k=KEYS.find(a=>el.hasAttribute(a)); const id=k+'='+el.getAttribute(k);
-    seen[id]=(seen[id]||0)+1; m.set(id+'#'+seen[id],el); }); return m; }
+/* ===================== in-place updates =====================
+   Filters and settings keep the current page and scroll position. The changed content
+   uses one short, interruptible fade; only the selected capsule moves between choices. */
 let morphTok=0;
 function morph(r){
   const pg=activePage(); if(!pg||pg.dataset.route!==r) return render(r,'none');
@@ -2309,26 +2282,19 @@ function morph(r){
     .then(()=>{ if(tok===morphTok&&activePage()===pg) morphNow(r,pg,fresh); });
 }
 function morphNow(r,pg,fresh){
-  const before=new Map(), vh=innerHeight;
-  keyed(pg).forEach((el,id)=>{ const b=el.getBoundingClientRect(); if(b.bottom>-200&&b.top<vh+200&&b.width) before.set(id,b); });
   const segFrom=pg.querySelector('.chip.on')?.getBoundingClientRect(), st=pg.scrollTop;
   route=r; keepImgs(fresh,pg); pg.replaceChildren(...fresh.childNodes); pg.querySelectorAll('img.fade').forEach(i=>i.classList.add('in')); setTimeout(()=>bind(pg,r),0); paintChrome(); pg.scrollTop=st; wireNav(pg);
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const ease='cubic-bezier(0.32,0.72,0,1)';
-  let n=0;
-  keyed(pg).forEach((el,id)=>{ const a=el.getBoundingClientRect(); if(!(a.bottom>0&&a.top<vh&&a.width)) return;
-    const b=before.get(id);
-    if(b){ const dx=b.left-a.left, dy=b.top-a.top, sx=b.width/a.width, sy=b.height/a.height;
-      if(Math.abs(dx)>.5||Math.abs(dy)>.5||Math.abs(sx-1)>.01||Math.abs(sy-1)>.01)
-        el.animate([{transformOrigin:'0 0',transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`},{transformOrigin:'0 0',transform:'none'}],{duration:400,easing:ease}); }
-    else el.animate([{opacity:.35,transform:'scale(.96)'},{opacity:1,transform:'none'}],{duration:300,easing:ease,fill:'backwards',delay:Math.min(n++*12,48)}); });   /* never from invisible: an empty frame reads as a flash */
+  pg.__morphAnimation?.cancel();
+  const changed=pg.querySelector(':scope>.content')||pg;
+  pg.__morphAnimation=changed.animate([{opacity:.82},{opacity:1}],{duration:150,easing:'ease-out'});
   const segOn=pg.querySelector('.chip.on');
   if(segFrom&&segOn){ const a=segOn.getBoundingClientRect();
     if(Math.abs(a.left-segFrom.left)>.5||Math.abs(a.width-segFrom.width)>.5){
       const cap=document.createElement('i'); cap.className='seg-fly';
       cap.style.cssText=`left:${a.left}px;top:${a.top}px;width:${a.width}px;height:${a.height}px`; document.body.appendChild(cap);
       segOn.classList.add('seg-moving');
-      cap.animate([{transform:`translateX(${segFrom.left-a.left}px) scaleX(${segFrom.width/a.width})`},{transform:'none'}],{duration:260,easing:'cubic-bezier(0.4,0,0.2,1)'})
+      cap.animate([{transform:`translateX(${segFrom.left-a.left}px) scaleX(${segFrom.width/a.width})`},{transform:'none'}],{duration:240,easing:'cubic-bezier(.32,.72,0,1)'})
         .finished.then(()=>{ cap.remove(); segOn.classList.remove('seg-moving'); });
       segOn.animate([{color:'var(--dim)'},{color:'var(--label)'}],{duration:160,easing:'linear'}); } }
 }
