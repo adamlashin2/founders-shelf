@@ -742,16 +742,7 @@ body.has-track #mini{transform:none;opacity:1;visibility:visible;pointer-events:
 .cover .dn{background:#fff;color:#000}
 .cover.cur{box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
 @media (hover:hover){.book:hover .cover,.artifact-card:hover .cover{transform:translateY(-3px);box-shadow:none}}
-.letter-object,.speech-object,.edit-object{background:var(--panel2);color:#fff;border-radius:var(--r-inner);box-shadow:none;transform:none}
-.letter-object::before,.speech-object::before,.letter-object .stamp,.letter-object .signature,.speech-object .mic,.edit-object .reels{display:none}
-.letter-object .kicker,.letter-object .date,.speech-object .kicker,.speech-object .speaker,.cover .no{display:none}
-.letter-object .object-title,.speech-object .object-title{margin-top:0}
-.letter-object,.speech-object{display:flex;flex-direction:column;justify-content:flex-end}
 .cover .ti{top:16px}
-.edit-object .tape-label{background:none;box-shadow:none;color:#fff;padding:0;height:auto}
-.edit-object .object-title{font-family:'Instrument Serif',Georgia,serif;font-size:18px;line-height:19px;font-weight:400;letter-spacing:0;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.edit-object .wave{display:flex;align-items:center;height:34px;margin:12px 0 0;gap:2px}
-.edit-object .wave i{width:3px;background:rgba(255,255,255,.6)}
 .artifact-card .object-stage,.archive-tile{background:var(--panel);box-shadow:none;border-radius:var(--r-panel)}
 .artifact-card .object-stage::after{display:none}
 .hist-object{background:var(--panel);box-shadow:none;border-radius:var(--r-inner)}
@@ -1118,11 +1109,10 @@ body.buffering #npplay::after,body.buffering #mini .tg::after{content:"";positio
 img.fade{opacity:0;transition:opacity .45s cubic-bezier(0.32,0.72,0,1)}
 img.fade.in{opacity:1}
 
-/* a screen settles in: sections rise a few points and fade, staggered (first visit to a page only) */
-@keyframes settle{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.settle>*{animation:settle .62s cubic-bezier(0.32,0.72,0,1) both}
-.settle>*:nth-child(2){animation-delay:.04s}.settle>*:nth-child(3){animation-delay:.08s}.settle>*:nth-child(4){animation-delay:.12s}
-.settle>*:nth-child(5){animation-delay:.16s}.settle>*:nth-child(6){animation-delay:.2s}.settle>*:nth-child(n+7){animation-delay:.24s}
+/* First paint is a single, quiet continuity cue. Staggered section entrances made
+   information-dense screens feel like presentation slides. */
+@keyframes settle{from{opacity:.72;transform:translateY(4px)}to{opacity:1;transform:none}}
+.settle{animation:settle .18s cubic-bezier(.2,.8,.2,1) both}
 
 /* real books: the actual cover, bound — spine shading, page block, shadow */
 .cover.real{background:#222!important;border-radius:3px 7px 7px 3px!important;overflow:visible;aspect-ratio:2/3;
@@ -1938,6 +1928,35 @@ html:not(.light) .row .mid .s,html:not(.light) .c2{color:rgb(235 235 245 / .6)}
   .page{padding-bottom:150px!important}}
 
 @media (max-width:899px){html .ltitle .btn-icon.glass,html .ltitle .btn-icon.glass.mob,html .ptop .btn-icon.glass{display:none!important}}
+
+/* =========================== COCKPIT POLISH · 2026-11-19 ===========================
+   Content objects keep their physical identity; chrome stays quiet and borderless. */
+.artifact-card .object-stage:has(.letter-object),.artifact-card .object-stage:has(.speech-object),.artifact-card .object-stage:has(.edit-object),
+.archive-tile .object-stage:has(.letter-object),.archive-tile .object-stage:has(.speech-object),.archive-tile .object-stage:has(.edit-object){
+  background:radial-gradient(circle at 50% 16%,rgb(var(--ns-fg-rgb) / .1),transparent 44%),var(--ns-seg)!important;
+  border-radius:var(--ns-card-r)!important;box-shadow:var(--ns-shadow)!important;overflow:hidden}
+.artifact-card .object-stage:has(.letter-object)::after,.artifact-card .object-stage:has(.speech-object)::after,.artifact-card .object-stage:has(.edit-object)::after{
+  display:block;content:"";position:absolute;left:18%;right:18%;bottom:11%;height:12px;border-radius:50%;background:rgb(0 0 0 / .34);filter:blur(10px)}
+.archive-object.letter-object,.archive-object.speech-object,.archive-object.edit-object{z-index:1;flex:none}
+html.light .speech-object{color:#f4efe6}html.light .edit-object{color:#e8e1d5}
+.artifact-card .letter-object{width:min(112px,calc(100% - 28px));height:auto;aspect-ratio:3/4}
+.artifact-card .speech-object{width:min(108px,calc(100% - 28px));height:auto;aspect-ratio:.76;padding:12px 11px}
+.artifact-card .speech-object .kicker{font-size:6px;line-height:9px}
+.artifact-card .speech-object .object-title{margin-top:12px;font-size:16px;line-height:16px;-webkit-line-clamp:3}
+.artifact-card .speech-object .speaker{left:11px;right:28px;bottom:10px;font-size:6px;line-height:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.artifact-card .speech-object .mic{right:9px;bottom:9px;transform:scale(.72);transform-origin:right bottom}
+.artifact-card .edit-object{width:min(122px,calc(100% - 24px));height:auto;aspect-ratio:1.4}
+.reading-shelf{margin-top:10px}.reading-shelf .book{width:132px}.reading-shelf .cover{width:132px}
+.reading-shelf .ref-source{display:flex;align-items:center;gap:4px;margin-top:4px;color:var(--ns-on)}
+.reading-shelf .ref-source .sfi{background-color:currentColor}
+html .search,html.light .search,.night,.lbig,.empty-state,.artifact-card .object-stage{border:0!important;outline:0!important}
+.fxbody .t-sub{color:rgba(255,255,255,.72)!important}
+.fxpill{min-height:44px;padding:8px 16px}
+.book .episode-meta{display:block;margin-top:3px;color:var(--label2)}
+.fx .book .episode-meta{color:rgba(255,255,255,.6)}
+@media (hover:hover){.refbook:hover .cover{transform:perspective(700px) rotateY(0) translateY(-5px)}}
+@media (min-width:900px){.reading-shelf .book,.reading-shelf .cover{width:150px}}
+@media (min-width:900px){.page:has(.sys-type){padding-bottom:230px!important}}
 </style>
 </head>
 <body>
@@ -2029,6 +2048,7 @@ const IC={
 
 /* ============================== data ============================== */
 const META = {
+ "Chung Ju-yung":{cat:"business",sub:"Hyundai",bio:"Escaped a farming village four times, built Hyundai from a rice shop and repair garage, then created industries Korea did not yet have — construction, cars, and the world’s largest shipyard.\n\nHis operating system was blunt: time is capital, difficulty is training, and a promise must survive the obstacle."},
  "Elon Musk":{cat:"business",sub:"SpaceX · Tesla · PayPal",bio:"Serial founder running the most ambitious industrial portfolio in history — rockets, cars, energy, tunnels, AI.\n\nThe episodes trace how he actually works: reasoning from first principles, setting insane deadlines, and committing everything he has, every time."},
  "Jeff Bezos":{cat:"business",sub:"Amazon · Blue Origin",bio:"Built Amazon from a garage bookstore into an everything company through long-term thinking, customer obsession, and written narratives instead of slides.\n\nHis shareholder letters are the closest thing modern business has to a syllabus."},
  "Bill Gates":{cat:"business",sub:"Microsoft",bio:"Co-founded Microsoft at nineteen and out-worked and out-positioned everyone through software's land-grab decade.\n\nA case study in leverage, focus, and knowing the whole board better than anyone playing on it."},
@@ -2072,7 +2092,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261108-0200';
+const BUILD='20261119-2130';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -2088,7 +2108,7 @@ function applyTheme(){ const t=store.get('theme','system'), light=t==='light'||(
   document.querySelector('meta[name="theme-color"]').content=light?'#ffffff':'#000000'; }
 lightMQ.addEventListener('change',applyTheme); applyTheme();
 const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-const fmtDur=s=>{s=Math.max(0,Math.round(s||0));const h=~~(s/3600),m=~~((s%3600)/60);return h?h+' hr '+(m?m+' min':''):m+' min'};
+const fmtDur=s=>{s=Math.max(0,Math.round(s||0));if(s>0&&s<60)return s+' sec';const h=~~(s/3600),m=~~((s%3600)/60);return h?h+' hr '+(m?m+' min':''):m+' min'};
 const fmtClock=s=>{s=Math.max(0,Math.round(s||0));const h=~~(s/3600),m=~~((s%3600)/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
 const mon=d=>d?new Date(d).toLocaleDateString(undefined,{month:'short',year:'numeric'}):'';
 const audio=$('audio');
@@ -2099,6 +2119,7 @@ const epKey=(p,e)=>p.slug+'::'+(e.id?e.id:(e.n!==null&&e.n!==undefined?e.n:e.tit
 const pos=(p,e)=>store.get('pos.'+epKey(p,e),0);
 const done=(p,e)=>store.get('done.'+epKey(p,e),false);
 const hours=p=>Math.round(p.episodes.reduce((t,e)=>t+(e.sec||0),0)/3600);
+const bookCount=p=>new Set(p.episodes.map(e=>(e.book&&e.book.trim())||epTitle(p,e))).size;
 const meta=p=>META[p.name]||{sub:'',bio:'',cat:''};
 let PAL={};
 const pal=p=>[0,0];   /* monochrome: one neutral ground for every figure */
@@ -2218,7 +2239,20 @@ function navAnimation(baseEl,opts){
   const back=opts.direction==='back', fig=back?opts.leavingEl:opts.enteringEl, other=back?opts.enteringEl:opts.leavingEl;
   const route=fig&&fig.dataset.route||'', slug=route.startsWith('p/')?route.slice(2):null;
   const src=slug&&zoomSource(other,slug);
-  if(!src||!ION) return ION?ION.iosTransitionAnimation(baseEl,opts):null;
+  if(!src||!ION){
+    if(!ION) return null;
+    const entering=opts.enteringEl, leaving=opts.leavingEl, back=opts.direction==='back';
+    const enterPage=entering?.querySelector(':scope>.page')||entering;
+    const leavePage=leaving?.querySelector(':scope>.page')||leaving;
+    const enterAni=ION.createAnimation().addElement(enterPage).keyframes(back?
+      [{offset:0,opacity:.82,transform:'scale(.996)'},{offset:1,opacity:1,transform:'scale(1)'}]:
+      [{offset:0,opacity:.56,transform:'translateY(5px) scale(.998)'},{offset:1,opacity:1,transform:'translateY(0) scale(1)'}]);
+    const leaveAni=ION.createAnimation().addElement(leavePage).keyframes(back?
+      [{offset:0,opacity:1,transform:'translateY(0)'},{offset:1,opacity:.56,transform:'translateY(5px)'}]:
+      [{offset:0,opacity:1,transform:'scale(1)'},{offset:1,opacity:.84,transform:'scale(.996)'}]);
+    return ION.createAnimation().addElement(entering).beforeRemoveClass('ion-page-invisible')
+      .duration(210).easing('cubic-bezier(.2,.8,.2,1)').fill('both').addAnimation([enterAni,leaveAni]);
+  }
   const figPage=fig.querySelector(':scope>.page'), otherPage=other.querySelector(':scope>.page');
   const box=baseEl.getBoundingClientRect(), c=src.getBoundingClientRect();
   const W=box.width, H=box.height, s=c.width/W, r=parseFloat(getComputedStyle(src).borderRadius)||20;
@@ -2253,7 +2287,7 @@ function keepImgs(fresh,old){ const pool=new Map();
   fresh.querySelectorAll('img:not(.in)').forEach(n=>{ if(!WARM.has(n.getAttribute('src'))) return; n.removeAttribute('loading'); n.decoding='sync'; n.classList.add('in'); }); }
 /* a screen settles in the first time it is shown (not on back, not on in-place updates) */
 function settle(pg){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) return; const c=pg.querySelector(':scope>.content')||pg; c.classList.add('settle');
-  setTimeout(()=>c.classList.remove('settle'),1100); }
+  setTimeout(()=>c.classList.remove('settle'),240); }
 
 /* ===================== in-place morph (no page rebuild snap) =====================
    Filters, favourites, settings rows and history filters update the live page element in place:
@@ -2407,15 +2441,18 @@ function cover(p,k,e,i,{cls=''}={}){
     ${dn?`<span class="dn">${IC.check(11)}</span>`:''}${st?`<span class="pr"><i style="width:${Math.min(99,100*ps/(e.sec||1))}%"></i></span>`:''}</span>`;
 }
 const book=(p,k,e,i)=>`<button class="book press" data-ep="${p.slug}|${k}|${i}">${cover(p,k,e,i)}
-  <span class="bm"><span class="t-foot trunc" style="display:block;font-weight:600">${esc(rowTitle(p,e))}</span><span class="t-cap1 c2">${fmtDur(e.sec)}</span></span></button>`;
+  <span class="bm"><span class="t-foot trunc" style="display:block;font-weight:600">${esc(rowTitle(p,e))}</span><span class="t-cap1 episode-meta">${e.n?'#'+e.n+' · ':''}${fmtDur(e.sec)}${e.date?' · '+mon(e.date):''}</span></span></button>`;
 function artifactVisual(p,k,e,i){
-  const title=rowTitle(p,e), date=e.date?mon(e.date):'Archive', seed=objectSeed(title+p.name);
+  const title=rowTitle(p,e), date=e.date?mon(e.date):(e.sub||'Archive'), seed=objectSeed(title+p.name);
   if(k==='bio') return cover(p,k,e,i);
-  /* speech, letter, edit: the speaker's portrait is the artwork; the kind is a small glass label */
-  return `<span class="archive-object type-obj k-${k}"><span class="ak">${({speeches:'Speech',letters:'Letter',edits:'Edit'})[k]||esc(KLABEL[k])}</span><span class="tt">${esc(title)}</span><span class="tw">${esc(p.shortName)} · ${date}</span></span>`;
+  if(k==='letters') return `<span class="archive-object letter-object"><span class="kicker">Private papers</span><span class="date">${esc(date)}</span><span class="object-title clamp2">${esc(title)}</span><span class="signature">${esc(p.shortName)}</span><span class="stamp">Archive<br>copy</span></span>`;
+  if(k==='edits') return `<span class="archive-object edit-object"><span class="tape-label"><span class="object-title">${esc(title)}</span><span class="wave" aria-hidden="true">${Array.from({length:18},(_,n)=>`<i style="height:${5+(seed+n*7)%12}px"></i>`).join('')}</span></span><span class="reels" aria-hidden="true"><i class="reel"></i><i class="window"></i><i class="reel"></i></span></span>`;
+  return `<span class="archive-object speech-object"><span class="kicker">Recorded address</span><span class="object-title clamp2">${esc(title)}</span><span class="speaker">${esc(p.shortName)} · ${esc(date)}</span><span class="mic" aria-hidden="true"></span></span>`;
 }
 const artifactCard=(p,k,e,i)=>`<button class="artifact-card press" data-ep="${p.slug}|${k}|${i}"><span class="object-stage">${artifactVisual(p,k,e,i)}</span>
   <span><span class="t-head clamp2" style="display:block">${esc(rowTitle(p,e))}</span><span class="t-foot c2" style="display:block;margin-top:3px">${esc(p.shortName)} · ${fmtDur(e.sec)}</span></span></button>`;
+const readingBook=(p,e)=>`<a class="book refbook press" href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" aria-label="Open ${esc(e.title)} by ${esc(e.author)}">${cover(p,'bio',{...e,book:e.title,n:null,sec:0,date:''},-1,{cls:'reference'})}
+  <span class="bm"><span class="t-foot clamp2" style="display:block;font-weight:600">${esc(e.title)}</span><span class="t-cap1 c2" style="display:block;margin-top:3px">${esc(e.author)}</span><span class="t-cap1 ref-source">View source ${IC.chev(10)}</span></span></a>`;
 const fcard=p=>{ const fav=favs.includes(p.name); return `<span class="fcw">${pcard(p)}
   <button class="fcfav press" data-favp="${p.slug}" aria-label="${fav?'Remove '+esc(p.shortName)+' from':'Add '+esc(p.shortName)+' to'} Favourites" aria-pressed="${fav}">${IC.star(18,fav)}</button></span>`; };
 const ER_IC={History:'clock',Favourites:'star',Continue:'play',Finished:'check'};
@@ -2628,25 +2665,27 @@ function pagePerson(p){
   const m=meta(p), fav=favs.includes(p.name), shelf=(SECTIONS.find(s=>s[0]===m.cat)||['',''])[1];
   const quote=(m.bio||'').split(String.fromCharCode(10))[0];
   const n=k=>items(p,k).length;
-  const stats=`<div class="stats"><span><b class="num">${p.episodes.length}</b><span>Books</span></span><span><b class="num">${hours(p)}</b><span>Hours</span></span>
+  const stats=`<div class="stats"><span><b class="num">${bookCount(p)}</b><span>Books</span></span><span><b class="num">${hours(p)}</b><span>Hours</span></span>
     ${n('speeches')?`<span><b class="num">${n('speeches')}</b><span>Speeches</span></span>`:''}${n('letters')?`<span><b class="num">${n('letters')}</b><span>Letters</span></span>`:''}</div>`;
   const acts=`<div class="acts"><button class="pill press" data-a="play">${IC.play(15)} Play</button>
     <button class="pill ghost press" data-a="shuffle" aria-label="Shuffle">${IC.shuffle(17)}</button>
     <button class="pill ghost press${fav?' faved':''}" data-a="fav" aria-label="${fav?'Remove from':'Add to'} Favourites" aria-pressed="${fav}">${IC.star(18,fav)}</button></div>`;
+  const shelfEpisodes=p.episodes.map((e,i)=>({e,i})).sort((a,b)=>(b.e.date||'').localeCompare(a.e.date||''));
   const books=`<section class="sect"><div class="${'wrap'}" style="padding:0">${shead('Books')}</div>
-    <div class="hrow bleed" style="gap:16px">${p.episodes.map((e,i)=>book(p,'bio',e,i)).join('')}</div></section>`;
+    <div class="hrow bleed" style="gap:16px">${shelfEpisodes.map(({e,i})=>book(p,'bio',e,i)).join('')}</div></section>`;
   const more=['speeches','edits','letters'].map(k=>{ const L=items(p,k); return L.length?`<section class="sect">${shead(KLABEL[k])}<div class="artifact-grid">${L.map((e,i)=>artifactCard(p,k,e,i)).join('')}</div></section>`:''; }).join('');
+  const reading=(p.reading||[]).length?`<section class="sect"><h2 class="t-sect">Further reading</h2><p class="t-foot c2" style="margin-top:5px">Independent histories that add context beyond the podcast.</p><div class="hrow bleed reading-shelf">${p.reading.map(e=>readingBook(p,e)).join('')}</div></section>`:'';
   const about=`<section class="sect"><h2 class="t-sect">Biography</h2><p class="t-sub" style="color:var(--text2);margin-top:8px;white-space:pre-line">${esc(m.bio)}</p></section>`;
   const kinds=[['bio','Books'],['speeches','Speeches'],['letters','Letters'],['edits','Edits']].filter(([k])=>items(p,k).length);
   return `<div class="fx"><div class="fxbg" aria-hidden="true">${img(p,'lo')}<img class="fade" src="${P[p.name]}" alt="" width="900" height="1200" decoding="async" fetchpriority="high" id="pimg"></div>
     <div class="fxtop"><button class="fxb press" data-a="back" aria-label="Back">${IC.back(19)}</button><button class="fxb press" data-a="about" aria-label="About">${IC.more(19)}</button></div>
     <section class="fxhero"><h1 class="fxt" data-title="${esc(p.shortName)}">${esc(p.shortName)}</h1>
-      <p class="fxm">${esc(shelf)} · ${p.episodes.length} book${p.episodes.length>1?'s':''} · ${hours(p)} h</p>
+      <p class="fxm">${esc(shelf)} · ${bookCount(p)} book${bookCount(p)>1?'s':''}${p.episodes.length!==bookCount(p)?` · ${p.episodes.length} episodes`:''} · ${hours(p)} h</p>
       <div class="seg" role="group" aria-label="Actions"><button class="on press" data-a="play"><i class="si ok">${IC.play(9)}</i><span>Play</span></button>
         <button class="press" data-a="shuffle"><i class="si">${IC.shuffle(9)}</i><span>Shuffle</span></button>        <button class="press${fav?' faved':''}" data-a="fav" aria-pressed="${fav}"><i class="si">${IC.star(9,fav)}</i><span>${fav?'Saved':'Save'}</span></button></div>
       <div class="fxcard"><div class="lav">${esc(m.sub||shelf)}</div><p>${esc(quote)}</p></div>
       <button class="fxpill press" data-a="scroll">Scroll down for the ${kinds.length>1?'archive':'books'} <i>${IC.down(10)}</i></button></section>
-    <div class="fxbody" id="fxbody">${books}${more}${about}</div></div>`;
+    <div class="fxbody" id="fxbody">${books}${reading}${more}${about}</div></div>`;
 }
 function pageList(id){
   let title='', body='';

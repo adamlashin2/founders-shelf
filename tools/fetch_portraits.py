@@ -3,6 +3,7 @@
 import json, os, sys, time, urllib.request, urllib.parse
 
 WIKI = {
+ "Chung Ju-yung": "Chung Ju-yung",
  "Alexander the Great": "Alexander the Great",
  "Napoleon": "Napoleon",
  "Elon Musk": "Elon Musk",

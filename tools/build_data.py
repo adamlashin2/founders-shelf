@@ -7,6 +7,7 @@ FEED = "https://feeds.megaphone.fm/DSLLC6297708582"
 UA = {"User-Agent": "Mozilla/5.0"}
 
 CORE = [
+ ("Chung Ju-yung",              [117, 440]),
  ("Alexander the Great",        [232, 226]),
  ("Napoleon",                   [294, 302, 337]),
  ("Elon Musk",                  [1, 11, 12, 13, 30, 38, 172, 233, 369, 399, 414, 415]),
@@ -42,8 +43,24 @@ ADJACENT = [
  ("James J. Hill",              [96, 371]),
 ]
 UNNUMBERED = {
+ "Chung Ju-yung": ["The Most Inspiring Autobiography I've Read: Chung Ju-yung Founder of Hyundai"],
  "Steve Jobs": ["Steve Jobs  and Edwin Land", "Steve Jobs's Heroes", "Steve Jobs and His Heroes"],
  "Jeff Bezos": ["Jeff Bezos (Insights, Stories, and Secrets)"],
+}
+
+READING = {
+ "Chung Ju-yung": [
+  {
+   "title": "Made in Korea: Chung Ju Yung and the Rise of Hyundai",
+   "author": "Richard M. Steers",
+   "url": "https://www.routledge.com/Made-in-Korea-Chung-Ju-Yung-and-the-Rise-of-Hyundai/Steers/p/book/9780415920506",
+  },
+  {
+   "title": "Korean Dynasty: Hyundai and Chung Ju Yung",
+   "author": "Donald Kirk",
+   "url": "https://books.google.com/books/about/Korean_Dynasty.html?id=bqYeAQAAMAAJ",
+  },
+ ],
 }
 
 def fetch_feed():
@@ -96,6 +113,7 @@ def build(eps):
                 "name": person,
                 "tier": tier,
                 "hours": round(sum(e["sec"] for e in items) / 3600, 1),
+                "reading": READING.get(person, []),
                 "episodes": [{
                     "n": e["n"], "title": clean_title(e["title"], person),
                     "full_title": e["title"], "url": e["url"], "sec": e["sec"],

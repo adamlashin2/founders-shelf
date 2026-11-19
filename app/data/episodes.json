@@ -1,9 +1,62 @@
 {
  "people": [
   {
+   "name": "Chung Ju-yung",
+   "tier": "core",
+   "hours": 3.4,
+   "reading": [
+    {
+     "title": "Made in Korea: Chung Ju Yung and the Rise of Hyundai",
+     "author": "Richard M. Steers",
+     "url": "https://www.routledge.com/Made-in-Korea-Chung-Ju-Yung-and-the-Rise-of-Hyundai/Steers/p/book/9780415920506"
+    },
+    {
+     "title": "Korean Dynasty: Hyundai and Chung Ju Yung",
+     "author": "Donald Kirk",
+     "url": "https://books.google.com/books/about/Korean_Dynasty.html?id=bqYeAQAAMAAJ"
+    }
+   ],
+   "episodes": [
+    {
+     "n": 117,
+     "title": "Chung Ju-yung founder of Hyundai (the most inspiring autobiography I've read)",
+     "full_title": "#117 : Chung Ju-yung founder of Hyundai (the most inspiring autobiography I've read)",
+     "url": "https://traffic.megaphone.fm/DSLLC5339975736.mp3?updated=1748636284",
+     "sec": 4826,
+     "img": null,
+     "date": "2020-03-26",
+     "book": "Born of This Land: My Life Story",
+     "author": "Chung Ju-yung"
+    },
+    {
+     "n": 440,
+     "title": "The Most Inspiring Autobiography I've Ever Read: Born of This Land: Chung Ju-yung",
+     "full_title": "#440 The Most Inspiring Autobiography I've Ever Read: Born of This Land: Chung Ju-yung",
+     "url": "https://traffic.megaphone.fm/DSLLC2370821068.mp3",
+     "sec": 2972,
+     "img": null,
+     "date": "2026-11-17",
+     "book": "Born of This Land: My Life Story",
+     "author": "Chung Ju-yung"
+    },
+    {
+     "n": null,
+     "title": "The Most Inspiring Autobiography I've Read: Chung Ju-yung Founder of Hyundai",
+     "full_title": "The Most Inspiring Autobiography I've Read: Chung Ju-yung Founder of Hyundai",
+     "url": "https://traffic.megaphone.fm/DSLLC3493210637.mp3?updated=1748636111",
+     "sec": 4550,
+     "img": null,
+     "date": "2024-12-27",
+     "book": "Born of This Land: My Life Story",
+     "author": "Chung Ju-yung"
+    }
+   ]
+  },
+  {
    "name": "Alexander the Great",
    "tier": "core",
    "hours": 2.2,
+   "reading": [],
    "episodes": [
     {
      "n": 226,
@@ -33,6 +86,7 @@
    "name": "Napoleon",
    "tier": "core",
    "hours": 2.6,
+   "reading": [],
    "episodes": [
     {
      "n": 294,
@@ -73,6 +127,7 @@
    "name": "Elon Musk",
    "tier": "core",
    "hours": 12.6,
+   "reading": [],
    "episodes": [
     {
      "n": 1,
@@ -212,6 +267,7 @@
    "name": "Jeff Bezos",
    "tier": "core",
    "hours": 13.0,
+   "reading": [],
    "episodes": [
     {
      "n": 17,
@@ -340,6 +396,7 @@
    "name": "Bill Gates",
    "tier": "core",
    "hours": 6.4,
+   "reading": [],
    "episodes": [
     {
      "n": 44,
@@ -413,6 +470,7 @@
    "name": "Jensen Huang",
    "tier": "core",
    "hours": 2.6,
+   "reading": [],
    "episodes": [
     {
      "n": 376,
@@ -442,6 +500,7 @@
    "name": "Mark Zuckerberg",
    "tier": "core",
    "hours": 0.6,
+   "reading": [],
    "episodes": [
     {
      "n": 14,
@@ -460,6 +519,7 @@
    "name": "Steve Jobs",
    "tier": "core",
    "hours": 23.2,
+   "reading": [],
    "episodes": [
     {
      "n": 5,
@@ -687,6 +747,7 @@
    "name": "John D. Rockefeller",
    "tier": "core",
    "hours": 12.6,
+   "reading": [],
    "episodes": [
     {
      "n": 16,
@@ -804,6 +865,7 @@
    "name": "Andrew Carnegie",
    "tier": "core",
    "hours": 5.8,
+   "reading": [],
    "episodes": [
     {
      "n": 73,
@@ -866,6 +928,7 @@
    "name": "Henry Ford",
    "tier": "core",
    "hours": 6.4,
+   "reading": [],
    "episodes": [
     {
      "n": 9,
@@ -939,6 +1002,7 @@
    "name": "Nikola Tesla",
    "tier": "core",
    "hours": 1.8,
+   "reading": [],
    "episodes": [
     {
      "n": 83,
@@ -957,6 +1021,7 @@
    "name": "J. Robert Oppenheimer",
    "tier": "core",
    "hours": 1.0,
+   "reading": [],
    "episodes": [
     {
      "n": 215,
@@ -975,6 +1040,7 @@
    "name": "Claude Shannon",
    "tier": "adjacent",
    "hours": 3.3,
+   "reading": [],
    "episodes": [
     {
      "n": 92,
@@ -1015,6 +1081,7 @@
    "name": "Vannevar Bush",
    "tier": "adjacent",
    "hours": 2.0,
+   "reading": [],
    "episodes": [
     {
      "n": 270,
@@ -1044,6 +1111,7 @@
    "name": "Alfred Lee Loomis",
    "tier": "adjacent",
    "hours": 0.9,
+   "reading": [],
    "episodes": [
     {
      "n": 143,
@@ -1062,6 +1130,7 @@
    "name": "Kelly Johnson - Skunk Works",
    "tier": "adjacent",
    "hours": 0.8,
+   "reading": [],
    "episodes": [
     {
      "n": 419,
@@ -1080,6 +1149,7 @@
    "name": "Edwin Land - Polaroid",
    "tier": "adjacent",
    "hours": 6.5,
+   "reading": [],
    "episodes": [
     {
      "n": 40,
@@ -1153,6 +1223,7 @@
    "name": "Ed Catmull - Pixar",
    "tier": "adjacent",
    "hours": 2.5,
+   "reading": [],
    "episodes": [
     {
      "n": 34,
@@ -1182,6 +1253,7 @@
    "name": "Demis Hassabis - DeepMind",
    "tier": "adjacent",
    "hours": 0.9,
+   "reading": [],
    "episodes": [
     {
      "n": 416,
@@ -1200,6 +1272,7 @@
    "name": "Bill Walsh",
    "tier": "adjacent",
    "hours": 1.1,
+   "reading": [],
    "episodes": [
     {
      "n": 106,
@@ -1218,6 +1291,7 @@
    "name": "Jim Simons",
    "tier": "adjacent",
    "hours": 2.3,
+   "reading": [],
    "episodes": [
     {
      "n": 108,
@@ -1247,6 +1321,7 @@
    "name": "Intel - Noyce Grove Shockley",
    "tier": "adjacent",
    "hours": 5.4,
+   "reading": [],
    "episodes": [
     {
      "n": 8,
@@ -1309,6 +1384,7 @@
    "name": "Winston Churchill",
    "tier": "adjacent",
    "hours": 4.4,
+   "reading": [],
    "episodes": [
     {
      "n": 196,
@@ -1360,6 +1436,7 @@
    "name": "Charles de Gaulle",
    "tier": "adjacent",
    "hours": 1.8,
+   "reading": [],
    "episodes": [
     {
      "n": 224,
@@ -1378,6 +1455,7 @@
    "name": "Peter Thiel",
    "tier": "adjacent",
    "hours": 4.5,
+   "reading": [],
    "episodes": [
     {
      "n": 31,
@@ -1418,6 +1496,7 @@
    "name": "Cornelius Vanderbilt",
    "tier": "adjacent",
    "hours": 4.0,
+   "reading": [],
    "episodes": [
     {
      "n": 54,
@@ -1458,6 +1537,7 @@
    "name": "J.P. Morgan",
    "tier": "adjacent",
    "hours": 2.0,
+   "reading": [],
    "episodes": [
     {
      "n": 139,
@@ -1487,6 +1567,7 @@
    "name": "The Rothschilds",
    "tier": "adjacent",
    "hours": 2.5,
+   "reading": [],
    "episodes": [
     {
      "n": 197,
@@ -1516,6 +1597,7 @@
    "name": "Jacob Fugger",
    "tier": "adjacent",
    "hours": 1.0,
+   "reading": [],
    "episodes": [
     {
      "n": 250,
@@ -1534,6 +1616,7 @@
    "name": "James J. Hill",
    "tier": "adjacent",
    "hours": 2.0,
+   "reading": [],
    "episodes": [
     {
      "n": 96,

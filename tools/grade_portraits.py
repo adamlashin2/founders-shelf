@@ -16,6 +16,7 @@ from PIL import Image, ImageOps
 ROOT = Path(__file__).resolve().parent.parent  # repo root (scripts live in tools/)
 SRC = ROOT / "sources" / "portraits"
 OUT = ROOT / "app" / "assets" / "people"
+THUMBS = OUT / "thumbs"
 PICKS = ROOT / "portrait_picks.json"
 W, H = 900, 1200                     # 3:4, enough for a 300pt card at @3x
 
@@ -52,6 +53,7 @@ def grade(src, dst, top=0.06):
 
 def main():
     SRC.mkdir(parents=True, exist_ok=True)
+    THUMBS.mkdir(parents=True, exist_ok=True)
     portraits = json.loads((ROOT / "app" / "data" / "portraits.json").read_text(encoding="utf8"))
     picks = json.loads(PICKS.read_text(encoding="utf8")) if PICKS.exists() else {}
     for name, rel in portraits.items():
@@ -61,7 +63,13 @@ def main():
             shutil.copyfile(picks[name]["file"], src)
         elif not src.exists():
             shutil.copyfile(OUT / fname, src)            # first run: keep the original
-        grade(src, OUT / fname, picks.get(name, {}).get("top", 0.06))
+        dst = OUT / fname
+        grade(src, dst, picks.get(name, {}).get("top", 0.06))
+        thumb = THUMBS / (Path(fname).stem + ".webp")
+        if not thumb.exists():
+            Image.open(dst).resize((360, 480), Image.LANCZOS).save(
+                thumb, "WEBP", quality=78, method=6
+            )
         print("graded", name)
 
 

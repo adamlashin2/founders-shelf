@@ -91,6 +91,9 @@ def main():
         for e in p["episodes"]:
             if e.get("book"):
                 books.setdefault(e["book"], clean_author(e.get("author")))
+        for e in p.get("reading", []):
+            if e.get("title"):
+                books.setdefault(e["title"], clean_author(e.get("author")))
     out_map_path = APP / "data" / "covers.json"
     covers = json.loads(out_map_path.read_text(encoding="utf-8")) if out_map_path.exists() else {}
     ok = miss = 0
