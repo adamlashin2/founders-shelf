@@ -132,5 +132,51 @@
   "edits": [
    {"id": "edit-1", "title": "The richest man in history", "sub": "Edit", "q": "John D Rockefeller edit"}
   ]
+ },
+
+ "Ed Catmull - Pixar": {
+  "speeches": [
+   {"id": "stanford-creativity", "title": "Creativity, Inc.", "sub": "Stanford Graduate School of Business", "q": "Ed Catmull Creativity Inc Stanford Graduate School of Business", "external": true}
+  ]
+ },
+ "Demis Hassabis - DeepMind": {
+  "speeches": [
+   {"id": "nobel-lecture-2024", "title": "Nobel Prize Lecture", "sub": "Stockholm · December 2024", "q": "Demis Hassabis Nobel Prize lecture 2024 official", "external": true}
+  ]
+ },
+ "Jim Simons": {
+  "speeches": [
+   {"id": "sfsu-math-luck", "title": "Mathematics, Common Sense and Good Luck", "sub": "San Francisco State University", "url": "https://youtu.be/Tj1NyJHLvWA", "external": true}
+  ]
+ },
+ "Walt Disney": {
+  "speeches": [
+   {"id": "plausible-impossible", "title": "The Plausible Impossible", "sub": "Walt Disney explains his creative method", "q": "Walt Disney The Plausible Impossible full", "external": true}
+  ]
+ },
+ "Phil Knight": {
+  "speeches": [
+   {"id": "stanford-view-from-top", "title": "A View From The Top", "sub": "Stanford Graduate School of Business", "q": "Phil Knight View From The Top Stanford GSB full", "external": true}
+  ]
+ },
+ "James Dyson": {
+  "speeches": [
+   {"id": "royal-college-art", "title": "James Dyson on Invention", "sub": "Design, engineering and persistence", "q": "James Dyson speech invention design engineering full", "external": true}
+  ]
+ },
+ "Warren Buffett": {
+  "speeches": [
+   {"id": "georgia-2001", "title": "Talk to University of Georgia Students", "sub": "Athens, Georgia · 2001", "q": "Warren Buffett University of Georgia 2001 full talk", "external": true}
+  ]
+ },
+ "Yvon Chouinard": {
+  "speeches": [
+   {"id": "uctv-reluctant-businessman", "title": "The Education of a Reluctant Businessman", "sub": "University of California Television", "url": "https://youtu.be/NVfy2T0rzMc", "external": true}
+  ]
+ },
+ "Sam Walton": {
+  "speeches": [
+   {"id": "medal-freedom-1992", "title": "Sam Walton’s Final Message", "sub": "Presidential Medal of Freedom · 1992", "q": "Sam Walton final speech Presidential Medal of Freedom 1992", "external": true}
+  ]
  }
 }

@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent  # repo root (scripts live in tools/)
 APP = ROOT / "app"
-SRC = ROOT / "media_sources.json"
+SRC = ROOT / "config" / "media_sources.json"
 OUT = APP / "data" / "media.json"
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126 Safari/537.36"}
 SEC_UA = {"User-Agent": "founders-shelf personal research mahmoud.lashin00@gmail.com"}
@@ -48,6 +48,21 @@ def fetch_audio(item, kind, dest):
         raise RuntimeError(r.stderr.strip()[-300:] or "no result inside the duration window")
     vid, ch, title = (line.split("\t") + ["", "", ""])[:3]
     return {"from": f"https://youtu.be/{vid}" if vid else item.get("url"), "channel": ch, "source_title": title}
+
+
+def resolve_external(item, kind):
+    """Resolve a source card without downloading a private local audio copy."""
+    lo, hi = LIMITS.get(kind, (0, 99999))
+    target = item.get("url") or f"ytsearch8:{item['q']}"
+    cmd = [sys.executable, "-m", "yt_dlp", target, "--no-playlist", "--skip-download",
+           "--match-filter", f"duration>={lo} & duration<={hi} & !is_live",
+           "--max-downloads", "1", "--print", "%(id)s\t%(channel)s\t%(title)s\t%(duration)s"]
+    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf8", errors="replace")
+    line = (r.stdout.strip().splitlines() or [""])[-1]
+    vid, ch, title, sec = (line.split("\t") + ["", "", "", "0"])[:4]
+    if not vid:
+        raise RuntimeError(r.stderr.strip()[-300:] or "no external source found")
+    return {"from": f"https://youtu.be/{vid}", "channel": ch, "source_title": title}, round(float(sec or 0))
 
 
 # ---------------------------------------------------------------- text
@@ -119,6 +134,18 @@ def main():
                 rec = {"id": f"{kind}:{it['id']}", "title": it["title"], "sub": it.get("sub", ""),
                        "url": f"media/{slug(person)}/{kind}/{it['id']}.mp3"}
                 try:
+                    if it.get("external"):
+                        if not only or person in only:
+                            rec["source"], rec["sec"] = resolve_external(it, kind)
+                            rec["url"] = rec["source"]["from"]
+                            rec["external"] = True
+                            print(f"  linked {person} / {kind} / {it['id']}", flush=True)
+                        elif old:
+                            rec.update({k: old[k] for k in ("source", "sec", "url", "external") if k in old})
+                        else:
+                            continue
+                        out["people"].setdefault(person, {}).setdefault(kind, []).append(rec)
+                        continue
                     if not mp3.exists() and (not only or person in only):
                         if "text" in it:
                             body = build_text(it)

@@ -1037,6 +1037,646 @@
    ]
   },
   {
+   "name": "Walt Disney",
+   "tier": "core",
+   "hours": 7.7,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 2,
+     "title": "Walt Disney",
+     "full_title": "#2 Walt Disney",
+     "url": "https://traffic.megaphone.fm/DSLLC5294741347.mp3?updated=1748636354",
+     "sec": 4671,
+     "img": null,
+     "date": "2016-10-10",
+     "book": "Walt Disney based on the book Walt Disney: The Triumph of the American Imagination",
+     "author": "Neal Gabler"
+    },
+    {
+     "n": 39,
+     "title": "Walt Disney: An American Original",
+     "full_title": "#39 Walt Disney: An American Original",
+     "url": "https://traffic.megaphone.fm/DSLLC4273006268.mp3?updated=1748636334",
+     "sec": 5742,
+     "img": null,
+     "date": "2018-09-24",
+     "book": "Walt Disney: An American Original",
+     "author": "Bob Thomas"
+    },
+    {
+     "n": 158,
+     "title": "Walt Disney (Disneyland)",
+     "full_title": "#158 Walt Disney (Disneyland)",
+     "url": "https://traffic.megaphone.fm/DSLLC7138385206.mp3?updated=1748636260",
+     "sec": 3117,
+     "img": null,
+     "date": "2020-12-14",
+     "book": "Disney's Land: Walt Disney and the Invention of the Amusement Park That Changed the World",
+     "author": "Richard Snow"
+    },
+    {
+     "n": 310,
+     "title": "Walt Disney and Picasso",
+     "full_title": "#310 Walt Disney and Picasso",
+     "url": "https://traffic.megaphone.fm/DSLLC6727924210.mp3?updated=1748636158",
+     "sec": 3118,
+     "img": null,
+     "date": "2023-07-04",
+     "book": "Creators: From Chaucer and Durer to Picasso and Disney",
+     "author": "Paul Johnson"
+    },
+    {
+     "n": 346,
+     "title": "How Walt Disney Built Himself",
+     "full_title": "#346 How Walt Disney Built Himself",
+     "url": "https://traffic.megaphone.fm/DSLLC4908255889.mp3?updated=1748636131",
+     "sec": 6430,
+     "img": null,
+     "date": "2024-04-22",
+     "book": "Walt Disney: The Triumph of the American Imagination",
+     "author": "Neal Gabler"
+    },
+    {
+     "n": 347,
+     "title": "How Walt Disney Built His Greatest Creation: Disneyland",
+     "full_title": "#347 How Walt Disney Built His Greatest Creation: Disneyland",
+     "url": "https://traffic.megaphone.fm/DSLLC6479243088.mp3?updated=1748636131",
+     "sec": 4674,
+     "img": null,
+     "date": "2024-04-29",
+     "book": "Disney's Land: Walt Disney and the Invention of the Amusement Park That Changed the World",
+     "author": "Richard Snow"
+    }
+   ]
+  },
+  {
+   "name": "Sam Walton",
+   "tier": "core",
+   "hours": 6.3,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 6,
+     "title": "Sam Walton",
+     "full_title": "#6 Sam Walton",
+     "url": "https://traffic.megaphone.fm/DSLLC4884277874.mp3?updated=1748636352",
+     "sec": 3856,
+     "img": null,
+     "date": "2017-05-14",
+     "book": "Sam Walton: Made In America",
+     "author": "Sam Walton"
+    },
+    {
+     "n": 150,
+     "title": "Sam Walton (America's Richest Man)",
+     "full_title": "#150 Sam Walton (America's Richest Man)",
+     "url": "https://traffic.megaphone.fm/DSLLC5278262090.mp3?updated=1748636265",
+     "sec": 3267,
+     "img": null,
+     "date": "2020-10-24",
+     "book": "Sam Walton: The Inside Story of America's Richest Man",
+     "author": "Vance H. Trimble"
+    },
+    {
+     "n": 234,
+     "title": "Sam Walton: Made In America",
+     "full_title": "#234 Sam Walton: Made In America",
+     "url": "https://traffic.megaphone.fm/DSLLC8379773146.mp3?updated=1748636209",
+     "sec": 6924,
+     "img": null,
+     "date": "2022-02-28",
+     "book": "Sam Walton: Made In America",
+     "author": "Sam Walton"
+    },
+    {
+     "n": 354,
+     "title": "Sam Walton: The Inside Story of America's Richest Man",
+     "full_title": "#354 Sam Walton: The Inside Story of America's Richest Man",
+     "url": "https://traffic.megaphone.fm/DSLLC6747509247.mp3?updated=1748636125",
+     "sec": 5570,
+     "img": null,
+     "date": "2024-06-29",
+     "book": "Sam Walton: The Inside Story of America's Richest Man",
+     "author": "Vance Trimble"
+    },
+    {
+     "n": 434,
+     "title": "Sam Walton",
+     "full_title": "#434 Sam Walton",
+     "url": "https://traffic.megaphone.fm/DSLLC1116428270.mp3",
+     "sec": 2946,
+     "img": null,
+     "date": "2026-09-21",
+     "book": "Sam Walton: The Inside Story of America's Richest Man",
+     "author": "Vance Trimble"
+    }
+   ]
+  },
+  {
+   "name": "Estée Lauder",
+   "tier": "core",
+   "hours": 3.1,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 136,
+     "title": "Estée Lauder",
+     "full_title": "#136 Estée Lauder",
+     "url": "https://traffic.megaphone.fm/DSLLC5425014259.mp3?updated=1748636273",
+     "sec": 2671,
+     "img": null,
+     "date": "2020-07-18",
+     "book": "A Success Story",
+     "author": "Estee Lauder"
+    },
+    {
+     "n": 217,
+     "title": "Estée Lauder",
+     "full_title": "#217 Estée Lauder",
+     "url": "https://traffic.megaphone.fm/DSLLC5326221501.mp3?updated=1748636221",
+     "sec": 4976,
+     "img": null,
+     "date": "2021-11-18",
+     "book": "Estée Lauder: A Success Story",
+     "author": "Estée Lauder"
+    },
+    {
+     "n": 361,
+     "title": "Estée Lauder",
+     "full_title": "#361 Estée Lauder",
+     "url": "https://traffic.megaphone.fm/DSLLC8057999024.mp3?updated=1748636121",
+     "sec": 3502,
+     "img": null,
+     "date": "2024-08-18",
+     "book": "Estée: A Success Story",
+     "author": "Estée Lauder"
+    }
+   ]
+  },
+  {
+   "name": "Akio Morita",
+   "tier": "core",
+   "hours": 2.5,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 102,
+     "title": "Akio Morita (Sony)",
+     "full_title": "#102 Akio Morita (Sony)",
+     "url": "https://traffic.megaphone.fm/DSLLC9925864364.mp3?updated=1748636294",
+     "sec": 4577,
+     "img": null,
+     "date": "2019-12-15",
+     "book": "Made in Japan: Akio Morita and Sony",
+     "author": "Akio Morita"
+    },
+    {
+     "n": 386,
+     "title": "Akio Morita: Founder of Sony",
+     "full_title": "#386 Akio Morita: Founder of Sony",
+     "url": "https://traffic.megaphone.fm/DSLLC7401194553.mp3?updated=1748636104",
+     "sec": 4292,
+     "img": null,
+     "date": "2025-04-22",
+     "book": "Akio's classic 1986 autobiography Made In Japan",
+     "author": ""
+    }
+   ]
+  },
+  {
+   "name": "Ingvar Kamprad",
+   "tier": "core",
+   "hours": 2.5,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 104,
+     "title": "Ingvar Kamprad (IKEA)",
+     "full_title": "#104 Ingvar Kamprad (IKEA)",
+     "url": "https://traffic.megaphone.fm/DSLLC1026631706.mp3?updated=1748636293",
+     "sec": 4940,
+     "img": null,
+     "date": "2019-12-30",
+     "book": "Leading",
+     "author": "Design"
+    },
+    {
+     "n": 370,
+     "title": "The Founder of IKEA: Ingvar Kamprad",
+     "full_title": "#370 The Founder of IKEA: Ingvar Kamprad",
+     "url": "https://traffic.megaphone.fm/DSLLC6935890254.mp3?updated=1748636114",
+     "sec": 3933,
+     "img": null,
+     "date": "2024-11-12",
+     "book": "Leading",
+     "author": "Design"
+    }
+   ]
+  },
+  {
+   "name": "Enzo Ferrari",
+   "tier": "core",
+   "hours": 4.3,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 97,
+     "title": "Enzo Ferrari (Ferrari vs Ford)",
+     "full_title": "#97 Enzo Ferrari (Ferrari vs Ford)",
+     "url": "https://traffic.megaphone.fm/DSLLC5154189490.mp3?updated=1748636297",
+     "sec": 3299,
+     "img": null,
+     "date": "2019-11-10",
+     "book": "Go Like Hell: Ford, Ferrari, and Their Battle for Speed and Glory at Le Mans",
+     "author": "A. J. Baime"
+    },
+    {
+     "n": 98,
+     "title": "Enzo Ferrari (the making of an automobile empire)",
+     "full_title": "#98 Enzo Ferrari (the making of an automobile empire)",
+     "url": "https://traffic.megaphone.fm/DSLLC9447461489.mp3?updated=1748636297",
+     "sec": 3777,
+     "img": null,
+     "date": "2019-11-18",
+     "book": "Enzo Ferrari: Power, Politics, and the Making of an Automobile Empire",
+     "author": "Luca Dal"
+    },
+    {
+     "n": 220,
+     "title": "Enzo Ferrari: The Man and the Machine",
+     "full_title": "#220 Enzo Ferrari: The Man and the Machine",
+     "url": "https://traffic.megaphone.fm/DSLLC2425333821.mp3?updated=1748636219",
+     "sec": 4927,
+     "img": null,
+     "date": "2021-12-09",
+     "book": "Enzo Ferrari: The Man and the Machine",
+     "author": "Brock Yates"
+    },
+    {
+     "n": 396,
+     "title": "The Obsession of Enzo Ferrari",
+     "full_title": "#396 The Obsession of Enzo Ferrari",
+     "url": "https://traffic.megaphone.fm/DSLLC1051475857.mp3?updated=1753939767",
+     "sec": 3441,
+     "img": null,
+     "date": "2025-07-30",
+     "book": "",
+     "author": ""
+    }
+   ]
+  },
+  {
+   "name": "Coco Chanel",
+   "tier": "core",
+   "hours": 2.0,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 64,
+     "title": "Coco Chanel: Her Life and Secrets",
+     "full_title": "#64 Coco Chanel: Her Life and Secrets",
+     "url": "https://traffic.megaphone.fm/DSLLC2616854069.mp3?updated=1748636316",
+     "sec": 3489,
+     "img": null,
+     "date": "2019-03-24",
+     "book": "Coco Chanel: Her Life, Her Secrets",
+     "author": ""
+    },
+    {
+     "n": 199,
+     "title": "Coco Chanel: The Legend and the Life",
+     "full_title": "#199 Coco Chanel: The Legend and the Life",
+     "url": "https://traffic.megaphone.fm/DSLLC9449307156.mp3?updated=1748636233",
+     "sec": 3824,
+     "img": null,
+     "date": "2021-08-20",
+     "book": "Coco Chanel: The Legend and the Life",
+     "author": "Justine Picardie"
+    }
+   ]
+  },
+  {
+   "name": "Thomas Edison",
+   "tier": "core",
+   "hours": 5.5,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 3,
+     "title": "The Wizard of Menlo Park: How Thomas Edison Invented The Modern the Modern World",
+     "full_title": "#3 The Wizard of Menlo Park: How Thomas Edison Invented The Modern the Modern World",
+     "url": "https://traffic.megaphone.fm/DSLLC5423866500.mp3?updated=1748636354",
+     "sec": 5212,
+     "img": null,
+     "date": "2017-03-24",
+     "book": "The Wizard of Menlo Park: How Thomas Alva Edison Invented The Modern World",
+     "author": "Randall Stross"
+    },
+    {
+     "n": 83,
+     "title": "Thomas Edison, Nikola Tesla, George Westinghouse, and the Race to Electrify the World",
+     "full_title": "#83 Thomas Edison, Nikola Tesla, George Westinghouse, and the Race to Electrify the World",
+     "url": "https://traffic.megaphone.fm/DSLLC1900737350.mp3?updated=1748636305",
+     "sec": 6620,
+     "img": null,
+     "date": "2019-08-04",
+     "book": "Empires of Light: Edison, Tesla, Westinghouse, and the Race to Electrify the World",
+     "author": "Jill Jonnes"
+    },
+    {
+     "n": 190,
+     "title": "Henry Ford and Thomas Edison",
+     "full_title": "#190 Henry Ford and Thomas Edison",
+     "url": "https://traffic.megaphone.fm/DSLLC7713034296.mp3?updated=1748636239",
+     "sec": 3596,
+     "img": null,
+     "date": "2021-07-10",
+     "book": "The Vagabonds: The Story of Henry Ford and Thomas Edison's Ten-Year Road Trip",
+     "author": "Jeff Guinn"
+    },
+    {
+     "n": 267,
+     "title": "Thomas Edison",
+     "full_title": "#267 Thomas Edison",
+     "url": "https://traffic.megaphone.fm/DSLLC2268476888.mp3?updated=1748636187",
+     "sec": 4227,
+     "img": null,
+     "date": "2022-09-14",
+     "book": "Edison: A Biography",
+     "author": "Matthew Josephson"
+    }
+   ]
+  },
+  {
+   "name": "Soichiro Honda",
+   "tier": "core",
+   "hours": 0.8,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 423,
+     "title": "Soichiro Honda",
+     "full_title": "#423 Soichiro Honda",
+     "url": "https://traffic.megaphone.fm/DSLLC7238750256.mp3",
+     "sec": 2899,
+     "img": null,
+     "date": "2026-06-28",
+     "book": "Honda: The Man and His Machines",
+     "author": "Sol Sanders"
+    }
+   ]
+  },
+  {
+   "name": "Yvon Chouinard",
+   "tier": "core",
+   "hours": 2.2,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 60,
+     "title": "Yvon Chouinard: What We've Learned from Patagonia's First 40 Years",
+     "full_title": "#60 Yvon Chouinard: What We've Learned from Patagonia's First 40 Years",
+     "url": "https://traffic.megaphone.fm/DSLLC8037087830.mp3?updated=1748636318",
+     "sec": 4308,
+     "img": null,
+     "date": "2019-02-18",
+     "book": "The Responsible Company: What We've Learned From Patagonia's First 40 Years",
+     "author": "Yvon Chouinard and Vincent Stanley"
+    },
+    {
+     "n": 297,
+     "title": "Yvon Chouinard (Patagonia)",
+     "full_title": "#297 Yvon Chouinard (Patagonia)",
+     "url": "https://traffic.megaphone.fm/DSLLC2869817804.mp3?updated=1748636167",
+     "sec": 3596,
+     "img": null,
+     "date": "2023-04-03",
+     "book": "Let My People Go Surfing: The Education of a Reluctant Businessman",
+     "author": "Yvon Chouinard"
+    }
+   ]
+  },
+  {
+   "name": "James Dyson",
+   "tier": "core",
+   "hours": 8.1,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 25,
+     "title": "Against the Odds: An Autobiography by James Dyson",
+     "full_title": "#25 Against the Odds: An Autobiography by James Dyson",
+     "url": "https://traffic.megaphone.fm/DSLLC6641354449.mp3?updated=1748636341",
+     "sec": 5144,
+     "img": null,
+     "date": "2018-04-22",
+     "book": "Against the Odds: An Autobiography",
+     "author": "James Dyson"
+    },
+    {
+     "n": 200,
+     "title": "James Dyson (Against the Odds)",
+     "full_title": "#200 James Dyson (Against the Odds)",
+     "url": "https://traffic.megaphone.fm/DSLLC3794853731.mp3?updated=1748636233",
+     "sec": 8049,
+     "img": null,
+     "date": "2021-08-27",
+     "book": "Against The Odds: An Autobiography",
+     "author": "James Dyson and reading A"
+    },
+    {
+     "n": 205,
+     "title": "James Dyson (Invention: A Life)",
+     "full_title": "#205 James Dyson (Invention: A Life)",
+     "url": "https://traffic.megaphone.fm/DSLLC2352046540.mp3?updated=1748636230",
+     "sec": 6732,
+     "img": null,
+     "date": "2021-09-18",
+     "book": "Invention: A Life",
+     "author": "James Dyson"
+    },
+    {
+     "n": 300,
+     "title": "James Dyson (Against the Odds)",
+     "full_title": "#300 James Dyson (Against the Odds)",
+     "url": "https://traffic.megaphone.fm/DSLLC1058834872.mp3?updated=1748636164",
+     "sec": 4884,
+     "img": null,
+     "date": "2023-04-24",
+     "book": "Against the Odds: An Autobiography",
+     "author": "James Dyson"
+    },
+    {
+     "n": 400,
+     "title": "The Stubborn Genius of James Dyson",
+     "full_title": "#400 The Stubborn Genius of James Dyson",
+     "url": "https://traffic.megaphone.fm/DSLLC3507623381.mp3?updated=1757644112",
+     "sec": 4383,
+     "img": null,
+     "date": "2025-09-12",
+     "book": "",
+     "author": ""
+    }
+   ]
+  },
+  {
+   "name": "Phil Knight",
+   "tier": "core",
+   "hours": 2.8,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 186,
+     "title": "Phil Knight (Nike)",
+     "full_title": "#186 Phil Knight (Nike)",
+     "url": "https://traffic.megaphone.fm/DSLLC1822760892.mp3?updated=1748636241",
+     "sec": 6173,
+     "img": null,
+     "date": "2021-06-16",
+     "book": "Shoe Dog: A Memoir",
+     "author": "the Creator"
+    },
+    {
+     "n": 418,
+     "title": "Phil Knight: Founder of Nike",
+     "full_title": "#418 Phil Knight: Founder of Nike",
+     "url": "https://traffic.megaphone.fm/DSLLC2694344310.mp3?updated=1778186288",
+     "sec": 3795,
+     "img": null,
+     "date": "2026-05-07",
+     "book": "Shoe Dog: A Memoir",
+     "author": "the Creator"
+    }
+   ]
+  },
+  {
+   "name": "Warren Buffett",
+   "tier": "core",
+   "hours": 13.4,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 88,
+     "title": "Warren Buffett's Shareholder Letters— All of them!",
+     "full_title": "#88 Warren Buffett's Shareholder Letters— All of them!",
+     "url": "https://traffic.megaphone.fm/DSLLC5204978662.mp3?updated=1748636302",
+     "sec": 10871,
+     "img": null,
+     "date": "2019-09-08",
+     "book": "Berkshire Hathaway Letters to Shareholders",
+     "author": "Warren Buffett"
+    },
+    {
+     "n": 100,
+     "title": "Warren Buffett (The Snowball)",
+     "full_title": "#100 Warren Buffett (The Snowball)",
+     "url": "https://traffic.megaphone.fm/DSLLC1633984154.mp3?updated=1748636295",
+     "sec": 5174,
+     "img": null,
+     "date": "2019-12-01",
+     "book": "The Snowball: Warren Buffett and the Business of Life",
+     "author": "Alice Schroeder"
+    },
+    {
+     "n": 101,
+     "title": "Warren Buffett (The Tao of Warren Buffett)",
+     "full_title": "#101 Warren Buffett (The Tao of Warren Buffett)",
+     "url": "https://traffic.megaphone.fm/DSLLC2227129959.mp3?updated=1748636294",
+     "sec": 2536,
+     "img": null,
+     "date": "2019-12-08",
+     "book": "The Tao of Warren Buffett",
+     "author": "David Clark and Mary Buffett"
+    },
+    {
+     "n": 182,
+     "title": "Warren Buffett (The Making of an American Capitalist)",
+     "full_title": "#182 Warren Buffett (The Making of an American Capitalist)",
+     "url": "https://traffic.megaphone.fm/DSLLC3959171576.mp3?updated=1748636244",
+     "sec": 4378,
+     "img": null,
+     "date": "2021-05-29",
+     "book": "Buffett: The Making of an American Capitalist",
+     "author": "Roger Lowenstein"
+    },
+    {
+     "n": 202,
+     "title": "A Few Lessons From Warren Buffett",
+     "full_title": "#202 A Few Lessons From Warren Buffett",
+     "url": "https://traffic.megaphone.fm/DSLLC4812753813.mp3?updated=1748636232",
+     "sec": 4020,
+     "img": null,
+     "date": "2021-09-02",
+     "book": "A Few Lessons for Investors and Managers From Warren Buffett",
+     "author": "Warren Buffett and Peter Bevelin"
+    },
+    {
+     "n": 227,
+     "title": "The Essays of Warren Buffett",
+     "full_title": "#227 The Essays of Warren Buffett",
+     "url": "https://traffic.megaphone.fm/DSLLC3508449936.mp3?updated=1748636214",
+     "sec": 7011,
+     "img": null,
+     "date": "2022-01-20",
+     "book": "The Essays of Warren Buffett",
+     "author": "Warren Buffett and Lawrence Cunningham"
+    },
+    {
+     "n": 286,
+     "title": "Warren Buffett and Charlie Munger",
+     "full_title": "#286 Warren Buffett and Charlie Munger",
+     "url": "https://traffic.megaphone.fm/DSLLC9955404633.mp3?updated=1748636175",
+     "sec": 4244,
+     "img": null,
+     "date": "2023-01-16",
+     "book": "All I Want To Know Is Where I'm Going To Die So I'll Never Go There: Buffett & Munger – A Study in Simplicity and Uncommon, Common Sense",
+     "author": "Peter Bevelin"
+    },
+    {
+     "n": 363,
+     "title": "Li Lu and Charlie Munger and Warren Buffett",
+     "full_title": "#363 Li Lu and Charlie Munger and Warren Buffett",
+     "url": "https://traffic.megaphone.fm/DSLLC7324691768.mp3?updated=1748636119",
+     "sec": 5062,
+     "img": null,
+     "date": "2024-09-06",
+     "book": "",
+     "author": ""
+    },
+    {
+     "n": 380,
+     "title": "Four Hundred Pages of Warren Buffett and Charlie Munger In Their Own Words",
+     "full_title": "#380 Four Hundred Pages of Warren Buffett and Charlie Munger In Their Own Words",
+     "url": "https://traffic.megaphone.fm/DSLLC4583494823.mp3?updated=1748636108",
+     "sec": 4903,
+     "img": null,
+     "date": "2025-02-25",
+     "book": "Buffett and Munger Unscripted: Three Decades of Investment and Business Insights from the Berkshire Hathaway Shareholder Meetings",
+     "author": "Alex Morris"
+    }
+   ]
+  },
+  {
+   "name": "Ted Turner",
+   "tier": "core",
+   "hours": 1.4,
+   "reading": [],
+   "episodes": [
+    {
+     "n": 327,
+     "title": "Ted Turner",
+     "full_title": "#327 Ted Turner",
+     "url": "https://traffic.megaphone.fm/DSLLC2083946832.mp3?updated=1748636145",
+     "sec": 5197,
+     "img": null,
+     "date": "2023-11-14",
+     "book": "Ted Turner's Autobiography. ---- Get access to the World's Most Valuable Notebook for Founders",
+     "author": "investing in"
+    }
+   ]
+  },
+  {
    "name": "Claude Shannon",
    "tier": "adjacent",
    "hours": 3.3,

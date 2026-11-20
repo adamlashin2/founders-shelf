@@ -409,6 +409,159 @@
      "sec": 90
     }
    ]
+  },
+  "Ed Catmull - Pixar": {
+   "speeches": [
+    {
+     "id": "speeches:stanford-creativity",
+     "title": "Creativity, Inc.",
+     "sub": "Stanford Graduate School of Business",
+     "url": "https://youtu.be/k2h2lvhzMDc",
+     "source": {
+      "from": "https://youtu.be/k2h2lvhzMDc",
+      "channel": "Stanford Graduate School of Business",
+      "source_title": "Ed Catmull, Pixar: Keep Your Crises Small"
+     },
+     "sec": 3251,
+     "external": true
+    }
+   ]
+  },
+  "Demis Hassabis - DeepMind": {
+   "speeches": [
+    {
+     "id": "speeches:nobel-lecture-2024",
+     "title": "Nobel Prize Lecture",
+     "sub": "Stockholm · December 2024",
+     "url": "https://youtu.be/YtPaZsasmNA",
+     "source": {
+      "from": "https://youtu.be/YtPaZsasmNA",
+      "channel": "Nobel Prize",
+      "source_title": "Nobel Prize lecture: Demis Hassabis, Nobel Prize in Chemistry 2024"
+     },
+     "sec": 1742,
+     "external": true
+    }
+   ]
+  },
+  "Jim Simons": {
+   "speeches": [
+    {
+     "id": "speeches:sfsu-math-luck",
+     "title": "Mathematics, Common Sense and Good Luck",
+     "sub": "San Francisco State University",
+     "url": "https://youtu.be/Tj1NyJHLvWA",
+     "source": {
+      "from": "https://youtu.be/Tj1NyJHLvWA",
+      "channel": "San Francisco State University",
+      "source_title": "James H. Simons: Mathematics, Common Sense and Good Luck"
+     },
+     "sec": 4837,
+     "external": true
+    }
+   ]
+  },
+  "Walt Disney": {
+   "speeches": [
+    {
+     "id": "speeches:plausible-impossible",
+     "title": "The Plausible Impossible",
+     "sub": "Walt Disney explains his creative method",
+     "url": "https://youtu.be/-SjGoTZ1dHY",
+     "source": {
+      "from": "https://youtu.be/-SjGoTZ1dHY",
+      "channel": "Dapper Dave",
+      "source_title": "The Plausible Impossible"
+     },
+     "sec": 1349,
+     "external": true
+    }
+   ]
+  },
+  "Phil Knight": {
+   "speeches": [
+    {
+     "id": "speeches:stanford-view-from-top",
+     "title": "A View From The Top",
+     "sub": "Stanford Graduate School of Business",
+     "url": "https://youtu.be/OHTosaWWKvg",
+     "source": {
+      "from": "https://youtu.be/OHTosaWWKvg",
+      "channel": "Stanford Graduate School of Business",
+      "source_title": "Phil Knight, MBA ’62, Co-founder and Chairman Emeritus, Nike"
+     },
+     "sec": 2213,
+     "external": true
+    }
+   ]
+  },
+  "James Dyson": {
+   "speeches": [
+    {
+     "id": "speeches:royal-college-art",
+     "title": "James Dyson on Invention",
+     "sub": "Design, engineering and persistence",
+     "url": "https://youtu.be/R21A84A-NLk",
+     "source": {
+      "from": "https://youtu.be/R21A84A-NLk",
+      "channel": "The Wall Street Journal",
+      "source_title": "Dyson Founder Breaks Down His Biggest Inventions and His 'Life of Failure' | WSJ"
+     },
+     "sec": 556,
+     "external": true
+    }
+   ]
+  },
+  "Warren Buffett": {
+   "speeches": [
+    {
+     "id": "speeches:georgia-2001",
+     "title": "Talk to University of Georgia Students",
+     "sub": "Athens, Georgia · 2001",
+     "url": "https://youtu.be/dyTBx6RYCY0",
+     "source": {
+      "from": "https://youtu.be/dyTBx6RYCY0",
+      "channel": "Buffett Bites",
+      "source_title": "Warren Buffett's full 2001 speech at Terry School of Business, University of Georgia"
+     },
+     "sec": 4630,
+     "external": true
+    }
+   ]
+  },
+  "Yvon Chouinard": {
+   "speeches": [
+    {
+     "id": "speeches:uctv-reluctant-businessman",
+     "title": "The Education of a Reluctant Businessman",
+     "sub": "University of California Television",
+     "url": "https://youtu.be/NVfy2T0rzMc",
+     "source": {
+      "from": "https://youtu.be/NVfy2T0rzMc",
+      "channel": "University of California Television (UCTV)",
+      "source_title": "The Education of a Reluctant Businessman with Yvon Chouinard"
+     },
+     "sec": 3573,
+     "external": true
+    }
+   ]
+  },
+  "Sam Walton": {
+   "speeches": [
+    {
+     "id": "speeches:medal-freedom-1992",
+     "title": "Sam Walton’s Final Message",
+     "sub": "Presidential Medal of Freedom · 1992",
+     "url": "https://youtu.be/DgqoRzj62dY",
+     "source": {
+      "from": "https://youtu.be/DgqoRzj62dY",
+      "channel": "Walmart",
+      "source_title": "Sam Walton receives the Medal of Freedom"
+     },
+     "sec": 591,
+     "external": true
+    }
+   ]
   }
  }
 }

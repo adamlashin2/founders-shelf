@@ -35,6 +35,20 @@ WIKI = {
  "The Rothschilds": "Mayer Amschel Rothschild",
  "Jacob Fugger": "Jakob Fugger",
  "James J. Hill": "James J. Hill",
+ "Walt Disney": "Walt Disney",
+ "Sam Walton": "Sam Walton",
+ "Estée Lauder": "Estée Lauder (businesswoman)",
+ "Akio Morita": "Akio Morita",
+ "Ingvar Kamprad": "Ingvar Kamprad",
+ "Enzo Ferrari": "Enzo Ferrari",
+ "Coco Chanel": "Coco Chanel",
+ "Thomas Edison": "Thomas Edison",
+ "Soichiro Honda": "Soichiro Honda",
+ "Yvon Chouinard": "Yvon Chouinard",
+ "James Dyson": "James Dyson",
+ "Phil Knight": "Phil Knight",
+ "Warren Buffett": "Warren Buffett",
+ "Ted Turner": "Ted Turner",
 }
 
 def slug(name):

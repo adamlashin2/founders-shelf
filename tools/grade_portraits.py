@@ -56,7 +56,10 @@ def main():
     THUMBS.mkdir(parents=True, exist_ok=True)
     portraits = json.loads((ROOT / "app" / "data" / "portraits.json").read_text(encoding="utf8"))
     picks = json.loads(PICKS.read_text(encoding="utf8")) if PICKS.exists() else {}
+    only = set(sys.argv[1:])
     for name, rel in portraits.items():
+        if only and name not in only:
+            continue
         fname = Path(rel).name
         src = SRC / fname
         if name in picks and Path(picks[name]["file"]).exists():

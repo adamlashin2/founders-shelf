@@ -472,7 +472,7 @@ body.has-track #mini{transform:none;opacity:1;visibility:visible;pointer-events:
 @media (min-width:900px){ .cover,.book{width:164px} }
 
 .artifact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 14px}
-.artifact-card{min-width:0;text-align:left;display:flex;flex-direction:column;gap:12px}
+.artifact-card{min-width:0;text-align:left;display:flex;flex-direction:column;gap:12px;color:inherit;text-decoration:none}
 .artifact-card .object-stage{height:218px;border-radius:22px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;
   background:radial-gradient(circle at 50% 15%,rgba(255,255,255,.10),transparent 42%),linear-gradient(145deg,#202022,#101011);box-shadow:inset 0 0 0 1px var(--hair)}
 .artifact-card .object-stage::after{content:"";position:absolute;left:12%;right:12%;bottom:14px;height:18px;border-radius:50%;background:rgba(0,0,0,.48);filter:blur(11px)}
@@ -2424,6 +2424,20 @@ const META = {
  "John D. Rockefeller":{cat:"business",sub:"Standard Oil",bio:"Turned one Cleveland refinery into Standard Oil, history's most disciplined monopoly, through cost accounting, silence, and patience.\n\nThe most-covered founder in the catalog for a reason: every mechanism is on display."},
  "Andrew Carnegie":{cat:"business",sub:"Carnegie Steel",bio:"Scottish telegraph boy who became the richest man in the world by riding technological shifts and hiring men smarter than himself — then spent the rest of his life giving it all away."},
  "Henry Ford":{cat:"business",sub:"Ford Motor Company",bio:"Put the world on wheels by obsessing over one product at one falling price, and relentlessly removing waste from the production line.\n\nToday and Tomorrow — his 1926 book — reads like the source code for Toyota."},
+ "Walt Disney":{cat:"business",sub:"The Walt Disney Company",bio:"Built a new kind of company at the intersection of art, technology, and controlled imagination — surviving bankruptcy, losing his first character, and betting the company repeatedly on ideas others considered impossible.\n\nDisneyland was not diversification. It was the physical expression of the same operating system."},
+ "Sam Walton":{cat:"business",sub:"Walmart",bio:"Turned one variety store in Arkansas into the world’s largest retailer through relentless observation, low costs, small-town strategy, and an almost total absence of ego about copying what worked.\n\nHis advantage was compounding thousands of tiny operational decisions faster than everyone else."},
+ "Estée Lauder":{cat:"business",sub:"Estée Lauder Companies",bio:"Started with handmade skin creams and built a global beauty empire one demonstration, sample, and customer relationship at a time.\n\nA masterclass in doing things that do not scale until they become a system no competitor can match."},
+ "Akio Morita":{cat:"business",sub:"Sony",bio:"Co-founded Sony in a bomb-damaged Tokyo department store and helped transform Japan’s reputation from cheap manufacturing to world-leading consumer technology.\n\nHe built for the customer before the customer knew the category existed."},
+ "Ingvar Kamprad":{cat:"business",sub:"IKEA",bio:"Built IKEA by turning constraint into product: flat packs, self-service warehouses, democratic design, and a culture engineered to keep prices low forever.\n\nFrugality was not a slogan. It was the architecture of the company."},
+ "Enzo Ferrari":{cat:"business",sub:"Ferrari",bio:"Created the most emotionally powerful automotive brand in the world by treating the road-car business as fuel for racing.\n\nObsessive, contradictory, and brutally demanding — a study in the productive and destructive edges of total commitment."},
+ "Coco Chanel":{cat:"business",sub:"Chanel",bio:"Rewrote women’s fashion by removing ornament, borrowing from menswear, and making simplicity feel like liberation.\n\nShe did not follow taste; she imposed a new one and built a house that outlived her."},
+ "Thomas Edison":{cat:"science",sub:"Edison laboratories",bio:"Industrialized invention itself: teams, laboratories, rapid experiments, and a portfolio of technologies designed to work as systems.\n\nHis real product was not the light bulb. It was a repeatable machine for turning ideas into industries."},
+ "Soichiro Honda":{cat:"business",sub:"Honda Motor Company",bio:"A mechanic and racer who rebuilt after war, fire, and repeated failure, then took Honda from motorized bicycles to the largest motorcycle maker on earth.\n\nHe treated engineering as a contact sport and failure as the tuition for originality."},
+ "Yvon Chouinard":{cat:"business",sub:"Patagonia",bio:"A climber and reluctant businessman who built Patagonia around product durability, environmental responsibility, and the conviction that a company can reject conventional growth logic.\n\nThe mission constrained the business — and made it stronger."},
+ "James Dyson":{cat:"science",sub:"Dyson",bio:"Built 5,127 prototypes before the bagless vacuum worked, then manufactured and sold it himself after incumbents rejected it.\n\nA living argument for stubborn iteration, vertical integration, and engineering-led taste."},
+ "Phil Knight":{cat:"business",sub:"Nike",bio:"Started by selling imported running shoes from the trunk of his car and built Nike through athlete obsession, brand mythology, and an appetite for risk that nearly broke the company repeatedly."},
+ "Warren Buffett":{cat:"money",sub:"Berkshire Hathaway",bio:"Built Berkshire Hathaway into a compounding machine by combining patient capital allocation, unusually clear communication, and a temperament designed to survive cycles.\n\nThe letters and episodes form a decades-long course in judgment."},
+ "Ted Turner":{cat:"business",sub:"CNN · Turner Broadcasting",bio:"Inherited a small billboard company and used debt, speed, and audacity to build cable superstations, CNN, and a global media empire.\n\nHe repeatedly entered markets before they looked sensible and forced the future to arrive early."},
  "Edwin Land - Polaroid":{cat:"business",sub:"Polaroid",bio:"Steve Jobs's hero. Ran Polaroid as an instrument for turning science into products people didn't know they needed — thirty years before the iPhone playbook existed."},
  "Intel - Noyce Grove Shockley":{cat:"business",sub:"Intel",bio:"Noyce, Grove, and the physics-to-fab lineage that invented the integrated circuit and then survived every wave that killed its rivals.\n\nGrove's paranoia is doctrine; Noyce's optimism is the counterweight."},
  "Peter Thiel":{cat:"business",sub:"PayPal · Palantir · Founders Fund",bio:"Contrarian operator behind PayPal, Palantir, and the sharpest question in tech: what important truth do very few people agree with you on?"},
@@ -2458,7 +2472,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261120-desktop';
+const BUILD='20261120-greats-expansion';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -2764,7 +2778,7 @@ const shead=(t,link)=>`<div class="shead"><h2 class="t-sect">${esc(t)}${link?IC.
 const tile=p=>`<button class="tile press" data-p="${p.slug}" style="${tone(p)}"><span class="art toned">${p.episodes.some(e=>e.date>='2026-01-01')?'<span class="badge">NEW</span>':''}${img(p)}</span>
   <span class="tt t-foot trunc">${esc(p.shortName)}</span><span class="t-foot c2 trunc" style="display:block">${esc(meta(p).sub)}</span></button>`;
 const pcard=p=>`<button class="pcard press" data-p="${p.slug}"><span class="art">${img(p)}</span>
-  <span class="cn trunc">${esc(p.shortName)}</span><span class="cs trunc">${p.episodes.length} book${p.episodes.length>1?'s':''} · ${hours(p)} hr</span></button>`;
+  <span class="cn trunc">${esc(p.shortName)}</span><span class="cs trunc">${bookCount(p)} book${bookCount(p)!==1?'s':''}${p.episodes.length!==bookCount(p)?` · ${p.episodes.length} episodes`:''} · ${hours(p)} hr</span></button>`;
 /* a disc holding a cluster of greats (the reference's "Family" / "Co-workers" circles); positions measured from it */
 const CLUSTER={1:[[50,50]],2:[[36.5,50],[63.5,50]],3:[[37.7,38],[62.3,38],[50,62]],4:[[37.7,37],[62.3,37],[37.7,63],[62.3,63]],
   5:[[29,38],[50,34],[71,38],[37.7,63],[62.3,63]],6:[[29,38],[50,34],[71,38],[29,62],[50,66],[71,62]]};
@@ -2789,6 +2803,7 @@ function cover(p,k,e,i,{cls=''}={}){
 }
 const book=(p,k,e,i)=>`<button class="book press" data-ep="${p.slug}|${k}|${i}">${cover(p,k,e,i)}
   <span class="bm"><span class="t-foot trunc" style="display:block;font-weight:600">${esc(rowTitle(p,e))}</span><span class="t-cap1 episode-meta">${e.n?'#'+e.n+' · ':''}${fmtDur(e.sec)}${e.date?' · '+mon(e.date):''}</span></span></button>`;
+const externalSource=e=>{ const u=e&&e.source&&e.source.from; return typeof u==='string'&&/^https?:\/\//.test(u)?u:''; };
 function artifactVisual(p,k,e,i){
   const title=rowTitle(p,e), date=e.date?mon(e.date):(e.sub||'Archive'), seed=objectSeed(title+p.name);
   if(k==='bio') return cover(p,k,e,i);
@@ -2796,8 +2811,8 @@ function artifactVisual(p,k,e,i){
   if(k==='edits') return `<span class="archive-object edit-object"><span class="tape-label"><span class="object-title">${esc(title)}</span><span class="wave" aria-hidden="true">${Array.from({length:18},(_,n)=>`<i style="height:${5+(seed+n*7)%12}px"></i>`).join('')}</span></span><span class="reels" aria-hidden="true"><i class="reel"></i><i class="window"></i><i class="reel"></i></span></span>`;
   return `<span class="archive-object speech-object"><span class="kicker">Recorded address</span><span class="object-title clamp2">${esc(title)}</span><span class="speaker">${esc(p.shortName)} · ${esc(date)}</span><span class="mic" aria-hidden="true"></span></span>`;
 }
-const artifactCard=(p,k,e,i)=>`<button class="artifact-card press" data-ep="${p.slug}|${k}|${i}"><span class="object-stage">${artifactVisual(p,k,e,i)}</span>
-  <span><span class="t-head clamp2" style="display:block">${esc(rowTitle(p,e))}</span><span class="t-foot c2" style="display:block;margin-top:3px">${esc(p.shortName)} · ${fmtDur(e.sec)}</span></span></button>`;
+const artifactCard=(p,k,e,i)=>{ const ext=externalSource(e), tag=ext?'a':'button'; return `<${tag} class="artifact-card press" ${ext?`href="${esc(ext)}" target="_blank" rel="noopener noreferrer" aria-label="Open original source: ${esc(rowTitle(p,e))}"`:`data-ep="${p.slug}|${k}|${i}"`}><span class="object-stage">${artifactVisual(p,k,e,i)}</span>
+  <span><span class="t-head clamp2" style="display:block">${esc(rowTitle(p,e))}</span><span class="t-foot c2" style="display:block;margin-top:3px">${esc(p.shortName)} · ${ext?'Open original':fmtDur(e.sec)}</span></span></${tag}>`; };
 const readingBook=(p,e)=>`<a class="book refbook press" href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" aria-label="Open ${esc(e.title)} by ${esc(e.author)}">${cover(p,'bio',{...e,book:e.title,n:null,sec:0,date:''},-1,{cls:'reference'})}
   <span class="bm"><span class="t-foot clamp2" style="display:block;font-weight:600">${esc(e.title)}</span><span class="t-cap1 c2" style="display:block;margin-top:3px">${esc(e.author)}</span><span class="t-cap1 ref-source">View source ${IC.chev(10)}</span></span></a>`;
 const fcard=p=>{ const fav=favs.includes(p.name); return `<span class="fcw">${pcard(p)}
@@ -2807,13 +2822,15 @@ const er=(label,n,go)=>`<button class="row lrow press" data-go="${go}"><span cla
   <span class="mid"><span class="t trunc">${esc(label)}</span><span class="s trunc">${n} ${n===1?'item':'items'}</span></span><span class="end">${IC.chev(14)}</span></button>`;
 function erow(p,k,e,i,{num=true,lead=false}={}){
   const isCur=cur&&cur.p===p&&cur.k===k&&cur.i===i, dn=done(p,e), ps=pos(p,e), st=ps>60&&!dn;
+  const ext=externalSource(e);
   const n=isCur?`<span class="eq${audio.paused?' paused':''}"><i></i><i></i><i></i></span>`:(i+1);
-  const side=lead?`<span class="rpill${dn&&!isCur?' off':''}">${isCur?'Playing':st?'Resume':dn?'Played':'Play'}</span>`
+  const side=ext?`<span class="rpill">Open</span>`:lead?`<span class="rpill${dn&&!isCur?' off':''}">${isCur?'Playing':st?'Resume':dn?'Played':'Play'}</span>`
     :st?`<span class="cr t-foot" style="font-weight:600">${fmtDur((e.sec||0)-ps)} left</span>`:dn?IC.check(15):`<span class="t-foot num">${fmtDur(e.sec)}</span>`;
-  return `<button class="row press${isCur?' cur':''}" data-ep="${p.slug}|${k}|${i}">
+  const tag=ext?'a':'button';
+  return `<${tag} class="row press${isCur?' cur':''}" ${ext?`href="${esc(ext)}" target="_blank" rel="noopener noreferrer"`:`data-ep="${p.slug}|${k}|${i}"`}>
     ${lead?`<span class="lead toned" style="${tone(p)}">${img(p)}</span>`:''}${num?`<span class="n t-sub num">${n}</span>`:''}
     <span class="mid"><span class="t t-callout trunc">${esc(rowTitle(p,e))}</span><span class="s t-foot c2 trunc">${esc(lead?p.shortName+' · '+(e.sec?fmtDur(e.sec):mon(e.date)):rowSub(p,e))}</span></span>
-    <span class="end">${side}</span>${st?`<span class="prog"><i style="width:${Math.min(99,100*ps/(e.sec||1))}%"></i></span>`:''}</button>`;
+    <span class="end">${side}</span>${st&&!ext?`<span class="prog"><i style="width:${Math.min(99,100*ps/(e.sec||1))}%"></i></span>`:''}</${tag}>`;
 }
 function continueList(){
   const out=[]; DATA.people.forEach(p=>KINDS.forEach(([k])=>items(p,k).forEach((e,i)=>{ const ps=pos(p,e); if(ps>60&&!done(p,e)) out.push({p,k,e,i,ps,t:store.get('t.'+epKey(p,e),0)}); })));
@@ -2861,7 +2878,7 @@ const wide=c=>`<button class="wide press" data-ep="${c.p.slug}|${c.k}|${c.i}" st
   <span class="tt t-sub trunc" style="font-weight:600">${esc(rowTitle(c.p,c.e))}</span><span class="t-foot c2 trunc" style="display:block">${esc(c.p.shortName)} · ${fmtDur((c.e.sec||0)-c.ps)} left</span></button>`;
 
 /* ============================== pages ============================== */
-function featured(){ const F=['Steve Jobs','Winston Churchill','Napoleon','Alexander the Great','Elon Musk','Jeff Bezos','Jensen Huang','Nikola Tesla','Andrew Carnegie','Peter Thiel','Henry Ford','Charles de Gaulle']
+function featured(){ const F=['Steve Jobs','Walt Disney','Sam Walton','Estée Lauder','Akio Morita','Soichiro Honda','Warren Buffett','Winston Churchill','Napoleon','Alexander the Great','Elon Musk','Jeff Bezos','Jensen Huang','Nikola Tesla','Andrew Carnegie','Peter Thiel','Henry Ford','Charles de Gaulle']
   .map(n=>DATA.people.find(p=>p.name===n)).filter(Boolean); return F[Math.floor(Date.now()/864e5)%F.length]; }
 /* documented quotes (source in the second field) for the Home quote card */
 const QUOTES={'Steve Jobs':['Creativity is just connecting things.','Wired, 1996'],
