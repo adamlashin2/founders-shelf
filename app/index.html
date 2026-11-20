@@ -2166,14 +2166,147 @@ ion-modal.sheet-modal{--background:var(--app-glass-strong);--border-radius:28px}
   .lhead{font-size:34px!important;line-height:37px!important}.lnum{font-size:64px;line-height:60px}
 }
 @media (min-width:900px){
-  :root{--app-margin:24px;--ns-seg-w:auto}
-  .page>.content{max-width:1120px}
-  html.light #topnav,html:not(.light) #topnav{border-radius:22px!important;background:var(--app-surface)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
-  html #topnav button:not(.lg){height:44px!important;border-radius:12px!important;font-size:15px}
+  :root{
+    --app-bg:#101011;
+    --app-margin:24px;
+    --sbw:232px;
+    --sbx:12px;
+    --cx:calc(var(--sbw) + var(--sbx) + 24px);
+    --ns-seg-w:auto;
+  }
+  html.light{--app-bg:#f5f5f7}
+
+  /* One desktop frame: a compact persistent sidebar and one aligned canvas. */
+  #topnav{
+    left:var(--sbx)!important;top:var(--sbx)!important;bottom:var(--sbx)!important;width:var(--sbw)!important;
+    padding:12px 10px!important;border:0!important;border-radius:20px!important;overflow-y:auto;scrollbar-width:none;
+  }
+  #topnav::-webkit-scrollbar{display:none}
+  html.light #topnav,html:not(.light) #topnav{
+    background:color-mix(in srgb,var(--app-surface) 96%,transparent)!important;
+    box-shadow:0 12px 38px rgb(0 0 0 / .14)!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  }
+  #topnav .lg{height:42px!important;margin:0 2px 10px!important;padding:0 8px!important;gap:10px!important}
+  #topnav .lg img{width:28px!important;height:28px!important;border-radius:8px!important;box-shadow:none!important}
+  html #topnav .lg span{font-size:22px!important;line-height:26px!important}
+  #topnav .nav-primary,#topnav .nav-tools{gap:1px!important}
+  #topnav .nav-tools{padding-top:8px!important}
+  html #topnav button:not(.lg){height:38px!important;padding:0 12px!important;border-radius:10px!important;gap:10px!important;font-size:14px!important;line-height:18px!important}
   html #topnav button.on{background:var(--app-fill)!important;color:var(--app-label)!important;box-shadow:none!important}
-  .ltitle h1.t-page{font-size:40px!important;line-height:46px!important}.pgrid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-  .pgrid>.pcard{content-visibility:visible;contain:none}.page:has(.sys-type){padding-bottom:320px!important}
-  .invc{width:230px;height:380px;border-radius:22px}.fxbody{border-radius:24px}
+  #topnav .nav-sect{margin:14px 12px 5px!important;font-size:11px!important;line-height:14px!important;font-weight:600!important;letter-spacing:.01em!important;text-transform:uppercase!important;color:var(--app-label-3)!important}
+
+  .page{padding:0 28px 112px var(--cx)!important;background:var(--app-bg)!important}
+  .page>.content{width:100%;max-width:1280px!important;margin:0 auto!important}
+  .page:has(.home-x),.page:has(.fx){padding:0!important}
+  .content{min-width:0}
+  .ltitle{display:flex;align-items:center;min-height:82px;padding:26px 0 12px!important;margin:0!important;background:none!important}
+  .ltitle h1.t-page{font-size:30px!important;line-height:36px!important;letter-spacing:.1px!important}
+  .ltitle>.t-sub{margin-left:auto;font-size:13px!important;line-height:18px!important}
+  .wrap{padding-left:0!important;padding-right:0!important}
+  .sect{margin-top:30px}
+  .shead{margin-bottom:12px}
+  .shead h2.t-sect,.hxh,.history-section-title h2{font-size:17px!important;line-height:22px!important;letter-spacing:-.2px!important}
+  .t-body,.row .mid .t,.cn,.gt,.hxb{font-size:14px!important;line-height:18px!important;letter-spacing:-.1px!important}
+  .row .mid .s,.cs,.gs,.ls,.lu,.hdur,.pmeta .g{font-size:12px!important;line-height:16px!important}
+  .chip,.ltab{height:36px!important;padding:0 13px!important;font-size:13px!important;line-height:16px!important;border-radius:10px!important}
+  .row{min-height:52px}.grow{min-height:48px}.grow .t-body{font-size:14px!important;line-height:18px!important}
+
+  /* Collections stay dense enough to scan instead of becoming poster walls. */
+  .pgrid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:26px 18px!important}
+  .pgrid>.pcard{content-visibility:visible;contain:none}
+  .pcard .art{border-radius:16px!important;box-shadow:none!important}
+  .pcard .art::before,.pcard .art::after{display:none!important}
+  .pcard .tt{margin-top:8px!important}
+  .cats{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))!important;gap:18px!important}
+  .artifact-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:24px 18px!important}
+  .artifact-card .archive-object{transform:scale(1.24)}
+  @media (hover:hover){.artifact-card:hover .archive-object{transform:translateY(-4px) rotate(-.35deg) scale(1.24)}}
+  .archive-showcase{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+
+  /* Library is a desktop shelf, not an enlarged phone screen. */
+  .lib-v2 .lhero{padding-top:0!important}
+  .lib-v2 .lhead{max-width:620px!important;font-size:38px!important;line-height:43px!important;letter-spacing:-.35px!important}
+  .lib-v2 .ledge{gap:10px!important;margin-top:16px!important;padding-bottom:13px!important}
+  .lib-v2 .lbook,.lib-v2 .lbook .cover{width:104px!important}
+  .lib-v2 .ltabs{gap:8px!important;margin-top:16px!important}
+  .lib-v2 .lbig{max-width:760px!important;grid-template-columns:minmax(220px,1fr) minmax(300px,1.25fr)!important;margin-top:18px!important;border-radius:18px!important}
+  .lib-v2 .lnum{font-size:52px!important;line-height:50px!important}
+
+  /* History uses the width it has: weekly context beside the chronological list. */
+  .hist-v2 .wrap{display:grid;grid-template-columns:minmax(390px,470px) minmax(360px,1fr);grid-template-rows:auto 1fr;gap:18px 28px;align-items:start;width:100%;max-width:none!important}
+  .hist-v2 .night{grid-column:1;grid-row:1 / span 2;position:sticky;top:24px;margin:0!important;padding:22px!important;border-radius:18px!important}
+  .hist-v2 .history-filters{grid-column:2;grid-row:1;margin:0!important;align-self:center}
+  .hist-v2 #history-results{grid-column:2;grid-row:2;min-width:0}
+  .hist-v2 .month{font-size:24px!important;line-height:30px!important}
+  .hist-v2 .week{gap:5px!important;margin-top:12px!important}
+  .hist-v2 .day{height:48px!important;border-radius:11px!important}.hist-v2 .day.on{height:54px!important}
+  .hist-v2 .hsum{font-size:27px!important;line-height:32px!important}.hist-v2 .hsum em{font-size:27px!important}
+  .history-item{min-height:64px!important}
+
+  /* Settings and utility screens align to the same canvas. */
+  .settings{max-width:760px!important;margin:0!important}
+  .settings .ptop{display:none!important}
+  .settings .wrap{max-width:720px!important;margin:0!important}
+  .settings .group{border-radius:12px!important}.settings .gh{margin-top:24px!important;font-size:12px!important}
+  .content:has(>.ptop):not(.settings) .ltitle{padding-left:50px!important}
+  .content:has(>.ptop):not(.settings)>.ptop{left:var(--cx)!important;top:25px!important}
+  .content:has(>.ptop):not(.settings)>.ptop .btn-icon{width:36px!important;height:36px!important;min-width:36px!important}
+
+  /* The immersive home becomes an editorial split composition on desktop. */
+  .home-x{min-height:100%;padding-left:var(--cx)!important;padding-bottom:120px!important;background:var(--app-bg)!important}
+  .hxbg{left:var(--cx)!important;right:24px!important;top:24px!important;height:calc(100vh - 48px)!important;border-radius:26px;overflow:hidden;background:#050505}
+  .hxbg img{left:auto!important;right:0!important;width:68%!important;object-position:center 12%!important}
+  .hxbg::before{display:none!important}
+  .hxbg::after{background:linear-gradient(90deg,#050505 0,#050505 24%,transparent 70%),linear-gradient(0deg,#050505 0,transparent 44%),linear-gradient(180deg,rgb(0 0 0 / .28),transparent 30%)!important}
+  .hx{min-height:100vh!important;padding:34px 36px 46px!important;align-items:stretch}
+  .hxtop{position:relative;z-index:2}
+  .hxwm{font-size:28px!important;line-height:34px!important}
+  .hxlow{position:relative;z-index:2;width:440px;align-items:flex-start!important;text-align:left!important}
+  .hxrow{justify-content:flex-start!important;margin-left:6px}
+  .hxmore{font-size:13px!important}
+  .hxt{max-width:430px!important;font-size:46px!important;line-height:49px!important;text-align:left!important}
+  .hxm{font-size:14px!important;line-height:19px!important}
+  .hxcard{max-width:420px!important;border-radius:16px!important}
+  .hxbar{max-width:420px!important}
+  .hxs{margin-top:36px!important}
+  .hxh,.glist,.home-x .discrow{padding-left:36px!important;padding-right:36px!important}
+  .inv{gap:14px!important;padding:14px 36px 8px!important}
+  .invc{width:198px!important;height:300px!important;border-radius:18px!important}
+  .invt b{font-size:25px!important;line-height:27px!important}
+  .glist{max-width:720px!important}
+
+  /* Person pages keep the portrait as content and place the controls in a readable pane. */
+  .fx{padding-left:var(--cx)!important;background:var(--app-bg)!important}
+  .fxbg{left:var(--cx)!important;right:24px!important;top:24px!important;bottom:auto!important;height:calc(100vh - 48px)!important;border-radius:26px;overflow:hidden;background:#050505}
+  .fxbg img{left:auto!important;right:0!important;width:62%!important;height:100%!important;object-position:center 15%!important;-webkit-mask:none!important;mask:none!important}
+  .fxbg::before{display:none!important}
+  .fxbg::after{background:linear-gradient(90deg,#050505 0,#050505 28%,transparent 72%),linear-gradient(0deg,#050505 0,transparent 38%),linear-gradient(180deg,rgb(0 0 0 / .2),transparent 28%)!important}
+  .fxtop{left:calc(var(--cx) + 22px)!important;right:46px!important;top:44px!important}
+  .fxhero{min-height:100vh!important;padding:116px 36px 54px!important;align-items:flex-start!important;justify-content:flex-end!important;text-align:left!important}
+  .fxt{max-width:430px!important;font-size:44px!important;line-height:48px!important;text-align:left!important}
+  .fxm{max-width:430px!important;font-size:14px!important;line-height:19px!important}
+  .fxhero .seg,.fxhero .fxcard{max-width:420px!important}
+  .fxhero .seg{height:48px!important;border-radius:16px!important}.fxhero .seg button{height:42px!important;border-radius:13px!important;font-size:13px!important}
+  .fxcard{padding:16px 18px!important;border-radius:18px!important}.fxcard p{font-size:14px!important;line-height:19px!important}
+  .fxbody{margin:24px 24px 0 0!important;padding:26px 30px 130px!important;border:0!important;border-radius:22px 22px 0 0!important;background:var(--app-surface)!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  .fxbody .sect:first-child{margin-top:0!important}
+
+  /* A compact desktop mini-player no longer bisects every screen. */
+  #dock{left:auto!important;right:28px!important;bottom:22px!important;width:460px!important;padding:0!important}
+  #dock::before{display:none!important}
+  #mini{width:100%!important;height:56px!important;margin:0!important;border-radius:16px!important;box-shadow:0 14px 40px rgb(0 0 0 / .32)!important}
+  #mini .mini-main{height:48px!important;padding:0 8px!important}
+  #mini .art{width:40px!important;height:40px!important}
+  body.np-open #view{filter:none!important}
+  .page:has(.sys-type){padding-bottom:180px!important}
+}
+@media (min-width:900px) and (max-width:1120px){
+  :root{--sbw:214px;--cx:250px}
+  .pgrid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .cats{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .hist-v2 .wrap{grid-template-columns:1fr!important}.hist-v2 .night{position:relative;top:auto;grid-column:1;grid-row:auto}.hist-v2 .history-filters,.hist-v2 #history-results{grid-column:1;grid-row:auto}
+  .hxlow{width:390px}.hxbg img{width:74%!important}
 }
 @media (min-width:680px){.pgrid>.pcard{content-visibility:visible;contain:none}}
 
@@ -2325,7 +2458,7 @@ const SECTIONS = [
 
 const KINDS=[['bio','Biographies'],['speeches','Speeches'],['edits','Edits'],['letters','Letters']];
 const KLABEL=Object.fromEntries(KINDS);
-const BUILD='20261119-apple';
+const BUILD='20261120-desktop';
 (()=>{ fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(v=>{ v=(v||'').trim();
   if(v&&v!==BUILD&&!sessionStorage.getItem('tg.reloaded')){ sessionStorage.setItem('tg.reloaded','1'); location.reload(); } }).catch(()=>{}); })();
 
@@ -2423,7 +2556,7 @@ const lastPage={};   /* route -> the page element last built for it; its decoded
 function pageFor(r){ const pg=build(r); pg.classList.add('ion-page'); pg.dataset.route=r;
   const old=lastPage[r]; keepImgs(pg,old&&!old.isConnected?old:document.createElement('div')); lastPage[r]=pg;   /* first visits too: decoded photos paint during the transition, never a black box */
   const v=document.createElement('div'); v.className='nav-view ion-page'; v.dataset.route=r; v.appendChild(pg); return v; }
-function showing(pg,r,kind){ paintChrome(); revealDecoded(pg); if(kind==='none') settle(pg);   /* tab switches are instant on iOS; only the first screen settles */ if(kind!=='pop') pg.scrollTop=kind==='tab'?(scrollMem[r]||0):0; if(!pg.__wired){ pg.__wired=true; wireNav(pg); } else wireNav(pg); }
+function showing(pg,r,kind){ paintChrome(); revealDecoded(pg); if(kind==='none'||(innerWidth>=900&&kind==='tab')) settle(pg);   /* phone tabs stay immediate; desktop tabs use a brief opacity settle */ if(kind!=='pop') pg.scrollTop=kind==='tab'?(scrollMem[r]||0):0; if(!pg.__wired){ pg.__wired=true; wireNav(pg); } else wireNav(pg); }
 let navQueue=Promise.resolve();
 function render(r,kind='none'){
   navQueue=navQueue.then(()=>renderNow(r,kind)).catch(e=>console.error(e)); return navQueue; }
@@ -2464,6 +2597,22 @@ function navAnimation(baseEl,opts){
   const route=fig&&fig.dataset.route||'', slug=route.startsWith('p/')?route.slice(2):null;
   const src=slug&&zoomSource(other,slug);
   if(!ION) return null;
+  /* macOS-style hierarchy change: the sidebar never moves and content never
+     crosses the whole window. A precise fade/settle preserves context without
+     making desktop navigation feel like an enlarged phone or a slide deck. */
+  if(innerWidth>=900){
+    const entering=opts.enteringEl.querySelector(':scope>.page>:first-child')||opts.enteringEl;
+    const leaving=opts.leavingEl?.querySelector(':scope>.page>:first-child')||opts.leavingEl;
+    const enterAni=ION.createAnimation().addElement(entering)
+      .keyframes(back?[{offset:0,opacity:.94,transform:'translateY(-5px)'},{offset:1,opacity:1,transform:'translateY(0)'}]
+        :[{offset:0,opacity:.88,transform:'translateY(7px)'},{offset:1,opacity:1,transform:'translateY(0)'}]);
+    const parts=[enterAni];
+    if(leaving) parts.push(ION.createAnimation().addElement(leaving)
+      .keyframes(back?[{offset:0,opacity:1,transform:'translateY(0)'},{offset:1,opacity:.88,transform:'translateY(7px)'}]
+        :[{offset:0,opacity:1,transform:'translateY(0)'},{offset:1,opacity:.94,transform:'translateY(-5px)'}]));
+    return ION.createAnimation().addElement(opts.enteringEl).beforeRemoveClass('ion-page-invisible')
+      .duration(190).easing('cubic-bezier(.2,.8,.2,1)').fill('both').addAnimation(parts);
+  }
   if(!src) return ION.iosTransitionAnimation(baseEl,opts);
   const figPage=fig.querySelector(':scope>.page'), otherPage=other.querySelector(':scope>.page');
   const box=baseEl.getBoundingClientRect(), c=src.getBoundingClientRect();
